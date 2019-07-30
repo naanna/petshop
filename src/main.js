@@ -10,6 +10,9 @@ import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
 
+import moment from 'moment'
+Vue.prototype.moment = moment;
+
 import router from "./router/router.js";
 
 new Vue({
