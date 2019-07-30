@@ -5,7 +5,10 @@ Vue.config.productionTip = false
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
+Vue.use(VueAxios, axios)
 
 import router from "./router/router.js";
 

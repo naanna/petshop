@@ -202,6 +202,13 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    // this.axios
+    //   .get("http://jsonplaceholder.typicode.com/users")
+    //   .then(response => {
+    //     console.log(response.data);
+    //   });
   }
 };
 </script>
