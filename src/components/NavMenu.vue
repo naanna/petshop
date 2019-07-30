@@ -1,8 +1,6 @@
 
 <template>
   <div>
-    <!-- 根据实际情况做修改 -->
-
     <el-submenu
       v-for="(item,index) in navlist"
       :key="index"
