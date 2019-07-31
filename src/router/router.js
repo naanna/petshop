@@ -42,7 +42,7 @@ export default new Router({
         {
             path: '/fostercare/index',
             name: 'allfostercare',
-            component: resolve => require(['../components/pet/index.vue'], resolve)
+            component: resolve => require(['../components/fostercare/index.vue'], resolve)
         },
         {
             path: '/fostercare/my',
