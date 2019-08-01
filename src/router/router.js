@@ -40,6 +40,11 @@ export default new Router({
             component: resolve => require(['../components/customer/vip.vue'], resolve)
         },
         {
+            path: '/customer/admin',
+            name: 'admin',
+            component: resolve => require(['../components/customer/admin.vue'], resolve)
+        },
+        {
             path: '/fostercare/index',
             name: 'allfostercare',
             component: resolve => require(['../components/fostercare/index.vue'], resolve)
@@ -53,11 +58,6 @@ export default new Router({
             path: '/fostercare/rule',
             name: 'rulefostercare',
             component: resolve => require(['../components/fostercare/rule.vue'], resolve)
-        },
-        {
-            path: '/leavemessage/manage',
-            name: 'manageleavemessage',
-            component: resolve => require(['../components/leavemessage/manage.vue'], resolve)
         },
         {
             path: '/leavemessage/look',
@@ -75,11 +75,6 @@ export default new Router({
             component: resolve => require(['../components/manual/look.vue'], resolve)
         },
         {
-            path: '/manual/manage',
-            name: 'manualmanage',
-            component: resolve => require(['../components/manual/manage.vue'], resolve)
-        },
-        {
             path: '/count/month',
             name: 'month',
             component: resolve => require(['../components/count/month.vue'], resolve)
@@ -90,14 +85,38 @@ export default new Router({
             component: resolve => require(['../components/count/year.vue'], resolve)
         },
         {
-            path: '/cost/approval',
+            path: '/manage/approval',
             name: 'approval',
-            component: resolve => require(['../components/cost/approval.vue'], resolve)
+            component: resolve => require(['../components/manage/approval.vue'], resolve)
         },
         {
-            path: '/booking/manage',
-            name: 'bookingmanage',
-            component: resolve => require(['../components/booking/manage.vue'], resolve)
+            path: '/manage/order',
+            name: 'costorder',
+            component: resolve => require(['../components/manage/order.vue'], resolve)
+        },
+        {
+            path: '/manage/bookmanage',
+            name: 'bookmanage',
+            component: resolve => require(['../components/manage/bookmanage.vue'], resolve)
+        }, {
+            path: '/manage/caremanage',
+            name: 'caremanage',
+            component: resolve => require(['../components/manage/caremanage.vue'], resolve)
+        },
+        {
+            path: '/manage/manualmanage',
+            name: 'manualmanage',
+            component: resolve => require(['../components/manage/manualmanage.vue'], resolve)
+        },
+        {
+            path: '/manage/leavemessagemanage',
+            name: 'manageleavemessage',
+            component: resolve => require(['../components/manage/leavemessagemanage.vue'], resolve)
+        },
+        {
+            path: '/manage/usermanage',
+            name: 'usermanage',
+            component: resolve => require(['../components/manage/usermanage.vue'], resolve)
         },
         {
             path: '/booking/my',
@@ -138,6 +157,11 @@ export default new Router({
             path: '/shpping/cost',
             name: 'shppingcost',
             component: resolve => require(['../components/shpping/cost.vue'], resolve)
+        },
+        {
+            path: '/shpping/historycost',
+            name: 'historycost',
+            component: resolve => require(['../components/shpping/historycost.vue'], resolve)
         },
         {
             path: '/shpping/person',

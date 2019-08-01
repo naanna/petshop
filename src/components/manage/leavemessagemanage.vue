@@ -1,12 +1,12 @@
 <template>
   <div>
-manage
+leavemessagemanage
   </div>
 </template>
 
 <script>
 export default {
-  name: 'manage'
+  name: 'leavemessagemanage'
 }
 </script>
 

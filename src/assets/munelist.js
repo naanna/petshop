@@ -92,6 +92,18 @@ const navlist = [{
                     deep: 2,
                     code: "22"
                 }
+            },
+            {
+                adminMenu: {
+                    id: 23,
+                    menuName: "管理员",
+                    menuType: "page",
+                    pid: "2",
+                    url: "/customer/admin",
+                    sort: 3,
+                    deep: 2,
+                    code: "23"
+                }
             }
         ]
     }, {
@@ -155,18 +167,6 @@ const navlist = [{
         },
         children: [{
                 adminMenu: {
-                    id: 41,
-                    menuName: "评论管理",
-                    menuType: "page",
-                    pid: "4",
-                    url: "/leavemessage/manage",
-                    sort: 1,
-                    deep: 2,
-                    code: "41"
-                }
-            },
-            {
-                adminMenu: {
                     id: 42,
                     menuName: "查看评论",
                     menuType: "page",
@@ -202,30 +202,17 @@ const navlist = [{
             code: "5"
         },
         children: [{
-                adminMenu: {
-                    id: 51,
-                    menuName: "手册管理",
-                    menuType: "page",
-                    pid: "5",
-                    url: "/manual/manage",
-                    sort: 1,
-                    deep: 2,
-                    code: "51"
-                }
-            },
-            {
-                adminMenu: {
-                    id: 52,
-                    menuName: "查看手册",
-                    menuType: "page",
-                    pid: "5",
-                    url: "/manual/look",
-                    sort: 2,
-                    deep: 2,
-                    code: "52"
-                }
+            adminMenu: {
+                id: 52,
+                menuName: "查看手册",
+                menuType: "page",
+                pid: "5",
+                url: "/manual/look",
+                sort: 2,
+                deep: 2,
+                code: "52"
             }
-        ]
+        }]
     }, {
         adminMenu: {
             id: 6,
@@ -265,7 +252,7 @@ const navlist = [{
     }, {
         adminMenu: {
             id: 7,
-            menuName: "充值处理",
+            menuName: "数据管理",
             menuType: "list",
             pid: "0",
             url: "#",
@@ -274,17 +261,88 @@ const navlist = [{
             code: "7"
         },
         children: [{
-            adminMenu: {
-                id: 71,
-                menuName: "管理员审批",
-                menuType: "page",
-                pid: "7",
-                url: "/cost/approval",
-                sort: 1,
-                deep: 2,
-                code: "71"
-            }
-        }]
+                adminMenu: {
+                    id: 71,
+                    menuName: "充值审批",
+                    menuType: "page",
+                    pid: "7",
+                    url: "/manage/approval",
+                    sort: 1,
+                    deep: 2,
+                    code: "71"
+                }
+            }, {
+                adminMenu: {
+                    id: 72,
+                    menuName: "订单管理",
+                    menuType: "page",
+                    pid: "7",
+                    url: "/manage/order",
+                    sort: 2,
+                    deep: 2,
+                    code: "72"
+                }
+            },
+            {
+                adminMenu: {
+                    id: 73,
+                    menuName: "代售管理",
+                    menuType: "page",
+                    pid: "8",
+                    url: "/manage/bookmanage",
+                    sort: 3,
+                    deep: 2,
+                    code: "73"
+                }
+            }, {
+                adminMenu: {
+                    id: 74,
+                    menuName: "寄养管理",
+                    menuType: "page",
+                    pid: "8",
+                    url: "/manage/caremanage",
+                    sort: 4,
+                    deep: 2,
+                    code: "74"
+                }
+            },
+            {
+                adminMenu: {
+                    id: 75,
+                    menuName: "评论管理",
+                    menuType: "page",
+                    pid: "8",
+                    url: "/manage/leavemessagemanage",
+                    sort: 5,
+                    deep: 2,
+                    code: "75"
+                }
+            },
+            {
+                adminMenu: {
+                    id: 76,
+                    menuName: "手册管理",
+                    menuType: "page",
+                    pid: "8",
+                    url: "/manage/manualmanage",
+                    sort: 6,
+                    deep: 2,
+                    code: "76"
+                }
+            },
+            {
+                adminMenu: {
+                    id: 77,
+                    menuName: "账户管理",
+                    menuType: "page",
+                    pid: "8",
+                    url: "/manage/usermanage",
+                    sort: 7,
+                    deep: 2,
+                    code: "77"
+                }
+            },
+        ]
     }, {
         adminMenu: {
             id: 8,
@@ -297,18 +355,6 @@ const navlist = [{
             code: "8"
         },
         children: [{
-                adminMenu: {
-                    id: 81,
-                    menuName: "代售管理",
-                    menuType: "page",
-                    pid: "8",
-                    url: "/booking/manage",
-                    sort: 1,
-                    deep: 2,
-                    code: "81"
-                }
-            },
-            {
                 adminMenu: {
                     id: 82,
                     menuName: "我的代售",

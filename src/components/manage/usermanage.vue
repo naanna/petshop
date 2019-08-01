@@ -1,9 +1,9 @@
 <template>
   <div class="__p_C7_u_238">
-    <span class="__p_C7_u_239">全部客户</span>
+    <span class="__p_C7_u_239">全部账户</span>
     <div class="__p_C7_u_277">
       <div class="__p_C7_u_278">
-        <el-button type="primary" size="small">增加客户</el-button>
+        <el-button type="primary" size="small">增加账户</el-button>
         <el-button type="primary" size="small">删除选中</el-button>
       </div>
       <div class="__p_C7_u_279">
@@ -44,6 +44,12 @@
         </template>
       </el-table-column>
       <el-table-column label="余额" prop="moeny" align="center" header-align="center"></el-table-column>
+      <el-table-column label="权限" prop="permissions" align="center" header-align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.permissions=='customer'">客户</span>
+          <span v-else>管理员</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="130" align="center" header-align="center">
         <div slot-scope="scope">
           <el-button type="text" size="small">编辑</el-button>
@@ -82,29 +88,29 @@ export default {
   },
   methods: {
     go2Query() {
-      // this.axios
-      //   .get("http://localhost:3000/api/getalluser", {
-      //     params: {
-      //       page_no: this.page_no,
-      //       page_size: this.page_size
-      //     }
-      //   })
-      //   .then(res => {
-      //     if (res.data.success) {
-      //       var results = res.data;
-      //       this.tabledata = results.message;
-      //       this.total = results.total;
-      //       for (let i in this.tabledata) {
-      //         this.tabledata[i].birthday = this.moment(
-      //           this.tabledata[i].birthday
-      //         ).format("YYYY-MM-DD");
-      //         this.tabledata[i].regday = this.moment(
-      //           this.tabledata[i].regday
-      //         ).format("YYYY-MM-DD");
-      //       }
-      //       console.log(results);
-      //     }
-      //   });
+      this.axios
+        .get("http://localhost:3000/api/getalluser", {
+          params: {
+            page_no: this.page_no,
+            page_size: this.page_size
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.tabledata = results.message;
+            this.total = results.total;
+            for (let i in this.tabledata) {
+              this.tabledata[i].birthday = this.moment(
+                this.tabledata[i].birthday
+              ).format("YYYY-MM-DD");
+              this.tabledata[i].regday = this.moment(
+                this.tabledata[i].regday
+              ).format("YYYY-MM-DD");
+            }
+            console.log(results);
+          }
+        });
     },
     sizeChangeHandle(val) {
       this.page_size = val;

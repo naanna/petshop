@@ -1,12 +1,12 @@
 <template>
   <div>
-manage
+manualmanage
   </div>
 </template>
 
 <script>
 export default {
-  name: 'manage'
+  name: 'manualmanage'
 }
 </script>
 

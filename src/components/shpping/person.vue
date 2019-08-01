@@ -64,7 +64,15 @@
           <span style="color: #898989;">{{form.moeny}}</span>
         </el-form-item>
         <el-form-item label="会员等级：" label-width="300px" class="__p_2362_uid_205">
-          <span style="color: #898989;">{{form.leavel}}</span>
+          <div style="margin-top:10px;display:inline-block;">
+            <img src="../../assets/picture/vip1.png" style="height:25px" v-if="form.level=='vip'" />
+            <img
+              src="../../assets/picture/vip2.png"
+              style="height:25px"
+              v-else-if="form.level=='vip2'"
+            />
+            <img src="../../assets/picture/vip3.png" style="height:25px" v-else />
+          </div>
         </el-form-item>
       </el-form>
     </div>

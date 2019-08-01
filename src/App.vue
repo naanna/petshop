@@ -23,7 +23,7 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="/shpping/person">个人中心</el-dropdown-item>
               <el-dropdown-item command="/shpping/cost">充值</el-dropdown-item>
-              <el-dropdown-item command="/shpping/order">我的订单</el-dropdown-item>
+              <el-dropdown-item command="/shpping/order">我的消费</el-dropdown-item>
               <el-dropdown-item command="/">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>

@@ -1,6 +1,7 @@
 <template>
   <div class="__p_2362_uid_193">
     <span class="__p_2362_uid_232">充值中心</span>
+    <el-button type="text" size="small" style="float:right;" @click="gohistory">查看历史充值</el-button>
     <el-form
       label-position="right"
       class="__p_2362_uid_194"
@@ -44,7 +45,12 @@
 </template>
 
 <script>
-import { checkspace, checkzh, checkspecil,checkinput } from "../../assets/validate.js";
+import {
+  checkspace,
+  checkzh,
+  checkspecil,
+  checkinput
+} from "../../assets/validate.js";
 export default {
   name: "cost",
   data() {
@@ -65,7 +71,7 @@ export default {
       rules: {
         money: [{ validator: checkmoeny, trigger: "blur" }],
         user: [
-          { validator: checkinput,message: "充值账户不能为空"  },
+          { validator: checkinput, message: "充值账户不能为空" },
           { validator: checkzh },
           { validator: checkspace, message: "充值账户不能有空格" },
           { validator: checkspecil },
@@ -82,12 +88,29 @@ export default {
             confirmButtonText: "确定",
             cancelButtonText: "取消"
           })
-            .then(() => {})
+            .then(() => {
+              this.axios
+                .post("http://localhost:3000/api/invest/add", {
+                  money: this.form.money,
+                  time: this.moment().format("YYYY-MM-DD"),
+                  username: this.form.user
+                })
+                .then(res => {
+                  if (res.data.success) {
+                    this.$message.success("充值记录提交成功！");
+                  } else {
+                    this.$message.warning("充值记录提交失败！");
+                  }
+                });
+            })
             .catch(() => {});
         } else {
           return false;
         }
       });
+    },
+    gohistory() {
+      this.$router.replace("/shpping/historycost");
     },
     goclear() {
       this.$refs["form"].resetFields();

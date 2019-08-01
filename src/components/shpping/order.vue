@@ -1,82 +1,34 @@
 <template>
   <div>
-    <span class="__p_2363_uid_239">我的订单</span>
-    <div class="__p_2363_uid_261">
-      <el-select size="small" class="__p_2363_uid_262" v-model="type">
-        <el-option value="订单号" label="订单号"></el-option>
-        <el-option value="种类" label="种类"></el-option>
-        <el-option value="价格" label="价格"></el-option>
-        <el-option value="订单日期" label="订单日期"></el-option>
-      </el-select>
-      <el-input placeholder="请输入搜索内容" type="text" size="small" class="__p_2363_uid_263"></el-input>
-      <el-button type="primary" size="small" v-model="searchval">搜索</el-button>
-    </div>
-    <el-table :data="data" stripe border highlight-current-row class="__p_2363_uid_252">
-      <el-table-column label=" 订单号  " prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="总价" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="订单类型" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="订单日期" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="购买者" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="操作" align="center" header-align="center">
-        <div slot-scope="scope">
-          <el-button type="text" size="small" @click="godetail">详情</el-button>
-        </div>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      @size-change="sizeChangeHandle"
-      @current-change="currentChangeHandle"
-      :current-page="page_no"
-      :page-sizes="[10,20,50,100]"
-      :page-size="page_size"
-      :total="total"
-      layout="total, sizes, prev, pager, next, jumper"
-      class="__p_2363_uid_260"
-    ></el-pagination>
-    <rjDialog></rjDialog>
+    <span class="__p_2363_uid_239">消费记录</span>
+    <el-tabs value="first" class="__p_2363_uid_261">
+      <el-tab-pane label="购物" name="first">
+        <buy></buy>
+      </el-tab-pane>
+      <el-tab-pane label="寄养" name="second">
+        <care></care>
+      </el-tab-pane>
+      <el-tab-pane label="代售" name="third">
+        <Instead></Instead>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog.vue";
-import orderdetail from "./orderdetail.vue";
+import buy from "./order/buy.vue";
+import Instead from "./order/Instead.vue";
+import care from "./order/care.vue";
 export default {
   components: {
-    rjDialog
+    care,
+    Instead,
+    buy
   },
   data() {
-    return {
-      type: "订单号",
-      searchval: "",
-      data: [],
-      total: 0,
-      page_no: 1,
-      page_size: 10
-    };
+    return {};
   },
-  methods: {
-    go2Query() {
-      console.log(this.page_no);
-    },
-    sizeChangeHandle(val) {
-      this.page_size = val;
-      this.go2Query();
-    },
-    currentChangeHandle(val) {
-      this.page_no = val;
-      this.go2Query();
-    },
-    godetail() {
-      this.rjDialog
-        .title("订单详情")
-        .width("800px")
-        .currentView(orderdetail, {})
-        .showClose(true)
-        .sizeTiny()
-        .then(opt => {})
-        .show();
-    }
-  }
+  methods: {}
 };
 </script>
 <style scoped>
@@ -84,30 +36,7 @@ export default {
   font-size: 25px;
 }
 
-.__p_2363_uid_262 {
-  width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.__p_2363_uid_263 {
-  width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
 .__p_2363_uid_261 {
   margin-top: 20px;
-}
-
-.__p_2363_uid_252 {
-  margin-top: 10px;
-}
-
-.__p_2363_uid_260 {
-  margin-top: 20px;
-  text-align: right;
 }
 </style>
