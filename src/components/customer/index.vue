@@ -82,29 +82,28 @@ export default {
   },
   methods: {
     go2Query() {
-      // this.axios
-      //   .get("http://localhost:3000/api/getalluser", {
-      //     params: {
-      //       page_no: this.page_no,
-      //       page_size: this.page_size
-      //     }
-      //   })
-      //   .then(res => {
-      //     if (res.data.success) {
-      //       var results = res.data;
-      //       this.tabledata = results.message;
-      //       this.total = results.total;
-      //       for (let i in this.tabledata) {
-      //         this.tabledata[i].birthday = this.moment(
-      //           this.tabledata[i].birthday
-      //         ).format("YYYY-MM-DD");
-      //         this.tabledata[i].regday = this.moment(
-      //           this.tabledata[i].regday
-      //         ).format("YYYY-MM-DD");
-      //       }
-      //       console.log(results);
-      //     }
-      //   });
+      this.axios
+        .get("http://localhost:3000/api/getalluser", {
+          params: {
+            page_no: this.page_no,
+            page_size: this.page_size
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.tabledata = results.message;
+            this.total = results.total;
+            for (let i in this.tabledata) {
+              this.tabledata[i].birthday = this.moment(
+                this.tabledata[i].birthday
+              ).format("YYYY-MM-DD");
+              this.tabledata[i].regday = this.moment(
+                this.tabledata[i].regday
+              ).format("YYYY-MM-DD");
+            }
+          }
+        });
     },
     sizeChangeHandle(val) {
       this.page_size = val;

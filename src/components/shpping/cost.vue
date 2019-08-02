@@ -92,7 +92,7 @@ export default {
               this.axios
                 .post("http://localhost:3000/api/invest/add", {
                   money: this.form.money,
-                  time: this.moment().format("YYYY-MM-DD"),
+                  time: this.moment().format("YYYY-MM-DD HH:mm:ss"),
                   username: this.form.user
                 })
                 .then(res => {
