@@ -15,6 +15,18 @@
         <span class="__p_Cc_u_12">福建福州</span>
       </el-form-item>
     </el-form>
+    <p class="__p_Cc_u_14">联系我们</p>
+    <el-form label-position="right" class="__p_Cc_u_3">
+      <el-form-item label="售后电话：" label-width="200px" class="__p_Cc_u_4">
+        <span class="__p_Cc_u_6">1000110001</span>
+      </el-form-item>
+      <el-form-item label="客服电话：" label-width="200px" class="__p_Cc_u_7">
+        <span class="__p_Cc_u_8">1008610086</span>
+      </el-form-item>
+      <el-form-item label="email：" label-width="200px" class="__p_Cc_u_9">
+        <span class="__p_Cc_u_10">10086086086@163.com</span>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 

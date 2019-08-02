@@ -330,18 +330,6 @@ const navlist = [{
           code: "76"
         }
       },
-      {
-        adminMenu: {
-          id: 77,
-          menuName: "手册管理",
-          menuType: "page",
-          pid: "8",
-          url: "/manage/manualmanage",
-          sort: 7,
-          deep: 2,
-          code: "77"
-        }
-      },
     ]
   }, {
     adminMenu: {

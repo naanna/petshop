@@ -75,6 +75,21 @@ export default new Router({
       component: resolve => require(['../components/manual/look.vue'], resolve)
     },
     {
+      path: '/manual/dog',
+      name: 'manualdog',
+      component: resolve => require(['../components/manual/dog.vue'], resolve)
+    },
+    {
+      path: '/manual/cat',
+      name: 'manualcat',
+      component: resolve => require(['../components/manual/cat.vue'], resolve)
+    },
+    {
+      path: '/manual/pig',
+      name: 'manualpig',
+      component: resolve => require(['../components/manual/pig.vue'], resolve)
+    },
+    {
       path: '/count/month',
       name: 'month',
       component: resolve => require(['../components/count/month.vue'], resolve)
@@ -103,11 +118,6 @@ export default new Router({
       name: 'caremanage',
       component: resolve => require(['../components/manage/caremanage.vue'], resolve)
     },
-    {
-      path: '/manage/manualmanage',
-      name: 'manualmanage',
-      component: resolve => require(['../components/manage/manualmanage.vue'], resolve)
-    }, 
     {
       path: '/manage/leavemessagemanage',
       name: 'manageleavemessage',
