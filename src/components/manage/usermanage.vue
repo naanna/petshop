@@ -3,7 +3,7 @@
     <span class="__p_C7_u_239">全部账户</span>
     <div class="__p_C7_u_277">
       <div class="__p_C7_u_278">
-        <el-button type="primary" size="small">增加账户</el-button>
+        <el-button type="primary" size="small" @click="goadd">增加账户</el-button>
         <el-button type="primary" size="small">删除选中</el-button>
       </div>
       <div class="__p_C7_u_279">
@@ -52,8 +52,8 @@
       </el-table-column>
       <el-table-column label="操作" width="130" align="center" header-align="center">
         <div slot-scope="scope">
-          <el-button type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small">删除</el-button>
+          <el-button type="text" size="small" @click="goupdate">编辑</el-button>
+          <el-button type="text" size="small" @click="godel">删除</el-button>
         </div>
       </el-table-column>
     </el-table>
@@ -67,17 +67,22 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="__p_C7_u_260"
     ></el-pagination>
+    <rjDialog></rjDialog>
   </div>
 </template>
 
 <script>
+import rjDialog from "../dialog";
+import add_update from "./dialog/useradd_update.vue";
 export default {
-  name: "index",
+  components: {
+    rjDialog
+  },
   data() {
     return {
       type: "账号",
       searchval: "",
-      tabledata: [],
+      tabledata: [{ id: 1 }],
       total: 0,
       page_no: 1,
       page_size: 10
@@ -111,6 +116,34 @@ export default {
             console.log(results);
           }
         });
+    },
+    godel() {
+      this.$confirm("确认删除账户?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {})
+        .catch(() => {});
+    },
+    goadd() {
+      this.rjDialog
+        .title("添加用户")
+        .width("800px")
+        .currentView(add_update, {})
+        .showClose(true)
+        .sizeTiny()
+        .then(opt => {})
+        .show();
+    },
+    goupdate() {
+      this.rjDialog
+        .title("修改用户")
+        .width("800px")
+        .currentView(add_update, {})
+        .showClose(true)
+        .sizeTiny()
+        .then(opt => {})
+        .show();
     },
     sizeChangeHandle(val) {
       this.page_size = val;

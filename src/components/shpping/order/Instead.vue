@@ -26,8 +26,8 @@
     </div>
     <el-table :data="tabledata" stripe border highlight-current-row class="__p_2363_uid_252">
       <el-table-column label="代售订单号" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="定金" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="代售价格" prop="id" align="center" header-align="center"></el-table-column>
+      <el-table-column label="服务费" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物类型" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="代售日期" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="状态" prop="id" align="center" header-align="center"></el-table-column>
