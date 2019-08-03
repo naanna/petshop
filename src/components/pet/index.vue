@@ -1,5 +1,25 @@
 <template>
   <div>
+    <div style="float:right;">
+      <input
+        type="text"
+        placeholder="¥"
+        v-model.number="money1"
+        size="small"
+        class="el-input__inner inputwidth"
+        oninput="value=value.replace(/[^\d]/g,'')"
+      />
+      <span style="margin-left:5px;margin-right:5px;">-</span>
+      <input
+        type="text"
+        placeholder="¥"
+        v-model.number="money2"
+        size="small"
+        class="el-input__inner inputwidth"
+        oninput="value=value.replace(/[^\d]/g,'')"
+      />
+      <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
+    </div>
     <i class="el-icon-plus __p_Cb_u_122" @click="goadd"></i>
     <div class="__p_Cb_u_44" @click="godetail">
       <i class="el-icon-close __p_Cb_u_110"></i>
@@ -7,11 +27,11 @@
       <span class="__p_Cb_u_46">粥粥</span>
       <div class="__p_Cb_u_50">
         <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_52">一岁</span>
+        <span class="__p_Cb_u_51">一岁</span>
       </div>
       <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_54">在售</span>
-        <span class="__p_Cb_u_55">2000</span>
+        <span class="__p_Cb_u_51">在售</span>
+        <span class="__p_Cb_u_51">2000</span>
       </div>
     </div>
     <div class="__p_Cb_u_44">
@@ -20,11 +40,11 @@
       <span class="__p_Cb_u_46">粥粥</span>
       <div class="__p_Cb_u_50">
         <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_52">一岁</span>
+        <span class="__p_Cb_u_51">一岁</span>
       </div>
       <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_54">在售</span>
-        <span class="__p_Cb_u_55">2000</span>
+        <span class="__p_Cb_u_51">在售</span>
+        <span class="__p_Cb_u_51">2000</span>
       </div>
     </div>
     <div class="__p_Cb_u_44">
@@ -33,11 +53,11 @@
       <span class="__p_Cb_u_46">粥粥</span>
       <div class="__p_Cb_u_50">
         <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_52">一岁</span>
+        <span class="__p_Cb_u_51">一岁</span>
       </div>
       <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_54">在售</span>
-        <span class="__p_Cb_u_55">2000</span>
+        <span class="__p_Cb_u_51">在售</span>
+        <span class="__p_Cb_u_51">2000</span>
       </div>
     </div>
     <div class="__p_Cb_u_44">
@@ -46,11 +66,11 @@
       <span class="__p_Cb_u_46">粥粥</span>
       <div class="__p_Cb_u_50">
         <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_52">一岁</span>
+        <span class="__p_Cb_u_51">一岁</span>
       </div>
       <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_54">在售</span>
-        <span class="__p_Cb_u_55">2000</span>
+        <span class="__p_Cb_u_51">在售</span>
+        <span class="__p_Cb_u_51">2000</span>
       </div>
     </div>
     <div class="__p_Cb_u_44">
@@ -59,11 +79,11 @@
       <span class="__p_Cb_u_46">粥粥</span>
       <div class="__p_Cb_u_50">
         <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_52">一岁</span>
+        <span class="__p_Cb_u_51">一岁</span>
       </div>
       <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_54">在售</span>
-        <span class="__p_Cb_u_55">2000</span>
+        <span class="__p_Cb_u_51">在售</span>
+        <span class="__p_Cb_u_51">2000</span>
       </div>
     </div>
     <div class="__p_Cb_u_44">
@@ -72,11 +92,11 @@
       <span class="__p_Cb_u_46">粥粥</span>
       <div class="__p_Cb_u_50">
         <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_52">一岁</span>
+        <span class="__p_Cb_u_51">一岁</span>
       </div>
       <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_54">在售</span>
-        <span class="__p_Cb_u_55">2000</span>
+        <span class="__p_Cb_u_51">在售</span>
+        <span class="__p_Cb_u_51">2000</span>
       </div>
     </div>
 
@@ -86,11 +106,11 @@
       <span class="__p_Cb_u_46">粥粥</span>
       <div class="__p_Cb_u_50">
         <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_52">一岁</span>
+        <span class="__p_Cb_u_51">一岁</span>
       </div>
       <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_54">在售</span>
-        <span class="__p_Cb_u_55">2000</span>
+        <span class="__p_Cb_u_51">在售</span>
+        <span class="__p_Cb_u_51">2000</span>
       </div>
     </div>
 
@@ -116,9 +136,30 @@ export default {
   },
   name: "index",
   data() {
-    return {};
+    return {
+      money1: "",
+      money2: ""
+    };
   },
   methods: {
+    gosearch() {
+      const query = {};
+      if (this.money1 != "" && this.money2 == "") {
+        query.small = this.money1;
+      } else if (this.money1 == "" && this.money2 != "") {
+        query.big = this.money2;
+      } else if (this.money1 > this.money2) {
+        let money = this.money2;
+        this.money2 = this.money1;
+        this.money1 = money;
+        query.small = this.money1;
+        query.big = this.money2;
+      } else {
+        query.small = this.money1;
+        query.big = this.money2;
+      }
+      console.log(query);
+    },
     goadd() {
       this.rjDialog
         .title("添加宝贝")
@@ -144,6 +185,11 @@ export default {
 </script>
 
 <style scoped>
+.inputwidth {
+  height: 32px;
+  line-height: 32px;
+  width: 70px;
+}
 .__p_Cb_u_111 {
   margin-top: 40px;
   margin-right: 40px;
@@ -193,11 +239,7 @@ export default {
 }
 
 .__p_Cb_u_51 {
-  color: #6EC8F5;
-}
-
-.__p_Cb_u_52 {
-  color: #6EC8F5;
+  color: #6ec8f5;
 }
 
 .__p_Cb_u_50 {
@@ -205,14 +247,6 @@ export default {
   line-height: 20px;
   justify-content: space-between;
   padding-right: 10px;
-}
-
-.__p_Cb_u_54 {
-  color: #6EC8F5;
-}
-
-.__p_Cb_u_55 {
-  color: #6EC8F5;
 }
 
 .__p_Cb_u_53 {

@@ -27,15 +27,15 @@
     <p class="biaoti" style="margin-top:25px;">了解如何照顾宠物</p>
     <div class="picturelist">
       <div class="picturediv">
-        <img src="../../assets/picture/manualdog.jpg" class="picture" @click="gourl('./dog')" />
+        <img src="@picture/manualdog.jpg" class="picture" @click="gourl('./dog')" />
         <p class="biaoti">点击图片查看如何照顾他们</p>
       </div>
       <div class="picturediv">
-        <img src="../../assets/picture/manualcat.jpg" class="picture" @click="gourl('./cat')" />
+        <img src="@picture/manualcat.jpg" class="picture" @click="gourl('./cat')" />
         <p class="biaoti">点击图片查看如何照顾他们</p>
       </div>
       <div class="picturediv">
-        <img src="../../assets/picture/manualpig.jpg" class="picture" @click="gourl('./pig')" />
+        <img src="@picture/manualpig.jpg" class="picture" @click="gourl('./pig')" />
         <p class="biaoti">点击图片查看如何照顾他们</p>
       </div>
     </div>

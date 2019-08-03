@@ -35,7 +35,7 @@
         prop="oldpsd"
         :inline-message="true"
       >
-        <el-input type="text" size="small" class="__p_2364_uid_306" v-model="form.oldpsd"></el-input>
+        <el-input show-password size="small" class="__p_2364_uid_306" v-model="form.oldpsd"></el-input>
       </el-form-item>
     </el-form>
     <el-form

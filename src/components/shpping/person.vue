@@ -65,13 +65,13 @@
         </el-form-item>
         <el-form-item label="会员等级：" label-width="300px" class="__p_2362_uid_205">
           <div style="margin-top:10px;display:inline-block;">
-            <img src="../../assets/picture/vip1.png" style="height:25px" v-if="form.level=='vip'" />
+            <img src="@picture/vip1.png" style="height:25px" v-if="form.level=='vip'" />
             <img
-              src="../../assets/picture/vip2.png"
+              src="@picture/vip2.png"
               style="height:25px"
               v-else-if="form.level=='vip2'"
             />
-            <img src="../../assets/picture/vip3.png" style="height:25px" v-else />
+            <img src="@picture/vip3.png" style="height:25px" v-else />
           </div>
         </el-form-item>
       </el-form>
@@ -80,13 +80,13 @@
       <span class="__p_2362_uid_225">账号安全</span>
       <div class="__p_2364_uid_284">
         <div>
-          <img src="../../assets/picture/psdicon.png" class="__p_2364_uid_293" />
+          <img src="@picture/psdicon.png" class="__p_2364_uid_293" />
         </div>
         <div class="__p_2364_uid_286">
           <span class="__p_2364_uid_287">我的密码</span>
           <span class="__p_2364_uid_288">修改密码，账号更安全</span>
           <div class="__p_2364_uid_289">
-            <img src="../../assets/picture/set.png" class="__p_2364_uid_290" />
+            <img src="@picture/set.png" class="__p_2364_uid_290" />
             <span class="__p_2364_uid_291" @click="gopsd">更改密码></span>
           </div>
         </div>
@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import { checkinput, checkspace } from "../../assets/validate.js";
+import { checkinput, checkspace } from "@assets/validate.js";
 import rjDialog from "../dialog.vue";
 import psd from "./psd.vue";
 export default {

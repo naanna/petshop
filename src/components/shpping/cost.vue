@@ -50,7 +50,7 @@ import {
   checkzh,
   checkspecil,
   checkinput
-} from "../../assets/validate.js";
+} from "@assets/validate.js";
 export default {
   name: "cost",
   data() {

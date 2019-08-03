@@ -58,12 +58,12 @@
             <span class="__p_2365_uid_314">宝贝照片</span>
           </div>
           <div class="__p_2365_uid_310">
-            <img src="../assets/picture/cat1.png" class="__p_2365_uid_405" />
-            <img src="../assets/picture/dog1.png" class="__p_2365_uid_405" />
-            <img src="../assets/picture/pig1.png" class="__p_2365_uid_405" />
-            <img src="../assets/picture/cat2.png" class="__p_2365_uid_408" />
-            <img src="../assets/picture/dog2.png" class="__p_2365_uid_408" />
-            <img src="../assets/picture/pig2.png" class="__p_2365_uid_408" />
+            <img src="@picture/cat1.png" class="__p_2365_uid_405" />
+            <img src="@picture/dog1.png" class="__p_2365_uid_405" />
+            <img src="@picture/pig1.png" class="__p_2365_uid_405" />
+            <img src="@picture/cat2.png" class="__p_2365_uid_408" />
+            <img src="@picture/dog2.png" class="__p_2365_uid_408" />
+            <img src="@picture/pig2.png" class="__p_2365_uid_408" />
           </div>
         </div>
         <div class="__p_2365_uid_308">

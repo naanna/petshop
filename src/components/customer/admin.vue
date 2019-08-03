@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="8" v-for="(o, index) in 4" :key="o">
         <el-card class="card">
-          <img src="../../assets/picture/touxiang.jpg" class="image" />
+          <img src="@picture/touxiang.jpg" class="image" />
           <div style="padding: 14px;">
             <span style=" display: block; text-align: center;">好吃的汉堡</span>
             <span class="admin">管理员</span>

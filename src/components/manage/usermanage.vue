@@ -113,7 +113,6 @@ export default {
                 this.tabledata[i].regday
               ).format("YYYY-MM-DD");
             }
-            console.log(results);
           }
         });
     },
