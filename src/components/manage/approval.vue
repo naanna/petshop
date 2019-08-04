@@ -5,8 +5,8 @@
       <el-tab-pane label="充值审批" name="first">
         <div>
           <div class="__p_C7_u_278">
-            <el-button type="primary" size="small">批量同意</el-button>
-            <el-button type="primary" size="small">批量拒绝</el-button>
+            <el-button type="primary" size="small" @click="go2yes">批量同意</el-button>
+            <el-button type="primary" size="small" @click="go2refuse">批量拒绝</el-button>
           </div>
           <div class="__p_C7_u_279">
             <el-date-picker
@@ -60,21 +60,20 @@
 
       <el-tab-pane label="充值记录" name="second">
         <div class="__p_2363_uid_261">
-          <el-select size="small" class="__p_C7_u_269" v-model="type" @change="selectchange">
+          <el-select
+            size="small"
+            class="__p_C7_u_269"
+            v-model="type"
+            @change="selectchange"
+            clearable
+          >
             <el-option value="审批者" label="审批者"></el-option>
             <el-option value="充值账号" label="充值账号"></el-option>
             <el-option value="充值日期" label="充值日期"></el-option>
+            <el-option value="状态" label="状态"></el-option>
           </el-select>
-          <el-input
-            v-if="type!='充值日期'"
-            placeholder="请输入内容"
-            type="text"
-            v-model="recordquery.searchval"
-            size="small"
-            class="__p_C7_u_269"
-          ></el-input>
           <el-date-picker
-            v-else
+            v-if="type=='充值日期'"
             v-model="recordquery.historydata"
             type="daterange"
             size="small"
@@ -83,6 +82,24 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
           ></el-date-picker>
+          <el-select
+            size="small"
+            class="__p_C7_u_269"
+            v-model="recordquery.searchval"
+            v-else-if="type=='状态'"
+          >
+            <el-option value="yes" label="已同意"></el-option>
+            <el-option value="no" label="待审批"></el-option>
+            <el-option value="refuse" label="被拒绝"></el-option>
+          </el-select>
+          <el-input
+            v-else
+            placeholder="请输入内容"
+            type="text"
+            v-model="recordquery.searchval"
+            size="small"
+            class="__p_C7_u_269"
+          ></el-input>
           <el-button type="primary" size="small" @click="gorecordsearch">搜索</el-button>
         </div>
         <el-table :data="data" stripe border highlight-current-row class="__p_C7_u_252">
@@ -133,12 +150,15 @@ export default {
         searchval: ""
       },
       data: [],
-      type: "审批者"
+      type: "审批者",
+      approval: "",
+      selectObj: []
     };
   },
   created() {
     this.getpending();
     this.getrecord();
+    this.approval = this.User.username;
   },
   methods: {
     makependingquery() {
@@ -164,7 +184,7 @@ export default {
     getpending() {
       let query = this.makependingquery();
       this.axios
-        .get("http://localhost:3000/api/invest/pending", {
+        .get("/api/invest/pending", {
           params: {
             ...query
           }
@@ -211,12 +231,16 @@ export default {
         if (this.recordquery.searchval != "")
           query.approval = this.recordquery.searchval;
       }
+      if (this.type == "状态") {
+        if (this.recordquery.searchval != "")
+          query.status = this.recordquery.searchval;
+      }
       return query;
     },
     getrecord() {
       let query = this.makerecordquery();
       this.axios
-        .get("http://localhost:3000/api/invest/getall", {
+        .get("/api/invest/getall", {
           params: {
             ...query
           }
@@ -239,7 +263,22 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
-        .then(() => {})
+        .then(() => {
+          this.axios
+            .post("/api/invest/approval", {
+              approval: this.approval,
+              id: row.investid,
+              type: "yes",
+              money: row.money,
+              username: row.username
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("您已同意！");
+                this.getpending();
+              }
+            });
+        })
         .catch(() => {});
     },
     gorefuse(row) {
@@ -247,7 +286,85 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
-        .then(() => {})
+        .then(() => {
+          this.axios
+            .post("/api/invest/approval", {
+              approval: this.approval,
+              id: row.investid,
+              type: "refuse"
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("您已成功拒绝！");
+                this.getpending();
+              }
+            });
+        })
+        .catch(() => {});
+    },
+    go2yes() {
+      let refobs = [];
+      this.selectObj.forEach(item => {
+        refobs.push({
+          approval: this.approval,
+          id: item.investid,
+          type: "yes",
+          money: item.money,
+          username: item.username
+        });
+      });
+      if (this.selectObj.length == 0) {
+        this.$message.warning("请选中要同意的充值申请");
+        return;
+      }
+      this.$confirm("确认同意这些充值申请吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .post("/api/invest/approval", {
+              refobs
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("您已同意！");
+                this.getpending();
+              }
+            });
+        })
+        .catch(() => {});
+    },
+    go2refuse() {
+      let refobs = [];
+      this.selectObj.forEach(item => {
+        refobs.push({
+          approval: this.approval,
+          id: item.investid,
+          type: "refuse"
+        });
+      });
+
+      if (this.selectObj.length == 0) {
+        this.$message.warning("请选中要拒绝的充值申请");
+        return;
+      }
+      this.$confirm("确认拒绝这些充值申请吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .post("/api/invest/approval", {
+              refobs
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("您已拒绝！");
+                this.getpending();
+              }
+            });
+        })
         .catch(() => {});
     },
     gorecordsearch() {

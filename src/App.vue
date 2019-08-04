@@ -58,8 +58,22 @@ export default {
   created() {
     window.addEventListener("resize", this.getHeight);
     this.getHeight();
+    this.getperson();
   },
   methods: {
+    getperson() {
+      this.axios
+        .get("/api/getuser", {
+          params: {
+            id: "admin"
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            this.User.setusername(res.data.message.username);
+          }
+        });
+    },
     gourl(url) {
       this.$router.replace(url);
     },

@@ -90,7 +90,7 @@ export default {
           })
             .then(() => {
               this.axios
-                .post("http://localhost:3000/api/invest/add", {
+                .post("/api/invest/add", {
                   money: this.form.money,
                   time: this.moment().format("YYYY-MM-DD HH:mm:ss"),
                   username: this.form.user
@@ -98,12 +98,9 @@ export default {
                 .then(res => {
                   if (res.data.success) {
                     this.$message.success("充值记录提交成功！");
-                  } else {
-                    this.$message.warning("充值记录提交失败！");
                   }
                 });
-            })
-            .catch(() => {});
+            });
         } else {
           return false;
         }

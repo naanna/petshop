@@ -179,15 +179,13 @@ export default {
             })
               .then(() => {
                 this.axios
-                  .post("http://localhost:3000/api/updateuser/psd", {
+                  .post("/api/updateuser/psd", {
                     psd: this.ruleForm.pass,
                     username: this.old.username
                   })
                   .then(res => {
                     if (res.data.success) {
                       this.nextpage++;
-                    } else {
-                      this.$message.warning("修改密码失败！");
                     }
                   });
               })

@@ -83,7 +83,7 @@ export default {
   methods: {
     go2Query() {
       this.axios
-        .get("http://localhost:3000/api/getalluser", {
+        .get("/api/getalluser", {
           params: {
             page_no: this.page_no,
             page_size: this.page_size

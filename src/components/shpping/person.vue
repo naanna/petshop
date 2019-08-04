@@ -61,16 +61,12 @@
       <span class="__p_2362_uid_225">会员信息</span>
       <el-form class="__p_2362_uid_194">
         <el-form-item label="账户余额：" label-width="300px" class="__p_2362_uid_203">
-          <span style="color: #898989;">{{form.moeny}}</span>
+          <span style="color: #898989;">{{form.money}}</span>
         </el-form-item>
         <el-form-item label="会员等级：" label-width="300px" class="__p_2362_uid_205">
           <div style="margin-top:10px;display:inline-block;">
             <img src="@picture/vip1.png" style="height:25px" v-if="form.level=='vip'" />
-            <img
-              src="@picture/vip2.png"
-              style="height:25px"
-              v-else-if="form.level=='vip2'"
-            />
+            <img src="@picture/vip2.png" style="height:25px" v-else-if="form.level=='vip2'" />
             <img src="@picture/vip3.png" style="height:25px" v-else />
           </div>
         </el-form-item>
@@ -136,7 +132,7 @@ export default {
   methods: {
     getperson() {
       this.axios
-        .get("http://localhost:3000/api/getuser", {
+        .get("/api/getuser", {
           params: {
             id: this.id
           }
@@ -162,27 +158,23 @@ export default {
           this.$confirm("确认保存修改的资料吗？", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消"
-          })
-            .then(() => {
-              var time = this.moment(this.form.birthday).format("YYYY-MM-DD");
-              this.axios
-                .post("http://localhost:3000/api/updateuser", {
-                  nickname: this.form.nickname,
-                  name: this.form.name,
-                  sex: this.form.sex,
-                  birthday: time,
-                  username: this.form.username
-                })
-                .then(res => {
-                  if (res.data.success) {
-                    this.getperson();
-                    this.$message.success("修改信息成功！");
-                  } else {
-                    this.$message.warning("修改信息失败！");
-                  }
-                });
-            })
-            .catch(() => {});
+          }).then(() => {
+            var time = this.moment(this.form.birthday).format("YYYY-MM-DD");
+            this.axios
+              .post("/api/updateuser", {
+                nickname: this.form.nickname,
+                name: this.form.name,
+                sex: this.form.sex,
+                birthday: time,
+                username: this.form.username
+              })
+              .then(res => {
+                if (res.data.success) {
+                  this.getperson();
+                  this.$message.success("修改信息成功！");
+                }
+              });
+          });
         } else {
           return false;
         }
