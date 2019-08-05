@@ -137,7 +137,7 @@ export default {
         })
         .catch(() => {});
     },
-    //删除存在外键，未处理
+    //删除存在外键，还是未处理
     go2del() {
       let delobs = [];
       this.selectObj.forEach(item => {

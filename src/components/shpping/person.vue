@@ -115,7 +115,6 @@
     <rjDialog></rjDialog>
   </div>
 </template>
-
 <script>
 import { checkinput, checkspace } from "@assets/validate.js";
 import rjDialog from "../dialog.vue";
