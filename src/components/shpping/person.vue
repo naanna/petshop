@@ -75,8 +75,14 @@
     <div>
       <span class="__p_2362_uid_225">我的头像</span>
       <div class="picturedivclass">
+        <el-button class="lookpic" circle @click="isShowImageDialog=true">
+          <p style="margin:0px;">查看</p>
+          <p style="margin:0px;">头像</p>
+        </el-button>
         <div class="boder">
-          <img src="@picture/touxiang.jpg" class="pictureclass" />
+          <el-avatar class="pictureclass" :src="form.picture" @error="errorHandler">
+            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+          </el-avatar>
         </div>
         <el-button class="changepic" circle @click="gourl('./changepic')">
           <p style="margin:0px;">更改</p>
@@ -100,7 +106,12 @@
         </div>
       </div>
     </div>
-
+    <el-dialog :visible.sync="isShowImageDialog">
+      <img
+        :src="form.picture"
+        style="max-width: 100%;max-height: 100%;display: block; margin: 0 auto;"
+      />
+    </el-dialog>
     <rjDialog></rjDialog>
   </div>
 </template>
@@ -116,6 +127,7 @@ export default {
   name: "person",
   data() {
     return {
+      isShowImageDialog: false,
       imageUrl: "",
       form: {},
       old: {
@@ -125,7 +137,7 @@ export default {
         birthday: "",
         psd: ""
       },
-      id: "505",
+      id: "admin",
       rules: {
         nickname: [
           { validator: checkinput, message: "昵称不能为空" },
@@ -212,6 +224,9 @@ export default {
           this.getperson();
         })
         .show();
+    },
+    errorHandler() {
+      return true;
     },
     gourl(url) {
       this.$router.push(url);
@@ -330,5 +345,13 @@ export default {
   left: 450px;
   color: #ffffff;
   background-color: #00a1d6;
+}
+.lookpic {
+  position: absolute;
+  top: 100px;
+  left: 270px;
+  color: #00a1d6;
+  border: 1px solid #00a1d6;
+  background-color: #ffffff;
 }
 </style>

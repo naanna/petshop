@@ -71,6 +71,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             this.User.setusername(res.data.message.username);
+            this.User.setpicture(res.data.message.picture);
           }
         });
     },

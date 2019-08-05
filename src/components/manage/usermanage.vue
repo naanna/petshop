@@ -4,7 +4,7 @@
     <div class="__p_C7_u_277">
       <div class="__p_C7_u_278">
         <el-button type="primary" size="small" @click="goadd">增加账户</el-button>
-        <el-button type="primary" size="small">删除选中</el-button>
+        <el-button type="primary" size="small" @click="go2del">删除选中</el-button>
       </div>
       <div class="__p_C7_u_279">
         <el-select size="small" class="__p_C7_u_280" v-model="type">
@@ -43,7 +43,7 @@
           <span v-else>高级vip</span>
         </template>
       </el-table-column>
-      <el-table-column label="余额" prop="moeny" align="center" header-align="center"></el-table-column>
+      <el-table-column label="余额" prop="money" align="center" header-align="center"></el-table-column>
       <el-table-column label="权限" prop="permissions" align="center" header-align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.permissions=='customer'">客户</span>
@@ -53,7 +53,7 @@
       <el-table-column label="操作" width="130" align="center" header-align="center">
         <div slot-scope="scope">
           <el-button type="text" size="small" @click="goupdate">编辑</el-button>
-          <el-button type="text" size="small" @click="godel">删除</el-button>
+          <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
         </div>
       </el-table-column>
     </el-table>
@@ -82,6 +82,7 @@ export default {
     return {
       type: "账号",
       searchval: "",
+      selectObj: [],
       tabledata: [{ id: 1 }],
       total: 0,
       page_no: 1,
@@ -94,7 +95,7 @@ export default {
   methods: {
     go2Query() {
       this.axios
-        .get("http://localhost:3000/api/getalluser", {
+        .get("/api/getalluser", {
           params: {
             page_no: this.page_no,
             page_size: this.page_size
@@ -116,12 +117,55 @@ export default {
           }
         });
     },
-    godel() {
+    godel(row) {
+      var delobs = [{}];
       this.$confirm("确认删除账户?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
-        .then(() => {})
+        .then(() => {
+          this.axios
+            .delete("/api/deteleuser", {
+              data: [{ username: row.username }]
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.go2Query();
+                this.$message.success("删除成功！");
+              }
+            });
+        })
+        .catch(() => {});
+    },
+    //删除存在外键，未处理
+    go2del() {
+      let delobs = [];
+      this.selectObj.forEach(item => {
+        delobs.push({
+          username: item.username
+        });
+      });
+
+      if (this.selectObj.length == 0) {
+        this.$message.warning("请选中要删除的对象！");
+        return;
+      }
+      this.$confirm("确认删除这些用户吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .delete("/api/deteleuser", {
+              data: delobs
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("删除成功！");
+                this.go2Query();
+              }
+            });
+        })
         .catch(() => {});
     },
     goadd() {
