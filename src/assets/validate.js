@@ -6,7 +6,7 @@ export function checkinput(rule, value, callback) {
     return callback(new Error(rule.message));
   }
   callback();
-};
+}
 
 //校验是否包含空格
 export function checkspace(rule, value, callback) {

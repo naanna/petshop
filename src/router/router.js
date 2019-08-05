@@ -177,6 +177,11 @@ export default new Router({
       path: '/shpping/person',
       name: 'person',
       component: resolve => require(['../components/shpping/person.vue'], resolve)
+    },
+    {
+      path: '/shpping/changepic',
+      name: 'changepic',
+      component: resolve => require(['../components/shpping/changepic.vue'], resolve)
     }
   ]
 })
