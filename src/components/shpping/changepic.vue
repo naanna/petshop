@@ -3,13 +3,13 @@
     <el-page-header @back="goBack"></el-page-header>
     <div class="boderclass">
       <el-upload
-        action="123"
+        :http-request="upload"
+        :multiple="true"
+        :show-file-list="false"
+        action
         ref="upload"
         class="uploadpic"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
         :on-change="onchange"
-        :auto-upload="false"
         :before-upload="beforeAvatarUpload"
       >
         <img v-if="imageUrl" :src="imageUrl" class="seepicture" slot="trigger" />
@@ -18,7 +18,7 @@
       <div class="lookpic">
         <img src="@picture/touxiang.jpg" class="pictureclass" />
       </div>
-      <el-button type="primary" class="buttonclass">更新</el-button>
+      <el-button type="primary" class="buttonclass" @click="goupdate">更新</el-button>
     </div>
   </div>
 </template>
@@ -28,17 +28,34 @@ export default {
   name: "changepic",
   data() {
     return {
-      imageUrl: ""
+      imageUrl: "",
+      fileList: [],
+      pictureurl: ""
     };
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+    goupdate() {
+      this.pictureurl = this.fileList[0].url;
+    },
+    upload(file) {
+      let OSS = require("ali-oss");
+      const client = new OSS({
+        region: "oss-cn-hangzhou",
+        accessKeyId: "LTAIMYW16QYY4WTH",
+        accessKeySecret: "5I2HVy0oFPyeg3BHO1fUhzHGZvjvKp",
+        bucket: "mmzdpicture"
+      });
+      var fileName = "mmzdtx" + file.file.uid;
+      client.put(fileName, file.file).then(result => {
+        this.fileList[0] = {
+          name: result.name,
+          url: result.url
+        };
+      });
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
-
       if (!isJPG) {
         this.$message.error("上传头像图片只能是 JPG 格式!");
         return false;
@@ -54,11 +71,15 @@ export default {
       var event = event || window.event;
       var file = event.target.files[0];
       var reader = new FileReader();
-      //转base64
-      reader.onload = function(e) {
-        _this.imageUrl = e.target.result; //将图片路径赋值给src
-      };
-      console.log(_this.imageUrl);
+
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (isJPG && isLt2M) {
+        //转base64
+        reader.onload = function(e) {
+          _this.imageUrl = e.target.result; //将图片路径赋值给src
+        };
+      }
       reader.readAsDataURL(file);
     },
     goBack() {
