@@ -23,6 +23,13 @@ export function checkzh(rule, value, callback) {
   }
   callback();
 }
+//校验是否包含数字
+export function checknum(rule, value, callback) {
+  if (Util.isNumber(value)) {
+    return callback(new Error("不包应含数字"));
+  }
+  callback();
+}
 
 //校验是否包含特殊字符
 export function checkspecil(rule, value, callback) {

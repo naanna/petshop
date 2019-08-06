@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="__p_C7_u_239">我的代售</span>
+    <span class="fontclass">我的代售</span>
     <el-button type="primary" size="small" class="__p_C7_u_266">我要代售</el-button>
     <div class="__p_C7_u_267">
       <el-select size="small" class="__p_C7_u_268">
@@ -43,10 +43,6 @@ export default {
 </script>
 
 <style scoped>
-.__p_C7_u_239 {
-  font-size: 25px;
-}
-
 .__p_C7_u_266 {
   float: right;
 }

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <P class="textcenter">寄养规则</P>
+    <div style="text-align: center;">
+      <img src="@picture/carerule.png" class="pictureclass" />
+    </div>
     <div>
       <el-collapse v-model="activeName" accordion>
         <el-collapse-item title="宠物寄养注意事项之什么样的宠物不适宜被寄养?" name="1">

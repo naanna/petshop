@@ -72,7 +72,7 @@ const navlist = [{
     children: [{
         adminMenu: {
           id: 21,
-          menuName: "全部客户",
+          menuName: "全部账户",
           menuType: "page",
           pid: "2",
           url: "/customer/index",
@@ -309,25 +309,13 @@ const navlist = [{
       {
         adminMenu: {
           id: 75,
-          menuName: "账户管理",
-          menuType: "page",
-          pid: "8",
-          url: "/manage/usermanage",
-          sort: 5,
-          deep: 2,
-          code: "75"
-        }
-      },
-      {
-        adminMenu: {
-          id: 76,
           menuName: "评论管理",
           menuType: "page",
           pid: "8",
           url: "/manage/leavemessagemanage",
-          sort: 6,
+          sort: 5,
           deep: 2,
-          code: "76"
+          code: "75"
         }
       },
     ]

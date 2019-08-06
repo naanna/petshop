@@ -1,20 +1,29 @@
 <template>
   <div>
-    <el-form label-position="right" style="margin-left:100px;">
-      <el-form-item label="寄养时长：" label-width="100px">
-        <el-input type="text" size="small" class="__p_C8_u_252"></el-input>
-        <span style="margin-left:10px;">天</span>
-      </el-form-item>
-      <el-form-item label="备注：" label-width="100px">
-        <el-input type="textarea" size="small" class="__p_C8_u_252" :rows="3"></el-input>
-      </el-form-item>
-      <el-form-item label label-width="100px">
-        <el-button type="text" size="small" @click="goadd">添加宠物</el-button>
-      </el-form-item>
-    </el-form>
     <div class="__p_C8_u_268">
-      <el-button type="primary" size="small">添加</el-button>
-      <el-button size="small" @click="goclose">取消</el-button>
+      <el-image class="pictureclass" :src="url" :preview-src-list="arr"></el-image>
+    </div>
+    <p class="__p_C8_u_268">粥粥</p>
+    <div class="info">
+      <span>布偶</span>
+      <span>一岁</span>
+    </div>
+    <div class="info2">
+      <span>我在这里</span>
+      <span>5</span>
+      <span>天啦！</span>
+    </div>
+    <p class="info2">主人的留言</p>
+    <el-input
+      type="textarea"
+      size="small"
+      class="__p_C8_u_252"
+      :rows="3"
+      :readonly="true"
+      v-model="text"
+    ></el-input>
+    <div class="buttonclass">
+      <el-button size="small" @click="goclose">关闭</el-button>
     </div>
     <rjDialog></rjDialog>
   </div>
@@ -28,7 +37,14 @@ export default {
     rjDialog
   },
   data() {
-    return {};
+    return {
+      text: "123132",
+      arr: [],
+      url: "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/mmzdtx1565004868180"
+    };
+  },
+  created() {
+    this.arr = [this.url];
   },
   methods: {
     goadd() {
@@ -49,39 +65,30 @@ export default {
 </script>
 
 <style scoped>
-.__p_C8_u_247 {
-  width: 250px;
-}
-
-.__p_C8_u_249 {
-  width: 250px;
-}
-
 .__p_C8_u_252 {
   width: 250px;
+  margin-left: 85px;
 }
-
-.__p_C8_u_258 {
-  width: 250px;
+.info {
+  display: flex;
+  margin-top: 15px;
+  justify-content: space-around;
 }
-
-.__p_C8_u_264 {
-  width: 250px;
+.info2 {
+  margin-left: 90px;
+  margin-top: 15px;
 }
-
-.__p_C8_u_254 {
-  width: 250px;
-}
-
-.__p_C8_u_262 {
-  width: 250px;
-}
-
-.__p_C8_u_267 {
-  width: 250px;
-}
-
 .__p_C8_u_268 {
   text-align: center;
+}
+
+.buttonclass {
+  margin-top: 20px;
+  text-align: center;
+}
+.pictureclass {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 }
 </style>

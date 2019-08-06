@@ -1,6 +1,6 @@
 <template>
   <div class>
-    <span class="__p_C7_u_239">充值管理</span>
+    <span class="fontclass">充值管理</span>
     <el-tabs value="first" class="__p_C7_u_277">
       <el-tab-pane label="充值审批" name="first">
         <div>
@@ -408,9 +408,6 @@ export default {
 };
 </script>
 <style scoped>
-.__p_C7_u_239 {
-  font-size: 25px;
-}
 .__p_C7_u_269 {
   width: 200px;
   margin-right: 10px;

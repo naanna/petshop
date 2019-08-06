@@ -9,8 +9,10 @@ const Util = {
   hasZh: function (str) {
     return /[\u4E00-\u9FA5]/.test(str);
   },
-
-
+  // 验证数字 0-9的数字
+  isNumber: function (str) {
+    return /^[0-9]*$/.test(str);
+  },
   //包含特殊字符
   specil: function (str) {
     var regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,

@@ -124,11 +124,6 @@ export default new Router({
       component: resolve => require(['../components/manage/leavemessagemanage.vue'], resolve)
     },
     {
-      path: '/manage/usermanage',
-      name: 'usermanage',
-      component: resolve => require(['../components/manage/usermanage.vue'], resolve)
-    },
-    {
       path: '/booking/my',
       name: 'mybooking',
       component: resolve => require(['../components/booking/my.vue'], resolve)

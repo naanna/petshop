@@ -116,7 +116,12 @@
   </div>
 </template>
 <script>
-import { checkinput, checkspace } from "@assets/validate.js";
+import {
+  checkinput,
+  checkspace,
+  checkspecil,
+  checknum
+} from "@assets/validate.js";
 import rjDialog from "../dialog.vue";
 import psd from "./psd.vue";
 export default {
@@ -144,6 +149,8 @@ export default {
         ],
         name: [
           { validator: checkinput, message: "姓名不能为空" },
+          { validator: checkspecil, message: "姓名不能包含特殊字符" },
+          { validator: checknum, message: "姓名不能包含数字" },
           { validator: checkspace, message: "姓名不能包含空格" },
           { min: 1, max: 10, message: "长度在1到10个字符" }
         ],

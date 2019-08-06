@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="__p_2363_uid_239">订单管理</span>
+    <span class="fontclass">订单管理</span>
     <div style="  margin-top: 20px;">
       <el-select size="small" class="__p_2363_uid_262" v-model="type">
         <el-option value="订单号" label="订单号"></el-option>
@@ -106,10 +106,6 @@ export default {
 };
 </script>
 <style scoped>
-.__p_2363_uid_239 {
-  font-size: 25px;
-}
-
 .__p_2363_uid_262 {
   width: 200px;
   display: inline-block;

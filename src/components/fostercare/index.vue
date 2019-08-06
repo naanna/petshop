@@ -1,6 +1,8 @@
 <template>
   <div style="margin-left:20px;">
-    <p style="text-align: center;margin-bottom:40px;">寄养观赏区</p>
+    <div style="text-align: center;">
+      <img src="@picture/look.png" />
+    </div>
     <div class="__p_Cb_u_44" @click="godetail">
       <el-avatar
         src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY"
@@ -134,8 +136,8 @@ export default {
     },
     godetail() {
       this.rjDialog
-        .title("编辑宝贝")
-        .width("800px")
+        .title("查看宝贝")
+        .width("450px")
         .currentView(add_update, {})
         .showClose(true)
         .sizeTiny()

@@ -1,6 +1,6 @@
 <template>
   <div class="__p_C7_u_238">
-    <span class="__p_C7_u_239">代售管理</span>
+    <span class="fontclass">代售管理</span>
     <el-tabs value="first" class="__p_2363_uid_261">
       <el-tab-pane label="代售申请" name="first">
         <div style="margin-bottom:10px;">
@@ -224,9 +224,6 @@ export default {
 </script>
 
 <style scoped>
-.__p_C7_u_239 {
-  font-size: 25px;
-}
 .__p_2363_uid_261 {
   margin-left: 10px;
   margin-top: 10px;

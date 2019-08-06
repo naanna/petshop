@@ -1,20 +1,21 @@
 <template>
-    <div>
-        <el-dialog 
-            :id="id"
-            append-to-body
-            :visible.sync="isShow"
-            :title="title" 
-            :size="size"
-            :show-close="showClose"
-            :close-on-click-modal="closeOnClickModal"
-            :style="style"
-            :top="top"
-            :before-close="beforeClose"
-            :width="width">
-            <component v-bind:is="currentView"></component>
-        </el-dialog>
-    </div>
+  <div>
+    <el-dialog
+      :id="id"
+      append-to-body
+      :visible.sync="isShow"
+      :title="title"
+      :size="size"
+      :show-close="showClose"
+      :close-on-click-modal="closeOnClickModal"
+      :style="style"
+      :top="top"
+      :before-close="beforeClose"
+      :width="width"
+    >
+      <component v-bind:is="currentView" class="back"></component>
+    </el-dialog>
+  </div>
 </template>
 
 <script type="text/javascript">
@@ -145,3 +146,12 @@ export default {
   }
 };
 </script>
+<style>
+.el-dialog {
+  /* background-color: #3db6e6; */
+  background-image: url(fostercare/petinco.png),
+    linear-gradient(-60deg, #1fa8c0 0, #6eb9da 68%);
+  border-radius: 12px;
+  
+}
+</style>

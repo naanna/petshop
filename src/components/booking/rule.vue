@@ -1,6 +1,8 @@
 <template>
   <div>
-    <P class="textcenter">代售规则</P>
+    <div class="textcenter">
+      <img src="@picture/bookrule.png"/>
+    </div
     <div>
       <p>首先感谢您选择我们家进行您的宠物代售。选择我们家这会对您的交易过程的安全有一定的保障。</p>
       <p>手续费根据你需要代售的宠物而定</p>

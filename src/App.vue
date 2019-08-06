@@ -86,6 +86,7 @@ export default {
 </script>
 
 <style>
+@import "./common/font/font.css";
 .el-header {
   background-color: #b3c0d1;
   color: #333;
@@ -98,5 +99,10 @@ export default {
 .mouser {
   cursor: pointer;
   margin-right: 10px;
+}
+
+.fontclass {
+  font-size: 30px;
+  font-family: "jelly";
 }
 </style>
