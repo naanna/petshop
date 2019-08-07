@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="textcenter">
-      <img src="@picture/bookrule.png"/>
-    </div
+      <p class="ruleclass">代售规则</p>
+    </div>
     <div>
       <p>首先感谢您选择我们家进行您的宠物代售。选择我们家这会对您的交易过程的安全有一定的保障。</p>
       <p>手续费根据你需要代售的宠物而定</p>
@@ -25,5 +25,14 @@ export default {
 <style scoped>
 .textcenter {
   text-align: center;
+}
+.ruleclass {
+  background: linear-gradient(to right, #5098eb, #5945c0);
+  -webkit-background-clip: text;
+  font-size: 100px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-family: "jelly";
+  color: transparent;
 }
 </style>

@@ -8,7 +8,6 @@
           :show-file-list="false"
           action
           ref="upload"
-          class="uploadpic"
           :on-change="onchange"
           :before-upload="beforeAvatarUpload"
         >

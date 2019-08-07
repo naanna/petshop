@@ -20,100 +20,153 @@
       />
       <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
     </div>
-    <i class="el-icon-plus __p_Cb_u_122" @click="goadd"></i>
-    <div class="__p_Cb_u_44" @click="godetail">
-      <i class="el-icon-close __p_Cb_u_110"></i>
-      <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-      <span class="__p_Cb_u_46">粥粥</span>
-      <div class="__p_Cb_u_50">
-        <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_51">一岁</span>
+    <div style="padding-top:35px;">
+      <i class="el-icon-plus __p_Cb_u_122" @click="goadd"></i>
+      <div class="__p_Cb_u_44" @click="godetail">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
-      <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_51">在售</span>
-        <span class="__p_Cb_u_51">2000</span>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
-    </div>
-    <div class="__p_Cb_u_44">
-      <i class="el-icon-close __p_Cb_u_110"></i>
-      <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-      <span class="__p_Cb_u_46">粥粥</span>
-      <div class="__p_Cb_u_50">
-        <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_51">一岁</span>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
-      <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_51">在售</span>
-        <span class="__p_Cb_u_51">2000</span>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
-    </div>
-    <div class="__p_Cb_u_44">
-      <i class="el-icon-close __p_Cb_u_110"></i>
-      <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-      <span class="__p_Cb_u_46">粥粥</span>
-      <div class="__p_Cb_u_50">
-        <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_51">一岁</span>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
-      <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_51">在售</span>
-        <span class="__p_Cb_u_51">2000</span>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
-    </div>
-    <div class="__p_Cb_u_44">
-      <i class="el-icon-close __p_Cb_u_110"></i>
-      <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-      <span class="__p_Cb_u_46">粥粥</span>
-      <div class="__p_Cb_u_50">
-        <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_51">一岁</span>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
-      <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_51">在售</span>
-        <span class="__p_Cb_u_51">2000</span>
-      </div>
-    </div>
-    <div class="__p_Cb_u_44">
-      <i class="el-icon-close __p_Cb_u_110"></i>
-      <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-      <span class="__p_Cb_u_46">粥粥</span>
-      <div class="__p_Cb_u_50">
-        <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_51">一岁</span>
-      </div>
-      <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_51">在售</span>
-        <span class="__p_Cb_u_51">2000</span>
-      </div>
-    </div>
-    <div class="__p_Cb_u_44">
-      <i class="el-icon-close __p_Cb_u_110"></i>
-      <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-      <span class="__p_Cb_u_46">粥粥</span>
-      <div class="__p_Cb_u_50">
-        <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_51">一岁</span>
-      </div>
-      <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_51">在售</span>
-        <span class="__p_Cb_u_51">2000</span>
-      </div>
-    </div>
 
-    <div class="__p_Cb_u_44">
-      <i class="el-icon-close __p_Cb_u_110"></i>
-      <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-      <span class="__p_Cb_u_46">粥粥</span>
-      <div class="__p_Cb_u_50">
-        <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_51">一岁</span>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
-      <div class="__p_Cb_u_53">
-        <span class="__p_Cb_u_51">在售</span>
-        <span class="__p_Cb_u_51">2000</span>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
+      </div>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
+      </div>
+      <div class="__p_Cb_u_44">
+        <i class="el-icon-close __p_Cb_u_110"></i>
+        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
+        <span class="__p_Cb_u_46">粥粥</span>
+        <div class="__p_Cb_u_50">
+          <span class="__p_Cb_u_51">猫咪</span>
+          <span class="__p_Cb_u_51">一岁</span>
+        </div>
+        <div class="__p_Cb_u_53">
+          <span class="__p_Cb_u_51">在售</span>
+          <span class="__p_Cb_u_51">2000</span>
+        </div>
       </div>
     </div>
-
     <el-pagination
       :current-page="1"
       :page-sizes="[50,100,200]"
@@ -130,6 +183,7 @@
 <script>
 import rjDialog from "../dialog.vue";
 import add_update from "./add_update.vue";
+import detail from "./detail.vue";
 export default {
   components: {
     rjDialog
@@ -162,7 +216,7 @@ export default {
     },
     goadd() {
       this.rjDialog
-        .title("添加宝贝")
+        .title("添加宠物")
         .width("600px")
         .currentView(add_update, {})
         .showClose(true)
@@ -172,9 +226,9 @@ export default {
     },
     godetail() {
       this.rjDialog
-        .title("编辑宝贝")
-        .width("800px")
-        .currentView(add_update, {})
+        .title("宠物详情")
+        .width("500px")
+        .currentView(detail, {})
         .showClose(true)
         .sizeTiny()
         .then(opt => {})
@@ -265,7 +319,7 @@ export default {
   display: inline-block;
   padding-left: 20px;
   padding-right: 10px;
-  margin-right: 40px;
+  margin-right: 38px;
   padding-top: 5px;
   margin-top: 40px;
 }

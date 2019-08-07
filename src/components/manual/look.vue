@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="ruleclass">了解如何照顾宠物</p>
     <el-collapse v-model="activeNames" class="pageclass">
       <el-collapse-item title="为什么要养宠物" name="1">
         <div>
@@ -24,19 +25,16 @@
         <div>着手规划居家空间前，必须先思考宠物在居家的定位，是单纯的宠物或是家庭成员;另外，若家中饲养宠物的类别较多，还需考虑不同宠物之间的互动。接下来则是宠物与主人生活的配合程度，基本上，仍然以主人自身的生活质量为重，再针对宠物需求来设定安排。</div>
       </el-collapse-item>
     </el-collapse>
-    <p class="biaoti" style="margin-top:25px;">了解如何照顾宠物</p>
+    <p class="ruleclass1">点击图片查看如何照顾他们</p>
     <div class="picturelist">
       <div class="picturediv">
         <img src="@picture/manualdog.jpg" class="picture" @click="gourl('./dog')" />
-        <p class="biaoti">点击图片查看如何照顾他们</p>
       </div>
       <div class="picturediv">
         <img src="@picture/manualcat.jpg" class="picture" @click="gourl('./cat')" />
-        <p class="biaoti">点击图片查看如何照顾他们</p>
       </div>
       <div class="picturediv">
         <img src="@picture/manualpig.jpg" class="picture" @click="gourl('./pig')" />
-        <p class="biaoti">点击图片查看如何照顾他们</p>
       </div>
     </div>
   </div>
@@ -46,7 +44,7 @@
 export default {
   data() {
     return {
-      activeNames: ["1"]
+      activeNames: "1"
     };
   },
   methods: {
@@ -76,7 +74,27 @@ export default {
 }
 .picture {
   width: 300px;
-  height: 225px;
+  height: 350px;
   cursor: pointer;
+}
+.ruleclass {
+  text-align: center;
+  background: linear-gradient(to right, #8fffff, #4187d6);
+  -webkit-background-clip: text;
+  font-size: 100px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-family: "jelly";
+  color: transparent;
+}
+.ruleclass1 {
+  text-align: center;
+  background: linear-gradient(to right, #cf7979, #f190b1a2);
+  -webkit-background-clip: text;
+  font-size: 40px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-family: "jelly";
+  color: transparent;
 }
 </style>

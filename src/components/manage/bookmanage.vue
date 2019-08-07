@@ -13,6 +13,7 @@
             <el-input
               placeholder="请输入内容"
               type="text"
+              clearable
               size="small"
               class="__p_C7_u_281"
               v-model="searchval"
@@ -82,6 +83,7 @@
               placeholder="请输入内容"
               type="text"
               size="small"
+              clearable
               class="__p_C7_u_281"
               v-model="searchval"
             ></el-input>

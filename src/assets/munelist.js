@@ -317,6 +317,17 @@ const navlist = [{
           deep: 2,
           code: "75"
         }
+      }, {
+        adminMenu: {
+          id: 76,
+          menuName: "宠物管理",
+          menuType: "page",
+          pid: "8",
+          url: "/manage/petmanage",
+          sort: 6,
+          deep: 2,
+          code: "76"
+        }
       },
     ]
   }, {

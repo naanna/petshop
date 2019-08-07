@@ -8,6 +8,7 @@ Vue.use(VueRouter);
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import './assets/error.js'
+import './assets/icon/iconfont.css'
 Vue.use(VueAxios, axios)
 
 import moment from 'moment'
@@ -17,6 +18,6 @@ Vue.prototype.User = User;
 import router from "./router/router.js";
 
 new Vue({
-    render: h => h(App),
-    router
+  render: h => h(App),
+  router
 }).$mount('#app')

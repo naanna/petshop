@@ -4,20 +4,21 @@
     <el-row>
       <el-col :span="6" v-for="(o, index) in 8" :key="o">
         <el-card class="card" shadow="hover">
+          <i class="el-icon-close close" @click="godel"></i>
           <el-image class="image" :src="url" :preview-src-list="arr"></el-image>
-          <div style="padding: 14px;cursor: pointer;" @click="godetail()">
+          <div style="padding: 14px;">
             <span style=" display: block; text-align: center;">好吃的汉堡</span>
             <span class="admin">管理员</span>
-            <div class="__p_Cc_u_18">
+            <div class="flexclass">
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 icon="el-icon-edit"
-                @click.stop="goupdate('row')"
+                @click="goupdate('row')"
               ></el-button>
               <el-switch v-model="switchvalue" disabled></el-switch>
-              <el-button type="danger" size="mini" plain icon="el-icon-postcard" @click.stop="godel"></el-button>
+              <el-button type="info" size="mini" plain icon="el-icon-postcard" @click="godetail"></el-button>
             </div>
           </div>
         </el-card>
@@ -32,7 +33,7 @@
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_C7_u_260"
+      class="pageclass"
     ></el-pagination>
     <rjDialog></rjDialog>
   </div>
@@ -106,7 +107,16 @@ export default {
 </script>
 
 <style scoped>
-.__p_Cc_u_18 {
+.close {
+  cursor: pointer;
+  float: right;
+  display: none;
+}
+.card:hover .close {
+  display: block;
+}
+
+.flexclass {
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
@@ -131,7 +141,7 @@ export default {
   margin-right: auto;
   border-radius: 50px;
 }
-.__p_C7_u_260 {
+.pageclass {
   margin-top: 20px;
   text-align: right;
 }

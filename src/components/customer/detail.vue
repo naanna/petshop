@@ -48,7 +48,7 @@ export default {
     return {
       customer: false,
       url:
-        "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/mmzdtx1565004868180"
+        "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/touxiang1.jpg"
     };
   },
   mounted() {
@@ -63,22 +63,24 @@ export default {
 <style scoped>
 .div1 {
   flex: 1;
-  padding-top: 30px;
+  padding-top: 50px;
   padding-left: 30px;
 }
 .div2 {
   line-height: 30px;
-  font-size: 16px;
+  font-size: 20px;
   margin-left: 40px;
-  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  font-family: "jelly", "Microsoft YaHei", "黑体", "宋体", sans-serif;
   flex: 2;
-  color: rgb(107, 77, 77);
+  color: rgb(32, 127, 190);
 }
 .pclass {
+  margin-top: 10px;
+  margin-top: 10px;
   text-align: center;
-  font-size: 22px;
+  font-size: 35px;
   font-weight: bold;
-  color: rgb(80, 118, 223);
-  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  color: rgb(61, 147, 245);
+  font-family: "jelly";
 }
 </style>

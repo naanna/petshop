@@ -22,6 +22,7 @@
         placeholder="请输入搜索内容"
         type="text"
         size="small"
+        clearable
         class="__p_2363_uid_263"
       ></el-input>
       <el-button type="primary" size="small" v-model="searchval">搜索</el-button>

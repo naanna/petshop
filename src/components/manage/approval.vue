@@ -85,6 +85,7 @@
           <el-select
             size="small"
             class="__p_C7_u_269"
+            clearable
             v-model="recordquery.searchval"
             v-else-if="type=='状态'"
           >
@@ -97,6 +98,7 @@
             placeholder="请输入内容"
             type="text"
             v-model="recordquery.searchval"
+            clearable
             size="small"
             class="__p_C7_u_269"
           ></el-input>

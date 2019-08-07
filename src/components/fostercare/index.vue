@@ -1,7 +1,7 @@
 <template>
   <div style="margin-left:20px;">
     <div style="text-align: center;">
-      <img src="@picture/look.png" />
+      <p class="ruleclass">寄养观赏区</p>
     </div>
     <div class="__p_Cb_u_44" @click="godetail">
       <el-avatar
@@ -229,5 +229,15 @@ export default {
 
 .__p_Cb_u_44 .__p_Cb_u_45:hover {
   transform: scale(1.4);
+}
+
+.ruleclass {
+  background: linear-gradient(to right, #ffa264, #ff3b5f);
+  -webkit-background-clip: text;
+  font-size: 100px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-family: "jelly";
+  color: transparent;
 }
 </style>

@@ -4,8 +4,9 @@
     <el-row>
       <el-col :span="6" v-for="(o, index) in 8" :key="o">
         <el-card class="card" shadow="hover">
+          <i class="el-icon-close close" @click="godel"></i>
           <el-image class="image" :src="url" :preview-src-list="arr"></el-image>
-          <div style="padding: 14px;cursor: pointer;" @click="godetail()">
+          <div style="padding: 14px;">
             <span style=" display: block; text-align: center;">好吃的汉堡</span>
             <span class="admin">高级vip</span>
             <div class="__p_Cc_u_18">
@@ -14,10 +15,10 @@
                 plain
                 size="mini"
                 icon="el-icon-edit"
-                @click.stop="goupdate('row')"
+                @click="goupdate('row')"
               ></el-button>
               <el-switch v-model="switchvalue" disabled></el-switch>
-              <el-button type="danger" size="mini" plain icon="el-icon-postcard" @click.stop="godel"></el-button>
+              <el-button type="info" size="mini" plain icon="el-icon-postcard" @click="godetail"></el-button>
             </div>
           </div>
         </el-card>
@@ -52,7 +53,7 @@ export default {
       switchvalue: true,
       arr: [],
       url:
-        "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/mmzdtx1565004868180",
+        "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/touxiang1.jpg",
       total: 0,
       page_no: 1,
       page_size: 10,
@@ -141,11 +142,11 @@ export default {
         .catch(() => {});
     },
     godetail() {
-      var customer="customer"
+      var customer = "customer";
       this.rjDialog
         .title("详情信息")
         .width("450px")
-        .currentView(detail, {customer})
+        .currentView(detail, { customer })
         .showClose(true)
         .sizeTiny()
         .then(opt => {})
@@ -158,21 +159,21 @@ export default {
     currentChangeHandle(val) {
       this.page_no = val;
       this.go2Query();
-    },
-    handleSelectionChange(val) {
-      let self = this;
-      var obj = eval("(" + JSON.stringify(val) + ")");
-      self.selectObj = [];
-      for (var i = 0; i < obj.length; i++) {
-        var temp = obj[i];
-        self.selectObj.push(temp);
-      }
     }
   }
 };
 </script>
 
 <style scoped>
+.close {
+  cursor: pointer;
+  float: right;
+  display: none;
+}
+.card:hover .close {
+  display: block;
+}
+
 .card {
   margin-top: 40px;
   margin-left: 40px;
