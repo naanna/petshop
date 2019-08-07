@@ -268,11 +268,15 @@ export default {
         .then(() => {
           this.axios
             .post("/api/invest/approval", {
-              approval: this.approval,
-              id: row.investid,
-              type: "yes",
-              money: row.money,
-              username: row.username
+              refobs: [
+                {
+                  approval: this.approval,
+                  id: row.investid,
+                  type: "yes",
+                  money: row.money,
+                  username: row.username
+                }
+              ]
             })
             .then(res => {
               if (res.data.success) {
@@ -291,9 +295,13 @@ export default {
         .then(() => {
           this.axios
             .post("/api/invest/approval", {
-              approval: this.approval,
-              id: row.investid,
-              type: "refuse"
+              refobs: [
+                {
+                  approval: this.approval,
+                  id: row.investid,
+                  type: "refuse"
+                }
+              ]
             })
             .then(res => {
               if (res.data.success) {

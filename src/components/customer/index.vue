@@ -20,8 +20,15 @@
           size="small"
           class="__p_C7_u_281"
           v-model="searchval"
+          clearable
         ></el-input>
-        <el-select v-else-if="type=='权限'" class="__p_C7_u_282" size="small" v-model="searchval">
+        <el-select
+          v-else-if="type=='权限'"
+          class="__p_C7_u_282"
+          size="small"
+          v-model="searchval"
+          clearable
+        >
           <el-option value="customer" label="客户"></el-option>
           <el-option value="admin" label="管理员"></el-option>
         </el-select>
@@ -53,9 +60,9 @@
       <el-table-column label="注册日期" prop="regday" align="center" header-align="center"></el-table-column>
       <el-table-column label="级别" prop="leavel" align="center" header-align="center">
         <template slot-scope="scope">
-          <span v-if="scope.row.leavel=='vip'">初级vip</span>
-          <span v-else-if="scope.row.leavel=='vip2'">中级vip</span>
-          <span v-else-if="scope.row.leavel=='vip3'">高级vip</span>
+          <span v-if="scope.row.level=='vip'">初级vip</span>
+          <span v-else-if="scope.row.level=='vip2'">中级vip</span>
+          <span v-else-if="scope.row.level=='vip3'">高级vip</span>
           <span v-else>管理员</span>
         </template>
       </el-table-column>
@@ -138,7 +145,6 @@ export default {
     },
     go2Query() {
       let query = this.makependingquery();
-      console.log(query);
       this.axios
         .get("/api/getalluser", {
           params: {
@@ -181,7 +187,6 @@ export default {
         })
         .catch(() => {});
     },
-    //删除存在外键，还是未处理
     go2del() {
       let delobs = [];
       this.selectObj.forEach(item => {
@@ -222,7 +227,9 @@ export default {
         .currentView(add_update, {})
         .showClose(true)
         .sizeTiny()
-        .then(opt => {})
+        .then(opt => {
+          this.go2Query();
+        })
         .show();
     },
     goupdate(row) {
@@ -233,7 +240,9 @@ export default {
         .currentView(add_update, { row })
         .showClose(true)
         .sizeTiny()
-        .then(opt => {})
+        .then(opt => {
+          this.go2Query();
+        })
         .show();
     },
     change() {

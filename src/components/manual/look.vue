@@ -89,7 +89,7 @@ export default {
 }
 .ruleclass1 {
   text-align: center;
-  background: linear-gradient(to right, #cf7979, #f190b1a2);
+  background: linear-gradient(to right, #cf7979, #ac6e84);
   -webkit-background-clip: text;
   font-size: 40px;
   margin-top: 25px;

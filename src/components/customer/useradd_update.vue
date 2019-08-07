@@ -54,11 +54,11 @@
       <el-form-item label="姓名：" label-width="100px" prop="name">
         <el-input type="text" size="small" class="__p_C8_u_247" v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="权限：" label-width="100px" prop="permission">
+      <el-form-item label="权限：" label-width="100px" prop="permissions">
         <el-select
           size="small"
           class="__p_C8_u_247"
-          v-model="form.permission"
+          v-model="form.permissions"
           @change="goclearlevel"
         >
           <el-option value="customer" label="客户"></el-option>
@@ -73,10 +73,10 @@
       </el-form-item>
       <el-form-item label="等级：" label-width="100px" prop="level">
         <el-select size="small" class="__p_C8_u_247" v-model="form.level">
-          <el-option value="vip1" label="初级vip" v-if="form.permission=='customer'"></el-option>
-          <el-option value="vip2" label="中级vip" v-if="form.permission=='customer'"></el-option>
-          <el-option value="vip3" label="高级vip" v-if="form.permission=='customer'"></el-option>
-          <el-option value="admin" label="管理员" v-if="form.permission=='admin'"></el-option>
+          <el-option value="vip1" label="初级vip" v-if="form.permissions=='customer'"></el-option>
+          <el-option value="vip2" label="中级vip" v-if="form.permissions=='customer'"></el-option>
+          <el-option value="vip3" label="高级vip" v-if="form.permissions=='customer'"></el-option>
+          <el-option value="admin" label="管理员" v-if="form.permissions=='admin'"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="余额：" label-width="100px" prop="money">
@@ -133,6 +133,7 @@ export default {
       disable: false,
       imageUrl: "",
       fileList: [],
+      edit: "no",
       form: {
         username: "",
         pass: "",
@@ -142,9 +143,10 @@ export default {
         money: 0,
         birthday: "",
         sex: "女",
-        permission: "customer",
+        permissions: "customer",
         level: "vip1",
-        picture: ""
+        picture: "",
+        regday: this.moment(new Date()).format("YYYY-MM-DD")
       },
       rules: {
         pass: [
@@ -180,20 +182,55 @@ export default {
   },
   mounted() {
     if (this.rjDialogParams().row) {
-      console.log(this.rjDialogParams().row);
       this.disable = true;
+      let obs = this.rjDialogParams().row;
+      this.form = obs;
+      this.form.pass = obs.psd;
+      this.form.checkPass = obs.psd;
+      if (obs.picture != null) this.imageUrl = obs.picture;
+      this.edit = "yes";
     }
   },
   methods: {
     goadd() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.fileList.length == 0) this.form.picture = null;
-          else this.form.picture = this.fileList[0].url;
-          this.form.birthday = this.moment(this.form.birthday).format(
-            "YYYY-MM-DD"
-          );
-          console.log(this.form);
+          const loading = this.$loading({
+            lock: true,
+            text: "添加用户中...",
+            spinner: "el-icon-loading",
+            background: "rgba(0, 0, 0, 0.7)"
+          });
+          setTimeout(() => {
+            if (this.fileList.length == 0) this.form.picture = null;
+            else this.form.picture = this.fileList[0].url;
+            this.form.birthday = this.moment(this.form.birthday).format(
+              "YYYY-MM-DD"
+            );
+            if (this.edit == "no") {
+              this.form.birthday = this.moment(this.form.birthday).format(
+                "YYYY-MM-DD"
+              );
+              this.axios.post("/api/adduser", this.form).then(res => {
+                if (res.data.success) {
+                  this.$message.success("成功添加用户！");
+                  this.closeRjDialog && this.closeRjDialog();
+                } else {
+                  loading.close();
+                }
+              });
+            } else {
+              this.axios.post("/api/updateuser", this.form).then(res => {
+                if (res.data.success) {
+                  this.$message.success("成功编辑用户！");
+                  this.closeRjDialog && this.closeRjDialog();
+                  loading.close();
+                } else {
+                  loading.close();
+                }
+              });
+            }
+          }, 2000);
         } else {
           return false;
         }
@@ -246,7 +283,7 @@ export default {
       reader.readAsDataURL(file);
     },
     goclearlevel() {
-      if (this.form.permission == "customer") this.form.level = "vip1";
+      if (this.form.permissions == "customer") this.form.level = "vip1";
       else this.form.level = "admin";
     },
     goclose() {
