@@ -35,20 +35,43 @@
         <el-button type="primary" size="small" @click="gosearch">搜索</el-button>
       </div>
     </div>
-    <el-table :data="tabledata" stripe border highlight-current-row class="__p_2363_uid_252">
-      <el-table-column label="编号" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="名字" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="年龄" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="状态" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="价格" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="种类" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="品种" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="性别" prop="id" align="center" header-align="center"></el-table-column>
+    <el-table
+      :data="tabledata"
+      stripe
+      border
+      highlight-current-row
+      class="__p_2363_uid_252"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column prop="id" type="selection" width="50px" align="center" header-align="center"></el-table-column>
+      <el-table-column label="编号" prop="petid" align="center" header-align="center"></el-table-column>
+      <el-table-column label="名字" prop="name" align="center" header-align="center"></el-table-column>
+      <el-table-column label="年龄" prop="age" align="center" header-align="center"></el-table-column>
+      <el-table-column label="状态" prop="status" align="center" header-align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.status=='booking'">代售中</span>
+          <span v-else-if="scope.row.status=='booked'">代售出</span>
+          <span v-else-if="scope.row.status=='saled'">售出</span>
+          <span v-else-if="scope.row.status=='saling'">在售</span>
+          <span v-else-if="scope.row.status=='caring'">寄养</span>
+          <span v-else>领回</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="价格" prop="price" align="center" header-align="center"></el-table-column>
+      <el-table-column label="种类" prop="type" align="center" header-align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.type=='cat'">猫咪</span>
+          <span v-else-if="scope.row.type=='dog'">狗狗</span>
+          <span v-else>香猪</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="品种" prop="variety" align="center" header-align="center"></el-table-column>
+      <el-table-column label="性别" prop="sex" align="center" header-align="center"></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <div slot-scope="scope">
-          <el-button type="text" size="small" @click="godetail">详情</el-button>
-          <el-button type="text" size="small" @click="goupdate">编辑</el-button>
-          <el-button type="text" size="small" @click="godel">删除</el-button>
+          <el-button type="text" size="small" @click="godetail(scope.row)">详情</el-button>
+          <el-button type="text" size="small" @click="goupdate(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
         </div>
       </el-table-column>
     </el-table>
@@ -68,7 +91,8 @@
 
 <script>
 import rjDialog from "../dialog.vue";
-import orderdetail from "../shpping/order/orderdetail.vue";
+import Util from "@assets/Util.js";
+import detail from "./dialog/petdetail.vue";
 import add_update from "./dialog/petadd_update.vue";
 export default {
   components: {
@@ -78,11 +102,14 @@ export default {
     return {
       type: "编号",
       searchval: "",
-      tabledata: [{ id: "1" }],
+      tabledata: [],
       total: 0,
       page_no: 1,
       page_size: 10
     };
+  },
+  created() {
+    this.go2Query();
   },
   methods: {
     makependingquery() {
@@ -104,15 +131,43 @@ export default {
     },
     go2Query() {
       const query = this.makependingquery();
-      console.log(query);
+      this.axios
+        .get("/api/getpet", {
+          params: {
+            ...query
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.tabledata = results.message;
+            this.total = results.total;
+            for (let i in this.tabledata) {
+              var now = this.moment(
+                this.moment(new Date()).format("YYYY-MM-DD")
+              );
+              var age = Util.displayAge(this.tabledata[i].birthday, now);
+              this.tabledata[i].age = age;
+            }
+          }
+        });
     },
-    godel() {
+    godel(row) {
       this.$confirm("您确定要删除该宠物信息吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message.success("您已成功删除");
+          this.axios
+            .delete("/api/deletepet", {
+              data: [{ petid: row.petid }]
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.go2Query();
+                this.$message.success("删除成功！");
+              }
+            });
         })
         .catch(() => {});
     },
@@ -123,14 +178,54 @@ export default {
         .currentView(add_update, {})
         .showClose(true)
         .sizeTiny()
-        .then(opt => {})
+        .then(opt => {
+          this.go2Query();
+        })
         .show();
     },
     go2del() {
-      console.log("del");
+      let delobs = [];
+      this.selectObj.forEach(item => {
+        delobs.push({
+          petid: item.petid
+        });
+      });
+
+      if (this.selectObj.length == 0) {
+        this.$message.warning("请选中要删除的对象！");
+        return;
+      }
+      this.$confirm("确认删除这些宠物信息吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .delete("/api/deletepet", {
+              data: delobs
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("删除成功！");
+                this.go2Query();
+              }
+            });
+        })
+        .catch(() => {});
     },
-    goupdate() {
-      console.log("edit");
+    goupdate(row) {
+      this.rjDialog
+        .title("编辑宠物")
+        .width("600px")
+        .currentView(add_update, {
+          row
+        })
+        .showClose(true)
+        .sizeTiny()
+        .then(opt => {
+          this.go2Query();
+        })
+        .show();
     },
     gosearch() {
       this.page_no = 1;
@@ -147,15 +242,28 @@ export default {
       this.page_no = val;
       this.go2Query();
     },
-    godetail() {
+    godetail(row) {
       this.rjDialog
-        .title("订单详情")
-        .width("800px")
-        .currentView(orderdetail, {})
+        .title("宠物详情")
+        .width("500px")
+        .currentView(detail, {
+          row
+        })
         .showClose(true)
         .sizeTiny()
-        .then(opt => {})
+        .then(opt => {
+          this.go2Query();
+        })
         .show();
+    },
+    handleSelectionChange(val) {
+      let self = this;
+      var obj = eval("(" + JSON.stringify(val) + ")");
+      self.selectObj = [];
+      for (var i = 0; i < obj.length; i++) {
+        var temp = obj[i];
+        self.selectObj.push(temp);
+      }
     }
   }
 };

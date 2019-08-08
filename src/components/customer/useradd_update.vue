@@ -13,7 +13,7 @@
         >
           <el-avatar
             shape="square"
-            v-if="imageUrl"
+            v-if="imageUrl&&imageUrl!='null'"
             :src="imageUrl"
             class="seepicture"
             slot="trigger"
@@ -186,6 +186,7 @@ export default {
       this.form.checkPass = obs.psd;
       if (obs.picture != null) this.imageUrl = obs.picture;
       this.edit = "yes";
+      console.log(this.form);
     }
   },
   methods: {

@@ -19,7 +19,7 @@
         >
           <el-avatar
             shape="square"
-            v-if="imageUrl"
+            v-if="imageUrl&&imageUrl!='null'"
             :src="imageUrl"
             class="seepicture"
             slot="trigger"
@@ -87,6 +87,7 @@ export default {
       },
       imageUrl: "",
       fileList: [],
+      edit: "no",
       rules: {
         name: [
           { validator: checkname, types: "名字" },
@@ -104,6 +105,14 @@ export default {
       }
     };
   },
+  mounted() {
+    if (this.rjDialogParams().row) {
+      let obs = this.rjDialogParams().row;
+      this.form = obs;
+      if (obs.picture != null) this.imageUrl = obs.picture;
+      this.edit = "yes";
+    }
+  },
   methods: {
     goadd() {
       this.$refs["form"].validate(valid => {
@@ -111,10 +120,24 @@ export default {
           this.form.birthday = this.moment(this.form.birthday).format(
             "YYYY-MM-DD"
           );
-          this.form.status="saling";
+          this.form.status = "saling";
           if (this.fileList.length == 0) this.form.picture = null;
           else this.form.picture = this.fileList[0].url;
-          console.log(this.form);
+          if (this.edit == "no") {
+            this.axios.post("/api/addpet", this.form).then(res => {
+              if (res.data.success) {
+                this.$message.success("成功添加宠物！");
+                this.closeRjDialog && this.closeRjDialog();
+              }
+            });
+          } else {
+            this.axios.post("/api/updatepet", this.form).then(res => {
+              if (res.data.success) {
+                this.$message.success("成功编辑宠物！");
+                this.closeRjDialog && this.closeRjDialog();
+              }
+            });
+          }
         } else {
           return false;
         }

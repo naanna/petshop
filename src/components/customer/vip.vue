@@ -2,23 +2,31 @@
   <div class="__p_C7_u_238">
     <span class="fontclass">全部客户</span>
     <el-row>
-      <el-col :span="6" v-for="(o, index) in 8" :key="o">
+      <el-col :span="6" v-for="(item, index) in tabledata" :key="index">
         <el-card class="card" shadow="hover">
-          <i class="el-icon-close close" @click="godel"></i>
-          <el-image class="image" :src="url" :preview-src-list="arr"></el-image>
+          <i class="el-icon-close close" @click="godel((item.username))"></i>
+          <el-image class="image" :src="item.picture" :preview-src-list="[item.picture]"></el-image>
           <div style="padding: 14px;">
-            <span style=" display: block; text-align: center;">好吃的汉堡</span>
-            <span class="admin">高级vip</span>
+            <span style=" display: block; text-align: center;">{{item.name}}</span>
+            <span class="admin" v-if="item.level=='vip1'">初级vip</span>
+            <span class="admin" v-else-if="item.level=='vip2'">中级vip</span>
+            <span class="admin" v-else>高级vip</span>
             <div class="__p_Cc_u_18">
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 icon="el-icon-edit"
-                @click="goupdate('row')"
+                @click="goupdate(item)"
               ></el-button>
               <el-switch v-model="switchvalue" disabled></el-switch>
-              <el-button type="info" size="mini" plain icon="el-icon-postcard" @click="godetail"></el-button>
+              <el-button
+                type="info"
+                size="mini"
+                plain
+                icon="el-icon-postcard"
+                @click="godetail(item)"
+              ></el-button>
             </div>
           </div>
         </el-card>
@@ -49,20 +57,15 @@ export default {
   name: "vip",
   data() {
     return {
-      type: "名字",
       switchvalue: true,
-      arr: [],
-      url:
-        "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/touxiang1.jpg",
       total: 0,
       page_no: 1,
-      page_size: 10,
-      tabledata: [{ id: 2 }, { id: 2 }, { id: 2 }]
+      page_size: 8,
+      tabledata: []
     };
   },
   created() {
     this.go2Query();
-    this.arr = [this.url];
   },
   methods: {
     makependingquery() {
@@ -70,27 +73,11 @@ export default {
         page_no: this.page_no,
         page_size: this.page_size
       };
-      if (this.type == "名字" && this.searchval != "") {
-        query.name = this.searchval;
-      }
-
-      if (this.type == "注册日期" && this.historydata != "") {
-        var regdaystart = this.moment(this.historydata[0]).format("YYYY-MM-DD");
-        var regdayend = this.moment(this.historydata[1]).format("YYYY-MM-DD");
-        query.regday = [regdaystart, regdayend];
-      }
-      if (this.type == "生日" && this.historydata != "") {
-        var birthdaystart = this.moment(this.historydata[0]).format(
-          "YYYY-MM-DD"
-        );
-        var birthdayend = this.moment(this.historydata[1]).format("YYYY-MM-DD");
-        query.birthday = [birthdaystart, birthdayend];
-      }
+      query.vip = true;
       return query;
     },
     go2Query() {
       let query = this.makependingquery();
-      console.log(query);
       this.axios
         .get("/api/getalluser", {
           params: {
@@ -113,16 +100,6 @@ export default {
           }
         });
     },
-    goadd() {
-      this.rjDialog
-        .title("添加客户")
-        .width("500px")
-        .currentView(add_update, {})
-        .showClose(true)
-        .sizeTiny()
-        .then(opt => {})
-        .show();
-    },
     goupdate(row) {
       this.rjDialog
         .title("编辑信息")
@@ -130,26 +107,40 @@ export default {
         .currentView(add_update, { row })
         .showClose(true)
         .sizeTiny()
-        .then(opt => {})
+        .then(opt => {
+          this.go2Query();
+        })
         .show();
     },
-    godel() {
+    godel(username) {
       this.$confirm("确认删除该客户账号?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
-        .then(() => {})
+        .then(() => {
+          this.axios
+            .delete("/api/deteleuser", {
+              data: [{ username: username }]
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.go2Query();
+                this.$message.success("删除成功！");
+              }
+            });
+        })
         .catch(() => {});
     },
-    godetail() {
-      var customer = "customer";
+    godetail(row) {
       this.rjDialog
         .title("详情信息")
-        .width("450px")
-        .currentView(detail, { customer })
+        .width("550px")
+        .currentView(detail, { row })
         .showClose(true)
         .sizeTiny()
-        .then(opt => {})
+        .then(opt => {
+          this.go2Query();
+        })
         .show();
     },
     sizeChangeHandle(val) {
@@ -192,10 +183,11 @@ export default {
 }
 .image {
   width: 100px;
+  height: 100px;
   display: block;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 50px;
+  border-radius: 50%;
 }
 .__p_C7_u_278 {
   display: inline-block;

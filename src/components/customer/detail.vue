@@ -1,41 +1,41 @@
 <template>
   <div style="display:flex;">
     <div class="div1">
-      <el-avatar shape="square" :size="120" :src="url"></el-avatar>
-      <p class="pclass">壮壮</p>
+      <el-avatar shape="square" :size="180" :src="customerobs.picture"></el-avatar>
+      <p class="pclass">{{customerobs.nickname}}</p>
     </div>
     <div class="div2">
       <div>
         <span>账号：</span>
-        <span>admin</span>
+        <span>{{customerobs.username}}</span>
       </div>
       <div>
         <span>姓名：</span>
-        <span>粥粥</span>
+        <span>{{customerobs.name}}</span>
       </div>
       <div>
         <span>性别：</span>
-        <span>女</span>
+        <span>{{customerobs.sex}}</span>
       </div>
       <div>
         <span>余额：</span>
-        <span>10000</span>
+        <span>{{customerobs.money}}</span>
       </div>
       <div v-if="customer">
         <span>等级：</span>
-        <span>高级VIP</span>
+        <span>{{customerobs.level}}</span>
       </div>
-      <div>
+      <!-- <div>
         <span>历史消费：</span>
-        <span>20000</span>
-      </div>
+        <span>{{customerobs.money}}</span>
+      </div> -->
       <div>
         <span>生日：</span>
-        <span>2000-01-05</span>
+        <span>{{customerobs.birthday}}</span>
       </div>
       <div>
         <span>注册日期：</span>
-        <span>2019-08-19</span>
+        <span>{{customerobs.regday}}</span>
       </div>
     </div>
   </div>
@@ -47,14 +47,13 @@ export default {
   data() {
     return {
       customer: false,
-      url:
-        "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/touxiang1.jpg"
+      customerobs: []
     };
   },
   mounted() {
-    if (this.rjDialogParams().customer) {
-      console.log(this.rjDialogParams().customer);
+    if (this.rjDialogParams().row) {
       this.customer = true;
+      this.customerobs = this.rjDialogParams().row;
     }
   }
 };
@@ -63,12 +62,11 @@ export default {
 <style scoped>
 .div1 {
   flex: 1;
-  padding-top: 50px;
   padding-left: 30px;
 }
 .div2 {
   line-height: 30px;
-  font-size: 20px;
+  font-size: 25px;
   margin-left: 40px;
   font-family: "jelly", "Microsoft YaHei", "黑体", "宋体", sans-serif;
   flex: 2;

@@ -258,7 +258,7 @@ export default {
   display: inline-block;
   padding-left: 20px;
   padding-right: 10px;
-  margin-right: 38px;
+  margin-right: 30px;
   padding-top: 5px;
   margin-top: 30px;
 }
