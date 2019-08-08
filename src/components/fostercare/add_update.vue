@@ -31,7 +31,7 @@
 
 <script>
 import rjDialog from "../dialog.vue";
-import add from "../pet/add_update.vue";
+import add from "../manage/dialog/petadd_update";
 export default {
   components: {
     rjDialog

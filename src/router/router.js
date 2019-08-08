@@ -121,6 +121,10 @@ export default new Router({
       path: '/manage/petmanage',
       name: 'petmanage',
       component: resolve => require(['../components/manage/petmanage.vue'], resolve)
+    },{
+      path: '/manage/goodsmanage',
+      name: 'goodsmanage',
+      component: resolve => require(['../components/manage/goodsmanage.vue'], resolve)
     },
     {
       path: '/manage/leavemessagemanage',

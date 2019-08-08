@@ -1,9 +1,9 @@
 <template>
   <div>
-    <span class="fontclass">宠物管理</span>
+    <span class="fontclass">商品管理</span>
     <div>
       <div class="__p_C7_u_278">
-        <el-button type="primary" size="small" @click="goadd">添加宠物</el-button>
+        <el-button type="primary" size="small" @click="goadd">添加商品</el-button>
         <el-button type="primary" size="small" @click="go2del">批量删除</el-button>
       </div>
       <div class="__p_C7_u_279">
@@ -13,7 +13,6 @@
           <el-option value="种类" label="种类"></el-option>
         </el-select>
         <el-input
-          v-if="type=='编号'"
           placeholder="请输入搜索内容"
           v-model="searchval"
           type="text"
@@ -21,17 +20,6 @@
           clearable
           class="__p_2363_uid_263"
         ></el-input>
-        <el-select v-else clearable size="small" class="__p_2363_uid_262" v-model="searchval">
-          <el-option v-if="type=='种类'" value="cat" label="猫咪"></el-option>
-          <el-option v-if="type=='种类'" value="dog" label="狗狗"></el-option>
-          <el-option v-if="type=='种类'" value="pig" label="香猪"></el-option>
-          <el-option v-if="type=='状态'" value="booking" label="代售中"></el-option>
-          <el-option v-if="type=='状态'" value="booked" label="代售出"></el-option>
-          <el-option v-if="type=='状态'" value="saled" label="售出"></el-option>
-          <el-option v-if="type=='状态'" value="saling" label="在售"></el-option>
-          <el-option v-if="type=='状态'" value="caring" label="寄养"></el-option>
-          <el-option v-if="type=='状态'" value="cared" label="领回"></el-option>
-        </el-select>
         <el-button type="primary" size="small" @click="gosearch">搜索</el-button>
       </div>
     </div>
@@ -46,7 +34,6 @@
       <el-table-column label="性别" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <div slot-scope="scope">
-          <el-button type="text" size="small" @click="godetail">详情</el-button>
           <el-button type="text" size="small" @click="goupdate">编辑</el-button>
           <el-button type="text" size="small" @click="godel">删除</el-button>
         </div>
@@ -146,16 +133,6 @@ export default {
     currentChangeHandle(val) {
       this.page_no = val;
       this.go2Query();
-    },
-    godetail() {
-      this.rjDialog
-        .title("订单详情")
-        .width("800px")
-        .currentView(orderdetail, {})
-        .showClose(true)
-        .sizeTiny()
-        .then(opt => {})
-        .show();
     }
   }
 };

@@ -1,7 +1,7 @@
 const navlist = [{
     adminMenu: {
       id: 1,
-      menuName: "宠物信息",
+      menuName: "宠物中心",
       menuType: "list",
       pid: "0",
       url: "#",
@@ -327,6 +327,17 @@ const navlist = [{
           sort: 6,
           deep: 2,
           code: "76"
+        }
+      }, {
+        adminMenu: {
+          id: 77,
+          menuName: "商品管理",
+          menuType: "page",
+          pid: "8",
+          url: "/manage/goodsmanage",
+          sort: 7,
+          deep: 2,
+          code: "77"
         }
       },
     ]

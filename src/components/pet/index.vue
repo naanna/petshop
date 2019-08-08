@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="float:right;">
+    <div style=" text-align: right;">
       <input
         type="text"
         placeholder="¥"
@@ -20,10 +20,9 @@
       />
       <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
     </div>
-    <div style="padding-top:35px;">
-      <i class="el-icon-plus __p_Cb_u_122" @click="goadd"></i>
+    <div>
       <div class="__p_Cb_u_44" @click="godetail">
-        <i class="el-icon-close __p_Cb_u_110"></i>
+        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
         <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
         <span class="__p_Cb_u_46">粥粥</span>
         <div class="__p_Cb_u_50">
@@ -35,8 +34,8 @@
           <span class="__p_Cb_u_51">2000</span>
         </div>
       </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
+      <div class="__p_Cb_u_44" @click="godetail">
+        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
         <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
         <span class="__p_Cb_u_46">粥粥</span>
         <div class="__p_Cb_u_50">
@@ -48,8 +47,8 @@
           <span class="__p_Cb_u_51">2000</span>
         </div>
       </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
+      <div class="__p_Cb_u_44" @click="godetail">
+        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
         <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
         <span class="__p_Cb_u_46">粥粥</span>
         <div class="__p_Cb_u_50">
@@ -61,8 +60,8 @@
           <span class="__p_Cb_u_51">2000</span>
         </div>
       </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
+      <div class="__p_Cb_u_44" @click="godetail">
+        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
         <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
         <span class="__p_Cb_u_46">粥粥</span>
         <div class="__p_Cb_u_50">
@@ -74,8 +73,8 @@
           <span class="__p_Cb_u_51">2000</span>
         </div>
       </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
+      <div class="__p_Cb_u_44" @click="godetail">
+        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
         <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
         <span class="__p_Cb_u_46">粥粥</span>
         <div class="__p_Cb_u_50">
@@ -87,8 +86,8 @@
           <span class="__p_Cb_u_51">2000</span>
         </div>
       </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
+      <div class="__p_Cb_u_44" @click="godetail">
+        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
         <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
         <span class="__p_Cb_u_46">粥粥</span>
         <div class="__p_Cb_u_50">
@@ -100,61 +99,8 @@
           <span class="__p_Cb_u_51">2000</span>
         </div>
       </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44">
-        <i class="el-icon-close __p_Cb_u_110"></i>
+      <div class="__p_Cb_u_44" @click="godetail">
+        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
         <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
         <span class="__p_Cb_u_46">粥粥</span>
         <div class="__p_Cb_u_50">
@@ -182,7 +128,6 @@
 
 <script>
 import rjDialog from "../dialog.vue";
-import add_update from "./add_update.vue";
 import detail from "./detail.vue";
 export default {
   components: {
@@ -214,15 +159,15 @@ export default {
       }
       console.log(query);
     },
-    goadd() {
-      this.rjDialog
-        .title("添加宠物")
-        .width("600px")
-        .currentView(add_update, {})
-        .showClose(true)
-        .sizeTiny()
-        .then(opt => {})
-        .show();
+    goaddshop() {
+      this.$confirm("确定加入购物车?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.$message.success("添加成功!");
+        })
+        .catch(() => {});
     },
     godetail() {
       this.rjDialog
@@ -251,25 +196,11 @@ export default {
 }
 .__p_Cb_u_110 {
   cursor: pointer;
-  float: right;
+  position: absolute;
   display: none;
 }
 .__p_Cb_u_44:hover .__p_Cb_u_110 {
   display: block;
-}
-.__p_Cb_u_122 {
-  width: 182px;
-  height: 145px;
-  cursor: pointer;
-  margin-top: 40px;
-  margin-right: 40px;
-  border: 1px solid #dddddd;
-  font-size: 60px;
-  color: #dddddd;
-  display: inline-block;
-  text-align: center;
-  padding-top: 60px;
-  vertical-align: bottom;
 }
 
 .__p_Cb_u_45 {
@@ -280,11 +211,17 @@ export default {
   margin-left: auto;
   margin-right: auto;
   margin-top: 5px;
+  transition: all 0.6s;
+}
+
+.__p_Cb_u_44 .__p_Cb_u_45:hover {
+  transform: scale(1.4);
 }
 
 .__p_Cb_u_46 {
-  font-size: 16px;
-  color: #d69191;
+  font-size: 30px;
+  font-family: "jelly";
+  color: #67b4fc;
   display: block;
   text-align: center;
   margin-left: auto;
@@ -293,7 +230,9 @@ export default {
 }
 
 .__p_Cb_u_51 {
-  color: #6ec8f5;
+  color: #6e6b6b;
+  font-family: "jelly";
+  font-size: 20px;
 }
 
 .__p_Cb_u_50 {
@@ -314,13 +253,13 @@ export default {
 .__p_Cb_u_44 {
   cursor: pointer;
   width: 150px;
-  height: 200px;
+  height: 220px;
   border: 1px solid #dddddd;
   display: inline-block;
   padding-left: 20px;
   padding-right: 10px;
   margin-right: 38px;
   padding-top: 5px;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 </style>

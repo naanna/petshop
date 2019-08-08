@@ -105,7 +105,7 @@ import {
   checkspace,
   checkspecil,
   checkzh,
-  checknum
+  checkname
 } from "@assets/validate.js";
 export default {
   name: "add_update",
@@ -162,10 +162,7 @@ export default {
           { min: 1, max: 7, message: "长度在1到7个字符" }
         ],
         name: [
-          { validator: checkinput, message: "姓名不能为空" },
-          { validator: checkspace, message: "姓名不能包含空格" },
-          { validator: checkspecil, message: "姓名不能包含特殊字符" },
-          { validator: checknum, message: "姓名不能包含数字" },
+          { validator: checkname, types: "名字" },
           { min: 1, max: 10, message: "长度在1到10个字符" }
         ],
         username: [
@@ -208,9 +205,6 @@ export default {
               "YYYY-MM-DD"
             );
             if (this.edit == "no") {
-              this.form.birthday = this.moment(this.form.birthday).format(
-                "YYYY-MM-DD"
-              );
               this.axios.post("/api/adduser", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功添加用户！");

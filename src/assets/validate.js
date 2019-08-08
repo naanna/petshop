@@ -8,6 +8,22 @@ export function checkinput(rule, value, callback) {
   callback();
 }
 
+export function checkname(rule, value, callback) {
+  if (!value) {
+    return callback(new Error(rule.types + "不能为空"));
+  }
+  if (Util.containSpace(value)) {
+    return callback(new Error(rule.types + "不应含空格"));
+  }
+  if (Util.isNumber(value)) {
+    return callback(new Error(rule.types + "不含特殊字符和数字"));
+  }
+  if (!Util.specil(value)) {
+    return callback(new Error(rule.types + "不含特殊字符和数字"));
+  }
+  callback();
+}
+
 //校验是否包含空格
 export function checkspace(rule, value, callback) {
   if (Util.containSpace(value)) {
@@ -23,6 +39,7 @@ export function checkzh(rule, value, callback) {
   }
   callback();
 }
+
 //校验是否包含数字
 export function checknum(rule, value, callback) {
   if (Util.isNumber(value)) {

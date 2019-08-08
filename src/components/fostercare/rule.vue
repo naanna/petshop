@@ -28,7 +28,7 @@
         </el-collapse-item>
         <el-collapse-item name="3">
           <template slot="title">
-            <i class="header-icon el-icon-petchongwumao1 icno"></i>
+            <i class="header-icon el-icon-petchongwumao icno"></i>
             宠物寄养注意事项之店铺寄养的时间应如何控制？
           </template>
           <p>据专家介绍，第一次寄养最好不要超过5天。寄养对宠物来说，或多或少有一些心理影响，尤其是猫、狗。因为它们是群居动物，比较通人性，与主人接触时间长了，突然到一个陌生的环境，肯定会有一些不适的反应，因此寄养时间一般不要超过5天。</p>
@@ -62,6 +62,7 @@ export default {
 }
 .icno {
   margin-right: 10px;
+  font-size: 18px;
 }
 .ruleclass {
   background: linear-gradient(to right, #ffb08f, #5945c0);
