@@ -83,7 +83,7 @@
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_2363_uid_260"
+      class="fyclass"
     ></el-pagination>
     <rjDialog></rjDialog>
   </div>
@@ -291,10 +291,6 @@ export default {
   margin-top: 10px;
 }
 
-.__p_2363_uid_260 {
-  margin-top: 20px;
-  text-align: right;
-}
 .__p_C7_u_278 {
   display: inline-block;
   margin-top: 20px;

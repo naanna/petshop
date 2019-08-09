@@ -1,5 +1,5 @@
 <template>
-  <div class="__p_C7_u_238">
+  <div>
     <span class="fontclass">全部客户</span>
     <el-row>
       <el-col :span="6" v-for="(item, index) in tabledata" :key="index">
@@ -11,7 +11,7 @@
             <span class="admin" v-if="item.level=='vip1'">初级vip</span>
             <span class="admin" v-else-if="item.level=='vip2'">中级vip</span>
             <span class="admin" v-else>高级vip</span>
-            <div class="__p_Cc_u_18">
+            <div class="body1">
               <el-button
                 type="primary"
                 plain
@@ -40,7 +40,7 @@
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_C7_u_260"
+      class="fyclass"
     ></el-pagination>
     <rjDialog></rjDialog>
   </div>
@@ -65,7 +65,7 @@ export default {
     };
   },
   created() {
-    this.go2Query();
+    this.goquery();
   },
   methods: {
     makependingquery() {
@@ -76,7 +76,7 @@ export default {
       query.vip = true;
       return query;
     },
-    go2Query() {
+    goquery() {
       let query = this.makependingquery();
       this.axios
         .get("/api/getalluser", {
@@ -108,7 +108,7 @@ export default {
         .showClose(true)
         .sizeTiny()
         .then(opt => {
-          this.go2Query();
+          this.goquery();
         })
         .show();
     },
@@ -124,7 +124,7 @@ export default {
             })
             .then(res => {
               if (res.data.success) {
-                this.go2Query();
+                this.goquery();
                 this.$message.success("删除成功！");
               }
             });
@@ -139,17 +139,17 @@ export default {
         .showClose(true)
         .sizeTiny()
         .then(opt => {
-          this.go2Query();
+          this.goquery();
         })
         .show();
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.go2Query();
+      this.goquery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.go2Query();
+      this.goquery();
     }
   }
 };
@@ -176,7 +176,7 @@ export default {
   display: block;
   text-align: center;
 }
-.__p_Cc_u_18 {
+.body1 {
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
@@ -188,38 +188,5 @@ export default {
   margin-left: auto;
   margin-right: auto;
   border-radius: 50%;
-}
-.__p_C7_u_278 {
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.__p_C7_u_280 {
-  width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.__p_C7_u_281 {
-  width: 200px;
-  margin-left: 10px;
-}
-
-.__p_C7_u_282 {
-  margin-left: 10px;
-}
-
-.__p_C7_u_279 {
-  float: right;
-  display: inline-block;
-}
-
-.__p_C7_u_277 {
-  margin-top: 20px;
-}
-
-.__p_C7_u_260 {
-  margin-top: 20px;
-  text-align: right;
 }
 </style>

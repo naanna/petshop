@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <span class="__p_2362_uid_225">账号信息</span>
+      <span class="title">账号信息</span>
       <el-form
         label-position="right"
         class="__p_2362_uid_194"
@@ -9,29 +9,29 @@
         :rules="rules"
         ref="form"
       >
-        <el-form-item label="用户名：" label-width="300px" class="__p_2362_uid_203">
+        <el-form-item label="用户名：" label-width="300px" class="formclass">
           <span style="color: #898989;">{{form.username}}</span>
         </el-form-item>
         <el-form-item
           label="昵称："
           label-width="300px"
-          class="__p_2362_uid_203"
+          class="formclass"
           prop="nickname"
           :inline-message="true"
         >
-          <el-input type="text" size="small" class="__p_2362_uid_211" v-model="form.nickname"></el-input>
+          <el-input type="text" size="small" class="widthclass" v-model="form.nickname"></el-input>
         </el-form-item>
         <el-form-item
           label="姓名："
           label-width="300px"
-          class="__p_2362_uid_203"
+          class="formclass"
           prop="name"
           :inline-message="true"
         >
-          <el-input type="text" size="small" class="__p_2362_uid_211" v-model="form.name"></el-input>
+          <el-input type="text" size="small" class="widthclass" v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="性别：" label-width="300px" class="__p_2362_uid_203" prop="sex">
-          <el-select size="small" class="__p_2362_uid_211" v-model="form.sex">
+        <el-form-item label="性别：" label-width="300px" class="formclass" prop="sex">
+          <el-select size="small" class="widthclass" v-model="form.sex">
             <el-option value="男" label="男"></el-option>
             <el-option value="女" label="女"></el-option>
           </el-select>
@@ -39,16 +39,16 @@
         <el-form-item
           label="生日："
           label-width="300px"
-          class="__p_2362_uid_203"
+          class="formclass"
           prop="birthday"
           :inline-message="true"
         >
-          <el-date-picker type="date" size="small" class="__p_2362_uid_211" v-model="form.birthday"></el-date-picker>
+          <el-date-picker type="date" size="small" class="widthclass" v-model="form.birthday"></el-date-picker>
           <el-tooltip class="item" effect="dark" content="亲，生日当月将赠送优惠券（每年只享受一次）" placement="top">
-            <i class="el-icon-question __p_2362_uid_227"></i>
+            <i class="el-icon-question icon"></i>
           </el-tooltip>
         </el-form-item>
-        <el-form-item label="注册日期：" label-width="300px" class="__p_2362_uid_203">
+        <el-form-item label="注册日期：" label-width="300px" class="formclass">
           <span style="color: #898989;">{{form.regday}}</span>
         </el-form-item>
         <div class="__p_2362_uid_214">
@@ -58,12 +58,12 @@
       </el-form>
     </div>
     <div style="margin-top:20px;">
-      <span class="__p_2362_uid_225">会员信息</span>
+      <span class="title">会员信息</span>
       <el-form class="__p_2362_uid_194">
-        <el-form-item label="账户余额：" label-width="300px" class="__p_2362_uid_203">
+        <el-form-item label="账户余额：" label-width="300px" class="formclass">
           <span style="color: #898989;">{{form.money}}</span>
         </el-form-item>
-        <el-form-item label="会员等级：" label-width="300px" class="__p_2362_uid_203">
+        <el-form-item label="会员等级：" label-width="300px" class="formclass">
           <div style="margin-top:10px;display:inline-block;">
             <img src="@picture/vip1.png" style="height:25px" v-if="form.level=='vip'" />
             <img src="@picture/vip2.png" style="height:25px" v-else-if="form.level=='vip2'" />
@@ -73,7 +73,7 @@
       </el-form>
     </div>
     <div>
-      <span class="__p_2362_uid_225">我的头像</span>
+      <span class="title">我的头像</span>
       <div class="picturedivclass">
         <el-button class="lookpic" circle @click="isShowImageDialog=true">
           <p style="margin:0px;">查看</p>
@@ -91,7 +91,7 @@
       </div>
     </div>
     <div style="margin-top:20px;">
-      <span class="__p_2362_uid_225">账号安全</span>
+      <span class="title">账号安全</span>
       <div class="__p_2364_uid_284">
         <div>
           <img src="@picture/psdicon.png" class="__p_2364_uid_293" />
@@ -242,20 +242,20 @@ export default {
 </script>
 
 <style scoped>
-.__p_2362_uid_225 {
+.title {
   font-size: 25px;
   color: #000000;
 }
 
-.__p_2362_uid_211 {
+.widthclass {
   width: 250px;
 }
 
-.__p_2362_uid_227 {
+.icon {
   margin-left: 10px;
 }
 
-.__p_2362_uid_203 {
+.formclass {
   margin-bottom: 0;
   padding-top: 5px;
   padding-bottom: 5px;

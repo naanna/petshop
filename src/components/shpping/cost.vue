@@ -1,10 +1,10 @@
 <template>
   <div class="__p_2362_uid_193">
-    <span class="__p_2362_uid_232">充值中心</span>
+    <span class="title">充值中心</span>
     <el-button type="text" size="small" style="float:right;" @click="gohistory">查看历史充值</el-button>
     <el-form
       label-position="right"
-      class="__p_2362_uid_194"
+      class="boder"
       :model="form"
       :rules="rules"
       ref="form"
@@ -12,35 +12,35 @@
       <el-form-item
         label="充值金额："
         label-width="300px"
-        class="__p_2362_uid_197"
+        class="formclass"
         prop="money"
         :inline-message="true"
       >
-        <el-input type="text" size="small" class="__p_2362_uid_211" v-model.number="form.money"></el-input>
+        <el-input type="text" size="small" class="width" v-model.number="form.money"></el-input>
       </el-form-item>
       <el-form-item
         label="充值账户："
         label-width="300px"
-        class="__p_2362_uid_199"
+        class="formclass"
         prop="user"
         :inline-message="true"
       >
-        <el-input type="text" size="small" class="__p_2362_uid_200" v-model="form.user"></el-input>
-        <span class="__p_2362_uid_233" style="color: #898989;">请确认账户是否正确</span>
+        <el-input type="text" size="small" class="width" v-model="form.user"></el-input>
+        <span class="confire" style="color: #898989;">请确认账户是否正确</span>
       </el-form-item>
     </el-form>
-    <div class="__p_2362_uid_214">
+    <div class="button">
       <el-button type="primary" size="small" @click="gosave">提交申请</el-button>
       <el-button size="small" @click="goclear">取消</el-button>
     </div>
-    <p class="__p_2362_uid_234">充值说明</p>
-    <p class="__p_2362_uid_234">
+    <p class="text">充值说明</p>
+    <p class="text">
       本商店采用充值系统进行采购；
       <br />充值前请联系客服交付需要充值的金额的现金，再输入金额提交申请；
       <br />提交申请审批成功后，可以在个人账户页面内看到自己的账户余额；
       <br />因涉虚拟交易及促销返点等项目，因此不提供退款服务；
     </p>
-    <p class="__p_2362_uid_234">客服电话：400-870-5552。【工作时间：周一至周日，如遇忙线请稍后再拨。】</p>
+    <p class="text">客服电话：400-870-5552。【工作时间：周一至周日，如遇忙线请稍后再拨。】</p>
   </div>
 </template>
 
@@ -87,20 +87,19 @@ export default {
           this.$confirm("确认充值给" + this.form.user + "吗？", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消"
-          })
-            .then(() => {
-              this.axios
-                .post("/api/invest/add", {
-                  money: this.form.money,
-                  time: this.moment().format("YYYY-MM-DD HH:mm:ss"),
-                  username: this.form.user
-                })
-                .then(res => {
-                  if (res.data.success) {
-                    this.$message.success("充值记录提交成功！");
-                  }
-                });
-            });
+          }).then(() => {
+            this.axios
+              .post("/api/invest/add", {
+                money: this.form.money,
+                time: this.moment().format("YYYY-MM-DD HH:mm:ss"),
+                username: this.form.user
+              })
+              .then(res => {
+                if (res.data.success) {
+                  this.$message.success("充值记录提交成功！");
+                }
+              });
+          });
         } else {
           return false;
         }
@@ -117,35 +116,25 @@ export default {
 </script>
 
 <style scoped>
-.__p_2362_uid_232 {
+.title {
   font-size: 25px;
 }
 
-.__p_2362_uid_211 {
-  width: 250px;
-}
-
-.__p_2362_uid_197 {
+.formclass {
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 0;
 }
 
-.__p_2362_uid_200 {
+.width {
   width: 250px;
 }
 
-.__p_2362_uid_233 {
+.confire {
   margin-left: 10px;
 }
 
-.__p_2362_uid_199 {
-  margin-bottom: 0;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.__p_2362_uid_194 {
+.boder {
   background: #ffffff;
   border: 1px solid #dddddd;
   padding-top: 10px;
@@ -153,13 +142,13 @@ export default {
   padding-bottom: 10px;
 }
 
-.__p_2362_uid_214 {
+.button {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 10px;
 }
 
-.__p_2362_uid_234 {
+.text {
   margin-top: 20px;
   color: #898989;
 }

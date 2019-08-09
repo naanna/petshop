@@ -39,7 +39,7 @@
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
-      class="pageclass"
+      class="fyclass"
     ></el-pagination>
     <rjDialog></rjDialog>
   </div>
@@ -64,7 +64,7 @@ export default {
     };
   },
   created() {
-    this.go2Query();
+    this.goquery();
   },
   methods: {
     makependingquery() {
@@ -75,7 +75,7 @@ export default {
       query.admin = true;
       return query;
     },
-    go2Query() {
+    goquery() {
       let query = this.makependingquery();
       this.axios
         .get("/api/getalluser", {
@@ -121,7 +121,7 @@ export default {
             })
             .then(res => {
               if (res.data.success) {
-                this.go2Query();
+                this.goquery();
                 this.$message.success("删除成功！");
               }
             });
@@ -140,11 +140,11 @@ export default {
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.go2Query();
+      this.goquery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.go2Query();
+      this.goquery();
     }
   }
 };
@@ -185,9 +185,5 @@ export default {
   margin-left: auto;
   margin-right: auto;
   border-radius: 50px;
-}
-.pageclass {
-  margin-top: 20px;
-  text-align: right;
 }
 </style>

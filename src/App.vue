@@ -105,4 +105,9 @@ export default {
   font-size: 30px;
   font-family: "jelly";
 }
+
+.fyclass {
+  margin-top: 20px;
+  text-align: right;
+}
 </style>

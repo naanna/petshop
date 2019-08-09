@@ -1,13 +1,13 @@
 <template>
-  <div class="__p_C7_u_238">
+  <div>
     <span class="fontclass">全部账户</span>
-    <div class="__p_C7_u_277">
-      <div class="__p_C7_u_278">
+    <div class="but1">
+      <div class="button">
         <el-button type="primary" size="small" @click="goadd">增加账户</el-button>
         <el-button type="primary" size="small" @click="go2del">删除选中</el-button>
       </div>
-      <div class="__p_C7_u_279">
-        <el-select size="small" class="__p_C7_u_280" v-model="type" @change="change">
+      <div class="div1">
+        <el-select size="small" class="select" v-model="type" @change="change">
           <el-option value="注册日期" label="注册日期"></el-option>
           <el-option value="生日" label="生日"></el-option>
           <el-option value="名字" label="名字"></el-option>
@@ -18,13 +18,13 @@
           placeholder="请输入内容"
           type="text"
           size="small"
-          class="__p_C7_u_281"
+          class="select"
           v-model="searchval"
           clearable
         ></el-input>
         <el-select
           v-else-if="type=='权限'"
-          class="__p_C7_u_282"
+          class="select"
           size="small"
           v-model="searchval"
           clearable
@@ -37,12 +37,12 @@
           v-model="historydata"
           type="daterange"
           size="small"
-          class="__p_C7_u_282"
+          class="timerange"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
-        <el-button type="primary" size="small" class="__p_C7_u_282" @click="goserach">搜索</el-button>
+        <el-button type="primary" size="small" class="timerange" @click="goserach">搜索</el-button>
       </div>
     </div>
     <el-table
@@ -88,7 +88,7 @@
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_C7_u_260"
+      class="fyclass"
     ></el-pagination>
     <rjDialog></rjDialog>
   </div>
@@ -114,7 +114,7 @@ export default {
     };
   },
   created() {
-    this.go2Query();
+    this.goquery();
   },
   methods: {
     makependingquery() {
@@ -143,7 +143,7 @@ export default {
       }
       return query;
     },
-    go2Query() {
+    goquery() {
       let query = this.makependingquery();
       this.axios
         .get("/api/getalluser", {
@@ -179,7 +179,7 @@ export default {
             })
             .then(res => {
               if (res.data.success) {
-                this.go2Query();
+                this.goquery();
                 this.$message.success("删除成功！");
               }
             });
@@ -210,14 +210,15 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
-                this.go2Query();
+                this.goquery();
               }
             });
         })
         .catch(() => {});
     },
     goserach() {
-      this.go2Query();
+      this.page_no = 1;
+      this.goquery();
     },
     goadd() {
       this.rjDialog
@@ -227,7 +228,7 @@ export default {
         .showClose(true)
         .sizeTiny()
         .then(opt => {
-          this.go2Query();
+          this.goquery();
         })
         .show();
     },
@@ -240,7 +241,7 @@ export default {
         .showClose(true)
         .sizeTiny()
         .then(opt => {
-          this.go2Query();
+          this.goquery();
         })
         .show();
     },
@@ -250,11 +251,11 @@ export default {
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.go2Query();
+      this.goquery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.go2Query();
+      this.goquery();
     },
     handleSelectionChange(val) {
       let self = this;
@@ -270,38 +271,28 @@ export default {
 </script>
 
 <style scoped>
-.__p_C7_u_278 {
+.button {
   display: inline-block;
   vertical-align: bottom;
 }
 
-.__p_C7_u_280 {
+.select {
   width: 200px;
   display: inline-block;
   vertical-align: bottom;
 }
 
-.__p_C7_u_281 {
-  width: 200px;
+.timerange {
   margin-left: 10px;
 }
 
-.__p_C7_u_282 {
-  margin-left: 10px;
-}
-
-.__p_C7_u_279 {
+.div1 {
   float: right;
   display: inline-block;
 }
 
-.__p_C7_u_277 {
+.but1 {
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
-.__p_C7_u_260 {
-  margin-top: 20px;
-  text-align: right;
 }
 </style>

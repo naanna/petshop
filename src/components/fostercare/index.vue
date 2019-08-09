@@ -3,18 +3,18 @@
     <div style="text-align: center;">
       <p class="ruleclass">寄养观赏区</p>
     </div>
-    <div class="__p_Cb_u_44" @click="godetail">
+    <div class="picdiv" @click="godetail">
       <el-avatar
         src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY"
-        class="__p_Cb_u_45"
+        class="pic"
         @error="errorHandler"
       >
         <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
       </el-avatar>
-      <span class="__p_Cb_u_46">粥粥</span>
-      <div class="__p_Cb_u_50">
-        <span class="__p_Cb_u_51">猫咪</span>
-        <span class="__p_Cb_u_52">一岁</span>
+      <span class="name">粥粥</span>
+      <div class="ifno">
+        <span class="text">猫咪</span>
+        <span class="text">一岁</span>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
       :page-size="50"
       :total="100"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_Cb_u_111"
+      class="pageclass"
     ></el-pagination>
 
     <rjDialog></rjDialog>
@@ -61,21 +61,13 @@ export default {
 </script>
 
 <style scoped>
-.__p_Cb_u_111 {
+.pageclass {
   margin-top: 40px;
   margin-right: 40px;
   text-align: right;
 }
-.__p_Cb_u_110 {
-  cursor: pointer;
-  float: right;
-  display: none;
-}
-.__p_Cb_u_44:hover .__p_Cb_u_110 {
-  display: block;
-}
 
-.__p_Cb_u_46 {
+.name {
   font-size: 16px;
   color: #d69191;
   display: block;
@@ -85,38 +77,18 @@ export default {
   margin-top: 10px;
 }
 
-.__p_Cb_u_51 {
+.text {
   color: #6ec8f5;
 }
 
-.__p_Cb_u_52 {
-  color: #6ec8f5;
-}
-
-.__p_Cb_u_50 {
+.ifno {
   display: flex;
   line-height: 20px;
   justify-content: space-between;
   padding-right: 10px;
 }
 
-.__p_Cb_u_54 {
-  color: #6ec8f5;
-}
-
-.__p_Cb_u_55 {
-  color: #6ec8f5;
-}
-
-.__p_Cb_u_53 {
-  display: flex;
-  line-height: 20px;
-  justify-content: space-between;
-  margin-top: 10px;
-  padding-right: 10px;
-}
-
-.__p_Cb_u_44 {
+.picdiv {
   cursor: pointer;
   width: 150px;
   height: 170px;
@@ -128,7 +100,7 @@ export default {
   padding-top: 10px;
   margin-bottom: 60px;
 }
-.__p_Cb_u_45 {
+.pic {
   width: 100px;
   height: 100px;
   display: block;
@@ -139,7 +111,7 @@ export default {
   transition: all 0.6s;
 }
 
-.__p_Cb_u_44 .__p_Cb_u_45:hover {
+.picdiv .pic:hover {
   transform: scale(1.4);
 }
 

@@ -22,7 +22,7 @@
       :readonly="true"
       v-model="text"
     ></el-input>
-    <div class="buttonclass">
+    <div class="button">
       <el-button size="small" @click="goclose">关闭</el-button>
     </div>
     <rjDialog></rjDialog>
@@ -40,7 +40,8 @@ export default {
     return {
       text: "123132",
       arr: [],
-      url: "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/mmzdtx1565004868180"
+      url:
+        "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/mmzdtx1565004868180"
     };
   },
   created() {
@@ -78,7 +79,7 @@ export default {
   margin-left: 90px;
   margin-top: 15px;
 }
-.__p_C8_u_268 {
+.button {
   text-align: center;
 }
 

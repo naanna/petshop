@@ -28,6 +28,10 @@ export default new Router({
       path: '/pet/pig',
       name: 'pig',
       component: resolve => require(['../components/pet/pig.vue'], resolve)
+    }, {
+      path: '/pet/goods',
+      name: 'goods',
+      component: resolve => require(['../components/pet/goods.vue'], resolve)
     },
     {
       path: '/customer/index',
@@ -121,7 +125,7 @@ export default new Router({
       path: '/manage/petmanage',
       name: 'petmanage',
       component: resolve => require(['../components/manage/petmanage.vue'], resolve)
-    },{
+    }, {
       path: '/manage/goodsmanage',
       name: 'goodsmanage',
       component: resolve => require(['../components/manage/goodsmanage.vue'], resolve)

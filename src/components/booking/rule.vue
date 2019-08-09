@@ -1,12 +1,10 @@
 <template>
   <div>
+    <p class="ruleclass">代售规则</p>
     <div class="textcenter">
-      <p class="ruleclass">代售规则</p>
-    </div>
-    <div>
       <p>首先感谢您选择我们家进行您的宠物代售。选择我们家这会对您的交易过程的安全有一定的保障。</p>
       <p>手续费根据你需要代售的宠物而定</p>
-      <p>包含服务：封面图·详情·上架官网/微博/公众号/微信，自出以及下架请及时告知，否则如果被发现自己被遗忘了，请补上损失费。</p>
+      <p>包含服务：封面图·详情·上架官网/微博/公众号/微信，自出以及下架请及时告知，否则如果被发现自出了，请补上损失费。</p>
       <p>成交收取的代售费不接受议价，如挂多家代售请保持价格一致，如不一致则会给与证据并且下架。如觉得手续费略高可以多作考虑，请不要伤害。</p>
       <p>卖家在已有买家情况下跑单，请支付宠物价10%作为跑单费补偿，代售与买家一人一半作为损失。请悉知。</p>
       <p>买家在确认完毕后，如不喜欢了等理由想要跑单，请支付宠物价10%作为跑单费补偿，代售与卖家一人一半作为损失。</p>
@@ -25,6 +23,9 @@ export default {
 <style scoped>
 .textcenter {
   text-align: center;
+  font-family: "jelly";
+  font-size: 25px;
+  color:  #8291a1;
 }
 .ruleclass {
   background: linear-gradient(to right, #5098eb, #5945c0);
@@ -34,5 +35,6 @@ export default {
   margin-bottom: 15px;
   font-family: "jelly";
   color: transparent;
+  text-align: center;
 }
 </style>

@@ -119,7 +119,7 @@
       :page-size="50"
       :total="100"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_Cb_u_111"
+      class="pageclass"
     ></el-pagination>
 
     <rjDialog></rjDialog>
@@ -189,7 +189,7 @@ export default {
   line-height: 32px;
   width: 70px;
 }
-.__p_Cb_u_111 {
+.pageclass {
   margin-top: 40px;
   margin-right: 40px;
   text-align: right;

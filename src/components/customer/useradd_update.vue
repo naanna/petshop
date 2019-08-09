@@ -92,7 +92,7 @@
         ></el-date-picker>
       </el-form-item>
     </el-form>
-    <div class="__p_C8_u_268">
+    <div class="button">
       <el-button type="primary" size="small" @click="goadd">添加</el-button>
       <el-button size="small" @click="goclose">取消</el-button>
     </div>
@@ -295,7 +295,7 @@ export default {
 .incoclass {
   margin-left: 10px;
 }
-.__p_C8_u_268 {
+.button {
   text-align: center;
 }
 .seepicture {

@@ -1,17 +1,17 @@
 <template>
   <div>
     <span class="fontclass">我的代售</span>
-    <el-button type="primary" size="small" class="__p_C7_u_266">我要代售</el-button>
-    <div class="__p_C7_u_267">
-      <el-select size="small" class="__p_C7_u_268">
+    <el-button type="primary" size="small" class="bookbut">我要代售</el-button>
+    <div class="div1">
+      <el-select size="small" class="select">
         <el-option value="代售单号" label="代售单号"></el-option>
         <el-option value="宠物编号" label="宠物编号"></el-option>
         <el-option value="代售日期" label="代售日期"></el-option>
       </el-select>
-      <el-input placeholder="请输入内容" type="text" size="small" class="__p_C7_u_269"></el-input>
-      <el-button type="primary" size="small" class="__p_C7_u_270">搜索</el-button>
+      <el-input placeholder="请输入内容" type="text" size="small" class="select"></el-input>
+      <el-button type="primary" size="small">搜索</el-button>
     </div>
-    <el-table :data="data" stripe border highlight-current-row class="__p_C7_u_252">
+    <el-table :data="data" stripe border highlight-current-row class="table">
       <el-table-column label="代售单号  " prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物编号" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物名" prop="id" align="center" header-align="center"></el-table-column>
@@ -31,7 +31,7 @@
       :page-size="50"
       :total="100"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_C7_u_260"
+      class="fyclass"
     ></el-pagination>
   </div>
 </template>
@@ -43,35 +43,21 @@ export default {
 </script>
 
 <style scoped>
-.__p_C7_u_266 {
+.bookbut {
   float: right;
 }
 
-.__p_C7_u_268 {
+.select {
   width: 200px;
   display: inline-block;
-  vertical-align: bottom;
+  margin-right: 10px;
 }
 
-.__p_C7_u_269 {
-  width: 200px;
-  margin-left: 10px;
-}
-
-.__p_C7_u_270 {
-  margin-left: 10px;
-}
-
-.__p_C7_u_267 {
+.div1 {
   margin-top: 20px;
 }
 
-.__p_C7_u_252 {
+.table {
   margin-top: 10px;
-}
-
-.__p_C7_u_260 {
-  margin-top: 20px;
-  text-align: right;
 }
 </style>

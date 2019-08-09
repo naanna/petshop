@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span class="__p_2363_uid_239">充值历史</span>
-    <div class="__p_2363_uid_261">
+    <span class="title">充值历史</span>
+    <div class="table">
       <el-date-picker
         v-model="historydata"
         type="daterange"
@@ -12,7 +12,7 @@
       ></el-date-picker>
       <el-button type="primary" size="small" v-model="searchval" style="margin-left:10px;">搜索</el-button>
     </div>
-    <el-table :data="data" stripe border highlight-current-row class="__p_2363_uid_252">
+    <el-table :data="data" stripe border highlight-current-row class="table">
       <el-table-column label="充值单号 " prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="充值金额" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="充值日期" prop="id" align="center" header-align="center"></el-table-column>
@@ -27,7 +27,7 @@
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_2363_uid_260"
+      class="fyclass"
     ></el-pagination>
   </div>
 </template>
@@ -45,49 +45,26 @@ export default {
     };
   },
   methods: {
-    go2Query() {
+    goquery() {
       console.log(this.page_no);
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.go2Query();
+      this.goquery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.go2Query();
+      this.goquery();
     }
   }
 };
 </script>
 <style scoped>
-.__p_2363_uid_239 {
+.title {
   font-size: 25px;
 }
 
-.__p_2363_uid_262 {
-  width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.__p_2363_uid_263 {
-  width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.__p_2363_uid_261 {
+.table {
   margin-top: 20px;
-}
-
-.__p_2363_uid_252 {
-  margin-top: 20px;
-}
-
-.__p_2363_uid_260 {
-  margin-top: 20px;
-  text-align: right;
 }
 </style>

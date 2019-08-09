@@ -48,13 +48,25 @@ const navlist = [{
       {
         adminMenu: {
           id: 14,
-          menuName: "迷你猪",
+          menuName: "小香猪",
           menuType: "page",
           pid: "1",
           url: "/pet/pig",
           sort: 3,
           deep: 2,
           code: "14"
+        }
+      },
+      {
+        adminMenu: {
+          id: 15,
+          menuName: "宠物用品",
+          menuType: "page",
+          pid: "1",
+          url: "/pet/goods",
+          sort: 5,
+          deep: 2,
+          code: "15"
         }
       }
     ]

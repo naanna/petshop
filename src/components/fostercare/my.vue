@@ -1,16 +1,16 @@
 <template>
   <div>
     <span class="fontclass">我的寄养</span>
-    <el-button type="primary" size="small" class="__p_C7_u_266" @click="goadd">我要寄养</el-button>
-    <div class="__p_C7_u_267">
-      <el-select size="small" class="__p_C7_u_268" v-model="type">
+    <el-button type="primary" size="small" class="float" @click="goadd">我要寄养</el-button>
+    <div class="botton">
+      <el-select size="small" class="select" v-model="type">
         <el-option value="宠物种类" label="寄养单号"></el-option>
         <el-option value="寄养单号" label="宠物种类"></el-option>
       </el-select>
-      <el-input placeholder="请输入内容" type="text" size="small" class="__p_C7_u_269" v-model="searchval"></el-input>
+      <el-input placeholder="请输入内容" type="text" size="small" class="select" v-model="searchval"></el-input>
       <el-button type="primary" size="small" class="__p_C7_u_270">搜索</el-button>
     </div>
-    <el-table :data="tabledata" stripe border highlight-current-row class="__p_C7_u_252">
+    <el-table :data="tabledata" stripe border highlight-current-row class="table">
       <el-table-column label="寄养单号" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物名" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物种类" prop="id" align="center" header-align="center"></el-table-column>
@@ -31,12 +31,12 @@
       :page-size="50"
       :total="100"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_C7_u_260"
+      class="fyclass"
     ></el-pagination>
     <el-dialog title="延长寄养时间" :visible.sync="centerDialogVisible" width="35%" center>
       <el-form>
         <el-form-item label="延长时长：" label-width="100px" style="margin-bottom:0px;">
-          <el-input type="text" size="small" v-model="longtime" class="__p_C7_u_269"></el-input>
+          <el-input type="text" size="small" v-model="longtime" class="dhk"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -95,30 +95,27 @@ export default {
 
 <style scoped>
 
-.__p_C7_u_266 {
+.float {
   float: right;
 }
-.__p_C7_u_268 {
+.select {
   width: 200px;
   display: inline-block;
+  margin-right: 10px;
   vertical-align: bottom;
 }
-.__p_C7_u_269 {
+.dhk {
   width: 200px;
   margin-left: 10px;
   margin-right: 10px;
 }
 
-.__p_C7_u_252 {
+.table {
   margin-top: 10px;
 }
 
-.__p_C7_u_267 {
+.botton {
   margin-top: 20px;
 }
 
-.__p_C7_u_260 {
-  margin-top: 20px;
-  text-align: right;
-}
 </style>

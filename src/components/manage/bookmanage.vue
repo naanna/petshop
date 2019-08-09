@@ -54,7 +54,7 @@
           :page-size="page_size"
           :total="total"
           layout="total, sizes, prev, pager, next, jumper"
-          class="__p_C7_u_260"
+          class="fyclass"
         ></el-pagination>
         <el-dialog title="服务费" :visible.sync="centerDialogVisible" width="35%" center>
           <el-form>
@@ -126,7 +126,7 @@
           :page-size="page_size"
           :total="total"
           layout="total, sizes, prev, pager, next, jumper"
-          class="__p_C7_u_260"
+          class="fyclass"
         ></el-pagination>
       </el-tab-pane>
     </el-tabs>
@@ -154,10 +154,10 @@ export default {
     };
   },
   created() {
-    this.go2Query();
+    this.goquery();
   },
   methods: {
-    go2Query() {},
+    goquery() {},
     gorefused() {
       this.$confirm("您确定要拒绝本条代售?", "提示", {
         confirmButtonText: "确定",
@@ -206,11 +206,11 @@ export default {
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.go2Query();
+      this.goquery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.go2Query();
+      this.goquery();
     },
     handleSelectionChange(val) {
       let self = this;
@@ -253,10 +253,5 @@ export default {
 .__p_C7_u_279 {
   float: right;
   display: inline-block;
-}
-
-.__p_C7_u_260 {
-  margin-top: 20px;
-  text-align: right;
 }
 </style>

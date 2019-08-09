@@ -56,7 +56,7 @@
           :page-size="page_size"
           :total="total"
           layout="total, sizes, prev, pager, next, jumper"
-          class="__p_C7_u_260"
+          class="fyclass"
         ></el-pagination>
         <el-dialog title="寄养价格" :visible.sync="centerDialogVisible" width="35%" center>
           <el-form>
@@ -129,7 +129,7 @@
           :page-size="page_size"
           :total="total"
           layout="total, sizes, prev, pager, next, jumper"
-          class="__p_C7_u_260"
+          class="fyclass"
         ></el-pagination>
       </el-tab-pane>
     </el-tabs>
@@ -256,10 +256,5 @@ export default {
 .__p_C7_u_279 {
   float: right;
   display: inline-block;
-}
-
-.__p_C7_u_260 {
-  margin-top: 20px;
-  text-align: right;
 }
 </style>

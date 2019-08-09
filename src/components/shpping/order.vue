@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span class="__p_2363_uid_239">消费记录</span>
-    <el-tabs value="first" class="__p_2363_uid_261">
+    <span class="title">消费记录</span>
+    <el-tabs value="first" class="page">
       <el-tab-pane label="购物" name="first">
         <buy></buy>
       </el-tab-pane>
@@ -32,11 +32,11 @@ export default {
 };
 </script>
 <style scoped>
-.__p_2363_uid_239 {
+.title {
   font-size: 25px;
 }
 
-.__p_2363_uid_261 {
+.page {
   margin-top: 20px;
 }
 </style>

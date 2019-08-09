@@ -1,28 +1,28 @@
 <template>
   <div>
-    <div class="__p_Cb_u_18">
+    <div class="div1">
       <div :class="get1fontclass">
         <div :class="get1boderclass">
-          <span class="__p_Cb_u_21">1</span>
+          <span class="number">1</span>
         </div>
         <span style="margin-left:10px;">验证身份</span>
       </div>
       <div :class="get2fontclass">
         <div :class="get2boderclass">
-          <span class="__p_Cb_u_21">2</span>
+          <span class="number">2</span>
         </div>
         <span style="margin-left:10px;">设置密码</span>
       </div>
       <div :class="get3fontclass">
         <div :class="get3boderclass">
-          <span class="__p_Cb_u_21">3</span>
+          <span class="number">3</span>
         </div>
         <span style="margin-left:10px;">改密成功</span>
       </div>
     </div>
     <el-form
       label-position="right"
-      class="__p_Cb_u_37"
+      class="formclass1"
       v-show="nextpage=='1'"
       :model="form"
       :rules="rules"
@@ -31,11 +31,11 @@
       <el-form-item
         label="原密码："
         label-width="100px"
-        class="__p_2364_uid_305"
+        class="formclass"
         prop="oldpsd"
         :inline-message="true"
       >
-        <el-input show-password size="small" class="__p_2364_uid_306" v-model="form.oldpsd"></el-input>
+        <el-input show-password size="small" class="formwidth" v-model="form.oldpsd"></el-input>
       </el-form-item>
     </el-form>
     <el-form
@@ -44,12 +44,12 @@
       ref="ruleForm"
       v-show="nextpage=='2'"
       label-width="100px"
-      class="__p_Cb_u_37"
+      class="formclass1"
     >
       <el-form-item
         label="密码："
         label-width="100px"
-        class="__p_2364_uid_305"
+        class="formclass"
         prop="pass"
         :inline-message="true"
       >
@@ -58,17 +58,17 @@
           size="small"
           v-model="ruleForm.pass"
           autocomplete="off"
-          class="__p_2364_uid_306"
+          class="formwidth"
         ></el-input>
         <el-tooltip class="item" effect="dark" content="密码长度在6-20个字符间" placement="top">
-          <i class="el-icon-question __p_2362_uid_227"></i>
+          <i class="el-icon-question icon"></i>
         </el-tooltip>
       </el-form-item>
       <el-form-item
         prop="checkPass"
         label="确认密码："
         label-width="100px"
-        class="__p_2364_uid_305"
+        class="formclass"
         :inline-message="true"
       >
         <el-input
@@ -76,16 +76,12 @@
           type="password"
           v-model="ruleForm.checkPass"
           autocomplete="off"
-          class="__p_2364_uid_306"
+          class="formwidth"
         ></el-input>
       </el-form-item>
     </el-form>
-    <p
-      class="__p_Cb_u_18"
-      style="margin-top: 30px;margin-bottom: 20px;"
-      v-if="nextpage=='3'"
-    >您的密码已经修改成功！</p>
-    <div class="__p_Cb_u_18" style="margin-top: 10px;">
+    <p class="div1" style="margin-top: 30px;margin-bottom: 20px;" v-if="nextpage=='3'">您的密码已经修改成功！</p>
+    <div class="div1" style="margin-top: 10px;">
       <el-button type="primary" size="small" @click="goup" v-show="nextpage==2">上一步</el-button>
       <el-button type="primary" size="small" @click="gonext" v-show="nextpage!=3">下一步</el-button>
       <el-button type="primary" size="small" @click="goclose" v-show="nextpage==3">关闭</el-button>
@@ -248,22 +244,17 @@ export default {
 </script>
 
 <style scoped>
-.__p_2364_uid_306 {
+.formwidth {
   width: 250px;
 }
 
-.__p_2364_uid_305 {
+.formclass {
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 0;
 }
 
-.__p_2364_uid_307 {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-bottom: 0;
-}
-.__p_Cb_u_37 {
+.formclass1 {
   width: 500px;
   display: block;
   margin-left: auto;
@@ -271,7 +262,7 @@ export default {
   margin-right: auto;
   margin-top: 20px;
 }
-.__p_Cb_u_21 {
+.number {
   font-size: 20px;
   display: block;
   text-align: center;
@@ -286,13 +277,6 @@ export default {
   vertical-align: middle;
   border-radius: 17px;
 }
-
-.__p_Cb_u_26 {
-  font-size: 20px;
-  vertical-align: middle;
-  margin-left: 10px;
-}
-
 .font-pink {
   color: #f25d8e;
   display: inline-block;
@@ -315,10 +299,10 @@ export default {
   margin-left: 40px;
 }
 
-.__p_Cb_u_18 {
+.div1 {
   text-align: center;
 }
-.__p_2362_uid_227 {
+.icon {
   margin-left: 10px;
 }
 </style>

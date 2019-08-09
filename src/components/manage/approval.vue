@@ -54,7 +54,7 @@
           :page-size="pendingquery.page_size"
           :total="pendingquery.total"
           layout="total, sizes, prev, pager, next, jumper"
-          class="__p_C7_u_260"
+          class="fyclass"
         ></el-pagination>
       </el-tab-pane>
 
@@ -126,7 +126,7 @@
           :page-size="recordquery.page_size"
           :total="recordquery.total"
           layout="total, sizes, prev, pager, next, jumper"
-          class="__p_C7_u_260"
+          class="fyclass"
         ></el-pagination>
       </el-tab-pane>
     </el-tabs>
@@ -431,10 +431,6 @@ export default {
   margin-top: 10px;
 }
 
-.__p_C7_u_260 {
-  margin-top: 20px;
-  text-align: right;
-}
 .__p_C7_u_278 {
   display: inline-block;
   vertical-align: bottom;
