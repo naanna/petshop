@@ -22,13 +22,7 @@
           v-model="searchval"
           clearable
         ></el-input>
-        <el-select
-          v-else-if="type=='权限'"
-          class="select"
-          size="small"
-          v-model="searchval"
-          clearable
-        >
+        <el-select v-else-if="type=='权限'" class="select" size="small" v-model="searchval" clearable>
           <el-option value="customer" label="客户"></el-option>
           <el-option value="admin" label="管理员"></el-option>
         </el-select>
@@ -42,7 +36,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
-        <el-button type="primary" size="small" class="timerange" @click="goserach">搜索</el-button>
+        <el-button type="primary" size="small" @click="goserach">搜索</el-button>
       </div>
     </div>
     <el-table
@@ -280,10 +274,11 @@ export default {
   width: 200px;
   display: inline-block;
   vertical-align: bottom;
+  margin-right: 10px;
 }
 
 .timerange {
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .div1 {

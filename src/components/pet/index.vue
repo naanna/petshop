@@ -1,123 +1,60 @@
 <template>
   <div>
-    <div style=" text-align: right;">
-      <input
-        type="text"
-        placeholder="¥"
-        v-model.number="money1"
-        size="small"
-        class="el-input__inner inputwidth"
-        oninput="value=value.replace(/[^\d]/g,'')"
-      />
-      <span style="margin-left:5px;margin-right:5px;">-</span>
-      <input
-        type="text"
-        placeholder="¥"
-        v-model.number="money2"
-        size="small"
-        class="el-input__inner inputwidth"
-        oninput="value=value.replace(/[^\d]/g,'')"
-      />
-      <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
+    <div class="divbut">
+      <div style="display:inline-block;">
+        <el-button type="primary" size="small" @click="goseeout">查看售出</el-button>
+        <el-button type="primary" size="small" @click="goseein">查看在售</el-button>
+      </div>
+      <div style="display:inline-block;">
+        <input
+          type="text"
+          placeholder="¥"
+          v-model.number="money1"
+          size="small"
+          class="el-input__inner inputwidth"
+          oninput="value=value.replace(/[^\d]/g,'')"
+        />
+        <span style="margin-left:5px;margin-right:5px;">-</span>
+        <input
+          type="text"
+          placeholder="¥"
+          v-model.number="money2"
+          size="small"
+          class="el-input__inner inputwidth"
+          oninput="value=value.replace(/[^\d]/g,'')"
+        />
+        <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
+      </div>
     </div>
     <div>
-      <div class="__p_Cb_u_44" @click="godetail">
-        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
+      <div class="petdiv" @click="godetail(item)" v-for="item in tabledata">
+        <i
+          class="el-icon-shopping-cart-2 shopcar"
+          @click.stop="goaddshop"
+          v-if="item.status=='saling'||item.status=='booking'"
+        ></i>
+        <el-image class="petpic" :src="item.picture" fit="fill"></el-image>
+        <span class="text3">{{item.name}}</span>
+        <div class="text">
+          <span class="text1">{{item.variety}}</span>
+          <span class="text1">{{item.age}}</span>
         </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44" @click="godetail">
-        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44" @click="godetail">
-        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44" @click="godetail">
-        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44" @click="godetail">
-        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44" @click="godetail">
-        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
-        </div>
-      </div>
-      <div class="__p_Cb_u_44" @click="godetail">
-        <i class="el-icon-shopping-cart-2 __p_Cb_u_110" @click.stop="goaddshop"></i>
-        <img src="http://vve.qiniu.qjzd.net/FmNFhsiCua2mQK8NhfsODiiE1LtY" class="__p_Cb_u_45" />
-        <span class="__p_Cb_u_46">粥粥</span>
-        <div class="__p_Cb_u_50">
-          <span class="__p_Cb_u_51">猫咪</span>
-          <span class="__p_Cb_u_51">一岁</span>
-        </div>
-        <div class="__p_Cb_u_53">
-          <span class="__p_Cb_u_51">在售</span>
-          <span class="__p_Cb_u_51">2000</span>
+        <div class="text2">
+          <span class="text1" v-if="item.status=='booking'">代售中</span>
+          <span class="text1" v-else-if="item.status=='booked'">代售出</span>
+          <span class="text1" v-else-if="item.status=='saled'">售出</span>
+          <span class="text1" v-else>在售</span>
+          <span class="text1">{{item.price}}</span>
         </div>
       </div>
     </div>
     <el-pagination
-      :current-page="1"
-      :page-sizes="[50,100,200]"
-      :page-size="50"
-      :total="100"
+      @size-change="sizeChangeHandle"
+      @current-change="currentChangeHandle"
+      :current-page="page_no"
+      :page-sizes="[12,24,36,48]"
+      :page-size="page_size"
+      :total="total"
       layout="total, sizes, prev, pager, next, jumper"
       class="pageclass"
     ></el-pagination>
@@ -129,6 +66,7 @@
 <script>
 import rjDialog from "../dialog.vue";
 import detail from "./detail.vue";
+import Util from "@assets/Util.js";
 export default {
   components: {
     rjDialog
@@ -137,12 +75,28 @@ export default {
   data() {
     return {
       money1: "",
-      money2: ""
+      money2: "",
+      tabledata: [],
+      total: 0,
+      page_no: 1,
+      page_size: 12,
+      seeout: false
     };
   },
+  created() {
+    this.goquery();
+  },
   methods: {
-    gosearch() {
-      const query = {};
+    makependingquery() {
+      let query = {
+        page_no: this.page_no,
+        page_size: this.page_size
+      };
+      if (this.seeout) {
+        query.index = "status = 'booked' or status = 'saled'";
+      } else {
+        query.index = "status ='saling' or status = 'booking'";
+      }
       if (this.money1 != "" && this.money2 == "") {
         query.small = this.money1;
       } else if (this.money1 == "" && this.money2 != "") {
@@ -153,11 +107,52 @@ export default {
         this.money1 = money;
         query.small = this.money1;
         query.big = this.money2;
-      } else {
+      } else if (this.money1 != "" && this.money2 != "") {
         query.small = this.money1;
         query.big = this.money2;
       }
-      console.log(query);
+      return query;
+    },
+    goquery() {
+      const query = this.makependingquery();
+      this.axios
+        .get("/api/getpet", {
+          params: {
+            ...query
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.tabledata = results.message;
+            this.total = results.total;
+            for (let i in this.tabledata) {
+              var now = this.moment(
+                this.moment(new Date()).format("YYYY-MM-DD")
+              );
+              var age = Util.displayAge(this.tabledata[i].birthday, now);
+              this.tabledata[i].age = age;
+            }
+          }
+        });
+    },
+    gosearch() {
+      this.page_no = 1;
+      this.goquery();
+    },
+    goseeout() {
+      this.page_no = 1;
+      this.seeout = true;
+      this.money1 = "";
+      this.money2 = "";
+      this.goquery();
+    },
+    goseein() {
+      this.page_no = 1;
+      this.seeout = false;
+      this.money1 = "";
+      this.money2 = "";
+      this.goquery();
     },
     goaddshop() {
       this.$confirm("确定加入购物车?", "提示", {
@@ -169,15 +164,23 @@ export default {
         })
         .catch(() => {});
     },
-    godetail() {
+    godetail(row) {
       this.rjDialog
         .title("宠物详情")
         .width("500px")
-        .currentView(detail, {})
+        .currentView(detail, { row })
         .showClose(true)
         .sizeTiny()
         .then(opt => {})
         .show();
+    },
+    sizeChangeHandle(val) {
+      this.page_size = val;
+      this.goquery();
+    },
+    currentChangeHandle(val) {
+      this.page_no = val;
+      this.goquery();
     }
   }
 };
@@ -194,16 +197,16 @@ export default {
   margin-right: 40px;
   text-align: right;
 }
-.__p_Cb_u_110 {
+.shopcar {
   cursor: pointer;
   position: absolute;
   display: none;
 }
-.__p_Cb_u_44:hover .__p_Cb_u_110 {
+.petdiv:hover .shopcar {
   display: block;
 }
 
-.__p_Cb_u_45 {
+.petpic {
   width: 100px;
   height: 100px;
   display: block;
@@ -214,11 +217,11 @@ export default {
   transition: all 0.6s;
 }
 
-.__p_Cb_u_44 .__p_Cb_u_45:hover {
+.petdiv .petpic:hover {
   transform: scale(1.4);
 }
 
-.__p_Cb_u_46 {
+.text3 {
   font-size: 30px;
   font-family: "jelly";
   color: #67b4fc;
@@ -229,20 +232,20 @@ export default {
   margin-top: 10px;
 }
 
-.__p_Cb_u_51 {
+.text1 {
   color: #6e6b6b;
   font-family: "jelly";
   font-size: 20px;
 }
 
-.__p_Cb_u_50 {
+.text {
   display: flex;
   line-height: 20px;
   justify-content: space-between;
   padding-right: 10px;
 }
 
-.__p_Cb_u_53 {
+.text2 {
   display: flex;
   line-height: 20px;
   justify-content: space-between;
@@ -250,16 +253,21 @@ export default {
   padding-right: 10px;
 }
 
-.__p_Cb_u_44 {
+.petdiv {
   cursor: pointer;
-  width: 150px;
+  width: 200px;
   height: 220px;
   border: 1px solid #dddddd;
   display: inline-block;
   padding-left: 20px;
   padding-right: 10px;
-  margin-right: 30px;
+  margin-right: 24px;
   padding-top: 5px;
   margin-top: 30px;
+}
+.divbut {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
 }
 </style>

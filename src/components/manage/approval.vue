@@ -65,7 +65,6 @@
             class="__p_C7_u_269"
             v-model="type"
             @change="selectchange"
-            clearable
           >
             <el-option value="审批者" label="审批者"></el-option>
             <el-option value="充值账号" label="充值账号"></el-option>
@@ -81,6 +80,7 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            clearable
           ></el-date-picker>
           <el-select
             size="small"
@@ -88,6 +88,7 @@
             clearable
             v-model="recordquery.searchval"
             v-else-if="type=='状态'"
+            clearable
           >
             <el-option value="yes" label="已同意"></el-option>
             <el-option value="no" label="待审批"></el-option>

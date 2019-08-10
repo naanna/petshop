@@ -4,7 +4,7 @@
       <span class="title">账号信息</span>
       <el-form
         label-position="right"
-        class="__p_2362_uid_194"
+        class="boder1"
         :model="form"
         :rules="rules"
         ref="form"
@@ -51,7 +51,7 @@
         <el-form-item label="注册日期：" label-width="300px" class="formclass">
           <span style="color: #898989;">{{form.regday}}</span>
         </el-form-item>
-        <div class="__p_2362_uid_214">
+        <div class="button1">
           <el-button type="primary" size="small" @click="gosave">保存</el-button>
           <el-button size="small" @click="goclear">取消</el-button>
         </div>
@@ -59,7 +59,7 @@
     </div>
     <div style="margin-top:20px;">
       <span class="title">会员信息</span>
-      <el-form class="__p_2362_uid_194">
+      <el-form class="boder1">
         <el-form-item label="账户余额：" label-width="300px" class="formclass">
           <span style="color: #898989;">{{form.money}}</span>
         </el-form-item>
@@ -92,16 +92,16 @@
     </div>
     <div style="margin-top:20px;">
       <span class="title">账号安全</span>
-      <div class="__p_2364_uid_284">
+      <div class="psd">
         <div>
-          <img src="@picture/psdicon.png" class="__p_2364_uid_293" />
+          <img src="@picture/psdicon.png" class="psdpicture" />
         </div>
-        <div class="__p_2364_uid_286">
-          <span class="__p_2364_uid_287">我的密码</span>
-          <span class="__p_2364_uid_288">修改密码，账号更安全</span>
-          <div class="__p_2364_uid_289">
-            <img src="@picture/set.png" class="__p_2364_uid_290" />
-            <span class="__p_2364_uid_291" @click="gopsd">更改密码></span>
+        <div class="psd2">
+          <span class="psd1">我的密码</span>
+          <span class="psd3">修改密码，账号更安全</span>
+          <div class="psd4">
+            <img src="@picture/set.png" class="psd6" />
+            <span class="psd5" @click="gopsd">更改密码></span>
           </div>
         </div>
       </div>
@@ -261,7 +261,7 @@ export default {
   padding-bottom: 5px;
 }
 
-.__p_2362_uid_194 {
+.boder1 {
   background: #ffffff;
   border: 1px solid #dddddd;
   padding-top: 10px;
@@ -270,47 +270,47 @@ export default {
   padding-bottom: 10px;
 }
 
-.__p_2362_uid_214 {
+.button1 {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 10px;
   box-shadow: 0px 0px;
 }
-.__p_2364_uid_284 {
+.psd {
   margin-top: 20px;
   margin-left: 20px;
   width: 350px;
   display: flex;
 }
-.__p_2364_uid_293 {
+.psdpicture {
   width: 80px;
   height: 80px;
   border-radius: 40px;
   margin-top: 10px;
 }
 
-.__p_2364_uid_287 {
+.psd1 {
   font-size: 18px;
   display: block;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.__p_2364_uid_288 {
+.psd3 {
   font-size: 14px;
   color: #898989;
   display: block;
 }
-.__p_2364_uid_286 {
+.psd2 {
   flex: 1;
   margin-left: 20px;
 }
-.__p_2364_uid_290 {
+.psd6 {
   vertical-align: middle;
   border-radius: 10px;
 }
 
-.__p_2364_uid_291 {
+.psd5 {
   color: #52d0f3;
   vertical-align: middle;
   cursor: pointer;
@@ -318,7 +318,7 @@ export default {
   margin-left: 10px;
 }
 
-.__p_2364_uid_289 {
+.psd4 {
   padding-top: 10px;
   padding-bottom: 10px;
 }

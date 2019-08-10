@@ -58,14 +58,14 @@
       </el-form-item>
     </el-form>
     <div class="__p_C8_u_268">
-      <el-button type="primary" size="small" @click="goadd">添加</el-button>
+      <el-button type="primary" size="small" @click="goadd">保存</el-button>
       <el-button size="small" @click="goclose">取消</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import { checkname } from "@assets/validate.js";
+import { checkgoodsname } from "@assets/validate.js";
 export default {
   data() {
     return {
@@ -81,8 +81,8 @@ export default {
       edit: "no",
       rules: {
         name: [
-          { validator: checkname, types: "商品名" },
-          { min: 1, max: 10, message: "长度在1到30个字符" }
+          { validator: checkgoodsname },
+          { min: 1, max: 30, message: "长度在1到30个字符" }
         ],
         price: [{ type: "number", message: "价格必须为数字值" }],
         num: [{ type: "number", message: "库存必须为数字值" }]
@@ -101,24 +101,26 @@ export default {
     goadd() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.fileList.length == 0)
-            this.$message.warning("请选择商品图片！");
-          else this.form.picture = this.fileList[0].url;
-          // if (this.edit == "no") {
-          //   this.axios.post("/api/addpet", this.form).then(res => {
-          //     if (res.data.success) {
-          //       this.$message.success("成功添加商品！");
-          //       this.closeRjDialog && this.closeRjDialog();
-          //     }
-          //   });
-          // } else {
-          //   this.axios.post("/api/updatepet", this.form).then(res => {
-          //     if (res.data.success) {
-          //       this.$message.success("成功编辑商品！");
-          //       this.closeRjDialog && this.closeRjDialog();
-          //     }
-          //   });
-          // }
+          if (this.edit == "no") {
+            if (this.fileList.length == 0)
+              this.$message.warning("请选择商品图片！");
+            else {
+              this.form.picture = this.fileList[0].url;
+              this.axios.post("/api/addgood", this.form).then(res => {
+                if (res.data.success) {
+                  this.$message.success("成功添加商品！");
+                  this.closeRjDialog && this.closeRjDialog();
+                }
+              });
+            }
+          } else {
+            this.axios.post("/api/updategood", this.form).then(res => {
+              if (res.data.success) {
+                this.$message.success("成功编辑商品！");
+                this.closeRjDialog && this.closeRjDialog();
+              }
+            });
+          }
         } else {
           return false;
         }
@@ -179,8 +181,8 @@ export default {
 
 <style scoped>
 .seepicture {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 }
 .formlist {
   width: 250px;
@@ -188,5 +190,8 @@ export default {
 
 .__p_C8_u_268 {
   text-align: center;
+}
+.el-avatar >>> img {
+  width: 150px;
 }
 </style>

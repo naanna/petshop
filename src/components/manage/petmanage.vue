@@ -2,12 +2,12 @@
   <div>
     <span class="fontclass">宠物管理</span>
     <div>
-      <div class="__p_C7_u_278">
+      <div class="button">
         <el-button type="primary" size="small" @click="goadd">添加宠物</el-button>
         <el-button type="primary" size="small" @click="go2del">批量删除</el-button>
       </div>
-      <div class="__p_C7_u_279">
-        <el-select size="small" class="__p_2363_uid_262" v-model="type" @change="change">
+      <div class="buttondiv">
+        <el-select size="small" class="select" v-model="type" @change="change">
           <el-option value="编号" label="编号"></el-option>
           <el-option value="状态" label="状态"></el-option>
           <el-option value="种类" label="种类"></el-option>
@@ -19,9 +19,9 @@
           type="text"
           size="small"
           clearable
-          class="__p_2363_uid_263"
+          class="select"
         ></el-input>
-        <el-select v-else clearable size="small" class="__p_2363_uid_262" v-model="searchval">
+        <el-select v-else clearable size="small" class="select" v-model="searchval">
           <el-option v-if="type=='种类'" value="cat" label="猫咪"></el-option>
           <el-option v-if="type=='种类'" value="dog" label="狗狗"></el-option>
           <el-option v-if="type=='种类'" value="pig" label="香猪"></el-option>
@@ -40,7 +40,7 @@
       stripe
       border
       highlight-current-row
-      class="__p_2363_uid_252"
+      class="table"
       @selection-change="handleSelectionChange"
     >
       <el-table-column prop="id" type="selection" width="50px" align="center" header-align="center"></el-table-column>
@@ -109,7 +109,7 @@ export default {
     };
   },
   created() {
-    this.go2Query();
+    this.goquery();
   },
   methods: {
     makependingquery() {
@@ -129,7 +129,7 @@ export default {
 
       return query;
     },
-    go2Query() {
+    goquery() {
       const query = this.makependingquery();
       this.axios
         .get("/api/getpet", {
@@ -164,7 +164,7 @@ export default {
             })
             .then(res => {
               if (res.data.success) {
-                this.go2Query();
+                this.goquery();
                 this.$message.success("删除成功！");
               }
             });
@@ -179,7 +179,7 @@ export default {
         .showClose(true)
         .sizeTiny()
         .then(opt => {
-          this.go2Query();
+          this.goquery();
         })
         .show();
     },
@@ -207,7 +207,7 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
-                this.go2Query();
+                this.goquery();
               }
             });
         })
@@ -223,24 +223,24 @@ export default {
         .showClose(true)
         .sizeTiny()
         .then(opt => {
-          this.go2Query();
+          this.goquery();
         })
         .show();
     },
     gosearch() {
       this.page_no = 1;
-      this.go2Query();
+      this.goquery();
     },
     change() {
       this.searchval = "";
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.go2Query();
+      this.goquery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.go2Query();
+      this.goquery();
     },
     godetail(row) {
       this.rjDialog
@@ -252,7 +252,7 @@ export default {
         .showClose(true)
         .sizeTiny()
         .then(opt => {
-          this.go2Query();
+          this.goquery();
         })
         .show();
     },
@@ -269,33 +269,22 @@ export default {
 };
 </script>
 <style scoped>
-.__p_2363_uid_262 {
+.select {
   width: 200px;
   display: inline-block;
   vertical-align: bottom;
   margin-right: 10px;
 }
 
-.__p_2363_uid_263 {
-  width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
-  margin-right: 10px;
-}
-
-.__p_2363_uid_261 {
-  margin-top: 20px;
-}
-
-.__p_2363_uid_252 {
+.table {
   margin-top: 10px;
 }
 
-.__p_C7_u_278 {
+.button {
   display: inline-block;
   margin-top: 20px;
 }
-.__p_C7_u_279 {
+.buttondiv {
   float: right;
   display: inline-block;
 }

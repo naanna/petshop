@@ -25,7 +25,7 @@
         />
       </div>
 
-      <el-select size="small" style="width:200px;" v-model="searchval" v-else>
+      <el-select size="small" style="width:200px;" v-model="searchval" v-else clearable>
         <el-option value="狗粮" label="狗粮"></el-option>
         <el-option value="猫粮" label="猫粮"></el-option>
         <el-option value="猪粮" label="猪粮"></el-option>
@@ -40,16 +40,13 @@
       <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
     </div>
     <el-row>
-      <el-col :span="4" v-for="(item, index) in 8" :key="index">
+      <el-col :span="4" v-for="(item, index) in tabledata" :key="index">
         <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
-          <el-image
-            class="image"
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-          ></el-image>
+          <el-image class="image" :src="item.picture"></el-image>
           <div>
-            <span class="money">¥ 5元</span>
-            <span class="num">0件</span>
-            <span class="title">麦当劳板烧鸡腿堡</span>
+            <span class="money">¥ {{item.price}}元</span>
+            <span class="num">{{item.num}}件</span>
+            <span class="title">{{item.name}}</span>
             <div class="flexclass">
               <el-button
                 v-if="collect"
@@ -73,10 +70,12 @@
     </el-row>
 
     <el-pagination
-      :current-page="1"
-      :page-sizes="[50,100,200]"
-      :page-size="50"
-      :total="100"
+      @size-change="sizeChangeHandle"
+      @current-change="currentChangeHandle"
+      :current-page="page_no"
+      :page-sizes="[12,24,36,48]"
+      :page-size="page_size"
+      :total="total"
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
@@ -102,8 +101,12 @@ export default {
       money2: "",
       total: 0,
       page_no: 1,
-      page_size: 10
+      page_size: 12,
+      tabledata: []
     };
+  },
+  created() {
+    this.goquery();
   },
   methods: {
     makependingquery() {
@@ -132,12 +135,24 @@ export default {
       return query;
     },
     goquery() {
-      const query = this.makependingquery();
-      console.log(query);
+      let query = this.makependingquery();
+      this.axios
+        .get("/api/getgood", {
+          params: {
+            ...query
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.tabledata = results.message;
+            this.total = results.total;
+          }
+        });
     },
     gosearch() {
       this.page_no = 1;
-      this.go2Query();
+      this.goquery();
     },
     goaddshop() {
       this.$confirm("确定加入购物车?", "提示", {
@@ -169,6 +184,14 @@ export default {
         .sizeTiny()
         .then(opt => {})
         .show();
+    },
+    sizeChangeHandle(val) {
+      this.page_size = val;
+      this.goquery();
+    },
+    currentChangeHandle(val) {
+      this.page_no = val;
+      this.goquery();
     }
   }
 };
@@ -198,6 +221,7 @@ export default {
 
 .image {
   width: 100%;
+  height: 160px;
   display: block;
 }
 .money {

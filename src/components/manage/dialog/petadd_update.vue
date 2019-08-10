@@ -91,7 +91,7 @@ export default {
       rules: {
         name: [
           { validator: checkname, types: "名字" },
-          { min: 1, max: 10, message: "长度在1到10个字符" }
+          { min: 1, max: 5, message: "长度在1到5个字符" }
         ],
         birthday: [
           { validator: checkinput, trigger: "blur", message: "生日不能为空" }

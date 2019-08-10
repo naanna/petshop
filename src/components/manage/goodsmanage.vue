@@ -45,22 +45,29 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column prop="id" type="selection" width="50px" align="center" header-align="center"></el-table-column>
-      <el-table-column label="编号" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="商品名" prop="id" align="center" header-align="center">
+      <el-table-column label="编号" prop="goodid" align="center" header-align="center"></el-table-column>
+      <el-table-column label="商品名" prop="name" align="center" header-align="center">
         <template slot-scope="scope">
-          <span>123</span>
+          <span>{{scope.row.name}}</span>
           <el-popover placement="right" trigger="click">
-            <el-image style="width: 200px; height: 150px" :src="url" fit="fill"></el-image>
+            <el-image style="width: 200px; height: 200px" :src="scope.row.picture" fit="fill"></el-image>
             <i class="el-icon-picture icon" slot="reference"></i>
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="商品类型" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="价格" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="库存" prop="id" align="center" header-align="center"></el-table-column>
+      <el-table-column label="商品类型" prop="type" align="center" header-align="center"></el-table-column>
+      <el-table-column label="价格" prop="price" align="center" header-align="center"></el-table-column>
+      <el-table-column label="库存" prop="num" align="center" header-align="center"></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <div slot-scope="scope">
           <el-button type="text" size="small" @click="goupdate(scope.row)">编辑</el-button>
+          <el-button
+            v-if="scope.row.status=='sale'"
+            type="text"
+            size="small"
+            @click="godown_up(scope.row,'soldout')"
+          >下架</el-button>
+          <el-button v-else type="text" size="small" @click="godown_up(scope.row,'sale')">上架</el-button>
           <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
         </div>
       </el-table-column>
@@ -88,16 +95,17 @@ export default {
   },
   data() {
     return {
-      url:
-        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       type: "编号",
       searchval: "",
-      tabledata: [{ id: "1" }],
+      tabledata: [],
       total: 0,
       page_no: 1,
       page_size: 10,
       selectObj: []
     };
+  },
+  created() {
+    this.goquery();
   },
   methods: {
     makependingquery() {
@@ -111,23 +119,69 @@ export default {
         } else if (this.type == "商品名") {
           query.name = this.searchval;
         } else if (this.type == "种类") {
-          query.type = this.type;
+          query.type = this.searchval;
         }
       }
 
       return query;
     },
     goquery() {
-      const query = this.makependingquery();
-      console.log(query);
+      let query = this.makependingquery();
+      this.axios
+        .get("/api/getgood", {
+          params: {
+            ...query
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.tabledata = results.message;
+            this.total = results.total;
+          }
+        });
     },
     godel(row) {
-      this.$confirm("您确定要删除该宠物信息吗?", "提示", {
+      this.$confirm(
+        "您确定要删除该商品吗?用户购物车和收藏表内将不出现此商品!",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消"
+        }
+      )
+        .then(() => {
+          this.axios
+            .delete("/api/deletegood", {
+              data: [{ goodid: row.goodid }]
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("删除成功！");
+                this.goquery();
+              }
+            });
+        })
+        .catch(() => {});
+    },
+    godown_up(row, status) {
+      let statusinfo = "";
+      if (status == "sale")
+        statusinfo = "您确定要上架该商品吗?用户购物车和收藏表内将显示有效！";
+      else statusinfo = "您确定要下架该商品吗?用户购物车和收藏表内将显示失效！";
+      this.$confirm(statusinfo, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message.success("您已成功删除");
+          row.status = status;
+          row.downorup = "downorup";
+          this.axios.post("/api/updategood", row).then(res => {
+            if (res.data.success) {
+              this.$message.success(statusinfo + "成功！");
+              this.goquery();
+            }
+          });
         })
         .catch(() => {});
     },
@@ -138,7 +192,9 @@ export default {
         .currentView(add_update, {})
         .showClose(true)
         .sizeTiny()
-        .then(opt => {})
+        .then(opt => {
+          this.goquery();
+        })
         .show();
     },
     go2del() {
@@ -153,23 +209,27 @@ export default {
         this.$message.warning("请选中要删除的对象！");
         return;
       }
-      // this.$confirm("确认删除这些商品信息吗？", "提示", {
-      //   confirmButtonText: "确定",
-      //   cancelButtonText: "取消"
-      // })
-      //   .then(() => {
-      //     this.axios
-      //       .delete("/api/deletepet", {
-      //         data: delobs
-      //       })
-      //       .then(res => {
-      //         if (res.data.success) {
-      //           this.$message.success("删除成功！");
-      //           this.goquery();
-      //         }
-      //       });
-      //   })
-      //   .catch(() => {});
+      this.$confirm(
+        "确认删除这些商品信息吗?用户购物车和收藏表内将显示失效！",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消"
+        }
+      )
+        .then(() => {
+          this.axios
+            .delete("/api/deletegood", {
+              data: delobs
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("删除成功！");
+                this.goquery();
+              }
+            });
+        })
+        .catch(() => {});
     },
     goupdate(row) {
       this.rjDialog
@@ -178,7 +238,9 @@ export default {
         .currentView(add_update, { row })
         .showClose(true)
         .sizeTiny()
-        .then(opt => {})
+        .then(opt => {
+          this.goquery();
+        })
         .show();
     },
     gosearch() {
