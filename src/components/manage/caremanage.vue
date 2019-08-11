@@ -6,23 +6,36 @@
         <div style="margin-bottom:10px;">
           <el-button class="__p_C7_u_278" type="primary" size="small" @click="goallrefused">批量拒绝</el-button>
           <div class="__p_C7_u_279">
-            <el-select size="small" class="__p_C7_u_280" v-model="type">
+            <el-select size="small" class="__p_C7_u_280" v-model="approval.type">
               <el-option value="寄养者" label="寄养者"></el-option>
               <el-option value="寄养单号" label="寄养单号"></el-option>
               <el-option value="申请类型" label="申请类型"></el-option>
             </el-select>
+            <el-select
+              v-if="approval.type=='申请类型'"
+              size="small"
+              class="__p_C7_u_281"
+              v-model="approval.searchval"
+              clearable
+            >
+              <el-option value="care" label="寄养"></el-option>
+              <el-option value="back" label="领回"></el-option>
+              <el-option value="long" label="延迟"></el-option>
+            </el-select>
             <el-input
+              v-else
               placeholder="请输入内容"
               type="text"
               size="small"
               class="__p_C7_u_281"
-              v-model="searchval"
+              v-model="approval.searchval"
+              clearable
             ></el-input>
-            <el-button type="primary" size="small" class="__p_C7_u_282">搜索</el-button>
+            <el-button type="primary" size="small" @click="goapprovalsearch">搜索</el-button>
           </div>
         </div>
         <el-table
-          :data="tabledata"
+          :data="approvaldata"
           stripe
           highlight-current-row
           @selection-change="handleSelectionChange"
@@ -34,13 +47,18 @@
             align="center"
             header-align="center"
           ></el-table-column>
-          <el-table-column label="寄养单号" prop="username" align="center" header-align="center"></el-table-column>
-          <el-table-column label="宠物编号" prop="nickname" align="center" header-align="center"></el-table-column>
-          <el-table-column label="宠物名" prop="nickname" align="center" header-align="center"></el-table-column>
-          <el-table-column label="寄养日期" prop="name" align="center" header-align="center"></el-table-column>
-          <el-table-column label="寄养时长" prop="birthday" align="center" header-align="center"></el-table-column>
-          <el-table-column label="申请类型" prop="sex" align="center" header-align="center"></el-table-column>
-          <el-table-column label="寄养者" prop="leavel" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
+          <el-table-column label="宠物编号" prop="petid" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养日期" prop="starttime" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养时长" prop="timerang" align="center" header-align="center"></el-table-column>
+          <el-table-column label="申请类型" prop="caretype" align="center" header-align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.caretype=='care'">寄养</span>
+              <span v-else-if="scope.row.caretype=='long'">延迟</span>
+              <span v-else>领回</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="寄养者" prop="username" align="center" header-align="center"></el-table-column>
           <el-table-column label="操作" width="130" align="center" header-align="center">
             <div slot-scope="scope">
               <el-button type="text" size="small" @click="centerDialogVisible=true">同意</el-button>
@@ -49,12 +67,12 @@
           </el-table-column>
         </el-table>
         <el-pagination
-          @size-change="sizeChangeHandle"
-          @current-change="currentChangeHandle"
-          :current-page="page_no"
+          @size-change="sizeChangeHandle1"
+          @current-change="currentChangeHandle1"
+          :current-page="approval.page_no"
           :page-sizes="[10,20,50,100]"
-          :page-size="page_size"
-          :total="total"
+          :page-size="approval.page_size"
+          :total="approval.total"
           layout="total, sizes, prev, pager, next, jumper"
           class="fyclass"
         ></el-pagination>
@@ -77,23 +95,37 @@
             <el-button type="primary" size="small" @click="go2del">批量删除</el-button>
           </div>
           <div class="__p_C7_u_279">
-            <el-select size="small" class="__p_C7_u_280" v-model="recordtype">
+            <el-select size="small" class="__p_C7_u_280" v-model="recode.type">
               <el-option value="寄养者" label="寄养者"></el-option>
               <el-option value="寄养单号" label="寄养单号"></el-option>
               <el-option value="状态" label="状态"></el-option>
             </el-select>
+            <el-select
+              v-if="recode.type=='状态'"
+              size="small"
+              class="__p_C7_u_281"
+              v-model="recode.searchval"
+              clearable
+            >
+              <el-option value="agreeing" label="待同意"></el-option>
+              <el-option value="agreed" label="已同意"></el-option>
+              <el-option value="refused" label="拒绝"></el-option>
+              <el-option value="end" label="已结束"></el-option>
+            </el-select>
             <el-input
+              v-else
               placeholder="请输入内容"
               type="text"
               size="small"
               class="__p_C7_u_281"
-              v-model="searchval"
+              v-model="recode.searchval"
+              clearable
             ></el-input>
-            <el-button type="primary" size="small" class="__p_C7_u_282">搜索</el-button>
+            <el-button type="primary" size="small" class="__p_C7_u_282" @click="gorecodesearch">搜索</el-button>
           </div>
         </div>
         <el-table
-          :data="tabledata"
+          :data="recodedata"
           stripe
           highlight-current-row
           @selection-change="handleSelectionChange"
@@ -105,14 +137,21 @@
             align="center"
             header-align="center"
           ></el-table-column>
-          <el-table-column label="寄养单号" prop="username" align="center" header-align="center"></el-table-column>
-          <el-table-column label="宠物编号" prop="nickname" align="center" header-align="center"></el-table-column>
-          <el-table-column label="寄养日期" prop="name" align="center" header-align="center"></el-table-column>
-          <el-table-column label="寄养时长" prop="birthday" align="center" header-align="center"></el-table-column>
-          <el-table-column label="金额" prop="sex" align="center" header-align="center"></el-table-column>
-          <el-table-column label="领回日期" prop="birthday" align="center" header-align="center"></el-table-column>
-          <el-table-column label="寄养者" prop="leavel" align="center" header-align="center"></el-table-column>
-          <el-table-column label="状态" prop="leavel" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
+          <el-table-column label="宠物编号" prop="petid" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养日期" prop="starttime" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养时长" prop="timerang" align="center" header-align="center"></el-table-column>
+          <el-table-column label="金额" prop="careprice" align="center" header-align="center"></el-table-column>
+          <el-table-column label="领回日期" prop="endtime" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养者" prop="username" align="center" header-align="center"></el-table-column>
+          <el-table-column label="状态" prop="carestatus" align="center" header-align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.carestatus=='agreeing'">待同意</span>
+              <span v-else-if="scope.row.carestatus=='agreed'">已同意</span>
+              <span v-else-if="scope.row.carestatus=='refused'">拒绝</span>
+              <span v-else>已结束</span>
+            </template>
+          </el-table-column>
           <el-table-column label="操作" width="130" align="center" header-align="center">
             <div slot-scope="scope">
               <el-button type="text" size="small" @click="goupdate">编辑</el-button>
@@ -124,10 +163,10 @@
         <el-pagination
           @size-change="sizeChangeHandle"
           @current-change="currentChangeHandle"
-          :current-page="page_no"
+          :current-page="recode.page_no"
           :page-sizes="[10,20,50,100]"
-          :page-size="page_size"
-          :total="total"
+          :page-size="recode.page_size"
+          :total="recode.total"
           layout="total, sizes, prev, pager, next, jumper"
           class="fyclass"
         ></el-pagination>
@@ -147,20 +186,107 @@ export default {
   data() {
     return {
       centerDialogVisible: false,
-      type: "寄养者",
-      recordtype: "寄养者",
-      searchval: "",
-      tabledata: [{ id: 1 }],
-      total: 0,
-      page_no: 1,
-      page_size: 10
+      approvaldata: [],
+      longtime: "",
+      recodedata: [],
+      approval: {
+        type: "寄养者",
+        searchval: "",
+        total: 0,
+        page_no: 1,
+        page_size: 10
+      },
+      recode: {
+        type: "寄养者",
+        searchval: "",
+        total: 0,
+        page_no: 1,
+        page_size: 10
+      }
     };
   },
   created() {
-    this.go2Query();
+    this.goapprovalquery();
+    this.gorecodequery();
   },
   methods: {
-    go2Query() {},
+    makeapprovalquery() {
+      let query = {
+        page_no: this.approval.page_no,
+        page_size: this.approval.page_size
+      };
+      if (this.approval.searchval != "") {
+        if (this.approval.type == "寄养者") {
+          query.username = this.approval.searchval;
+        } else if (this.approval.type == "寄养单号") {
+          query.careid = this.approval.searchval;
+        } else if (this.approval.type == "申请类型") {
+          query.type = this.approval.searchval;
+        }
+      }
+      return query;
+    },
+    goapprovalquery() {
+      let query = this.makeapprovalquery();
+      this.axios
+        .get("/api/getcaretable", {
+          params: {
+            ...query
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.approvaldata = results.message;
+            for (let i in this.approvaldata) {
+              this.approvaldata[i].starttime = this.moment(
+                this.approvaldata[i].starttime
+              ).format("YYYY-MM-DD");
+              this.approvaldata[i].endtime = this.moment(
+                this.approvaldata[i].endtime
+              ).format("YYYY-MM-DD");
+            }
+            this.approval.total = results.total;
+          }
+        });
+    },
+    makerecodequery() {
+      let query = {
+        page_no: this.recode.page_no,
+        page_size: this.recode.page_size
+      };
+      if (this.recode.searchval != "") {
+        if (this.recode.type == "寄养者") {
+          query.username = this.recode.searchval;
+        } else if (this.recode.type == "寄养单号") {
+          query.careid = this.recode.searchval;
+        } else if (this.recode.type == "状态") {
+          query.status = this.recode.searchval;
+        }
+      }
+      return query;
+    },
+    gorecodequery() {
+      let query = this.makerecodequery();
+      this.axios
+        .get("/api/getcaretable", {
+          params: {
+            ...query
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.recodedata = results.message;
+            for (let i in this.recodedata) {
+              this.recodedata[i].starttime = this.moment(
+                this.recodedata[i].starttime
+              ).format("YYYY-MM-DD");
+            }
+            this.recode.total = results.total;
+          }
+        });
+    },
     gorefused() {
       this.$confirm("您确定要拒绝本条寄养?", "提示", {
         confirmButtonText: "确定",
@@ -207,13 +333,29 @@ export default {
     gonote() {
       this.$message("弹出备注框,只能查看记录");
     },
+    gorecodesearch() {
+      this.recode.page_no = 1;
+      this.gorecodequery();
+    },
+    goapprovalsearch() {
+      this.approval.page_no = 1;
+      this.goapprovalquery();
+    },
+    sizeChangeHandle1(val) {
+      this.approval.page_size = val;
+      this.goapprovalquery();
+    },
+    currentChangeHandle1(val) {
+      this.approval.page_no = val;
+      this.goapprovalquery();
+    },
     sizeChangeHandle(val) {
-      this.page_size = val;
-      this.go2Query();
+      this.recode.page_size = val;
+      this.gorecodequery();
     },
     currentChangeHandle(val) {
-      this.page_no = val;
-      this.go2Query();
+      this.recode.page_nopage_no = val;
+      this.gorecodequery();
     },
     handleSelectionChange(val) {
       let self = this;
@@ -247,6 +389,7 @@ export default {
 
 .__p_C7_u_281 {
   width: 200px;
+  margin-right: 10px;
 }
 
 .__p_C7_u_282 {

@@ -50,7 +50,7 @@
 
 <script>
 import rjDialog from "../dialog";
-import add_update from "./add_update.vue";
+import caretable from "./caretable.vue";
 export default {
   components: {
     rjDialog
@@ -61,7 +61,7 @@ export default {
       tabledata: [{ id: 1 }],
       type: "寄养单号",
       longtime: "",
-      searchval:""
+      searchval: ""
     };
   },
   methods: {
@@ -80,10 +80,11 @@ export default {
       this.$message.success("您已成功提交延长申请，请等待管理员处理");
     },
     goadd() {
+      var booking = true;
       this.rjDialog
         .title("我要寄养")
-        .width("800px")
-        .currentView(add_update, {})
+        .width("600px")
+        .currentView(caretable, {})
         .showClose(true)
         .sizeTiny()
         .then(opt => {})
@@ -94,7 +95,6 @@ export default {
 </script>
 
 <style scoped>
-
 .float {
   float: right;
 }
@@ -117,5 +117,4 @@ export default {
 .botton {
   margin-top: 20px;
 }
-
 </style>

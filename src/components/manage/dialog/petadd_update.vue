@@ -62,7 +62,7 @@
         <el-input type="textarea" :rows="3" class="formlist" v-model="form.note"></el-input>
       </el-form-item>
     </el-form>
-    <div class="__p_C8_u_268">
+    <div class="button">
       <el-button type="primary" size="small" @click="goadd">添加</el-button>
       <el-button size="small" @click="goclose">取消</el-button>
     </div>
@@ -106,11 +106,19 @@ export default {
     };
   },
   mounted() {
+    this.form.status = "saling";
     if (this.rjDialogParams().row) {
       let obs = this.rjDialogParams().row;
       this.form = obs;
       if (obs.picture != null) this.imageUrl = obs.picture;
       this.edit = "yes";
+    }
+    if (this.rjDialogParams().pet) {
+      this.form.status = "caring";
+      if (!this.rjDialogParams().pet.pet) {
+        this.form = this.rjDialogParams().pet;
+        this.imageUrl = this.rjDialogParams().pet.picture;
+      }
     }
   },
   methods: {
@@ -120,23 +128,26 @@ export default {
           this.form.birthday = this.moment(this.form.birthday).format(
             "YYYY-MM-DD"
           );
-          this.form.status = "saling";
           if (this.fileList.length == 0) this.form.picture = null;
           else this.form.picture = this.fileList[0].url;
-          if (this.edit == "no") {
-            this.axios.post("/api/addpet", this.form).then(res => {
-              if (res.data.success) {
-                this.$message.success("成功添加宠物！");
-                this.closeRjDialog && this.closeRjDialog();
-              }
-            });
+          if (this.form.status == "caring") {
+            this.closeRjDialog && this.closeRjDialog(this.form);
           } else {
-            this.axios.post("/api/updatepet", this.form).then(res => {
-              if (res.data.success) {
-                this.$message.success("成功编辑宠物！");
-                this.closeRjDialog && this.closeRjDialog();
-              }
-            });
+            if (this.edit == "no") {
+              this.axios.post("/api/addpet", this.form).then(res => {
+                if (res.data.success) {
+                  this.$message.success("成功添加宠物！");
+                  this.closeRjDialog && this.closeRjDialog();
+                }
+              });
+            } else {
+              this.axios.post("/api/updatepet", this.form).then(res => {
+                if (res.data.success) {
+                  this.$message.success("成功编辑宠物！");
+                  this.closeRjDialog && this.closeRjDialog();
+                }
+              });
+            }
           }
         } else {
           return false;
@@ -198,14 +209,17 @@ export default {
 
 <style scoped>
 .seepicture {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 }
 .formlist {
   width: 250px;
 }
 
-.__p_C8_u_268 {
+.button {
   text-align: center;
+}
+.el-avatar >>> img {
+  width: 150px;
 }
 </style>
