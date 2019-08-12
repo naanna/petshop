@@ -14,13 +14,27 @@
       <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
     </div>
     <el-table :data="tabledata" stripe border highlight-current-row class="table">
-      <el-table-column label="寄养单号" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="宠物名" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="寄养日期" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="寄养时长" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="领回日期" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="状态" prop="id" align="center" header-align="center"></el-table-column>
-      <el-table-column label="金额" prop="id" align="center" header-align="center"></el-table-column>
+      <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
+      <el-table-column label="宠物名" prop="name" align="center" header-align="center"></el-table-column>
+      <el-table-column label="寄养日期" prop="starttime" align="center" header-align="center"></el-table-column>
+      <el-table-column label="寄养时长" prop="timerang" align="center" header-align="center"></el-table-column>
+      <el-table-column label="领回日期" prop="endtime" align="center" header-align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.endtime!='Invalid date'">{{scope.row.endtime}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" prop="caretype" align="center" header-align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.caretype=='care'">寄养</span>
+          <span v-else-if="scope.row.caretype=='long'">延长</span>
+          <span v-else>领回</span>
+          <span v-if="scope.row.carestatus=='agreeing'">待同意</span>
+          <span v-else-if="scope.row.carestatus=='agreed'">已同意</span>
+          <span v-else-if="scope.row.carestatus=='refused'">拒绝</span>
+          <span v-else>已结束</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="金额" prop="careprice" align="center" header-align="center"></el-table-column>
     </el-table>
     <el-pagination
       @size-change="sizeChangeHandle"
@@ -53,7 +67,9 @@ export default {
     makequery() {
       let query = {
         page_no: this.page_no,
-        page_size: this.page_size
+        page_size: this.page_size,
+        username: this.User.username,
+        history: true
       };
 
       if (this.historydata != "" && this.historydata != null) {
@@ -66,26 +82,27 @@ export default {
     },
     goquery() {
       const query = this.makequery();
-      // this.axios
-      //   .get("/api/getpet", {
-      //     params: {
-      //       ...query
-      //     }
-      //   })
-      //   .then(res => {
-      //     if (res.data.success) {
-      //       var results = res.data;
-      //       this.tabledata = results.message;
-      //       this.total = results.total;
-      //       for (let i in this.tabledata) {
-      //         var now = this.moment(
-      //           this.moment(new Date()).format("YYYY-MM-DD")
-      //         );
-      //         var age = Util.displayAge(this.tabledata[i].birthday, now);
-      //         this.tabledata[i].age = age;
-      //       }
-      //     }
-      //   });
+      this.axios
+        .get("/api/getcaretable/person", {
+          params: {
+            ...query
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.tabledata = results.message;
+            this.total = results.total;
+            for (let i in this.tabledata) {
+              this.tabledata[i].starttime = this.moment(
+                this.tabledata[i].starttime
+              ).format("YYYY-MM-DD");
+              this.tabledata[i].endtime = this.moment(
+                this.tabledata[i].endtime
+              ).format("YYYY-MM-DD");
+            }
+          }
+        });
     },
     gosearch() {
       this.page_no = 1;

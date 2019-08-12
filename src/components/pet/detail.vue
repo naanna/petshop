@@ -2,7 +2,7 @@
   <div>
     <div style="display:flex;">
       <div class="div1">
-        <el-avatar shape="square" :size="120" :src="url"></el-avatar>
+        <el-avatar shape="square" :size="120" :src="form.picture"></el-avatar>
         <p class="pclass">{{form.name}}</p>
       </div>
       <div class="div2">
@@ -72,9 +72,7 @@ export default {
   data() {
     return {
       collect: false,
-      customer: false,
       form: [],
-      url: "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/touxiang1.jpg"
     };
   },
   mounted() {
