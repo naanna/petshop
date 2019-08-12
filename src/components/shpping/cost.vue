@@ -106,7 +106,7 @@ export default {
       });
     },
     gohistory() {
-      this.$router.replace("/shpping/historycost");
+      this.$router.push("/shpping/historycost");
     },
     goclear() {
       this.$refs["form"].resetFields();

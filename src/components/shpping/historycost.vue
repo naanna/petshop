@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-page-header @back="goBack" style="display: inline-block;"></el-page-header>
     <span class="title">充值历史</span>
     <div class="table">
       <el-date-picker
@@ -55,6 +56,9 @@ export default {
     currentChangeHandle(val) {
       this.page_no = val;
       this.goquery();
+    },
+    goBack() {
+      this.$router.go(-1);
     }
   }
 };

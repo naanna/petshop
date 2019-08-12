@@ -52,6 +52,10 @@ export default new Router({
       path: '/fostercare/index',
       name: 'allfostercare',
       component: resolve => require(['../components/fostercare/index.vue'], resolve)
+    }, {
+      path: '/fostercare/historycare',
+      name: 'historycare',
+      component: resolve => require(['../components/fostercare/historycare.vue'], resolve)
     },
     {
       path: '/fostercare/my',
@@ -144,6 +148,10 @@ export default new Router({
       path: '/booking/rule',
       name: 'bookingrule',
       component: resolve => require(['../components/booking/rule.vue'], resolve)
+    }, {
+      path: '/booking/historybook',
+      name: 'historybook',
+      component: resolve => require(['../components/booking/historybook.vue'], resolve)
     },
     {
       path: '/help/help',

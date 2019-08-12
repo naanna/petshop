@@ -60,12 +60,7 @@
 
       <el-tab-pane label="充值记录" name="second">
         <div class="__p_2363_uid_261">
-          <el-select
-            size="small"
-            class="__p_C7_u_269"
-            v-model="type"
-            @change="selectchange"
-          >
+          <el-select size="small" class="__p_C7_u_269" v-model="type" @change="selectchange">
             <el-option value="审批者" label="审批者"></el-option>
             <el-option value="充值账号" label="充值账号"></el-option>
             <el-option value="充值日期" label="充值日期"></el-option>
@@ -88,7 +83,6 @@
             clearable
             v-model="recordquery.searchval"
             v-else-if="type=='状态'"
-            clearable
           >
             <el-option value="yes" label="已同意"></el-option>
             <el-option value="no" label="待审批"></el-option>

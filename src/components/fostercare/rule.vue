@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div style="text-align: center;">
-      <p class="ruleclass">寄养规则</p>
-    </div>
+    <p class="ruleclass">寄养规则</p>
     <div class="div1">
       <el-collapse v-model="activeName" accordion>
         <el-collapse-item name="1">
@@ -75,6 +73,7 @@ export default {
 .ruleclass {
   background: linear-gradient(to right, #ffb08f, #5945c0);
   -webkit-background-clip: text;
+  text-align: center;
   font-size: 100px;
   margin-top: 0px;
   margin-bottom: 15px;
