@@ -4,7 +4,6 @@
     <el-tabs value="first" class="__p_2363_uid_261">
       <el-tab-pane label="寄养申请" name="first">
         <div style="margin-bottom:10px;">
-          <el-button class="__p_C7_u_278" type="primary" size="small" @click="goallrefused">批量拒绝</el-button>
           <div class="__p_C7_u_279">
             <el-select size="small" class="__p_C7_u_280" v-model="approval.type">
               <el-option value="寄养者" label="寄养者"></el-option>
@@ -34,12 +33,7 @@
             <el-button type="primary" size="small" @click="goapprovalsearch">搜索</el-button>
           </div>
         </div>
-        <el-table
-          :data="approvaldata"
-          stripe
-          highlight-current-row
-          @selection-change="handleSelectionChange"
-        >
+        <el-table :data="approvaldata" stripe highlight-current-row>
           <el-table-column
             prop="id"
             type="selection"
@@ -50,7 +44,7 @@
           <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
           <el-table-column label="宠物编号" prop="petid" align="center" header-align="center"></el-table-column>
           <el-table-column label="寄养日期" prop="starttime" align="center" header-align="center"></el-table-column>
-          <el-table-column label="寄养时长" prop="timerang" align="center" header-align="center"></el-table-column>
+          <el-table-column label="延迟天数" prop="longtime" align="center" header-align="center"></el-table-column>
           <el-table-column label="申请类型" prop="caretype" align="center" header-align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.caretype=='care'">寄养</span>
@@ -61,8 +55,8 @@
           <el-table-column label="寄养者" prop="username" align="center" header-align="center"></el-table-column>
           <el-table-column label="操作" width="130" align="center" header-align="center">
             <div slot-scope="scope">
-              <el-button type="text" size="small" @click="centerDialogVisible=true">同意</el-button>
-              <el-button type="text" size="small" @click="gorefused">拒绝</el-button>
+              <el-button type="text" size="small" @click="goagree(scope.row)">同意</el-button>
+              <el-button type="text" size="small" @click="gorefused(scope.row)">拒绝</el-button>
             </div>
           </el-table-column>
         </el-table>
@@ -77,13 +71,13 @@
           class="fyclass"
         ></el-pagination>
         <el-dialog title="寄养价格" :visible.sync="centerDialogVisible" width="35%" center>
-          <el-form>
-            <el-form-item label="价格：" label-width="100px" style="margin-bottom:0px;">
-              <el-input type="text" size="small" v-model="longtime" class="__p_C7_u_281"></el-input>
+          <el-form :model="form" :rules="rules" ref="form">
+            <el-form-item label="价格：" label-width="100px" style="margin-bottom:0px;" prop="price">
+              <el-input type="text" size="small" v-model.number="form.price" class="__p_C7_u_281"></el-input>
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">取 消</el-button>
+            <el-button @click="goclose">取 消</el-button>
             <el-button type="primary" @click="goyes">确 定</el-button>
           </span>
         </el-dialog>
@@ -154,8 +148,7 @@
           </el-table-column>
           <el-table-column label="操作" width="130" align="center" header-align="center">
             <div slot-scope="scope">
-              <el-button type="text" size="small" @click="goupdate">编辑</el-button>
-              <el-button type="text" size="small" @click="godel">删除</el-button>
+              <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
               <el-button type="text" size="small" @click="gonote">备注</el-button>
             </div>
           </el-table-column>
@@ -185,9 +178,17 @@ export default {
   },
   data() {
     return {
+      obs: "",
       centerDialogVisible: false,
+      form: { price: "" },
+      rules: {
+        price: [
+          { required: true, message: "不能为空" },
+          { type: "number", message: "必须为数字值" }
+        ]
+      },
+      selectObj: [],
       approvaldata: [],
-      longtime: "",
       recodedata: [],
       approval: {
         type: "寄养者",
@@ -287,38 +288,138 @@ export default {
           }
         });
     },
-    gorefused() {
-      this.$confirm("您确定要拒绝本条寄养?", "提示", {
+    gorefused(row) {
+      this.$confirm("您确定要拒绝本条申请?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message.success("您已成功拒绝");
+          this.axios
+            .post("/api/long_backcare/yesorno", {
+              careid: row.careid,
+              type: row.caretype,
+              typestatus: "no",
+              petid: row.petid
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("您已成功拒绝！");
+                this.goapprovalquery();
+              }
+            });
         })
         .catch(() => {});
     },
-    goyes() {
-      this.centerDialogVisible = false;
-      this.$message.success("您已成功同意本次寄养");
+    goagree(row) {
+      if (row.caretype == "back") {
+        this.$confirm("您确定要同意本条领回申请记录?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消"
+        })
+          .then(() => {
+            this.axios
+              .post("/api/long_backcare/yesorno", {
+                careid: row.careid,
+                type: row.caretype,
+                petid: row.petid,
+                typestatus: "yes",
+                endtime: this.moment(new Date()).format("YYYY-MM-DD")
+              })
+              .then(res => {
+                if (res.data.success) {
+                  this.$message.success("您已同意！");
+                  this.goapprovalquery();
+                }
+              });
+          })
+          .catch(() => {});
+      } else {
+        this.centerDialogVisible = true;
+        this.obs = row;
+      }
     },
-    godel() {
+    goyes() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/api/long_backcare/yesorno", {
+              careid: this.obs.careid,
+              type: this.obs.caretype,
+              typestatus: "yes",
+              longtime: this.obs.longtime,
+              username: this.obs.username,
+              price: this.form.price
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.centerDialogVisible = false;
+                this.$message.success("您已成功同意延迟寄养！");
+                this.$refs["form"].resetFields();
+                this.goapprovalquery();
+              }
+            });
+        } else {
+          return false;
+        }
+      });
+    },
+    godel(row) {
       this.$confirm("您确定要删除本条寄养记录?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message.success("您已成功删除");
+          let delobs = { careid: row.careid };
+          this.axios
+            .delete("/api/detelecaretable", {
+              data: {
+                delobs
+              }
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("您已成功删除");
+              }
+            });
         })
         .catch(() => {});
     },
-    goallrefused() {
-      this.$message.success("未实现");
+    goclose() {
+      this.centerDialogVisible = false;
+      this.$refs["form"].resetFields();
     },
     goadd() {
       this.$message.success("未实现");
     },
     go2del() {
-      this.$message.success("未实现");
+      let delobs = [];
+      this.selectObj.forEach(item => {
+        delobs.push({
+          careid: item.careid
+        });
+      });
+
+      if (this.selectObj.length == 0) {
+        this.$message.warning("请选中要删除的对象！");
+        return;
+      }
+      this.$confirm("确认删除选中吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .delete("/api/detelecaretable", {
+              data: delobs
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("删除成功！");
+                this.gorecodequery();
+              }
+            });
+        })
+        .catch(() => {});
     },
     goupdate() {
       this.rjDialog

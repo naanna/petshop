@@ -55,13 +55,13 @@
             type="text"
             size="small"
             @click="gotolong(scope.row)"
-            v-if="scope.row.carestatus=='agreed'"
+            v-if="scope.row.carestatus=='agreed'||scope.row.carestatus=='refused'"
           >延长</el-button>
           <el-button
             type="text"
             size="small"
             @click="godel(scope.row)"
-            v-if="scope.row.carestatus=='agreed'"
+            v-if="scope.row.carestatus=='agreed'||scope.row.carestatus=='refused'"
           >结束</el-button>
           <el-button
             type="text"
@@ -216,7 +216,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/detelecaretable", {
+            .delete("/api/cancelcaretable", {
               data: {
                 careid: row.careid,
                 petid: row.petid,

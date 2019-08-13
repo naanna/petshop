@@ -80,7 +80,7 @@ export default {
 
 <style scoped>
 .ruleclass {
-  background: linear-gradient(to right, #1262f7ec, #56da7d);
+  background: linear-gradient(to right, #629bdb, #56da7d);
   -webkit-background-clip: text;
   text-align: center;
   font-size: 100px;
