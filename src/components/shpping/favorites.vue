@@ -2,7 +2,7 @@
   <div>
     <span class="fontclass">我的收藏夹</span>
     <div class="infinite-list-wrapper" style="overflow:auto;max-height: 630px;">
-      <el-row v-infinite-scroll="load">
+      <el-row v-infinite-scroll="load" infinite-scroll-disabled="disabled">
         <el-col :span="4" v-for="(item, index) in count" :key="index">
           <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
             <el-image
@@ -11,11 +11,12 @@
             ></el-image>
             <p class="textclass">狗狗吃的狗粮</p>
             <p class="textclass">¥100</p>
+            <el-button size="mini" class="button">加入购物车</el-button>
           </el-card>
         </el-col>
       </el-row>
-      <p class="textclass" v-if="loading">加载中...</p>
-      <p class="textclass" v-if="noMore">没有更多了</p>
+      <p class="textclass1" v-if="loading">加载中...</p>
+      <p class="textclass1" v-if="noMore">没有更多了</p>
     </div>
   </div>
 </template>
@@ -28,6 +29,14 @@ export default {
       count: 10,
       loading: false
     };
+  },
+  computed: {
+    noMore() {
+      return this.count >= 20;
+    },
+    disabled() {
+      return this.loading || this.noMore;
+    }
   },
   methods: {
     load() {
@@ -49,5 +58,14 @@ export default {
 
 .textclass {
   text-align: center;
+}
+.textclass1 {
+  font-size: 18px;
+  text-align: center;
+  font-family: "jelly";
+}
+.button {
+  float: right;
+  margin: 0 10px 10px 0;
 }
 </style>

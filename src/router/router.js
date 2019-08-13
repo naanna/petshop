@@ -7,7 +7,7 @@ export default new Router({
   routes: [{
       path: '/',
       name: 'Login',
-      component: resolve => require(['../components/index.vue'], resolve)
+      component: resolve => require(['../components/main.vue'], resolve)
     },
     {
       path: '/pet/index',

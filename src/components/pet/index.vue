@@ -27,7 +27,7 @@
       </div>
     </div>
     <div>
-      <div class="petdiv" @click="godetail(item)" v-for="item in tabledata">
+      <div class="petdiv" @click="godetail(item)" v-for="(item,index) in tabledata" :key="index">
         <i
           class="el-icon-shopping-cart-2 shopcar"
           @click.stop="goaddshop"

@@ -6,40 +6,50 @@
         <span>TS10086</span>
       </div>
       <div class="headerinfo">
-        <span class="textclass">交易日期</span>
-        <span>2019-8-1</span>
+        <span class="textclass">交易时间</span>
+        <span>2019-8-1 14：00</span>
       </div>
     </div>
-    <div>
-      <div class="listboder">
-        <div class="listhead">
-          <div class="headerinfo">
-            <span class="textclass">宠物</span>
-            <span>1</span>
-          </div>
-          <div class="headerinfo">
-            <span class="textclass">宠物交易编号</span>
-            <span>2353</span>
-          </div>
-        </div>
-        <div class="listclass">
-          <span class="textclass">图</span>
-          <span class="textclass">粥粥</span>
-          <span class="textclass">2000</span>
-          <span class="textclass">交易成功</span>
-        </div>
-      </div>
+    <el-table :data="tabledata" class="table">
+      <el-table-column
+        label="商品信息"
+        prop="picture"
+        width="160px"
+        align="center"
+        header-align="center"
+      >
+        <template slot-scope="scope">
+          <el-image style="width: 120px; height: 120px" :src="scope.row.picture" fit="full"></el-image>
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" header-align="center"></el-table-column>
+      <el-table-column label="单价" width="160px" prop="price" align="center" header-align="center">
+        <template slot-scope="scope">
+          <span class="money1">￥{{scope.row.price}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="数量" width="160px" prop="num" align="center" header-align="center"></el-table-column>
+      <el-table-column
+        label="金额"
+        width="160px"
+        prop="totalprice"
+        align="center"
+        header-align="center"
+      >
+        <template slot-scope="scope">
+          <span class="money2">￥{{scope.row.num*scope.row.price}}</span>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div class="textdiv1">
+      <span>实付款：</span>
+      <span>￥10000</span>
     </div>
-    <el-form label-position="right" style="  margin-top: 20px;">
-      <el-form-item label="总价：" label-width="650px" class="formclass">
-        <span>10000</span>
-      </el-form-item>
-      <el-form-item label="下单者：" label-width="650px" class="formclass">
-        <span>壮壮</span>
-      </el-form-item>
-    </el-form>
-
-    <div class="__p_2362_uid_214">
+    <div class="textdiv1">
+      <span>下单者：</span>
+      <span>壮壮</span>
+    </div>
+    <div class="button">
       <el-button size="small" @click="goclose">关闭</el-button>
     </div>
   </div>
@@ -48,6 +58,36 @@
 <script>
 export default {
   name: "orderdetail",
+  data() {
+    return {
+      tabledata: [
+        {
+          carid: 1,
+          picture:
+            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
+          price: 100,
+          num: 1
+        },
+        {
+          carid: 2,
+          picture:
+            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
+          price: 100,
+          num: 1
+        },
+        {
+          carid: 3,
+          picture:
+            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
+          price: 100,
+          num: 1
+        }
+      ]
+    };
+  },
   methods: {
     goclose() {
       this.closeRjDialog && this.closeRjDialog();
@@ -69,35 +109,19 @@ export default {
   padding-right: 20px;
   margin-bottom: 20px;
 }
-.listhead {
-  line-height: 42px;
-  font-size: 17px;
-  display: flex;
-  justify-content: space-between;
-  padding-left: 100px;
-  padding-right: 100px;
-  background-color: #dddddd;
-}
 .headerinfo {
   display: inline-block;
 }
 .textclass {
   margin-right: 10px;
 }
-.listclass {
-  display: flex;
-  line-height: 32px;
-  padding-left: 100px;
-  padding-top: 10px;
-  padding-right: 100px;
-  justify-content: space-around;
-}
-.listboder {
-  border: 1px solid #dddddd;
-  padding-bottom: 10px;
-}
-.__p_2362_uid_214 {
+.button {
   text-align: center;
   padding-top: 20px;
+}
+.textdiv1 {
+  text-align: right;
+  margin: 20px 20px 0 0;
+  font-size: 18px;
 }
 </style>
