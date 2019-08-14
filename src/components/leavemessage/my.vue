@@ -25,11 +25,17 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
+    <rjDialog></rjDialog>
   </div>
 </template>
 
 <script>
+import rjDialog from "../dialog";
+import update from "./update.vue";
 export default {
+  components: {
+    rjDialog
+  },
   name: "my",
   data() {
     return {
@@ -41,7 +47,6 @@ export default {
     };
   },
   methods: {
-    goupdate(row) {},
     godel(row) {
       this.$confirm("您确认删除本条留言吗？", "提示", {
         confirmButtonText: "确定",
@@ -81,6 +86,18 @@ export default {
           //   });
         })
         .catch(() => {});
+    },
+    goupdate(row) {
+      this.rjDialog
+        .title("编辑留言")
+        .width("500px")
+        .currentView(update, {row})
+        .showClose(true)
+        .sizeTiny()
+        .then(opt => {
+          this.goquery();
+        })
+        .show();
     },
     sizeChangeHandle(val) {
       this.page_size = val;

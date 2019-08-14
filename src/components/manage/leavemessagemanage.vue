@@ -7,6 +7,7 @@
     <el-table :data="tabledata" highlight-current-row @selection-change="handleSelectionChange">
       <el-table-column prop="id" type="selection" width="80px" align="center" header-align="center"></el-table-column>
       <el-table-column label="内容" prop="note" align="center" header-align="center"></el-table-column>
+      <el-table-column label="发表者" prop="username" align="center" header-align="center" width="150px"></el-table-column>
       <el-table-column label="发表时间" prop="time" align="center" header-align="center" width="150px"></el-table-column>
       <el-table-column label="操作" align="center" header-align="center" width="150px">
         <div slot-scope="scope">

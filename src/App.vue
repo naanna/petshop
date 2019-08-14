@@ -32,4 +32,10 @@ export default {
   margin-top: 20px;
   text-align: right;
 }
+.el-scrollbar__wrap {
+  overflow-x: hidden !important;
+}
+.is-horizontal {
+  display: none;
+}
 </style>

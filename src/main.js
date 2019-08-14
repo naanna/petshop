@@ -11,6 +11,11 @@ import './assets/error.js'
 import './assets/icon/iconfont.css'
 Vue.use(VueAxios, axios)
 
+import echarts from 'echarts'
+import vueEcharts from 'vue-echarts'
+Vue.component('v-chart', vueEcharts)
+Vue.prototype.$echarts = echarts
+
 import moment from 'moment'
 Vue.prototype.moment = moment;
 import User from "@assets/data.js";

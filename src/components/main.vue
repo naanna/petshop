@@ -1,154 +1,164 @@
 <template>
   <div>
-    <div class="__p_2365_uid_294">
-      <div class="__p_2365_uid_296">
-        <div class="__p_2365_uid_303">
-          <div class="__p_2365_uid_331">
-            <span>订单总数</span>
-          </div>
-          <div class="__p_2365_uid_377">
-            <i class="el-icon-shopping-cart-full __p_2365_uid_378"></i>
-            <span class="__p_2365_uid_379">0</span>
-          </div>
-          <div class="__p_2365_uid_332">
-            <span>显示详细...</span>
-          </div>
+    <div class="card">
+      <div class="carddiv">
+        <div class="headdiv">
+          <span>订单总数</span>
         </div>
-        <div class="__p_2365_uid_303">
-          <div class="__p_2365_uid_331">
-            <span>销售总额</span>
-          </div>
-          <div class="__p_2365_uid_377">
-            <i class="el-icon-money __p_2365_uid_378"></i>
-            <span class="__p_2365_uid_379">0</span>
-          </div>
-          <div class="__p_2365_uid_332">
-            <span>显示详细...</span>
-          </div>
+        <div class="icondiv">
+          <i class="el-icon-shopping-cart-full titleicon"></i>
+          <span class="number">0</span>
         </div>
-        <div class="__p_2365_uid_303">
-          <div class="__p_2365_uid_331">
-            <span>会员总数</span>
-          </div>
-          <div class="__p_2365_uid_377">
-            <i class="el-icon-user __p_2365_uid_378"></i>
-            <span class="__p_2365_uid_379">0</span>
-          </div>
-          <div class="__p_2365_uid_332">
-            <span>显示详细...</span>
-          </div>
+        <div class="footerdiv">
+          <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
+          <span class="go" @click="gourl('/pet/goods')" v-else>我要下单...</span>
         </div>
-        <div class="__p_2365_uid_303">
-          <div class="__p_2365_uid_331">
-            <span>代售总数</span>
+      </div>
+      <div class="carddiv">
+        <div class="headdiv">
+          <span>销售总额</span>
+        </div>
+        <div class="icondiv">
+          <i class="el-icon-money titleicon"></i>
+          <span class="number">0</span>
+        </div>
+        <div class="footerdiv">
+          <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
+          <span class="go" @click="gourl('/pet/index')" v-else>我要购买...</span>
+        </div>
+      </div>
+      <div class="carddiv">
+        <div class="headdiv">
+          <span>会员总数</span>
+        </div>
+        <div class="icondiv">
+          <i class="el-icon-user titleicon"></i>
+          <span class="number">0</span>
+        </div>
+        <div class="footerdiv">
+          <span class="go" @click="gourl('/customer/index')" v-if="permissions=='admin'">显示详细...</span>
+          <span class="go" @click="gourl('/shpping/person')" v-else>查看我的...</span>
+        </div>
+      </div>
+      <div class="carddiv">
+        <div class="headdiv">
+          <span>代售总数</span>
+        </div>
+        <div class="icondiv">
+          <i class="el-icon-box titleicon"></i>
+          <span class="number">0</span>
+        </div>
+        <div class="footerdiv">
+          <span class="go" @click="gourl('/manage/bookmanage')" v-if="permissions=='admin'">显示详细...</span>
+          <span class="go" @click="gourl('/booking/my')" v-else>我要代售...</span>
+        </div>
+      </div>
+    </div>
+    <div class="second">
+      <div class="picdiv">
+        <div class="pichead">
+          <i class="el-icon-chicken icon"></i>
+          <span class="titleclass">宝贝照片</span>
+        </div>
+        <div class="picturediv">
+          <img src="@picture/cat1.png" class="picture1" />
+          <img src="@picture/dog1.png" class="picture1" />
+          <img src="@picture/pig1.png" class="picture1" />
+          <img src="@picture/cat2.png" class="picture2" />
+          <img src="@picture/dog2.png" class="picture2" />
+          <img src="@picture/pig2.png" class="picture2" />
+        </div>
+      </div>
+      <div class="chart">
+        <div class="charthead">
+          <i class="el-icon-menu icon"></i>
+          <span class="titleclass">销售图表</span>
+        </div>
+        <div class="chartdiv">
+          <v-chart :options="options" autoresize class="chart1"></v-chart>
+        </div>
+      </div>
+    </div>
+    <div class="third">
+      <div class="userdiv">
+        <div class="userhead">
+          <i class="el-icon-date icon"></i>
+          <span class="titleclass">用户活动</span>
+        </div>
+        <div>
+          <div class="user">
+            <div>
+              <span class="usernamecolor">壮壮</span>
+              <span class="join">加入我们</span>
+            </div>
+            <div>
+              <i class="el-icon-time"></i>
+              <span class="join">2019-07-29</span>
+            </div>
           </div>
-          <div class="__p_2365_uid_377">
-            <i class="el-icon-box __p_2365_uid_378"></i>
-            <span class="__p_2365_uid_379">0</span>
+          <div class="user">
+            <div>
+              <span class="usernamecolor">壮壮</span>
+              <span class="join">加入我们</span>
+            </div>
+            <div>
+              <i class="el-icon-time"></i>
+              <span class="join">2019-07-29</span>
+            </div>
           </div>
-          <div class="__p_2365_uid_332">
-            <span>显示详细...</span>
+          <div class="user">
+            <div>
+              <span class="usernamecolor">壮壮</span>
+              <span class="join">加入我们</span>
+            </div>
+            <div>
+              <i class="el-icon-time"></i>
+              <span class="join">2019-07-29</span>
+            </div>
+          </div>
+          <div class="user">
+            <div>
+              <span class="usernamecolor">壮壮</span>
+              <span class="join">加入我们</span>
+            </div>
+            <div>
+              <i class="el-icon-time"></i>
+              <span class="join">2019-07-29</span>
+            </div>
+          </div>
+          <div class="user">
+            <div>
+              <span class="usernamecolor">壮壮</span>
+              <span class="join">加入我们</span>
+            </div>
+            <div>
+              <i class="el-icon-time"></i>
+              <span class="join">2019-07-29</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="__p_2365_uid_297">
-        <div class="__p_2365_uid_307">
-          <div class="__p_2365_uid_309">
-            <i class="el-icon-chicken __p_2365_uid_313"></i>
-            <span class="__p_2365_uid_314">宝贝照片</span>
-          </div>
-          <div class="__p_2365_uid_310">
-            <img src="@picture/cat1.png" class="__p_2365_uid_405" />
-            <img src="@picture/dog1.png" class="__p_2365_uid_405" />
-            <img src="@picture/pig1.png" class="__p_2365_uid_405" />
-            <img src="@picture/cat2.png" class="__p_2365_uid_408" />
-            <img src="@picture/dog2.png" class="__p_2365_uid_408" />
-            <img src="@picture/pig2.png" class="__p_2365_uid_408" />
-          </div>
+      <div class="orderdiv">
+        <div class="userhead">
+          <i class="el-icon-s-grid icon"></i>
+          <span class="titleclass">今日推荐</span>
         </div>
-        <div class="__p_2365_uid_308">
-          <div class="__p_2365_uid_311">
-            <i class="el-icon-menu __p_2365_uid_313"></i>
-            <span class="__p_2365_uid_314">销售图表</span>
-          </div>
-          <div class="__p_2365_uid_312">
-            <!-- <v-chart :options="options" autoresize class="__p_2365_uid_318"></v-chart> -->
-          </div>
-        </div>
-      </div>
-      <div class="__p_2365_uid_298">
-        <div class="__p_2365_uid_319">
-          <div class="__p_2365_uid_360">
-            <i class="el-icon-date __p_2365_uid_313"></i>
-            <span class="__p_2365_uid_314">用户活动</span>
-          </div>
-          <div>
-            <div class="__p_2365_uid_412">
-              <div>
-                <span class="usernamecolor">壮壮</span>
-                <span class="__p_2365_uid_419">加入我们</span>
-              </div>
-              <div>
-                <i class="el-icon-time"></i>
-                <span class="__p_2365_uid_422">2019-07-29 20:37:14</span>
-              </div>
-            </div>
-            <div class="__p_2365_uid_412">
-              <div>
-                <span class="usernamecolor">壮壮</span>
-                <span class="__p_2365_uid_419">加入我们</span>
-              </div>
-              <div>
-                <i class="el-icon-time"></i>
-                <span class="__p_2365_uid_422">2019-07-29 20:37:14</span>
-              </div>
-            </div>
-            <div class="__p_2365_uid_412">
-              <div>
-                <span class="usernamecolor">壮壮</span>
-                <span class="__p_2365_uid_419">加入我们</span>
-              </div>
-              <div>
-                <i class="el-icon-time"></i>
-                <span class="__p_2365_uid_422">2019-07-29 20:37:14</span>
-              </div>
-            </div>
-            <div class="__p_2365_uid_412">
-              <div>
-                <span class="usernamecolor">壮壮</span>
-                <span class="__p_2365_uid_419">加入我们</span>
-              </div>
-              <div>
-                <i class="el-icon-time"></i>
-                <span class="__p_2365_uid_422">2019-07-29 20:37:14</span>
-              </div>
-            </div>
-            <div class="__p_2365_uid_412">
-              <div>
-                <span class="usernamecolor">壮壮</span>
-                <span class="__p_2365_uid_419">加入我们</span>
-              </div>
-              <div>
-                <i class="el-icon-time"></i>
-                <span class="__p_2365_uid_422">2019-07-29 20:37:14</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="__p_2365_uid_320">
-          <div class="__p_2365_uid_361">
-            <i class="el-icon-upload __p_2365_uid_313"></i>
-            <span class="__p_2365_uid_314">最新订单</span>
-          </div>
-          <el-table :data="data" stripe highlight-current-row class="__p_2365_uid_326">
-            <el-table-column label="订单号" prop="id" align="right" header-align="center"></el-table-column>
-            <el-table-column label="客户名称" prop="id" align="center" header-align="center"></el-table-column>
-            <el-table-column label="状态" prop="id" align="center" header-align="center"></el-table-column>
-            <el-table-column label="生成日期" prop="id" align="center" header-align="center"></el-table-column>
-            <el-table-column label="金额" prop="id" align="center" header-align="center"></el-table-column>
-            <el-table-column label="管理" prop="id" align="center" header-align="center"></el-table-column>
-          </el-table>
-        </div>
+        <el-table :data="data" stripe highlight-current-row style="padding:7px 0;">
+          <el-table-column label="图片" width="100px" prop="id" align="center" header-align="center">
+            <template slot-scope="scope">
+              <el-image style="width: 50px; height: 50px" :src="scope.row.picture" fit="full"></el-image>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="商品信息"
+            prop="id"
+            width="400px"
+            align="center"
+            header-align="center"
+          ></el-table-column>
+          <el-table-column label="价格" prop="id" align="center" header-align="center"></el-table-column>
+          <el-table-column label="库存" prop="id" align="center" header-align="center"></el-table-column>
+        </el-table>
       </div>
     </div>
   </div>
@@ -157,78 +167,89 @@
 export default {
   data() {
     return {
+      permissions: "",
       options: {
         title: {
-          text: "图表示例",
-          x: "center"
+          text: "八月销售情况"
         },
+        tooltip: {
+          trigger: "axis"
+        },
+        xAxis: [
+          {
+            type: "category",
+            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
         series: [
           {
-            name: "图标示例",
-            type: "pie",
-            radius: "55%",
-            center: ["50%", "60%"],
-            data: [
-              {
-                value: 335,
-                name: "标签1"
-              },
-              {
-                value: 310,
-                name: "标签2"
-              },
-              {
-                value: 234,
-                name: "标签3"
-              },
-              {
-                value: 135,
-                name: "标签4"
-              },
-              {
-                value: 1548,
-                name: "标签5"
-              }
-            ]
+            name: "订单数",
+            type: "bar",
+            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0],
+            markPoint: {
+              data: [
+                { type: "max", name: "最大值" },
+                { type: "min", name: "最小值" }
+              ]
+            }
           }
         ]
       },
       data: [
         {
-          id: 1
+          id: 1,
+          picture:
+            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
         },
         {
-          id: 2
+          id: 2,
+          picture:
+            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+        },
+        {
+          id: 2,
+          picture:
+            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
         }
       ]
     };
   },
-  // created() {
-
-  // }
+  created() {
+    this.permissions = this.User.permissions;
+  },
+  methods: {
+    gourl(url) {
+      this.$router.push(url);
+    }
+  }
 };
 </script>
 <style scoped>
-.__p_2365_uid_331 {
+.headdiv {
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
   border-radius: 10px;
 }
 
-.__p_2365_uid_378 {
+.titleicon {
   font-size: 35px;
   opacity: 0.3;
   transition: all 1s;
 }
-.__p_2365_uid_378:hover {
+.titleicon:hover {
   opacity: 0.95;
 }
-.__p_2365_uid_379 {
+.number {
   font-size: 35px;
 }
 
-.__p_2365_uid_377 {
+.icondiv {
   background: #2786c5;
   display: flex;
   padding-top: 20px;
@@ -239,12 +260,12 @@ export default {
   justify-content: space-between;
 }
 
-.__p_2365_uid_332 {
+.footerdiv {
   padding-left: 10px;
   border-radius: 10px;
 }
 
-.__p_2365_uid_303 {
+.carddiv {
   background: rgb(53, 143, 201);
   flex: 1;
   border-radius: 10px;
@@ -252,149 +273,116 @@ export default {
   margin-right: 30px;
 }
 
-.__p_2365_uid_383 {
-  background: #2786c5;
-  display: flex;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  line-height: 35px;
-  justify-content: space-between;
-}
-
-.__p_2365_uid_296 {
+.card {
   color: #ffffff;
   display: flex;
   line-height: 24px;
 }
 
-.__p_2365_uid_313 {
+.icon {
   font-size: 16px;
 }
 
-.__p_2365_uid_314 {
+.titleclass {
   font-size: 16px;
   margin-left: 10px;
 }
 
-.__p_2365_uid_309 {
+.pichead {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.__p_2365_uid_405 {
-  width: 150px;
-  height: 150px;
+.picture1 {
+  width: 160px;
+  height: 160px;
   vertical-align: bottom;
-  margin-right: 30px;
+  margin-right: 50px;
 }
 
-.__p_2365_uid_408 {
-  width: 150px;
-  height: 150px;
+.picture2 {
+  width: 160px;
+  height: 160px;
   vertical-align: bottom;
   margin-top: 30px;
-  margin-right: 30px;
+  margin-right: 50px;
 }
 
-.__p_2365_uid_310 {
+.picturediv {
   margin-top: 10px;
   padding-left: 20px;
 }
 
-.__p_2365_uid_307 {
+.picdiv {
   flex: 1;
 }
 
-.__p_2365_uid_311 {
+.charthead {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.__p_2365_uid_318 {
+.chart1 {
   width: 100%;
 }
 
-.__p_2365_uid_312 {
+.chartdiv {
   margin-top: 10px;
 }
 
-.__p_2365_uid_308 {
+.chart {
   flex: 1;
   margin-left: 20px;
 }
 
-.__p_2365_uid_297 {
+.second {
   display: flex;
   margin-top: 30px;
 }
 
-.__p_2365_uid_360 {
-  background: #e4e0e0;
+.userhead {
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
 }
 
-.__p_2365_uid_419 {
+.join {
   margin-left: 10px;
 }
 
-.__p_2365_uid_422 {
-  margin-left: 10px;
-}
-
-.__p_2365_uid_412 {
+.user {
   line-height: 20px;
   padding-left: 10px;
   padding-top: 10px;
+  background: #ffffff;
   padding-bottom: 10px;
   border-bottom: 1px solid #dddddd;
 }
 
-.__p_2365_uid_426 {
-  margin-left: 10px;
+.userdiv {
+  background: #e4e0e0;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  flex: 2;
 }
 
-.__p_2365_uid_429 {
-  margin-left: 10px;
-}
-
-.__p_2365_uid_319 {
-  background: #ffffff;
-  flex: 1;
-}
-
-.__p_2365_uid_361 {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-}
-
-.__p_2365_uid_326 {
-  margin-top: 5px;
-}
-
-.__p_2365_uid_320 {
-  background: #ffffff;
-  flex: 1;
+.orderdiv {
+  background: #e4e0e0;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  flex: 3;
   margin-left: 20px;
 }
 
-.__p_2365_uid_298 {
+.third {
   display: flex;
   margin-top: 30px;
 }
 
-.__p_2365_uid_294 {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-right: 20px;
-  padding-left: 20px;
-}
-
 .usernamecolor {
   color: rgb(119, 193, 232);
+}
+.go {
+  cursor: pointer;
 }
 </style>

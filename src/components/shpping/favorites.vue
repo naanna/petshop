@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="fontclass">我的收藏夹</span>
-    <div class="infinite-list-wrapper" style="overflow:auto;max-height: 630px;">
+    <el-scrollbar style="height:100%;">
       <el-row v-infinite-scroll="load" infinite-scroll-disabled="disabled">
         <el-col :span="4" v-for="(item, index) in count" :key="index">
           <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
@@ -17,7 +17,7 @@
       </el-row>
       <p class="textclass1" v-if="loading">加载中...</p>
       <p class="textclass1" v-if="noMore">没有更多了</p>
-    </div>
+    </el-scrollbar>
   </div>
 </template>
 

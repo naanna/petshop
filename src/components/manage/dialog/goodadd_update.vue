@@ -57,7 +57,7 @@
         <el-input type="text" size="small" class="formlist" v-model.number="form.num"></el-input>
       </el-form-item>
     </el-form>
-    <div class="__p_C8_u_268">
+    <div class="button">
       <el-button type="primary" size="small" @click="goadd">保存</el-button>
       <el-button size="small" @click="goclose">取消</el-button>
     </div>
@@ -188,7 +188,7 @@ export default {
   width: 250px;
 }
 
-.__p_C8_u_268 {
+.button {
   text-align: center;
 }
 .el-avatar >>> img {
