@@ -2,16 +2,22 @@
   <div>
     <el-page-header @back="goBack" style="display: inline-block;"></el-page-header>
     <span class="title">历史寄养</span>
-    <div class="table">
-      <el-date-picker
-        v-model="historydata"
-        type="daterange"
-        size="small"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-      ></el-date-picker>
-      <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
+    <div>
+      <div class="table" v-if="show">
+        <el-date-picker
+          v-model="historydata"
+          type="daterange"
+          size="small"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
+        <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
+      </div>
+      <div class="table" style="float:right;">
+        <el-button size="small" @click="gofirst">查看历史</el-button>
+        <el-button size="small" @click="gorefused">寄养申请被拒记录</el-button>
+      </div>
     </div>
     <el-table :data="tabledata" stripe border highlight-current-row class="table">
       <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
@@ -57,7 +63,8 @@ export default {
       tabledata: [],
       total: 0,
       page_no: 1,
-      page_size: 10
+      page_size: 10,
+      show: true
     };
   },
   created() {
@@ -71,12 +78,14 @@ export default {
         username: this.User.username,
         history: true
       };
-
       if (this.historydata != "" && this.historydata != null) {
         var time = this.moment(this.historydata[0]).format("YYYY-MM-DD");
         var time1 = this.moment(this.historydata[1]).format("YYYY-MM-DD");
         query.starttime = time;
         query.endtime = time1;
+      }
+      if (!this.show) {
+        query.refused = true;
       }
       return query;
     },
@@ -104,6 +113,17 @@ export default {
           }
         });
     },
+    gorefused() {
+      this.show = false;
+      this.historydata = "";
+      this.page_no = 1;
+      this.goquery();
+    },
+    gofirst() {
+      this.show = true;
+      this.page_no = 1;
+      this.goquery();
+    },
     gosearch() {
       this.page_no = 1;
       this.goquery();
@@ -128,6 +148,7 @@ export default {
 }
 
 .table {
-  margin-top: 20px;
+  margin-top: 10px;
+  display: inline-block;
 }
 </style>

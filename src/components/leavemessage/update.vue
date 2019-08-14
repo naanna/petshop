@@ -13,17 +13,35 @@ export default {
   name: "demo",
   data() {
     return {
-      textarea: ""
+      textarea: "",
+      messageid: ""
     };
   },
   mounted() {
     if (this.rjDialogParams().row) {
       let obs = this.rjDialogParams().row;
       this.textarea = obs.note;
+      this.messageid = obs.messageid;
     }
   },
   methods: {
-    gosave() {},
+    gosave() {
+      if (this.textarea == "") {
+        this.$message.warning("您还没有填写留言内容!");
+      } else {
+        this.axios
+          .post("/api/updatemessage", {
+            messageid: this.messageid,
+            note: this.textarea
+          })
+          .then(res => {
+            if (res.data.success) {
+              this.$message.success("修改成功!");
+              this.closeRjDialog && this.closeRjDialog();
+            }
+          });
+      }
+    },
     goclose() {
       this.closeRjDialog && this.closeRjDialog();
     }

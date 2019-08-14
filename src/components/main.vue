@@ -297,7 +297,7 @@ export default {
   width: 160px;
   height: 160px;
   vertical-align: bottom;
-  margin-right: 50px;
+  margin-right: 40px;
 }
 
 .picture2 {
@@ -305,7 +305,7 @@ export default {
   height: 160px;
   vertical-align: bottom;
   margin-top: 30px;
-  margin-right: 50px;
+  margin-right: 40px;
 }
 
 .picturediv {

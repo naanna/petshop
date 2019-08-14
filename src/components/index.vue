@@ -47,7 +47,7 @@
       </el-header>
 
       <el-container :style="conheight">
-        <el-scrollbar style="height:100%;width:220px;">
+        <el-scrollbar class="scroll">
           <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
             <el-menu
               style="text-align:left"
@@ -132,9 +132,16 @@ export default {
   cursor: pointer;
   margin-right: 10px;
 }
+.scroll {
+  height: 100%;
+  width: 220px;
+}
 .messagesolid {
   font-size: 18px;
   margin-right: 15px;
   cursor: pointer;
+}
+.el-scrollbar >>> .el-scrollbar__wrap {
+  overflow-x: hidden !important;
 }
 </style>
