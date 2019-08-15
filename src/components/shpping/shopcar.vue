@@ -8,7 +8,7 @@
       <!-- <el-step status="error" title="订单信息"></el-step> -->
     </el-steps>
     <div v-show="active==1">
-      <el-button type="primary" size="small">删除选中</el-button>
+      <el-button type="primary" size="small" @click="go2del">删除选中</el-button>
       <el-table
         :data="tabledata"
         highlight-current-row
@@ -45,7 +45,7 @@
               size="small"
               v-model="scope.row.num"
               :min="1"
-              :max="10"
+              :max="scope.row.goodnum"
               @change="changenum(scope.row)"
             ></el-input-number>
           </template>
@@ -159,6 +159,7 @@
 </template>
 
 <script>
+import Util from "@assets/Util.js";
 export default {
   name: "shopcar",
   data() {
@@ -176,27 +177,82 @@ export default {
           name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
           price: 100,
           num: 1
-        },
-        {
-          carid: 2,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
-          price: 100,
-          num: 1
-        },
-        {
-          carid: 3,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
-          price: 100,
-          num: 1
         }
       ]
     };
   },
+  created() {
+    this.getshopcar();
+  },
   methods: {
+    getshopcar() {
+      this.axios
+        .get("/api/getshopcar", {
+          params: {
+            username: this.User.username
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data.message;
+            this.tabledata = results.sort(Util.objSort("getshopcarid"));
+            for (let i in this.tabledata) {
+              if (this.tabledata[i].petid) {
+                this.tabledata[i].goodnum = 1;
+              }
+            }
+          }
+        });
+    },
+    godel(row) {
+      this.$confirm("确认删除吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .delete("/api/deteleshopcar", {
+              data: [{ shopcarid: row.shopcarid }]
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("删除成功！");
+                this.getshopcar();
+              }
+            });
+        })
+        .catch(() => {});
+    },
+    go2del() {
+      let delobs = [];
+      this.selectObj.forEach(item => {
+        delobs.push({
+          shopcarid: item.shopcarid
+        });
+      });
+
+      if (this.selectObj.length == 0) {
+        this.$message.warning("请选中要删除的对象！");
+        return;
+      }
+      this.$confirm("确认删除所选吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .delete("/api/deteleshopcar", {
+              data: delobs
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("删除成功！");
+                this.getshopcar();
+              }
+            });
+        })
+        .catch(() => {});
+    },
     next() {
       if (this.active == 2) {
         const loading = this.$loading({
@@ -218,6 +274,22 @@ export default {
       this.$router.go(0);
     },
     changenum(row) {
+      if (row.num == undefined) {
+        row.num = 1;
+      }
+      if (row.goodid) {
+        this.axios
+          .post("/api/updateshopcar", {
+            shopcarid: row.shopcarid,
+            num: row.num
+          })
+          .then(res => {
+            if (res.data.success) {
+              this.getshopcar();
+            }
+          });
+      }
+
       this.totalprice = 0;
       this.selectObj.forEach(item => {
         if (item.carid == row.carid) item.num = row.num;
