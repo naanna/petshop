@@ -1,11 +1,11 @@
 <template>
-  <div class="__p_C7_u_238">
+  <div>
     <span class="fontclass">寄养管理</span>
-    <el-tabs value="first" class="__p_2363_uid_261">
+    <el-tabs value="first" class="tabs">
       <el-tab-pane label="寄养申请" name="first">
         <div style="margin-bottom:10px;">
-          <div class="__p_C7_u_279">
-            <el-select size="small" class="__p_C7_u_280" v-model="approval.type" @change="change1">
+          <div class="floatdiv">
+            <el-select size="small" class="width2001" v-model="approval.type" @change="change1">
               <el-option value="寄养者" label="寄养者"></el-option>
               <el-option value="寄养单号" label="寄养单号"></el-option>
               <el-option value="申请类型" label="申请类型"></el-option>
@@ -13,7 +13,7 @@
             <el-select
               v-if="approval.type=='申请类型'"
               size="small"
-              class="__p_C7_u_281"
+              class="width200"
               v-model="approval.searchval"
               clearable
             >
@@ -26,7 +26,7 @@
               placeholder="请输入内容"
               type="text"
               size="small"
-              class="__p_C7_u_281"
+              class="width200"
               v-model="approval.searchval"
               clearable
             ></el-input>
@@ -73,7 +73,7 @@
         <el-dialog title="寄养价格" :visible.sync="centerDialogVisible" width="35%" center>
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item label="价格：" label-width="100px" style="margin-bottom:0px;" prop="price">
-              <el-input type="text" size="small" v-model.number="form.price" class="__p_C7_u_281"></el-input>
+              <el-input type="text" size="small" v-model.number="form.price" class="width200"></el-input>
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
@@ -84,12 +84,12 @@
       </el-tab-pane>
       <el-tab-pane label="记录管理" name="second">
         <div style="margin-bottom:10px;">
-          <div class="__p_C7_u_278">
+          <div class="button">
             <el-button type="primary" size="small" @click="goadd">添加寄养</el-button>
             <el-button type="primary" size="small" @click="go2del">批量删除</el-button>
           </div>
-          <div class="__p_C7_u_279">
-            <el-select size="small" class="__p_C7_u_280" v-model="recode.type" @change="change">
+          <div class="floatdiv">
+            <el-select size="small" class="width2001" v-model="recode.type" @change="change">
               <el-option value="寄养者" label="寄养者"></el-option>
               <el-option value="寄养时间" label="寄养时间"></el-option>
               <el-option value="类型" label="类型"></el-option>
@@ -97,7 +97,7 @@
             <el-select
               v-if="recode.type=='类型'"
               size="small"
-              class="__p_C7_u_281"
+              class="width200"
               v-model="recode.searchval"
               clearable
             >
@@ -110,7 +110,7 @@
               placeholder="请输入内容"
               type="text"
               size="small"
-              class="__p_C7_u_281"
+              class="width200"
               v-model="recode.searchval"
               clearable
             ></el-input>
@@ -123,7 +123,7 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
             ></el-date-picker>
-            <el-button type="primary" size="small" class="__p_C7_u_282" @click="gorecodesearch">搜索</el-button>
+            <el-button type="primary" size="small" class="searchbut" @click="gorecodesearch">搜索</el-button>
           </div>
         </div>
         <el-table
@@ -525,32 +525,32 @@ export default {
 </script>
 
 <style scoped>
-.__p_2363_uid_261 {
+.tabs {
   margin-left: 10px;
   margin-top: 10px;
 }
-.__p_C7_u_278 {
+.button {
   display: inline-block;
   vertical-align: bottom;
 }
 
-.__p_C7_u_280 {
+.width2001 {
   width: 200px;
   display: inline-block;
   margin-right: 10px;
   vertical-align: bottom;
 }
 
-.__p_C7_u_281 {
+.width200 {
   width: 200px;
   margin-right: 10px;
 }
 
-.__p_C7_u_282 {
+.searchbut {
   margin-left: 10px;
 }
 
-.__p_C7_u_279 {
+.floatdiv {
   float: right;
   display: inline-block;
 }

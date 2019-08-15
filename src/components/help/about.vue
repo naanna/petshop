@@ -1,32 +1,27 @@
 <template>
   <div>
-    <p class="__p_Cc_u_14">关于我们</p>
-    <el-form label-position="right" class="__p_Cc_u_3">
-      <el-form-item label="名字：" label-width="200px" class="__p_Cc_u_4">
-        <span class="__p_Cc_u_6">飞宠大乱斗</span>
-      </el-form-item>
-      <el-form-item label="创立时间：" label-width="200px" class="__p_Cc_u_7">
-        <span class="__p_Cc_u_8">2019/7/28</span>
-      </el-form-item>
-      <el-form-item label="经营范围：" label-width="200px" class="__p_Cc_u_9">
-        <span class="__p_Cc_u_10">销售/寄养/代售</span>
-      </el-form-item>
-      <el-form-item label="创立时间：" label-width="200px" class="__p_Cc_u_11">
-        <span class="__p_Cc_u_12">福建福州</span>
-      </el-form-item>
-    </el-form>
-    <p class="__p_Cc_u_14">联系我们</p>
-    <el-form label-position="right" class="__p_Cc_u_3">
-      <el-form-item label="售后电话：" label-width="200px" class="__p_Cc_u_4">
-        <span class="__p_Cc_u_6">1000110001</span>
-      </el-form-item>
-      <el-form-item label="客服电话：" label-width="200px" class="__p_Cc_u_7">
-        <span class="__p_Cc_u_8">1008610086</span>
-      </el-form-item>
-      <el-form-item label="email：" label-width="200px" class="__p_Cc_u_9">
-        <span class="__p_Cc_u_10">10086086086@163.com</span>
-      </el-form-item>
-    </el-form>
+    <div class="div1">
+      <div class="picdiv">
+        <img src="@picture/touxiang.jpg" class="picture" />
+        <p class="name">mxy</p>
+        <p class="name">木木周</p>
+      </div>
+      <div class="pdiv">
+        <p class="p">技术栈</p>
+        <span class="english">The skill of my shop</span>
+        <el-divider></el-divider>
+        <p>整个项目基于vue-cli</p>
+        <p>vue+element+axios+node.js+mysql</p>
+        <p class="p">关于我</p>
+        <span class="english">The info about me</span>
+        <el-divider></el-divider>
+        <p>昵称:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;壮壮</p>
+        <p>来自:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;福州</p>
+        <p>技能:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;java/html/css/js</p>
+        <p>坐标:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;福建师范大学</p>
+        <p>github:&nbsp;&nbsp;&nbsp;&nbsp;https://github.com/naanna</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,51 +32,43 @@ export default {
 </script>
 
 <style scoped>
-.__p_Cc_u_14 {
-  font-size: 20px;
+.div1 {
+  height: 660px;
+  padding: 0 150px 0 150px;
+  display: flex;
+  background-color: #9ad4e2b0;
+  background-image: url("fish.png");
+}
+.picdiv {
+  flex: 1;
   text-align: center;
+  padding-top: 140px;
 }
-
-.__p_Cc_u_6 {
-  color: #87d0f5;
+.picture {
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
 }
-
-.__p_Cc_u_4 {
-  margin-bottom: 0;
+.name {
+  font-family: "楷体";
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font-size: 25px;
 }
-
-.__p_Cc_u_8 {
-  color: #87d0f5;
+.pdiv {
+  flex: 2;
+  margin-left: 20px;
 }
-
-.__p_Cc_u_7 {
-  margin-bottom: 0;
+.p {
+  margin-top: 90px;
+  margin-bottom: 5px;
+  font-size: 20px;
 }
-
-.__p_Cc_u_10 {
-  color: #87d0f5;
+.el-divider {
+  background-color: #949aa0 !important;
+  margin-top: 10px !important;
 }
-
-.__p_Cc_u_9 {
-  margin-bottom: 0;
-}
-
-.__p_Cc_u_12 {
-  color: #87d0f5;
-}
-
-.__p_Cc_u_11 {
-  margin-bottom: 0;
-}
-
-.__p_Cc_u_3 {
-  width: 500px;
-  border: 1px solid #dddddd;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+.english {
+  font-family: "Times new roman";
 }
 </style>

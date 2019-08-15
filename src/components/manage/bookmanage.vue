@@ -1,12 +1,12 @@
 <template>
-  <div class="__p_C7_u_238">
+  <div>
     <span class="fontclass">代售管理</span>
-    <el-tabs value="first" class="__p_2363_uid_261">
+    <el-tabs value="first" class="tabs">
       <el-tab-pane label="代售申请" name="first">
         <div style="margin-bottom:10px;">
-          <el-button class="__p_C7_u_278" type="primary" size="small" @click="goallrefused">批量拒绝</el-button>
-          <div class="__p_C7_u_279">
-            <el-select size="small" class="__p_C7_u_280" v-model="type">
+          <el-button class="button" type="primary" size="small" @click="goallrefused">批量拒绝</el-button>
+          <div class="floatdiv">
+            <el-select size="small" class="width2001" v-model="type">
               <el-option value="代售者" label="代售者"></el-option>
               <el-option value="代售订单号" label="代售订单号"></el-option>
             </el-select>
@@ -15,10 +15,10 @@
               type="text"
               clearable
               size="small"
-              class="__p_C7_u_281"
+              class="width200"
               v-model="searchval"
             ></el-input>
-            <el-button type="primary" size="small" class="__p_C7_u_282">搜索</el-button>
+            <el-button type="primary" size="small" class="searchbut">搜索</el-button>
           </div>
         </div>
         <el-table
@@ -59,7 +59,7 @@
         <el-dialog title="服务费" :visible.sync="centerDialogVisible" width="35%" center>
           <el-form>
             <el-form-item label="价格：" label-width="100px" style="margin-bottom:0px;">
-              <el-input type="text" size="small" v-model="longtime" class="__p_C7_u_281"></el-input>
+              <el-input type="text" size="small" v-model="longtime" class="width200"></el-input>
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
@@ -70,12 +70,12 @@
       </el-tab-pane>
       <el-tab-pane label="记录管理" name="second">
         <div style="margin-bottom:10px;">
-          <div class="__p_C7_u_278">
+          <div class="button">
             <el-button type="primary" size="small" @click="goadd">添加代售</el-button>
             <el-button type="primary" size="small" @click="go2del">批量删除</el-button>
           </div>
-          <div class="__p_C7_u_279">
-            <el-select size="small" class="__p_C7_u_280" v-model="recordtype">
+          <div class="floatdiv">
+            <el-select size="small" class="width2001" v-model="recordtype">
               <el-option value="代售者" label="代售者"></el-option>
               <el-option value="代售订单号" label="代售订单号"></el-option>
             </el-select>
@@ -84,10 +84,10 @@
               type="text"
               size="small"
               clearable
-              class="__p_C7_u_281"
+              class="width200"
               v-model="searchval"
             ></el-input>
-            <el-button type="primary" size="small" class="__p_C7_u_282">搜索</el-button>
+            <el-button type="primary" size="small" class="searchbut">搜索</el-button>
           </div>
         </div>
         <el-table
@@ -226,31 +226,31 @@ export default {
 </script>
 
 <style scoped>
-.__p_2363_uid_261 {
+.tabs {
   margin-left: 10px;
   margin-top: 10px;
 }
-.__p_C7_u_278 {
+.button {
   display: inline-block;
   vertical-align: bottom;
 }
 
-.__p_C7_u_280 {
+.width2001 {
   width: 200px;
   display: inline-block;
   margin-right: 10px;
   vertical-align: bottom;
 }
 
-.__p_C7_u_281 {
+.width200 {
   width: 200px;
 }
 
-.__p_C7_u_282 {
+.searchbut {
   margin-left: 10px;
 }
 
-.__p_C7_u_279 {
+.floatdiv {
   float: right;
   display: inline-block;
 }

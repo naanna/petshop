@@ -239,7 +239,7 @@ const navlist = [{
     children: [{
         adminMenu: {
           id: 61,
-          menuName: "本月受欢迎宠物",
+          menuName: "本月受欢迎商品",
           menuType: "page",
           pid: "6",
           url: "/count/month",
@@ -251,7 +251,7 @@ const navlist = [{
       {
         adminMenu: {
           id: 62,
-          menuName: "年度受欢迎宠物",
+          menuName: "年度受欢迎商品",
           menuType: "page",
           pid: "6",
           url: "/count/year",
@@ -416,7 +416,7 @@ const navlist = [{
       {
         adminMenu: {
           id: 92,
-          menuName: "关于我们",
+          menuName: "关于我",
           menuType: "page",
           pid: "9",
           url: "/help/about",

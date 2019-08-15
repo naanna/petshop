@@ -1,14 +1,14 @@
 <template>
   <div class>
     <span class="fontclass">充值管理</span>
-    <el-tabs value="first" class="__p_C7_u_277">
+    <el-tabs value="first" class="tabs">
       <el-tab-pane label="充值审批" name="first">
         <div>
-          <div class="__p_C7_u_278">
+          <div class="button">
             <el-button type="primary" size="small" @click="go2yes">批量同意</el-button>
             <el-button type="primary" size="small" @click="go2refuse">批量拒绝</el-button>
           </div>
-          <div class="__p_C7_u_279">
+          <div class="search">
             <el-date-picker
               v-model="pendingquery.historydata"
               type="daterange"
@@ -18,14 +18,14 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
             ></el-date-picker>
-            <el-button type="primary" size="small" class="__p_C7_u_264" @click="gopendingsearch">搜索</el-button>
+            <el-button type="primary" size="small" class="searchbut" @click="gopendingsearch">搜索</el-button>
           </div>
         </div>
         <el-table
           :data="pendingdata"
           stripe
           highlight-current-row
-          class="__p_C7_u_252"
+          class="table"
           @selection-change="handleSelectionChange"
         >
           <el-table-column
@@ -59,8 +59,8 @@
       </el-tab-pane>
 
       <el-tab-pane label="充值记录" name="second">
-        <div class="__p_2363_uid_261">
-          <el-select size="small" class="__p_C7_u_269" v-model="type" @change="selectchange">
+        <div>
+          <el-select size="small" class="width200" v-model="type" @change="selectchange">
             <el-option value="审批者" label="审批者"></el-option>
             <el-option value="充值账号" label="充值账号"></el-option>
             <el-option value="充值日期" label="充值日期"></el-option>
@@ -79,7 +79,7 @@
           ></el-date-picker>
           <el-select
             size="small"
-            class="__p_C7_u_269"
+            class="width200"
             clearable
             v-model="recordquery.searchval"
             v-else-if="type=='状态'"
@@ -95,11 +95,11 @@
             v-model="recordquery.searchval"
             clearable
             size="small"
-            class="__p_C7_u_269"
+            class="width200"
           ></el-input>
           <el-button type="primary" size="small" @click="gorecordsearch">搜索</el-button>
         </div>
-        <el-table :data="data" stripe border highlight-current-row class="__p_C7_u_252">
+        <el-table :data="data" stripe border highlight-current-row class="table">
           <el-table-column label="充值单号 " prop="investid" align="center" header-align="center"></el-table-column>
           <el-table-column label="充值金额" prop="money" align="center" header-align="center"></el-table-column>
           <el-table-column label="充值日期" prop="time" align="center" header-align="center"></el-table-column>
@@ -413,30 +413,30 @@ export default {
 };
 </script>
 <style scoped>
-.__p_C7_u_269 {
+.width200 {
   width: 200px;
   margin-right: 10px;
 }
 
-.__p_C7_u_264 {
+.searchbut {
   margin-left: 10px;
 }
 
-.__p_C7_u_252 {
+.table {
   margin-top: 10px;
 }
 
-.__p_C7_u_278 {
+.button {
   display: inline-block;
   vertical-align: bottom;
 }
 
-.__p_C7_u_279 {
+.search {
   float: right;
   display: inline-block;
 }
 
-.__p_C7_u_277 {
+.tabs {
   margin-left: 10px;
   margin-top: 10px;
 }

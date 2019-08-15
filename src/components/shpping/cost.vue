@@ -1,5 +1,5 @@
 <template>
-  <div class="__p_2362_uid_193">
+  <div>
     <span class="title">充值中心</span>
     <el-button type="text" size="small" style="float:right;" @click="gohistory">查看历史充值</el-button>
     <el-form

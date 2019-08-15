@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <el-select size="small" class="__p_2363_uid_262" v-model="type">
+      <el-select size="small" class="width200" v-model="type">
         <el-option value="订单号" label="订单号"></el-option>
         <el-option value="订单日期" label="订单日期"></el-option>
       </el-select>
@@ -20,11 +20,11 @@
         placeholder="请输入搜索内容"
         type="text"
         size="small"
-        class="__p_2363_uid_263"
+        class="width2001"
       ></el-input>
       <el-button type="primary" size="small" v-model="searchval">搜索</el-button>
     </div>
-    <el-table :data="tabledata" stripe border highlight-current-row class="__p_2363_uid_252">
+    <el-table :data="tabledata" stripe border highlight-current-row class="table">
       <el-table-column label="寄养订单号" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="价格" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物名字" prop="id" align="center" header-align="center"></el-table-column>
@@ -41,7 +41,7 @@
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
-      class="__p_2363_uid_260"
+      class="fyclass"
     ></el-pagination>
   </div>
 </template>
@@ -75,17 +75,13 @@ export default {
 };
 </script>
 <style scoped>
-.__p_2363_uid_239 {
-  font-size: 25px;
-}
-
-.__p_2363_uid_262 {
+.width200 {
   width: 200px;
   display: inline-block;
   vertical-align: bottom;
 }
 
-.__p_2363_uid_263 {
+.width2001 {
   width: 200px;
   display: inline-block;
   vertical-align: bottom;
@@ -93,17 +89,8 @@ export default {
   margin-right: 10px;
 }
 
-.__p_2363_uid_261 {
-  margin-top: 20px;
-}
-
-.__p_2363_uid_252 {
+.table {
   margin-top: 10px;
-}
-
-.__p_2363_uid_260 {
-  margin-top: 20px;
-  text-align: right;
 }
 
 .timerang {

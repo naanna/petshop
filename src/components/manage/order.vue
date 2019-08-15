@@ -2,7 +2,7 @@
   <div>
     <span class="fontclass">订单管理</span>
     <div style="  margin-top: 20px;">
-      <el-select size="small" class="__p_2363_uid_262" v-model="type">
+      <el-select size="small" class="width200" v-model="type">
         <el-option value="订单号" label="订单号"></el-option>
         <el-option value="购物者" label="购物者"></el-option>
         <el-option value="订单日期" label="订单日期"></el-option>
@@ -23,11 +23,11 @@
         type="text"
         size="small"
         clearable
-        class="__p_2363_uid_263"
+        class="width2001"
       ></el-input>
       <el-button type="primary" size="small" v-model="searchval">搜索</el-button>
     </div>
-    <el-table :data="tabledata" stripe border highlight-current-row class="__p_2363_uid_252">
+    <el-table :data="tabledata" stripe border highlight-current-row class="table">
       <el-table-column label="购物订单号" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="总价" prop="id" align="center" header-align="center"></el-table-column>
       <el-table-column label="购物日期" prop="id" align="center" header-align="center"></el-table-column>
@@ -107,13 +107,13 @@ export default {
 };
 </script>
 <style scoped>
-.__p_2363_uid_262 {
+.width200 {
   width: 200px;
   display: inline-block;
   vertical-align: bottom;
 }
 
-.__p_2363_uid_263 {
+.width2001 {
   width: 200px;
   display: inline-block;
   vertical-align: bottom;
@@ -121,11 +121,7 @@ export default {
   margin-right: 10px;
 }
 
-.__p_2363_uid_261 {
-  margin-top: 20px;
-}
-
-.__p_2363_uid_252 {
+.table {
   margin-top: 10px;
 }
 

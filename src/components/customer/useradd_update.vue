@@ -31,7 +31,7 @@
         <el-input
           type="text"
           size="small"
-          class="__p_C8_u_247"
+          class="width250"
           v-model="form.username"
           :disabled="disable"
         ></el-input>
@@ -40,24 +40,24 @@
         </el-tooltip>
       </el-form-item>
       <el-form-item label="密码：" label-width="100px" prop="pass">
-        <el-input type="password" v-model="form.pass" size="small" class="__p_C8_u_247"></el-input>
+        <el-input type="password" v-model="form.pass" size="small" class="width250"></el-input>
       </el-form-item>
       <el-form-item label="确认密码：" label-width="100px" prop="checkPass">
-        <el-input type="password" v-model="form.checkPass" size="small" class="__p_C8_u_247"></el-input>
+        <el-input type="password" v-model="form.checkPass" size="small" class="width250"></el-input>
       </el-form-item>
       <el-form-item label="昵称：" label-width="100px" prop="nickname">
-        <el-input type="text" size="small" class="__p_C8_u_247" v-model="form.nickname"></el-input>
+        <el-input type="text" size="small" class="width250" v-model="form.nickname"></el-input>
         <el-tooltip class="item" effect="dark" content="长度不应超过7个字符且不含空格" placement="top">
           <i class="el-icon-question incoclass"></i>
         </el-tooltip>
       </el-form-item>
       <el-form-item label="姓名：" label-width="100px" prop="name">
-        <el-input type="text" size="small" class="__p_C8_u_247" v-model="form.name"></el-input>
+        <el-input type="text" size="small" class="width250" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="权限：" label-width="100px" prop="permissions">
         <el-select
           size="small"
-          class="__p_C8_u_247"
+          class="width250"
           v-model="form.permissions"
           @change="goclearlevel"
         >
@@ -66,13 +66,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="性别：" label-width="100px" prop="sex">
-        <el-select size="small" class="__p_C8_u_247" v-model="form.sex">
+        <el-select size="small" class="width250" v-model="form.sex">
           <el-option value="男" label="男"></el-option>
           <el-option value="女" label="女"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="等级：" label-width="100px" prop="level">
-        <el-select size="small" class="__p_C8_u_247" v-model="form.level">
+        <el-select size="small" class="width250" v-model="form.level">
           <el-option value="vip1" label="初级vip" v-if="form.permissions=='customer'"></el-option>
           <el-option value="vip2" label="中级vip" v-if="form.permissions=='customer'"></el-option>
           <el-option value="vip3" label="高级vip" v-if="form.permissions=='customer'"></el-option>
@@ -80,7 +80,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="余额：" label-width="100px" prop="money">
-        <el-input type="text" size="small" class="__p_C8_u_247" v-model.number="form.money"></el-input>
+        <el-input type="text" size="small" class="width250" v-model.number="form.money"></el-input>
       </el-form-item>
       <el-form-item label="生日：" label-width="100px" prop="birthday">
         <el-date-picker
@@ -88,7 +88,7 @@
           type="date"
           placeholder="选择日期"
           size="small"
-          class="__p_C8_u_247"
+          class="width250"
         ></el-date-picker>
       </el-form-item>
     </el-form>
@@ -289,7 +289,7 @@ export default {
 </script>
 
 <style scoped>
-.__p_C8_u_247 {
+.width250 {
   width: 250px;
 }
 .incoclass {
