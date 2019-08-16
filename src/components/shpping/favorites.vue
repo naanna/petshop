@@ -8,6 +8,7 @@
             <el-image class="image" :src="item.picture"></el-image>
             <p class="textclass2">{{item.name}}</p>
             <p class="textclass">¥{{item.price}}</p>
+            <el-button size="mini" icon="el-icon-delete" class="delete" @click="godel(item,index)"></el-button>
             <el-button size="mini" class="button" @click="goadd(item)">加入购物车</el-button>
           </el-card>
         </el-col>
@@ -102,6 +103,23 @@ export default {
             });
         })
         .catch(() => {});
+    },
+    godel(row, index) {
+      this.$confirm("您确认取消收藏吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .delete("/api/deletecollect?collectid=" + row.collectid)
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("成功取消收藏！");
+                this.showtable.splice(index, 1);
+              }
+            });
+        })
+        .catch(() => {});
     }
   }
 };
@@ -138,5 +156,14 @@ export default {
 .button {
   float: right;
   margin: 0 10px 10px 0;
+}
+.delete {
+  cursor: pointer;
+  position: absolute;
+  display: none;
+  margin-left: 10px;
+}
+.card:hover .delete {
+  display: block;
 }
 </style>

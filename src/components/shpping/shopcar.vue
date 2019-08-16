@@ -4,8 +4,8 @@
     <el-steps :active="active" finish-status="success" simple class="step">
       <el-step title="放进购物车"></el-step>
       <el-step title="确认支付"></el-step>
-      <el-step title="订单信息"></el-step>
-      <!-- <el-step status="error" title="订单信息"></el-step> -->
+      <el-step title="订单信息" v-if="showsuccess"></el-step>
+      <el-step status="error" title="订单信息" v-else></el-step>
     </el-steps>
     <div v-show="active==1">
       <el-button type="primary" size="small" @click="go2del">删除选中</el-button>
@@ -116,7 +116,7 @@
       </div>
     </div>
     <div v-show="active==3">
-      <div>
+      <div v-if="showsuccess">
         <img src="@picture/success.png" class="picture" />
         <div class="successdiv">
           <strong>支付成功！</strong>
@@ -139,7 +139,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div>
+      <div v-else>
         <img src="@picture/wrong.png" class="picture" />
         <div class="successdiv">
           <strong>支付失败！</strong>
@@ -169,16 +169,8 @@ export default {
       totalprice: 0,
       count: true,
       selectObj: [],
-      tabledata: [
-        {
-          carid: 1,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
-          price: 100,
-          num: 1
-        }
-      ]
+      tabledata: [],
+      showsuccess: true
     };
   },
   created() {
@@ -195,7 +187,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
-            this.tabledata = results.sort(Util.objSort("getshopcarid"));
+            this.tabledata = results.sort(Util.objSort("shopcarid"));
             for (let i in this.tabledata) {
               if (this.tabledata[i].petid) {
                 this.tabledata[i].goodnum = 1;
@@ -261,6 +253,32 @@ export default {
           spinner: "el-icon-loading",
           background: "rgba(0, 0, 0, 0.7)"
         });
+        this.axios
+          .post("/api/addorder", {
+            username: this.User.username,
+            totalprice: this.totalprice,
+            time: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+          })
+          .then(res => {
+            if (res.data.success) {
+              return this.axios.post("/api/addorderdetail", {
+                orderid: res.data.orderid,
+                totalprice: this.totalprice,
+                username: this.User.username,
+                list: this.selectObj
+              });
+            }
+          })
+          .then(res => {
+            if (res.data.success) {
+              if (res.data.message == "购物车内商品库存不足") {
+                this.showsuccess = false;
+              } else if (res.data.message == "购物车内宠物售出购买失败") {
+                this.showsuccess = false;
+              }
+            }
+          });
+
         setTimeout(() => {
           loading.close();
           this.active++;
