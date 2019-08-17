@@ -123,6 +123,8 @@
           <p>恭喜您，您的支付已经成功！</p>
           <p>订单信息如下显示！</p>
           <p>如有其它问题，请立即与我们客服人员联系。</p>
+          <span>返回</span>
+          <span class="car" @click="goback">购物车</span>
         </div>
         <el-form label-position="right" class="formclass">
           <el-form-item label="订单号：" label-width="100px" prop="name">
@@ -170,11 +172,28 @@ export default {
       count: true,
       selectObj: [],
       tabledata: [],
-      showsuccess: true
+      showsuccess: true,
+      // 超时定时器
+      overTimer: null,
+      // 是否超时
+      isOvertime: false
     };
   },
   created() {
     this.getshopcar();
+  },
+  watch: {
+    active: function() {
+      if (this.active == 2) {
+        this.overTimer = setTimeout(() => {
+          this.isOvertime = true;
+        }, 300000);
+      }
+    }
+  },
+  destroyed() {
+    // 销毁定时器
+    clearTimeout(this.overTimer);
   },
   methods: {
     getshopcar() {
@@ -247,42 +266,47 @@ export default {
     },
     next() {
       if (this.active == 2) {
-        const loading = this.$loading({
-          lock: true,
-          text: "订单提交中",
-          spinner: "el-icon-loading",
-          background: "rgba(0, 0, 0, 0.7)"
-        });
-        this.axios
-          .post("/api/addorder", {
-            username: this.User.username,
-            totalprice: this.totalprice,
-            time: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
-          })
-          .then(res => {
-            if (res.data.success) {
-              return this.axios.post("/api/addorderdetail", {
-                orderid: res.data.orderid,
-                totalprice: this.totalprice,
-                username: this.User.username,
-                list: this.selectObj
-              });
-            }
-          })
-          .then(res => {
-            if (res.data.success) {
-              if (res.data.message == "购物车内商品库存不足") {
-                this.showsuccess = false;
-              } else if (res.data.message == "购物车内宠物售出购买失败") {
-                this.showsuccess = false;
-              }
-            }
-          });
-
-        setTimeout(() => {
-          loading.close();
+        if (this.isOvertime) {
+          this.showsuccess = false;
           this.active++;
-        }, 2000);
+        } else {
+          const loading = this.$loading({
+            lock: true,
+            text: "订单提交中",
+            spinner: "el-icon-loading",
+            background: "rgba(0, 0, 0, 0.7)"
+          });
+          this.axios
+            .post("/api/addorder", {
+              username: this.User.username,
+              totalprice: this.totalprice,
+              time: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+            })
+            .then(res => {
+              if (res.data.success) {
+                return this.axios.post("/api/addorderdetail", {
+                  orderid: res.data.orderid,
+                  totalprice: this.totalprice,
+                  username: this.User.username,
+                  list: this.selectObj
+                });
+              }
+            })
+            .then(res => {
+              if (res.data.success) {
+                if (res.data.message == "购物车内商品库存不足") {
+                  this.showsuccess = false;
+                } else if (res.data.message == "购物车内宠物售出购买失败") {
+                  this.showsuccess = false;
+                }
+              }
+            });
+
+          setTimeout(() => {
+            loading.close();
+            this.active++;
+          }, 2000);
+        }
       } else this.active++;
     },
     up() {

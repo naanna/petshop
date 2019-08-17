@@ -49,13 +49,13 @@
             <span class="title">{{item.name}}</span>
             <div class="flexclass">
               <el-button
-                v-if="collect"
+                v-if="item.collect"
                 type="danger"
                 size="small"
                 icon="el-icon-star-off"
-                @click="gonocollect"
+                @click="gonocollect(item)"
               ></el-button>
-              <el-button v-else size="small" icon="el-icon-star-off" plain @click="gocollect"></el-button>
+              <el-button v-else size="small" icon="el-icon-star-off" plain @click="gocollect(item)"></el-button>
               <el-button
                 type="primary"
                 size="mini"
@@ -96,13 +96,13 @@ export default {
     return {
       type: "价格",
       searchval: "狗粮",
-      collect: false,
       money1: "",
       money2: "",
       total: 0,
       page_no: 1,
       page_size: 12,
-      tabledata: []
+      tabledata: [],
+      collectobs: []
     };
   },
   created() {
@@ -147,8 +147,33 @@ export default {
             var results = res.data;
             this.tabledata = results.message;
             this.total = results.total;
+            for (let i in this.tabledata) {
+              this.$set(this.tabledata[i], "collect", false);
+            }
+            return this.axios.get("/api/getcollect", {
+              params: {
+                username: this.User.username
+              }
+            });
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data.message;
+            this.collectobs = results.filter(item => item.goodid);
+            this.setcollect();
           }
         });
+    },
+    setcollect() {
+      for (let i in this.tabledata) {
+        for (let j in this.collectobs) {
+          if (this.tabledata[i].goodid == this.collectobs[j].goodid) {
+            this.tabledata[i].collect = true;
+            this.tabledata[i].collectid = this.collectobs[j].collectid;
+          }
+        }
+      }
     },
     gosearch() {
       this.page_no = 1;
@@ -169,11 +194,29 @@ export default {
       this.money2 = "";
       this.searchval = "";
     },
-    gocollect() {
+    gocollect(row) {
       this.collect = true;
+      this.axios
+        .post("/api/addcollect", {
+          username: this.User.username,
+          goodid: row.goodid
+        })
+        .then(res => {
+          if (res.data.success) {
+            this.goquery();
+            this.$message.success("加入收藏!");
+          }
+        });
     },
-    gonocollect() {
-      this.collect = false;
+    gonocollect(row) {
+      this.axios
+        .delete("/api/deletecollect?collectid=" + row.collectid)
+        .then(res => {
+          if (res.data.success) {
+            this.goquery();
+            this.$message.success("取消收藏!");
+          }
+        });
     },
     godetail() {
       this.rjDialog
@@ -217,6 +260,12 @@ export default {
   font-size: 13px;
   display: block;
   text-align: center;
+  height: 30px;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 .image {
