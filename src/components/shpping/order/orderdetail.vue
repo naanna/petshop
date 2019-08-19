@@ -3,11 +3,11 @@
     <div class="headclass">
       <div class="headerinfo">
         <span class="textclass">交易单号</span>
-        <span>TS10086</span>
+        <span>{{orderid}}</span>
       </div>
       <div class="headerinfo">
         <span class="textclass">交易时间</span>
-        <span>2019-8-1 14：00</span>
+        <span>{{time}}</span>
       </div>
     </div>
     <el-table :data="tabledata" class="table">
@@ -28,26 +28,32 @@
           <span class="money1">￥{{scope.row.price}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="数量" width="160px" prop="num" align="center" header-align="center"></el-table-column>
+      <el-table-column
+        label="数量"
+        width="160px"
+        prop="ordernum"
+        align="center"
+        header-align="center"
+      ></el-table-column>
       <el-table-column
         label="金额"
         width="160px"
-        prop="totalprice"
+        prop="ordernum"
         align="center"
         header-align="center"
       >
         <template slot-scope="scope">
-          <span class="money2">￥{{scope.row.num*scope.row.price}}</span>
+          <span class="money2">￥{{scope.row.ordernum*scope.row.price}}</span>
         </template>
       </el-table-column>
     </el-table>
     <div class="textdiv1">
       <span>实付款：</span>
-      <span>￥10000</span>
+      <span>￥{{totalprice}}</span>
     </div>
     <div class="textdiv1">
-      <span>下单者：</span>
-      <span>壮壮</span>
+      <span>下单账户：</span>
+      <span>{{username}}</span>
     </div>
     <div class="button">
       <el-button size="small" @click="goclose">关闭</el-button>
@@ -56,39 +62,42 @@
 </template>
 
 <script>
+import Util from "@assets/Util.js";
 export default {
   name: "orderdetail",
   data() {
     return {
-      tabledata: [
-        {
-          carid: 1,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
-          price: 100,
-          num: 1
-        },
-        {
-          carid: 2,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
-          price: 100,
-          num: 1
-        },
-        {
-          carid: 3,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-          name: "宠物狗的狗粮呀呀呀呀呀呀呀哈哈哈哈",
-          price: 100,
-          num: 1
-        }
-      ]
+      orderid: "",
+      tabledata: [],
+      totalprice: "",
+      username: "",
+      time: ""
     };
   },
+  created() {
+    if (this.rjDialogParams().row) {
+      this.orderid = this.rjDialogParams().row.orderid;
+      this.totalprice = this.rjDialogParams().row.totalprice;
+      this.username = this.rjDialogParams().row.username;
+      this.time = this.rjDialogParams().row.time;
+      this.goquery();
+    }
+  },
   methods: {
+    goquery() {
+      this.axios
+        .get("/api/getorderdetail", {
+          params: {
+            orderid: this.orderid
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data.message;
+            this.tabledata = results.sort(Util.objSort("orderdetailid"));
+          }
+        });
+    },
     goclose() {
       this.closeRjDialog && this.closeRjDialog();
     }

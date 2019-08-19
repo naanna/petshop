@@ -128,16 +128,16 @@
         </div>
         <el-form label-position="right" class="formclass">
           <el-form-item label="订单号：" label-width="100px" prop="name">
-            <span class="spanclass">123</span>
+            <span class="spanclass">{{form.orderid}}</span>
           </el-form-item>
           <el-form-item label="支付金额：" label-width="100px" prop="price">
-            <span class="spanclass">123</span>
+            <span class="spanclass">{{form.totalprice}}</span>
           </el-form-item>
           <el-form-item label="下单时间：" label-width="100px" prop="type">
-            <span class="spanclass">123</span>
+            <span class="spanclass">{{form.time}}</span>
           </el-form-item>
           <el-form-item label="下单账户：" label-width="100px" prop="num">
-            <span class="spanclass">123</span>
+            <span class="spanclass">{{form.username}}</span>
           </el-form-item>
         </el-form>
       </div>
@@ -176,7 +176,8 @@ export default {
       // 超时定时器
       overTimer: null,
       // 是否超时
-      isOvertime: false
+      isOvertime: false,
+      form: ""
     };
   },
   created() {
@@ -276,14 +277,20 @@ export default {
             spinner: "el-icon-loading",
             background: "rgba(0, 0, 0, 0.7)"
           });
+          this.form.time = this.moment(new Date()).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          this.form.username = this.User.username;
+          this.form.totalprice = this.totalprice;
           this.axios
             .post("/api/addorder", {
-              username: this.User.username,
-              totalprice: this.totalprice,
-              time: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+              username: this.form.username,
+              totalprice: this.form.totalprice,
+              time: this.form.time
             })
             .then(res => {
               if (res.data.success) {
+                this.form.orderid = res.data.orderid;
                 return this.axios.post("/api/addorderdetail", {
                   orderid: res.data.orderid,
                   totalprice: this.totalprice,

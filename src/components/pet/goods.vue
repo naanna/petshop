@@ -61,7 +61,7 @@
                 size="mini"
                 plain
                 icon="el-icon-shopping-cart-1"
-                @click="goaddshop"
+                @click="goaddshop(item)"
               ></el-button>
             </div>
           </div>
@@ -179,13 +179,26 @@ export default {
       this.page_no = 1;
       this.goquery();
     },
-    goaddshop() {
-      this.$confirm("确定加入购物车?", "提示", {
+    goaddshop(row) {
+      this.$confirm("您确认要加入购物车吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message.success("添加成功!");
+          this.axios
+            .post("/api/addshopcar", {
+              goodid: row.goodid,
+              username: this.User.username
+            })
+            .then(res => {
+              if (res.data.success) {
+                if (res.data.message == "已达上限") {
+                  this.$message.warning("购物车中数量已达最大库存！");
+                } else {
+                  this.$message.success("成功加入购物车！");
+                }
+              }
+            });
         })
         .catch(() => {});
     },
