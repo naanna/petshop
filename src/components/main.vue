@@ -7,7 +7,7 @@
         </div>
         <div class="icondiv">
           <i class="el-icon-shopping-cart-full titleicon"></i>
-          <span class="number">0</span>
+          <span class="number">{{totalorder}}</span>
         </div>
         <div class="footerdiv">
           <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
@@ -20,7 +20,7 @@
         </div>
         <div class="icondiv">
           <i class="el-icon-money titleicon"></i>
-          <span class="number">0</span>
+          <span class="number">{{totalmoeny}}</span>
         </div>
         <div class="footerdiv">
           <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
@@ -33,7 +33,7 @@
         </div>
         <div class="icondiv">
           <i class="el-icon-user titleicon"></i>
-          <span class="number">0</span>
+          <span class="number">{{totaluser}}</span>
         </div>
         <div class="footerdiv">
           <span class="go" @click="gourl('/customer/index')" v-if="permissions=='admin'">显示详细...</span>
@@ -42,15 +42,15 @@
       </div>
       <div class="carddiv">
         <div class="headdiv">
-          <span>代售总数</span>
+          <span>寄养总数</span>
         </div>
         <div class="icondiv">
           <i class="el-icon-box titleicon"></i>
-          <span class="number">0</span>
+          <span class="number">{{totalcare}}</span>
         </div>
         <div class="footerdiv">
-          <span class="go" @click="gourl('/manage/bookmanage')" v-if="permissions=='admin'">显示详细...</span>
-          <span class="go" @click="gourl('/booking/my')" v-else>我要代售...</span>
+          <span class="go" @click="gourl('/manage/caremanage')" v-if="permissions=='admin'">显示详细...</span>
+          <span class="go" @click="gourl('/fostercare/my')" v-else>我要代售...</span>
         </div>
       </div>
     </div>
@@ -86,54 +86,14 @@
           <span class="titleclass">用户活动</span>
         </div>
         <div>
-          <div class="user">
+          <div class="user" v-for="item in userdata">
             <div>
-              <span class="usernamecolor">壮壮</span>
+              <span class="usernamecolor">{{item.nickname}}</span>
               <span class="join">加入我们</span>
             </div>
             <div>
               <i class="el-icon-time"></i>
-              <span class="join">2019-07-29</span>
-            </div>
-          </div>
-          <div class="user">
-            <div>
-              <span class="usernamecolor">壮壮</span>
-              <span class="join">加入我们</span>
-            </div>
-            <div>
-              <i class="el-icon-time"></i>
-              <span class="join">2019-07-29</span>
-            </div>
-          </div>
-          <div class="user">
-            <div>
-              <span class="usernamecolor">壮壮</span>
-              <span class="join">加入我们</span>
-            </div>
-            <div>
-              <i class="el-icon-time"></i>
-              <span class="join">2019-07-29</span>
-            </div>
-          </div>
-          <div class="user">
-            <div>
-              <span class="usernamecolor">壮壮</span>
-              <span class="join">加入我们</span>
-            </div>
-            <div>
-              <i class="el-icon-time"></i>
-              <span class="join">2019-07-29</span>
-            </div>
-          </div>
-          <div class="user">
-            <div>
-              <span class="usernamecolor">壮壮</span>
-              <span class="join">加入我们</span>
-            </div>
-            <div>
-              <i class="el-icon-time"></i>
-              <span class="join">2019-07-29</span>
+              <span class="join">{{item.regday}}</span>
             </div>
           </div>
         </div>
@@ -151,13 +111,13 @@
           </el-table-column>
           <el-table-column
             label="商品信息"
-            prop="id"
+            prop="name"
             width="400px"
             align="center"
             header-align="center"
           ></el-table-column>
-          <el-table-column label="价格" prop="id" align="center" header-align="center"></el-table-column>
-          <el-table-column label="库存" prop="id" align="center" header-align="center"></el-table-column>
+          <el-table-column label="价格" prop="price" align="center" header-align="center"></el-table-column>
+          <el-table-column label="库存" prop="num" align="center" header-align="center"></el-table-column>
         </el-table>
       </div>
     </div>
@@ -168,61 +128,59 @@ export default {
   data() {
     return {
       permissions: "",
-      options: {
-        title: {
-          text: "八月销售情况"
-        },
-        tooltip: {
-          trigger: "axis"
-        },
-        xAxis: [
-          {
-            type: "category",
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: [
-          {
-            name: "订单数",
-            type: "bar",
-            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0],
-            markPoint: {
-              data: [
-                { type: "max", name: "最大值" },
-                { type: "min", name: "最小值" }
-              ]
-            }
-          }
-        ]
-      },
-      data: [
-        {
-          id: 1,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-        },
-        {
-          id: 2,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-        },
-        {
-          id: 2,
-          picture:
-            "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-        }
-      ]
+      totalorder: 0,
+      totalmoeny: 0,
+      totaluser: 0,
+      totalcare: 0,
+      options: {},
+      data: [],
+      userdata: []
     };
   },
   created() {
     this.permissions = this.User.permissions;
+    this.getnums();
   },
   methods: {
+    getnums() {
+      this.axios
+        .get("/api/getindex")
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data.message;
+            this.totalorder = results.totalorder;
+            this.totalmoeny = results.totalmoeny;
+            this.totaluser = results.totaluser;
+            this.totalcare = results.totalcare;
+            return this.axios.get("/api/getrecommended");
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data.message;
+            this.data = results;
+            return this.axios.get("/api/getuseractivity");
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data.message;
+            this.userdata = results;
+            for (let i in this.userdata) {
+              this.userdata[i].regday = this.moment(
+                this.userdata[i].regday
+              ).format("YYYY-MM-DD");
+            }
+            return this.axios.get("/api/getsales");
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data.message;
+            this.options = results;
+          }
+        });
+    },
     gourl(url) {
       this.$router.push(url);
     }
