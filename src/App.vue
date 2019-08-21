@@ -1,15 +1,15 @@
 <template>
   <div>
-    <index></index>
+    <login></login>
   </div>
 </template>
 
 <script>
-import index from "./components/index";
+import login from "./components/login";
 export default {
   name: "app",
   components: {
-    index
+    login
   },
   data() {
     return {};
