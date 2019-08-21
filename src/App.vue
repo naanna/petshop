@@ -1,6 +1,6 @@
 <template>
   <div>
-    <login></login>
+    <router-view></router-view>
   </div>
 </template>
 

@@ -21,8 +21,10 @@ Vue.prototype.moment = moment;
 import User from "@assets/data.js";
 Vue.prototype.User = User;
 import router from "./router/router.js";
+import store from "./store/main.js";
 
 new Vue({
-  render: h => h(App),
-  router
+    render: h => h(App),
+    store,
+    router,
 }).$mount('#app')

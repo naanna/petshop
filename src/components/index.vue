@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <span class="mouser" @click="gourl('/')">
+        <span class="mouser" @click="gourl('/index')">
           <i class="el-icon-s-home"></i>首页
         </span>
         <span class="mouser" @click="gourl('/shpping/shopcar')">

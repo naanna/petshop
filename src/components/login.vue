@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "demo",
   data() {
@@ -28,8 +29,22 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setToken"]),
     gologin() {
-      console.log(this.loginform);
+      let _this = this;
+      this.axios
+        .get("/api/login", {
+          params: {
+            username: _this.loginform.username,
+            password: _this.loginform.password
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            _this.setToken({ token: res.data.token }); //store中的为token赋值方法
+            _this.$router.push("/index");
+          }
+        });
     }
   }
 };
