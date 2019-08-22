@@ -25,8 +25,6 @@
           <el-option v-if="type=='种类'" value="cat" label="猫咪"></el-option>
           <el-option v-if="type=='种类'" value="dog" label="狗狗"></el-option>
           <el-option v-if="type=='种类'" value="pig" label="香猪"></el-option>
-          <el-option v-if="type=='状态'" value="booking" label="代售中"></el-option>
-          <el-option v-if="type=='状态'" value="booked" label="代售出"></el-option>
           <el-option v-if="type=='状态'" value="saled" label="售出"></el-option>
           <el-option v-if="type=='状态'" value="saling" label="在售"></el-option>
           <el-option v-if="type=='状态'" value="caring" label="寄养"></el-option>
@@ -49,9 +47,7 @@
       <el-table-column label="年龄" prop="age" align="center" header-align="center"></el-table-column>
       <el-table-column label="状态" prop="status" align="center" header-align="center">
         <template slot-scope="scope">
-          <span v-if="scope.row.status=='booking'">代售中</span>
-          <span v-else-if="scope.row.status=='booked'">代售出</span>
-          <span v-else-if="scope.row.status=='saled'">售出</span>
+          <span v-if="scope.row.status=='saled'">售出</span>
           <span v-else-if="scope.row.status=='saling'">在售</span>
           <span v-else-if="scope.row.status=='caring'">寄养</span>
           <span v-else>领回</span>

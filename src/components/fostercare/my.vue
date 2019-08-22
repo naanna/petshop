@@ -237,7 +237,6 @@ export default {
       this.goquery();
     },
     goadd() {
-      var booking = true;
       this.rjDialog
         .title("我要寄养")
         .width("600px")

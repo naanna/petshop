@@ -5,12 +5,8 @@
 </template>
 
 <script>
-import login from "./components/login";
 export default {
   name: "app",
-  components: {
-    login
-  },
   data() {
     return {};
   },

@@ -10,9 +10,6 @@
           <el-menu-item index="2">
             <span slot="title">寄养流程</span>
           </el-menu-item>
-          <el-menu-item index="3">
-            <span slot="title">代售流程</span>
-          </el-menu-item>
           <el-menu-item index="4">
             <span slot="title">留言功能</span>
           </el-menu-item>
@@ -49,18 +46,6 @@
           <p>4.如需要延迟寄养申请请进入我的寄养提交延长申请，管理员审批后将会填写需要补上的金额。</p>
           <p>5.寄养申请通过将会立即从账户上扣除寄养金额，请保证你的账户余额足够。</p>
           <p>6.提前结束寄养不会退还金额！请谨慎决定寄养时长。</p>
-        </div>
-      </div>
-      <div class="divclass" v-else-if="key==3">
-        <p class="center">代售流程</p>
-        <div>
-          <p>为您介绍下详细代售步骤：</p>
-          <p>1.登录到你的账号，点击导航上的【代售中心】->【我的代售】</p>
-          <p>2.点击右上角的【我要代售】，填写代售信息。</p>
-          <p>3.填写完代售信息提交申请，管理员审批后会填写代售服务费，并发送通知消息给您。</p>
-          <p>4.代售申请通过将会立即从账户上扣除服务费，请保证你的账户余额足够。</p>
-          <p>5.取消代售不会退还金额！请谨慎决定。</p>
-          <p>6.代售售出后将会以支付宝转账的形式将资金转给您。</p>
         </div>
       </div>
       <div class="divclass" v-else-if="key==4">

@@ -26,9 +26,7 @@
         </div>
         <div>
           <span>状态：</span>
-          <span v-if="form.status=='booking'">代售中</span>
-          <span v-else-if="form.status=='booked'">代售出</span>
-          <span v-else-if="form.status=='saled'">售出</span>
+          <span v-if="form.status=='saled'">售出</span>
           <span v-else-if="form.status=='saling'">在售</span>
           <span v-else-if="form.status=='caring'">寄养</span>
           <span v-else>领回</span>

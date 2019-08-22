@@ -31,7 +31,7 @@
         <i
           class="el-icon-shopping-cart-2 shopcar"
           @click.stop="goaddshop"
-          v-if="item.status=='saling'||item.status=='booking'"
+          v-if="item.status=='saling'"
         ></i>
         <el-image class="petpic" :src="item.picture" fit="fill"></el-image>
         <span class="text3">{{item.name}}</span>
@@ -40,9 +40,7 @@
           <span class="text1">{{item.age}}</span>
         </div>
         <div class="text2">
-          <span class="text1" v-if="item.status=='booking'">代售中</span>
-          <span class="text1" v-else-if="item.status=='booked'">代售出</span>
-          <span class="text1" v-else-if="item.status=='saled'">售出</span>
+          <span class="text1" v-if="item.status=='saled'">售出</span>
           <span class="text1" v-else>在售</span>
           <span class="text1">{{item.price}}</span>
         </div>
@@ -93,9 +91,9 @@ export default {
         page_size: this.page_size
       };
       if (this.seeout) {
-        query.index = "(status ='booked' or status = 'saled') and type='cat'";
+        query.index = "status = 'saled' and type='cat'";
       } else {
-        query.index = "(status ='saling' or status = 'booking') and type='cat'";
+        query.index = "status = 'saling' and type='cat'";
       }
       if (this.money1 != "" && this.money2 == "") {
         query.small = this.money1;

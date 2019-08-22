@@ -2,15 +2,16 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
-export default new Router({
-    mode: 'history', //去掉#号
+
+const router = new Router({
+    mode: 'history', //去掉#号,
     routes: [{
-            path: '/',
+            path: '/login',
             name: 'Login',
             component: resolve => require(['../components/login.vue'], resolve)
         },
         {
-            path: '/index',
+            path: '/',
             name: 'index',
             component: resolve => require(['../components/index.vue'], resolve),
             children: [{
@@ -126,18 +127,16 @@ export default new Router({
                     component: resolve => require(['../components/manage/order.vue'], resolve)
                 },
                 {
-                    path: '/manage/bookmanage',
-                    name: 'bookmanage',
-                    component: resolve => require(['../components/manage/bookmanage.vue'], resolve)
-                }, {
                     path: '/manage/caremanage',
                     name: 'caremanage',
                     component: resolve => require(['../components/manage/caremanage.vue'], resolve)
-                }, {
+                },
+                {
                     path: '/manage/petmanage',
                     name: 'petmanage',
                     component: resolve => require(['../components/manage/petmanage.vue'], resolve)
-                }, {
+                },
+                {
                     path: '/manage/goodsmanage',
                     name: 'goodsmanage',
                     component: resolve => require(['../components/manage/goodsmanage.vue'], resolve)
@@ -146,20 +145,6 @@ export default new Router({
                     path: '/manage/leavemessagemanage',
                     name: 'manageleavemessage',
                     component: resolve => require(['../components/manage/leavemessagemanage.vue'], resolve)
-                },
-                {
-                    path: '/booking/my',
-                    name: 'mybooking',
-                    component: resolve => require(['../components/booking/my.vue'], resolve)
-                },
-                {
-                    path: '/booking/rule',
-                    name: 'bookingrule',
-                    component: resolve => require(['../components/booking/rule.vue'], resolve)
-                }, {
-                    path: '/booking/historybook',
-                    name: 'historybook',
-                    component: resolve => require(['../components/booking/historybook.vue'], resolve)
                 },
                 {
                     path: '/help/help',
@@ -208,5 +193,20 @@ export default new Router({
                 }
             ]
         }
-    ]
+    ],
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.path === '/login') {
+        next();
+    } else {
+        let token = localStorage.getItem('token');
+        if (token === null || token === '') {
+            next('/login');
+        } else {
+            next();
+        }
+    }
+});
+
+export default router

@@ -8,21 +8,16 @@
       <el-tab-pane label="寄养" name="second">
         <care></care>
       </el-tab-pane>
-      <el-tab-pane label="代售" name="third">
-        <Instead></Instead>
-      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
 import buy from "./order/buy.vue";
-import Instead from "./order/Instead.vue";
 import care from "./order/care.vue";
 export default {
   components: {
     care,
-    Instead,
     buy
   },
   data() {

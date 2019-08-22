@@ -42,7 +42,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             _this.setToken({ token: res.data.token }); //store中的为token赋值方法
-            _this.$router.push("/index");
+            _this.$router.push("/");
           }
         });
     }

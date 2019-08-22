@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <span class="mouser" @click="gourl('/index')">
+        <span class="mouser" @click="gourl('/')">
           <i class="el-icon-s-home"></i>首页
         </span>
         <span class="mouser" @click="gourl('/shpping/shopcar')">
@@ -41,7 +41,7 @@
             <el-dropdown-item command="/shpping/person">个人中心</el-dropdown-item>
             <el-dropdown-item command="/shpping/cost">充值</el-dropdown-item>
             <el-dropdown-item command="/shpping/order">我的消费</el-dropdown-item>
-            <el-dropdown-item command="/">退出登录</el-dropdown-item>
+            <el-dropdown-item command="/login">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -73,6 +73,7 @@
 <script>
 import NavMenu from "./NavMenu";
 import Menulist from "@assets/munelist.js";
+import { mapMutations } from "vuex";
 export default {
   name: "app",
   components: {
@@ -93,6 +94,7 @@ export default {
     this.getperson();
   },
   methods: {
+    ...mapMutations(["delToken"]),
     getperson() {
       this.axios
         .get("/api/getuser", {
@@ -109,6 +111,9 @@ export default {
         });
     },
     gourl(url) {
+      if (url == "/login") {
+        this.delToken({ token: "" });
+      }
       this.$router.push(url);
     },
     getHeight() {
