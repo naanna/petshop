@@ -104,6 +104,7 @@ export default {
       conheight: {
         height: ""
       },
+      truename: "",
       name: "",
       form: {
         username: "",
@@ -146,11 +147,28 @@ export default {
       if (this.active == 1) {
         if (this.name == "") {
           this.$message.warning("请输入验证账户的姓名！");
-        } else this.active++;
+        } else {
+          if (this.name != this.truename) {
+            this.$message.warning("姓名错误！");
+          } else {
+            this.active++;
+          }
+        }
       } else if (this.active == 2) {
         this.$refs["psd"].validate(valid => {
           if (valid) {
-            this.active++;
+            this.axios
+              .post("/api/updateuser/psd", {
+                psd: this.psd.pass,
+                username: this.form.username
+              })
+              .then(res => {
+                if (res.data.success) {
+                  this.active++;
+                } else {
+                  this.showsuccess = false;
+                }
+              });
           } else {
             return false;
           }
@@ -165,7 +183,18 @@ export default {
           } else if (this.form.code != this.code) {
             this.$message.warning("验证码错误！");
           } else {
-            this.page = 2;
+            this.axios
+              .get("/api/getuser", {
+                params: {
+                  id: this.form.username
+                }
+              })
+              .then(res => {
+                if (res.data.success) {
+                  this.truename = res.data.message.name;
+                  this.page = 2;
+                }
+              });
           }
         } else {
           return false;
