@@ -152,15 +152,15 @@ export default {
             this.totalmoeny = results.totalmoeny;
             this.totaluser = results.totaluser;
             this.totalcare = results.totalcare;
-            return this.axios.get("/api/getrecommended");
           }
+          return this.axios.get("/api/getrecommended");
         })
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
             this.data = results;
-            return this.axios.get("/api/getuseractivity");
           }
+          return this.axios.get("/api/getuseractivity");
         })
         .then(res => {
           if (res.data.success) {
@@ -171,8 +171,8 @@ export default {
                 this.userdata[i].regday
               ).format("YYYY-MM-DD");
             }
-            return this.axios.get("/api/getsales");
           }
+          return this.axios.get("/api/getsales");
         })
         .then(res => {
           if (res.data.success) {

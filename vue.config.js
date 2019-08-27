@@ -11,6 +11,7 @@ module.exports = {
             .set('@assets', resolve('src/assets'))
             .set('@picture', resolve('src/assets/picture'))
             .set('@store', resolve('src/store'))
+            .set('@', resolve('src'))
     },
     devServer: {
         // 设置主机地址

@@ -7,6 +7,7 @@ Vue.config.productionTip = false
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
+
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import './assets/icon/iconfont.css'
@@ -24,7 +25,6 @@ import User from "@assets/data.js";
 Vue.prototype.User = User;
 import router from "./router/router.js";
 import store from "./store/main.js";
-
 
 axios.defaults.headers.common['Authorization'] = store.state.token
 
@@ -46,7 +46,6 @@ axios.interceptors.request.use(config => {
             config.headers.common['Authorization'] = store.state.token;
         }
     }
-    console.log(store.state.token.token)
     return config;
 }, err => {
     Message.error({ message: '请求超时!' });
@@ -58,8 +57,13 @@ axios.interceptors.response.use(data => {
     if (!data.data.success) {
         Message.error({ message: data.data.reason });
     }
-
-    return data;
+    if (data.data.status == 403) {
+        store.commit('delToken');
+        router.push('/login');
+        return new Promise(() => {});
+    } else {
+        return data;
+    }
 }, err => {
     if (err && err.response) {
         switch (err.response.status) {
@@ -71,11 +75,6 @@ axios.interceptors.response.use(data => {
                 break;
             case 403:
                 err.message = '登录已过期,请重新登录';
-                this.$store.commit('del_token');
-                router.replace({
-                    path: '/',
-                    query: { redirect: router.currentRoute.fullPath } //登录成功后跳入浏览的当前页面
-                })
                 break;
             case 404:
                 err.message = '请求出错(404)';
