@@ -79,7 +79,8 @@ const navlist = [{
             url: "#",
             sort: 1,
             deep: 1,
-            code: "2"
+            code: "2",
+            permissions: "admin"
         },
         children: [{
                 adminMenu: {
@@ -90,7 +91,8 @@ const navlist = [{
                     url: "/customer/index",
                     sort: 1,
                     deep: 2,
-                    code: "21"
+                    code: "21",
+                    permissions: "admin"
                 }
             },
             {
@@ -102,7 +104,8 @@ const navlist = [{
                     url: "/customer/vip",
                     sort: 2,
                     deep: 2,
-                    code: "22"
+                    code: "22",
+                    permissions: "admin"
                 }
             },
             {
@@ -114,7 +117,8 @@ const navlist = [{
                     url: "/customer/admin",
                     sort: 3,
                     deep: 2,
-                    code: "23"
+                    code: "23",
+                    permissions: "admin"
                 }
             }
         ]
@@ -270,7 +274,8 @@ const navlist = [{
             url: "#",
             sort: 1,
             deep: 1,
-            code: "7"
+            code: "7",
+            permissions: "admin"
         },
         children: [{
                 adminMenu: {
@@ -281,7 +286,8 @@ const navlist = [{
                     url: "/manage/approval",
                     sort: 1,
                     deep: 2,
-                    code: "71"
+                    code: "71",
+                    permissions: "admin"
                 }
             }, {
                 adminMenu: {
@@ -292,7 +298,8 @@ const navlist = [{
                     url: "/manage/order",
                     sort: 2,
                     deep: 2,
-                    code: "72"
+                    code: "72",
+                    permissions: "admin"
                 }
             }, {
                 adminMenu: {
@@ -303,7 +310,8 @@ const navlist = [{
                     url: "/manage/caremanage",
                     sort: 4,
                     deep: 2,
-                    code: "74"
+                    code: "74",
+                    permissions: "admin"
                 }
             },
             {
@@ -315,7 +323,8 @@ const navlist = [{
                     url: "/manage/leavemessagemanage",
                     sort: 5,
                     deep: 2,
-                    code: "75"
+                    code: "75",
+                    permissions: "admin"
                 }
             }, {
                 adminMenu: {
@@ -326,7 +335,8 @@ const navlist = [{
                     url: "/manage/petmanage",
                     sort: 6,
                     deep: 2,
-                    code: "76"
+                    code: "76",
+                    permissions: "admin"
                 }
             }, {
                 adminMenu: {
@@ -337,7 +347,8 @@ const navlist = [{
                     url: "/manage/goodsmanage",
                     sort: 7,
                     deep: 2,
-                    code: "77"
+                    code: "77",
+                    permissions: "admin"
                 }
             },
         ]

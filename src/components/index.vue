@@ -11,32 +11,34 @@
         <span class="mouser" @click="gourl('/shpping/favorites')">
           <i class="el-icon-collection"></i>收藏夹
         </span>
-        <el-badge :value="12" class="item">
+        <i v-if="num==0" class="el-icon-message-solid messagesolid"></i>
+        <el-badge v-else :value="num" class="item">
           <el-popover placement="bottom" width="180" trigger="click">
-            <p>
-              申请被拒绝啦！！
-              <i class="el-icon-circle-close" style="margin-left:30px;cursor: pointer;"></i>
-            </p>
-            <p>
-              申请被拒绝啦！！
-              <i class="el-icon-circle-close" style="margin-left:30px;cursor: pointer;"></i>
-            </p>
-            <p>
-              申请被拒绝啦！！
-              <i class="el-icon-circle-close" style="margin-left:30px;cursor: pointer;"></i>
-            </p>
-            <p>
-              申请被拒绝啦！！
-              <i class="el-icon-circle-close" style="margin-left:30px;cursor: pointer;"></i>
+            <p v-for="item in list">
+              <span v-if="item.type=='invest'">充值申请被</span>
+              <span v-else-if="item.type=='care'">寄养申请被</span>
+              <span v-else-if="item.type=='long'">延长申请被</span>
+              <span v-else-if="item.type=='back'">领回申请被</span>
+
+              <span v-if="item.status=='yes'">同意啦！</span>
+              <span v-else-if="item.status=='refuse'">拒绝啦！</span>
+              <span v-else-if="item.status=='agreed'">同意啦！</span>
+              <span v-else-if="item.status=='refused'">拒绝啦！</span>
+              <span v-else-if="item.status=='end'">同意啦！</span>
+              <i
+                class="el-icon-circle-close"
+                style="margin-left:30px;cursor: pointer;"
+                @click="goread(item)"
+              ></i>
             </p>
             <p style="text-align:center; margin-bottom:0px;">
-              <el-button size="mini">全部已读</el-button>
+              <el-button size="mini" @click="goallread">全部已读</el-button>
             </p>
             <i class="el-icon-message-solid messagesolid" slot="reference"></i>
           </el-popover>
         </el-badge>
         <el-dropdown @command="gourl">
-          <span class="mouser">壮壮</span>
+          <span class="mouser">{{User.nickname}}123</span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="/shpping/person">个人中心</el-dropdown-item>
             <el-dropdown-item command="/shpping/cost">充值</el-dropdown-item>
@@ -85,34 +87,88 @@ export default {
       conheight: {
         height: "",
         border: "1px solid #eee"
-      }
+      },
+      num: 0,
+      list: []
     };
   },
   created() {
     window.addEventListener("resize", this.getHeight);
     this.getHeight();
-    this.getperson();
+    this.getunread();
   },
   methods: {
     ...mapMutations(["delToken"]),
-    getperson() {
+    getunread() {
       this.axios
-        .get("/api/getuser", {
+        .get("/api/getunread", {
           params: {
-            id: "admin"
+            username: this.User.username
           }
         })
         .then(res => {
           if (res.data.success) {
-            this.User.setusername(res.data.message.username);
-            this.User.setpermissions(res.data.message.permissions);
-            this.User.setpicture(res.data.message.picture);
+            var message = res.data;
+            this.num = message.total;
+            this.list = message.message;
+          }
+        });
+    },
+    goread(row) {
+      let refobs = [];
+      if (row.investid) {
+        refobs = [
+          {
+            investid: row.investid
+          }
+        ];
+      }
+      if (row.careid) {
+        refobs = [
+          {
+            careid: row.careid
+          }
+        ];
+      }
+      this.axios
+        .post("/api/readunread", {
+          refobs
+        })
+        .then(res => {
+          if (res.data.success) {
+            this.getunread();
+          }
+        });
+    },
+    goallread() {
+      let refobs = [];
+      for (let i in this.list) {
+        if (this.list[i].investid) {
+          refobs.push({
+            investid: this.list[i].investid
+          });
+        }
+        if (this.list[i].careid) {
+          refobs.push({
+            careid: this.list[i].careid
+          });
+        }
+      }
+
+      this.axios
+        .post("/api/readunread", {
+          refobs
+        })
+        .then(res => {
+          if (res.data.success) {
+            this.getunread();
           }
         });
     },
     gourl(url) {
       if (url == "/login") {
         this.delToken({ token: "" });
+        this.User.deleteobs();
       }
       this.$router.push(url);
     },

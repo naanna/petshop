@@ -14,7 +14,7 @@
       </el-form-item>
       <el-form-item prop="password" label="密码:">
         <el-input type="password" size="small" v-model="loginform.password" class="formitem"></el-input>
-      </el-form-item>      
+      </el-form-item>
       <el-form-item label="验证码:">
         <el-input type="text" v-model="loginform.code" size="small" class="form1"></el-input>
         <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
@@ -39,12 +39,12 @@ export default {
   name: "demo",
   data() {
     return {
-      code:"",
-      showcode:"",
+      code: "",
+      showcode: "",
       loginform: {
         username: "",
         password: "",
-        code:""
+        code: ""
       },
       conheight: {
         height: ""
@@ -71,11 +71,11 @@ export default {
       this.$refs["loginform"].validate(valid => {
         if (valid) {
           let _this = this;
-          if(_this.loginform.code==""){
+          if (_this.loginform.code == "") {
             this.$message.warning("请输入验证码！");
-          }else if(_this.loginform.code!=_this.code){
+          } else if (_this.loginform.code != _this.code) {
             this.$message.warning("验证码错误！");
-          }else{
+          } else {
             this.axios
               .get("/api/login", {
                 params: {
@@ -86,10 +86,24 @@ export default {
               .then(res => {
                 if (res.data.success) {
                   _this.setToken({ token: res.data.token }); //store中的为token赋值方法
-                  _this.$router.push("/");
+                  _this.axios
+                    .get("/api/getuser", {
+                      params: {
+                        id: _this.loginform.username
+                      }
+                    })
+                    .then(res => {
+                      if (res.data.success) {
+                        _this.User.setusername(res.data.message.username);
+                        _this.User.setnickname(res.data.message.nickname);
+                        _this.User.setpermissions(res.data.message.permissions);
+                        _this.User.setpicture(res.data.message.picture);
+                        _this.$router.push("/");
+                      }
+                    });
                 }
               });
-            }
+          }
         } else {
           return false;
         }
@@ -104,20 +118,56 @@ export default {
     goForget() {
       this.$router.push("/forgetpsd");
     },
-    generatedCode () {
-      const random = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-        'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-      let code = '';
-      let showcode='';
+    generatedCode() {
+      const random = [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z"
+      ];
+      let code = "";
+      let showcode = "";
       for (let i = 0; i < 4; i++) {
-        let index = Math.floor(Math.random() * 36)
+        let index = Math.floor(Math.random() * 36);
         code += random[index];
-        showcode += random[index]+" "
+        showcode += random[index] + " ";
       }
       this.code = code;
-      this.showcode=showcode;
+      this.showcode = showcode;
     },
-    gochange(){
+    gochange() {
       this.generatedCode();
     }
   }
@@ -138,7 +188,7 @@ export default {
 }
 .div1 {
   background: url("~@/assets/picture/login.jpg");
-  background-size: 100% 100%; 
+  background-size: 100% 100%;
 }
 .form {
   position: absolute;
@@ -149,20 +199,20 @@ export default {
   padding-bottom: 20px;
   border-radius: 10px;
 }
-.code{
-  background: #e6e3e3 ;
+.code {
+  background: #e6e3e3;
   width: 80px;
   line-height: 32px;
   vertical-align: middle;
   font-size: 18px;
   text-align: center;
   display: inline-block;
-  margin-left:20px;
+  margin-left: 20px;
   border-radius: 5px;
   cursor: pointer;
 }
-.form1{
+.form1 {
   vertical-align: middle;
-  width:100px;
+  width: 100px;
 }
 </style>
