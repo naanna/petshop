@@ -3,6 +3,7 @@
     <el-page-header @back="goback" content="忘记密码"></el-page-header>
     <el-form
       :model="form"
+      :style="location"
       label-position="right"
       class="formdiv"
       :rules="rules"
@@ -27,7 +28,7 @@
       <el-button type="primary" size="small" @click="gonext">下一步</el-button>
     </el-form>
 
-    <div class="formdiv" v-if="page==2">
+    <div class="formdiv" v-if="page==2" :style="location">
       <el-steps :active="active" finish-status="success" align-center>
         <el-step title="身份认证"></el-step>
         <el-step title="设置操作"></el-step>
@@ -104,6 +105,10 @@ export default {
       conheight: {
         height: ""
       },
+      location: {
+        top: "",
+        left: ""
+      },
       truename: "",
       name: "",
       form: {
@@ -112,7 +117,7 @@ export default {
       },
       code: "",
       showcode: "",
-      page: 1,
+      page: 2,
       rules: {
         username: [
           { validator: checkinput, message: "账号不能为空" },
@@ -206,6 +211,8 @@ export default {
     },
     getHeight() {
       this.conheight.height = window.innerHeight + "px";
+      this.location.top = window.innerHeight / 3 + "px";
+      this.location.left = window.innerWidth / 3 + "px";
     },
     gochange() {
       this.generatedCode();
@@ -266,6 +273,7 @@ export default {
 <style scoped>
 .div1 {
   background: url("~@/assets/picture/login.jpg");
+  background-size: 100% 100%;
 }
 .width250 {
   width: 250px;
@@ -275,8 +283,6 @@ export default {
   background: #ffffff;
   width: 500px;
   text-align: center;
-  top: 200px;
-  left: 450px;
   padding: 30px 0;
   border-radius: 10px;
 }

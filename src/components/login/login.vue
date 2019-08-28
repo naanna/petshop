@@ -84,7 +84,6 @@ export default {
                 }
               })
               .then(res => {
-                console.log(res)
                 if (res.data.success) {
                   _this.setToken({ token: res.data.token }); //store中的为token赋值方法
                   _this.$router.push("/");
@@ -139,13 +138,14 @@ export default {
 }
 .div1 {
   background: url("~@/assets/picture/login.jpg");
+  background-size: 100% 100%; 
 }
 .form {
   position: absolute;
   background: #ffffff;
   width: 430px;
   top: 200px;
-  left: 500px;
+  right: 200px;
   padding-bottom: 20px;
   border-radius: 10px;
 }
