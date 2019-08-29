@@ -111,14 +111,14 @@ const router = new Router({
                     component: resolve => require(['../components/manual/pig.vue'], resolve)
                 },
                 {
-                    path: '/count/month',
-                    name: 'month',
-                    component: resolve => require(['../components/count/month.vue'], resolve)
+                    path: '/count/life',
+                    name: 'life',
+                    component: resolve => require(['../components/count/life.vue'], resolve)
                 },
                 {
-                    path: '/count/year',
-                    name: 'year',
-                    component: resolve => require(['../components/count/year.vue'], resolve)
+                    path: '/count/distribution',
+                    name: 'distribution',
+                    component: resolve => require(['../components/count/distribution.vue'], resolve)
                 },
                 {
                     path: '/manage/approval',

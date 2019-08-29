@@ -98,6 +98,7 @@ export default {
                         _this.User.setnickname(res.data.message.nickname);
                         _this.User.setpermissions(res.data.message.permissions);
                         _this.User.setpicture(res.data.message.picture);
+                        _this.User.setregday(res.data.message.regday);
                         _this.$router.push("/");
                       }
                     });

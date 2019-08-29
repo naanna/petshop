@@ -141,7 +141,6 @@ export default {
         birthday: "",
         psd: ""
       },
-      id: "admin",
       rules: {
         nickname: [
           { validator: checkinput, message: "昵称不能为空" },
@@ -166,7 +165,7 @@ export default {
       this.axios
         .get("/api/getuser", {
           params: {
-            id: this.id
+            id: this.User.username
           }
         })
         .then(res => {

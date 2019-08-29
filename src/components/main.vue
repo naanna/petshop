@@ -50,7 +50,7 @@
         </div>
         <div class="footerdiv">
           <span class="go" @click="gourl('/manage/caremanage')" v-if="permissions=='admin'">显示详细...</span>
-          <span class="go" @click="gourl('/fostercare/my')" v-else>我要代售...</span>
+          <span class="go" @click="gourl('/fostercare/my')" v-else>我要寄养...</span>
         </div>
       </div>
     </div>
