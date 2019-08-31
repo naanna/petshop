@@ -53,7 +53,7 @@ export default {
       this.axios
         .get("/api/getuser", {
           params: {
-            id: this.User.username
+            id: this.$store.state.username
           }
         })
         .then(res => {
@@ -77,7 +77,7 @@ export default {
           this.axios
             .post("/api/updateuser/picture", {
               picture: this.showimageurl,
-              username: this.User.username
+              username: this.$store.state.username
             })
             .then(res => {
               if (res.data.success) {

@@ -38,7 +38,7 @@
           </el-popover>
         </el-badge>
         <el-dropdown @command="gourl">
-          <span class="mouser">{{User.nickname}}123</span>
+          <span class="mouser">{{$store.state.nickname}}</span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="/shpping/person">个人中心</el-dropdown-item>
             <el-dropdown-item command="/shpping/cost">充值</el-dropdown-item>
@@ -103,7 +103,7 @@ export default {
       this.axios
         .get("/api/getunread", {
           params: {
-            username: this.User.username
+            username: this.$store.state.username
           }
         })
         .then(res => {
@@ -167,8 +167,7 @@ export default {
     },
     gourl(url) {
       if (url == "/login") {
-        this.delToken({ token: "" });
-        this.User.deleteobs();
+        this.delToken();
       }
       this.$router.push(url);
     },

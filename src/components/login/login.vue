@@ -66,7 +66,7 @@ export default {
     this.generatedCode();
   },
   methods: {
-    ...mapMutations(["setToken"]),
+    ...mapMutations(["setToken", "setUser"]),
     gologin() {
       this.$refs["loginform"].validate(valid => {
         if (valid) {
@@ -94,11 +94,7 @@ export default {
                     })
                     .then(res => {
                       if (res.data.success) {
-                        _this.User.setusername(res.data.message.username);
-                        _this.User.setnickname(res.data.message.nickname);
-                        _this.User.setpermissions(res.data.message.permissions);
-                        _this.User.setpicture(res.data.message.picture);
-                        _this.User.setregday(res.data.message.regday);
+                        _this.setUser({ user: res.data.message });
                         _this.$router.push("/");
                       }
                     });

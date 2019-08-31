@@ -52,7 +52,7 @@ export default {
   },
   created() {
     this.getlife();
-    let Date1 = Date.parse(this.User.regday);
+    let Date1 = Date.parse(this.$store.state.regday);
     let Date2 = Date.parse(new Date());
     let dateSpan = Math.abs(Date2 - Date1);
     this.day = Math.floor(dateSpan / (24 * 3600 * 1000));
@@ -62,7 +62,7 @@ export default {
       this.axios
         .get("/api/getlife", {
           params: {
-            username: this.User.username
+            username: this.$store.state.username
           }
         })
         .then(res => {

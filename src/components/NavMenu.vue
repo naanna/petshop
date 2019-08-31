@@ -4,7 +4,7 @@
     <el-submenu
       v-for="(item,index) in navlist"
       :key="index"
-      v-if="item.adminMenu.menuType=='list'&&(User.permissions=='admin'||(item.adminMenu.permissions==null &&User.permissions!='admin'))"
+      v-if="item.adminMenu.menuType=='list'&&($store.state.permissions=='admin'||(item.adminMenu.permissions==null &&$store.state.permissions!='admin'))"
       :index="item.adminMenu.code"
     >
       <template slot="title">
@@ -17,7 +17,7 @@
     <el-menu-item
       v-for="(item,index) in navlist"
       :key="index"
-      v-if="item.adminMenu.menuType=='page'&&(User.permissions=='admin'||(item.adminMenu.permissions==null &&User.permissions!='admin'))"
+      v-if="item.adminMenu.menuType=='page'&&($store.state.permissions=='admin'||(item.adminMenu.permissions==null &&$store.state.permissions!='admin'))"
       :index="item.adminMenu.url"
     >
       <i class="el-icon-moon"></i>

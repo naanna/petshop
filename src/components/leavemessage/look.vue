@@ -84,7 +84,7 @@ export default {
           .then(() => {
             this.axios
               .post("/api/addmessage", {
-                username: this.User.username,
+                username: this.$store.state.username,
                 note: this.textarea,
                 time: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
               })

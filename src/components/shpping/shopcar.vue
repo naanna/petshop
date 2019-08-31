@@ -201,7 +201,7 @@ export default {
       this.axios
         .get("/api/getshopcar", {
           params: {
-            username: this.User.username
+            username: this.$store.state.username
           }
         })
         .then(res => {
@@ -280,7 +280,7 @@ export default {
           this.form.time = this.moment(new Date()).format(
             "YYYY-MM-DD HH:mm:ss"
           );
-          this.form.username = this.User.username;
+          this.form.username = this.$store.state.username;
           this.form.totalprice = this.totalprice;
           this.axios
             .post("/api/addorder", {
@@ -294,7 +294,7 @@ export default {
                 return this.axios.post("/api/addorderdetail", {
                   orderid: res.data.orderid,
                   totalprice: this.totalprice,
-                  username: this.User.username,
+                  username: this.$store.state.username,
                   list: this.selectObj
                 });
               }

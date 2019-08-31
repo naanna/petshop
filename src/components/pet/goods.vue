@@ -152,7 +152,7 @@ export default {
             }
             return this.axios.get("/api/getcollect", {
               params: {
-                username: this.User.username
+                username: this.$store.state.username
               }
             });
           }
@@ -188,7 +188,7 @@ export default {
           this.axios
             .post("/api/addshopcar", {
               goodid: row.goodid,
-              username: this.User.username
+              username: this.$store.state.username
             })
             .then(res => {
               if (res.data.success) {
@@ -211,7 +211,7 @@ export default {
       this.collect = true;
       this.axios
         .post("/api/addcollect", {
-          username: this.User.username,
+          username: this.$store.state.username,
           goodid: row.goodid
         })
         .then(res => {

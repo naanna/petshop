@@ -155,7 +155,7 @@ export default {
   created() {
     this.getpending();
     this.getrecord();
-    this.approval = this.User.username;
+    this.approval = this.$store.state.username;
   },
   methods: {
     makependingquery() {

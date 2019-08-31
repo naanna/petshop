@@ -21,8 +21,6 @@ Vue.prototype.$echarts = echarts
 
 import moment from 'moment'
 Vue.prototype.moment = moment;
-import User from "@assets/data.js";
-Vue.prototype.User = User;
 import router from "./router/router.js";
 import store from "./store/main.js";
 

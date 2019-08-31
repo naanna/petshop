@@ -50,7 +50,7 @@ export default {
       this.axios
         .get("/api/getcollect", {
           params: {
-            username: this.User.username
+            username: this.$store.state.username
           }
         })
         .then(res => {
@@ -80,7 +80,7 @@ export default {
       let id = {};
       if (row.petid) id.petid = row.petid;
       if (row.goodid) id.goodid = row.goodid;
-      id.username = this.User.username;
+      id.username = this.$store.state.username;
       this.$confirm("您确认要加入购物车吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"

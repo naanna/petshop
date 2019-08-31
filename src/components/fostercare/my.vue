@@ -130,7 +130,7 @@ export default {
       let query = {
         page_no: this.page_no,
         page_size: this.page_size,
-        username: this.User.username
+        username: this.$store.state.username
       };
 
       if (this.searchval != "" && this.searchval != null) {

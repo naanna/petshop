@@ -138,7 +138,7 @@ export default {
     };
   },
   created() {
-    this.permissions = this.User.permissions;
+    this.permissions = this.$store.state.permissions;
     this.getnums();
   },
   methods: {

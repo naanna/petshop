@@ -165,7 +165,7 @@ export default {
       this.axios
         .get("/api/getuser", {
           params: {
-            id: this.User.username
+            id: this.$store.state.username
           }
         })
         .then(res => {
