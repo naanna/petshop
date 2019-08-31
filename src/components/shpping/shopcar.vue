@@ -21,6 +21,7 @@
           width="80px"
           align="center"
           header-align="center"
+          :selectable="selectInit"
         ></el-table-column>
         <el-table-column
           label="商品信息"
@@ -36,14 +37,17 @@
         <el-table-column prop="name" header-align="center"></el-table-column>
         <el-table-column label="价格" width="160px" prop="price" align="center" header-align="center">
           <template slot-scope="scope">
-            <span class="money1">￥{{scope.row.price}}</span>
+            <el-tag v-if="scope.row.status=='soldout'" type="info">失效</el-tag>
+            <span class="money1" v-else>￥{{scope.row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column label="数量" width="160px" prop="num" align="center" header-align="center">
           <template slot-scope="scope">
+            <span v-if="scope.row.status=='soldout'">宝贝已下架！</span>
             <el-input-number
               size="small"
               v-model="scope.row.num"
+              v-else
               :min="1"
               :max="scope.row.goodnum"
               @change="changenum(scope.row)"
@@ -58,7 +62,8 @@
           header-align="center"
         >
           <template slot-scope="scope">
-            <span class="money2">￥{{scope.row.num*scope.row.price}}</span>
+            <span v-if="scope.row.status=='soldout'">不能够买，请联系卖家</span>
+            <span v-else class="money2">￥{{scope.row.num*scope.row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="160px" align="center" header-align="center">
@@ -344,6 +349,13 @@ export default {
         if (item.carid == row.carid) item.num = row.num;
         this.totalprice += item.num * item.price;
       });
+    },
+    selectInit(row, index) {
+      if (row.status == "soldout") {
+        return false; //不可勾选
+      } else {
+        return true; //可勾选
+      }
     },
     handleSelectionChange(val) {
       let self = this;

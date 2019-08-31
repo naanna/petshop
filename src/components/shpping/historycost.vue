@@ -17,7 +17,13 @@
       <el-table-column label="充值单号 " prop="investid" align="center" header-align="center"></el-table-column>
       <el-table-column label="充值金额" prop="money" align="center" header-align="center"></el-table-column>
       <el-table-column label="充值日期" prop="time" align="center" header-align="center"></el-table-column>
-      <el-table-column label="状态" prop="status" align="center" header-align="center"></el-table-column>
+      <el-table-column label="状态" prop="status" align="center" header-align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.status=='no'">待同意</span>
+          <span v-else-if="scope.row.status=='yes'">已同意</span>
+          <span v-else>被拒绝</span>
+        </template>
+      </el-table-column>
       <el-table-column label="审批者" prop="approval" align="center" header-align="center"></el-table-column>
     </el-table>
     <el-pagination
@@ -83,8 +89,8 @@ export default {
           }
         });
     },
-    gosearch(){
-      this.page_no=1;
+    gosearch() {
+      this.page_no = 1;
       this.goquery();
     },
     sizeChangeHandle(val) {

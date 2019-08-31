@@ -67,8 +67,9 @@
           <span v-else>管理员</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="130" align="center" header-align="center">
+      <el-table-column label="操作" width="150" align="center" header-align="center">
         <div slot-scope="scope">
+          <el-button type="text" size="small" @click="goupdatepsd(scope.row)">修改密码</el-button>
           <el-button type="text" size="small" @click="goupdate(scope.row)">编辑</el-button>
           <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
         </div>
@@ -91,6 +92,7 @@
 <script>
 import rjDialog from "../dialog";
 import add_update from "./useradd_update.vue";
+import psd from "./updatepsd.vue";
 export default {
   components: {
     rjDialog
@@ -214,6 +216,18 @@ export default {
       this.page_no = 1;
       this.goquery();
     },
+    goupdatepsd(row) {
+      this.rjDialog
+        .title("修改密码")
+        .width("500px")
+        .currentView(psd, { row })
+        .showClose(true)
+        .sizeTiny()
+        .then(opt => {
+          this.goquery();
+        })
+        .show();
+    },
     goadd() {
       this.rjDialog
         .title("添加用户")
@@ -227,7 +241,6 @@ export default {
         .show();
     },
     goupdate(row) {
-      console.log(row);
       this.rjDialog
         .title("修改用户")
         .width("600px")

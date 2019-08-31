@@ -57,7 +57,6 @@ axios.interceptors.response.use(data => {
     }
     if (data.data.status == 403) {
         store.commit('delToken');
-        User.deleteobs();
         router.push('/login');
         return new Promise(() => {});
     } else {

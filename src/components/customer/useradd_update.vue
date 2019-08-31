@@ -39,10 +39,10 @@
           <i class="el-icon-question incoclass"></i>
         </el-tooltip>
       </el-form-item>
-      <el-form-item label="密码：" label-width="100px" prop="pass">
+      <el-form-item v-if="edit=='no'" label="密码：" label-width="100px" prop="pass">
         <el-input type="password" v-model="form.pass" size="small" class="width250"></el-input>
       </el-form-item>
-      <el-form-item label="确认密码：" label-width="100px" prop="checkPass">
+      <el-form-item v-if="edit=='no'" label="确认密码：" label-width="100px" prop="checkPass">
         <el-input type="password" v-model="form.checkPass" size="small" class="width250"></el-input>
       </el-form-item>
       <el-form-item label="昵称：" label-width="100px" prop="nickname">
@@ -55,12 +55,7 @@
         <el-input type="text" size="small" class="width250" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="权限：" label-width="100px" prop="permissions">
-        <el-select
-          size="small"
-          class="width250"
-          v-model="form.permissions"
-          @change="goclearlevel"
-        >
+        <el-select size="small" class="width250" v-model="form.permissions" @change="goclearlevel">
           <el-option value="customer" label="客户"></el-option>
           <el-option value="admin" label="管理员"></el-option>
         </el-select>
@@ -186,7 +181,6 @@ export default {
       this.form.checkPass = obs.psd;
       if (obs.picture != null) this.imageUrl = obs.picture;
       this.edit = "yes";
-      console.log(this.form);
     }
   },
   methods: {

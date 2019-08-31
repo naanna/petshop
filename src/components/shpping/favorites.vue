@@ -5,11 +5,33 @@
       <el-row v-infinite-scroll="load" infinite-scroll-disabled="disabled">
         <el-col :span="4" v-for="(item, index) in showtable" :key="index">
           <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
-            <el-image class="image" :src="item.picture"></el-image>
-            <p class="textclass2">{{item.name}}</p>
-            <p class="textclass">¥{{item.price}}</p>
-            <el-button size="mini" icon="el-icon-delete" class="delete" @click="godel(item,index)"></el-button>
-            <el-button size="mini" class="button" @click="goadd(item)">加入购物车</el-button>
+            <el-image v-if="item.status=='soldout'" class="image gray" :src="item.picture"></el-image>
+            <el-image v-else class="image" :src="item.picture"></el-image>
+            <el-tooltip
+              v-if="item.name.length>11"
+              class="item"
+              effect="dark"
+              :content="item.name"
+              placement="bottom"
+            >
+              <p class="textclass2">{{item.name}}</p>
+            </el-tooltip>
+            <p v-else class="textclass2">{{item.name}}</p>
+            <p v-if="item.status=='soldout'" class="textclass">已下架</p>
+            <div v-if="item.status=='soldout'" class="soldout">
+              <el-tag type="info" size="medium">失效</el-tag>
+              <el-button size="mini" @click="godel(item)">删除</el-button>
+            </div>
+            <div v-else>
+              <p class="textclass">¥{{item.price}}</p>
+              <el-button
+                size="mini"
+                icon="el-icon-delete"
+                class="delete"
+                @click="godel(item,index)"
+              ></el-button>
+              <el-button size="mini" class="button" @click="goadd(item)">加入购物车</el-button>
+            </div>
           </el-card>
         </el-col>
       </el-row>
@@ -137,13 +159,13 @@ export default {
 
 .textclass {
   text-align: center;
+  margin: 10px 0;
 }
 .textclass2 {
   font-size: 14px;
   text-align: center;
-  height: 30px;
   overflow: hidden;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -165,5 +187,18 @@ export default {
 }
 .card:hover .delete {
   display: block;
+}
+.gray {
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray;
+}
+.soldout {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px 10px 10px;
 }
 </style>
