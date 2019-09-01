@@ -5,7 +5,11 @@
       <el-row v-infinite-scroll="load" infinite-scroll-disabled="disabled">
         <el-col :span="4" v-for="(item, index) in showtable" :key="index">
           <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
-            <el-image v-if="item.status=='soldout'" class="image gray" :src="item.picture"></el-image>
+            <el-image
+              v-if="item.status=='soldout'||item.status=='saled'"
+              class="image gray"
+              :src="item.picture"
+            ></el-image>
             <el-image v-else class="image" :src="item.picture"></el-image>
             <el-tooltip
               v-if="item.name.length>11"
@@ -17,8 +21,8 @@
               <p class="textclass2">{{item.name}}</p>
             </el-tooltip>
             <p v-else class="textclass2">{{item.name}}</p>
-            <p v-if="item.status=='soldout'" class="textclass">已下架</p>
-            <div v-if="item.status=='soldout'" class="soldout">
+            <p v-if="item.status=='soldout'||item.status=='saled'" class="textclass">已下架</p>
+            <div v-if="item.status=='soldout'||item.status=='saled'" class="soldout">
               <el-tag type="info" size="medium">失效</el-tag>
               <el-button size="mini" @click="godel(item)">删除</el-button>
             </div>
@@ -132,8 +136,18 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
+          let body = { username: this.$store.state.username };
+          if (row.goodid) {
+            body.goodid = row.goodid;
+          } else if (row.petid) {
+            body.petid = row.petid;
+          }
           this.axios
-            .delete("/api/deletecollect?collectid=" + row.collectid)
+            .delete("/api/deletecollect", {
+              data: {
+                ...body
+              }
+            })
             .then(res => {
               if (res.data.success) {
                 this.$message.success("成功取消收藏！");

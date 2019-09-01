@@ -37,13 +37,13 @@
         <el-table-column prop="name" header-align="center"></el-table-column>
         <el-table-column label="价格" width="160px" prop="price" align="center" header-align="center">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.status=='soldout'" type="info">失效</el-tag>
+            <el-tag v-if="scope.row.status=='soldout'||scope.row.status=='saled'" type="info">失效</el-tag>
             <span class="money1" v-else>￥{{scope.row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column label="数量" width="160px" prop="num" align="center" header-align="center">
           <template slot-scope="scope">
-            <span v-if="scope.row.status=='soldout'">宝贝已下架！</span>
+            <span v-if="scope.row.status=='soldout'||scope.row.status=='saled'">宝贝已下架！</span>
             <el-input-number
               size="small"
               v-model="scope.row.num"
@@ -62,7 +62,7 @@
           header-align="center"
         >
           <template slot-scope="scope">
-            <span v-if="scope.row.status=='soldout'">不能够买，请联系卖家</span>
+            <span v-if="scope.row.status=='soldout'||scope.row.status=='saled'">不能够买，请联系卖家</span>
             <span v-else class="money2">￥{{scope.row.num*scope.row.price}}</span>
           </template>
         </el-table-column>
@@ -213,13 +213,28 @@ export default {
           if (res.data.success) {
             var results = res.data.message;
             this.tabledata = results.sort(Util.objSort("shopcarid"));
-            for (let i in this.tabledata) {
-              if (this.tabledata[i].petid) {
-                this.tabledata[i].goodnum = 1;
-              }
-            }
+            this.tabledata = this.tabledata.sort(this.Sortfailure("status"));
+            this.tabledata.forEach(item => {
+              if (item.petid) item.goodnum = 1;
+            });
           }
         });
+    },
+    //将失效的放到最底下
+    Sortfailure(prop) {
+      return function(obj1, obj2) {
+        var val1 = obj1[prop];
+        var val2 = obj2[prop];
+        if (!isNaN(Number(val1)) && !isNaN(Number(val2))) {
+          val1 = Number(val1);
+          val2 = Number(val2);
+        }
+        if (val1 == "saled" || val1 == "soldout") {
+          return 1;
+        } else {
+          return 0;
+        }
+      };
     },
     godel(row) {
       this.$confirm("确认删除吗？", "提示", {
@@ -351,7 +366,7 @@ export default {
       });
     },
     selectInit(row, index) {
-      if (row.status == "soldout") {
+      if (row.status == "soldout" || row.status == "saled") {
         return false; //不可勾选
       } else {
         return true; //可勾选

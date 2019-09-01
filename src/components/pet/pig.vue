@@ -273,7 +273,7 @@ export default {
 .petpic {
   width: 100px;
   height: 100px;
-  display: block; 
+  display: block;
   border-radius: 50px;
   margin-left: auto;
   margin-right: auto;
