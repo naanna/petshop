@@ -179,10 +179,8 @@ export default {
   font-size: 14px;
   text-align: center;
   overflow: hidden;
-  -webkit-line-clamp: 1;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
 }
 .textclass1 {
   font-size: 18px;
