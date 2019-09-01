@@ -28,11 +28,25 @@
     </div>
     <div>
       <div class="petdiv" @click="godetail(item)" v-for="(item,index) in tabledata" :key="index">
-        <i
-          class="el-icon-shopping-cart-2 shopcar"
-          @click.stop="goaddshop"
-          v-if="item.status=='saling'"
-        ></i>
+        <div v-if="!seeout">
+          <i class="el-icon-shopping-cart-2 shopcar" @click.stop="goaddshop"></i>
+          <el-button
+            v-if="item.collect"
+            type="danger"
+            size="mini"
+            class="collect"
+            icon="el-icon-star-off"
+            @click.stop="gonocollect(item)"
+          ></el-button>
+          <el-button
+            v-else
+            class="collect"
+            size="mini"
+            icon="el-icon-star-off"
+            plain
+            @click.stop="gocollect(item)"
+          ></el-button>
+        </div>
         <el-image class="petpic" :src="item.picture" fit="fill"></el-image>
         <span class="text3">{{item.name}}</span>
         <div class="text">
@@ -78,7 +92,8 @@ export default {
       total: 0,
       page_no: 1,
       page_size: 12,
-      seeout: false
+      seeout: false,
+      collectobs: []
     };
   },
   created() {
@@ -125,12 +140,62 @@ export default {
             this.tabledata = results.message;
             this.total = results.total;
             for (let i in this.tabledata) {
+              this.$set(this.tabledata[i], "collect", false);
               var now = this.moment(
                 this.moment(new Date()).format("YYYY-MM-DD")
               );
               var age = Util.displayAge(this.tabledata[i].birthday, now);
               this.tabledata[i].age = age;
             }
+            return this.axios.get("/api/getcollect", {
+              params: {
+                username: this.$store.state.username
+              }
+            });
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data.message;
+            this.collectobs = results
+              .filter(item => item.status == "saling")
+              .map(item => {
+                return item.petid;
+              });
+            this.tabledata.filter((item, index) => {
+              if (this.collectobs.includes(item.petid)) {
+                item.collect = true;
+                return this.collectobs.includes(item.petid);
+              }
+            });
+          }
+        });
+    },
+    gocollect(row) {
+      this.axios
+        .post("/api/addcollect", {
+          username: this.$store.state.username,
+          petid: row.petid
+        })
+        .then(res => {
+          if (res.data.success) {
+            row.collect = true;
+            this.$message.success("加入收藏!");
+          }
+        });
+    },
+    gonocollect(row) {
+      this.axios
+        .delete("/api/deletecollect", {
+          data: {
+            username: this.$store.state.username,
+            petid: row.petid
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            row.collect = false;
+            this.$message.success("取消收藏!");
           }
         });
     },
@@ -199,6 +264,10 @@ export default {
   cursor: pointer;
   position: absolute;
   display: none;
+}
+.collect {
+  float: right;
+  padding: 2px 5px;
 }
 .petdiv:hover .shopcar {
   display: block;

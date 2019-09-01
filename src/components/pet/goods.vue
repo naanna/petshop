@@ -160,20 +160,19 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
-            this.collectobs = results.filter(item => item.goodid);
-            this.setcollect();
+            this.collectobs = results
+              .filter(item => item.status == "sale")
+              .map(item => {
+                return item.goodid;
+              });
+            this.tabledata.filter((item, index) => {
+              if (this.collectobs.includes(item.goodid)) {
+                item.collect = true;
+                return this.collectobs.includes(item.goodid);
+              }
+            });
           }
         });
-    },
-    setcollect() {
-      for (let i in this.tabledata) {
-        for (let j in this.collectobs) {
-          if (this.tabledata[i].goodid == this.collectobs[j].goodid) {
-            this.tabledata[i].collect = true;
-            this.tabledata[i].collectid = this.collectobs[j].collectid;
-          }
-        }
-      }
     },
     gosearch() {
       this.page_no = 1;
@@ -208,7 +207,6 @@ export default {
       this.searchval = "";
     },
     gocollect(row) {
-      this.collect = true;
       this.axios
         .post("/api/addcollect", {
           username: this.$store.state.username,
@@ -216,17 +214,22 @@ export default {
         })
         .then(res => {
           if (res.data.success) {
-            this.goquery();
+            row.collect = true;
             this.$message.success("加入收藏!");
           }
         });
     },
     gonocollect(row) {
       this.axios
-        .delete("/api/deletecollect?collectid=" + row.collectid)
+        .delete("/api/deletecollect", {
+          data: {
+            username: this.$store.state.username,
+            goodid: row.goodid
+          }
+        })
         .then(res => {
           if (res.data.success) {
-            this.goquery();
+            row.collect = false;
             this.$message.success("取消收藏!");
           }
         });
