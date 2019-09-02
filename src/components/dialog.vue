@@ -148,10 +148,7 @@ export default {
 </script>
 <style>
 .el-dialog {
-  /* background-color: #3db6e6; */
-  background-image: url(fostercare/1234.png),
-    linear-gradient(-60deg, #1fa8c0 0, #6eb9da 68%);
+  background-image: url("~@/assets/picture/dialog.png");
   border-radius: 12px;
-  
 }
 </style>

@@ -35,8 +35,6 @@
     </div>
     <el-table
       :data="tabledata"
-      stripe
-      border
       highlight-current-row
       class="table"
       @selection-change="handleSelectionChange"
@@ -53,7 +51,7 @@
           <span v-else>领回</span>
         </template>
       </el-table-column>
-      <el-table-column label="价格" prop="price" align="center" header-align="center"></el-table-column>
+      <el-table-column label="价格" prop="price" sortable align="center" header-align="center"></el-table-column>
       <el-table-column label="种类" prop="type" align="center" header-align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.type=='cat'">猫咪</span>

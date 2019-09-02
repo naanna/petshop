@@ -25,7 +25,7 @@
       <el-button type="text" size="small" style="float:right;" @click="gohistory">查看历史寄养</el-button>
     </div>
 
-    <el-table :data="tabledata" stripe border highlight-current-row class="table">
+    <el-table :data="tabledata" stripe highlight-current-row class="table">
       <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物名" prop="name" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物种类" prop="type" align="center" header-align="center">

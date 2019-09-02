@@ -39,13 +39,12 @@
     <el-table
       :data="tabledata"
       stripe
-      border
       highlight-current-row
       class="table"
       @selection-change="handleSelectionChange"
     >
       <el-table-column prop="id" type="selection" width="50px" align="center" header-align="center"></el-table-column>
-      <el-table-column label="编号" prop="goodid" align="center" header-align="center"></el-table-column>
+      <el-table-column label="编号" width="150px" prop="goodid" align="center" header-align="center"></el-table-column>
       <el-table-column label="商品名" prop="name" align="center" header-align="center">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
@@ -55,10 +54,24 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="商品类型" prop="type" align="center" header-align="center"></el-table-column>
-      <el-table-column label="价格" prop="price" align="center" header-align="center"></el-table-column>
-      <el-table-column label="库存" prop="num" align="center" header-align="center"></el-table-column>
-      <el-table-column label="操作" align="center" header-align="center">
+      <el-table-column label="商品类型" width="120px" prop="type" align="center" header-align="center"></el-table-column>
+      <el-table-column
+        label="价格"
+        width="120px"
+        sortable
+        prop="price"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        label="库存"
+        width="120px"
+        sortable
+        prop="num"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column label="操作" width="250px" align="center" header-align="center">
         <div slot-scope="scope">
           <el-button type="text" size="small" @click="goupdate(scope.row)">编辑</el-button>
           <el-button

@@ -9,6 +9,7 @@
     </el-steps>
     <div v-show="active==1">
       <el-button type="primary" size="small" @click="go2del">删除选中</el-button>
+      <el-button size="small" v-if="failure" @click="goclear">清空失效</el-button>
       <el-table
         :data="tabledata"
         highlight-current-row
@@ -16,7 +17,7 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column
-          prop="id"
+          prop="status"
           type="selection"
           width="80px"
           align="center"
@@ -182,7 +183,8 @@ export default {
       overTimer: null,
       // 是否超时
       isOvertime: false,
-      form: ""
+      form: "",
+      failure: false
     };
   },
   created() {
@@ -212,22 +214,27 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
+            let i = 0;
             this.tabledata = results.sort(Util.objSort("shopcarid"));
             this.tabledata = this.tabledata.sort(this.Sortfailure("status"));
             this.tabledata.forEach(item => {
               if (item.petid) item.goodnum = 1;
+              if (item.status == "saled" || item.status == "soldout") i++;
             });
+            if (i > 0) {
+              this.failure = true;
+            } else {
+              this.failure = false;
+            }
           }
         });
     },
     //将失效的放到最底下
     Sortfailure(prop) {
-      return function(obj1, obj2) {
+      return function(obj1) {
         var val1 = obj1[prop];
-        var val2 = obj2[prop];
-        if (!isNaN(Number(val1)) && !isNaN(Number(val2))) {
+        if (!isNaN(Number(val1))) {
           val1 = Number(val1);
-          val2 = Number(val2);
         }
         if (val1 == "saled" || val1 == "soldout") {
           return 1;
@@ -335,6 +342,28 @@ export default {
           }, 2000);
         }
       } else this.active++;
+    },
+    goclear() {
+      let delobs = this.tabledata.filter(item => {
+        return item.status == "saled" || item.status == "soldout";
+      });
+      this.$confirm("确认删除所选吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .delete("/api/deteleshopcar", {
+              data: delobs
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("清空成功！");
+                this.getshopcar();
+              }
+            });
+        })
+        .catch(() => {});
     },
     up() {
       this.active--;

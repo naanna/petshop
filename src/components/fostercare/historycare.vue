@@ -19,7 +19,7 @@
         <el-button size="small" @click="gorefused">寄养申请被拒记录</el-button>
       </div>
     </div>
-    <el-table :data="tabledata" stripe border highlight-current-row class="table">
+    <el-table :data="tabledata" stripe highlight-current-row class="table">
       <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物名" prop="name" align="center" header-align="center"></el-table-column>
       <el-table-column label="寄养日期" prop="starttime" align="center" header-align="center"></el-table-column>

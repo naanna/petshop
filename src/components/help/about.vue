@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <div class="div1">
-      <div class="picdiv">
-        <img src="@picture/touxiang.jpg" class="picture" />
-        <p class="name">mxy</p>
-        <p class="name">木木周</p>
-      </div>
-      <div class="pdiv">
-        <p class="p">技术栈</p>
-        <span class="english">The skill of my shop</span>
-        <el-divider></el-divider>
-        <p>整个项目基于vue-cli</p>
-        <p>vue+element+axios+node.js+mysql</p>
-        <p class="p">关于我</p>
-        <span class="english">The info about me</span>
-        <el-divider></el-divider>
-        <p>昵称:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;壮壮</p>
-        <p>来自:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;福州</p>
-        <p>技能:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;java/html/css/js</p>
-        <p>坐标:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;福建师范大学</p>
-        <p>github:&nbsp;&nbsp;&nbsp;&nbsp;https://github.com/naanna</p>
-      </div>
+  <div class="div1">
+    <div class="picdiv">
+      <img src="@picture/touxiang.jpg" class="picture" />
+      <p class="name">mxy</p>
+      <p class="name">木木周</p>
+    </div>
+    <div class="pdiv">
+      <p class="p">技术栈</p>
+      <span class="english">The skill of my shop</span>
+      <el-divider></el-divider>
+      <p>整个项目基于vue-cli</p>
+      <p>vue+element+axios+node.js+mysql</p>
+      <p class="p">关于我</p>
+      <span class="english">The info about me</span>
+      <el-divider></el-divider>
+      <p>昵称:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;壮壮</p>
+      <p>来自:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;福州</p>
+      <p>技能:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;java/html/css/js</p>
+      <p>坐标:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;福建师范大学</p>
+      <p>github:&nbsp;&nbsp;&nbsp;&nbsp;https://github.com/naanna</p>
     </div>
   </div>
 </template>
@@ -33,11 +31,15 @@ export default {
 
 <style scoped>
 .div1 {
-  height: 660px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 0 150px 0 150px;
   display: flex;
-  background-color: #9ad4e2b0;
-  background-image: url("fish.png");
+  background-color: #9ad4e2;
+  background-image: url("~@/assets/picture/fish.png");
 }
 .picdiv {
   flex: 1;

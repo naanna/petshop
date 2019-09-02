@@ -28,10 +28,10 @@
       ></el-input>
       <el-button type="primary" size="small" @click="gosearch">搜索</el-button>
     </div>
-    <el-table :data="tabledata" stripe border highlight-current-row class="table">
+    <el-table :data="tabledata" stripe highlight-current-row class="table">
       <el-table-column label="订单号" prop="orderid" align="center" header-align="center"></el-table-column>
       <el-table-column label="总价" prop="totalprice" align="center" header-align="center"></el-table-column>
-      <el-table-column label="下单时间" prop="time" align="center" header-align="center"></el-table-column>
+      <el-table-column label="下单时间" sortable prop="time" align="center" header-align="center"></el-table-column>
       <el-table-column label="下单账号" prop="username" align="center" header-align="center"></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <div slot-scope="scope">
