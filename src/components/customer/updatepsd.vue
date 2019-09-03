@@ -56,8 +56,8 @@ export default {
     };
   },
   mounted() {
-    if (this.rjDialogParams().row) {
-      this.form.username = this.rjDialogParams().row.username;
+    if (this.DialogParams().row) {
+      this.form.username = this.DialogParams().row.username;
     }
   },
   methods: {
@@ -72,7 +72,7 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("修改密码成功！");
-                this.closeRjDialog && this.closeRjDialog();
+                this.closeDialog && this.closeDialog();
               }
             });
         } else {
@@ -81,7 +81,7 @@ export default {
       });
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   }
 };

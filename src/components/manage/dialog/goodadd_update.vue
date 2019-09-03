@@ -90,8 +90,8 @@ export default {
     };
   },
   mounted() {
-    if (this.rjDialogParams().row) {
-      let obs = this.rjDialogParams().row;
+    if (this.DialogParams().row) {
+      let obs = this.DialogParams().row;
       this.form = obs;
       if (obs.picture != null) this.imageUrl = obs.picture;
       this.edit = "yes";
@@ -109,7 +109,7 @@ export default {
               this.axios.post("/api/addgood", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功添加商品！");
-                  this.closeRjDialog && this.closeRjDialog();
+                  this.closeDialog && this.closeDialog();
                 }
               });
             }
@@ -117,7 +117,7 @@ export default {
             this.axios.post("/api/updategood", this.form).then(res => {
               if (res.data.success) {
                 this.$message.success("成功编辑商品！");
-                this.closeRjDialog && this.closeRjDialog();
+                this.closeDialog && this.closeDialog();
               }
             });
           }
@@ -173,7 +173,7 @@ export default {
       reader.readAsDataURL(file);
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   }
 };

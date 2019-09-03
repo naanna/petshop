@@ -188,16 +188,16 @@
         ></el-pagination>
       </el-tab-pane>
     </el-tabs>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog";
+import Dialog from "../dialog";
 import add_update from "./dialog/careadd_update.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   data() {
     return {
@@ -425,12 +425,10 @@ export default {
       this.$refs["form"].resetFields();
     },
     goadd() {
-      this.rjDialog
+      this.Dialog
         .title("添加寄养记录")
         .width("600px")
         .currentView(add_update, {})
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goapprovalquery();
           this.gorecodequery();
@@ -469,12 +467,10 @@ export default {
         .catch(() => {});
     },
     goupdate(row) {
-      this.rjDialog
+      this.Dialog
         .title("修改寄养记录")
         .width("600px")
         .currentView(add_update, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goapprovalquery();
           this.gorecodequery();

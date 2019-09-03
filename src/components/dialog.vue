@@ -1,147 +1,89 @@
 <template>
   <div>
     <el-dialog
-      :id="id"
       append-to-body
-      :visible.sync="isShow"
+      :visible.sync="dialogVisible"
       :title="title"
-      :size="size"
-      :show-close="showClose"
-      :close-on-click-modal="closeOnClickModal"
-      :style="style"
-      :top="top"
-      :before-close="beforeClose"
       :width="width"
+      :close-on-click-modal="closeOnClickModal"
+      :before-close="beforeClose"
     >
-      <component v-bind:is="currentView" class="back"></component>
+      <component v-bind:is="currentView"></component>
     </el-dialog>
   </div>
 </template>
 
-<script type="text/javascript">
-import Vue from "vue";
-
+<script>
 export default {
   data() {
     return {
-      id: new Date().getTime(),
-      fj_params: undefined,
-      title: "提示信息!",
-      isShow: false,
-      currentView: undefined,
-      size: "tiny",
-      showClose: true,
-      closeOnClickModal: false,
+      dialogVisible: false,
+      title: "",
       width: "",
-      style: "",
-      top: "6%"
+      closeOnClickModal: false,
+      currentView: null
     };
   },
   created() {
-    let self = this;
-
-    let rjDialog = function() {
-      let subSelf = this;
-
-      subSelf.currentView = function(currentView, params) {
-        //先移除原有组件
-        self.currentView = currentView;
+    let _this = this;
+    let Dialog = function() {
+      let cur_this = this;
+      cur_this.currentView = function(currentView, params) {
+        //初始化
+        _this.currentView = currentView;
         let methods = currentView.methods;
         methods = methods ? methods : {};
-        methods.closeRjDialog = function(opt) {
-          subSelf.close(opt);
+
+        methods.closeDialog = function(data) {
+          cur_this.close(data);
         };
-        methods.rjDialogParams = function() {
+
+        methods.DialogParams = function() {
           return params;
         };
         currentView.methods = methods;
-        return subSelf;
+        return cur_this;
       };
 
-      subSelf.title = function(title) {
-        self.title = title ? title : "提示信息!";
-        return subSelf;
+      //显示
+      cur_this.show = function() {
+        _this.dialogVisible = true;
+        return cur_this;
+      };
+      //设置标题
+      cur_this.title = function(title) {
+        _this.title = title;
+        return cur_this;
       };
 
-      subSelf.sizeFull = function() {
-        self.size = "full";
-        return subSelf;
+      //设置宽
+      cur_this.width = function(w) {
+        _this.width = w;
+        return cur_this;
       };
 
-      subSelf.sizeTiny = function() {
-        self.size = "tiny";
-        return subSelf;
-      };
-
-      subSelf.sizeSmall = function() {
-        self.size = "small";
-        return subSelf;
-      };
-
-      subSelf.sizeLarge = function() {
-        self.size = "large";
-        return subSelf;
-      };
-
-      //命名格式要求：.el-dialog--自定义{width:100px;}， 传入参数是：xxx
-      subSelf.sizeSelf = function(sizeSelf) {
-        self.size = sizeSelf;
-        return subSelf;
-      };
-      //设置宽度
-      subSelf.width = function(w) {
-        self.width = w;
-        return subSelf;
-      };
-      //设置顶部
-      subSelf.top = function(t) {
-        self.top = t == undefined || t == "" ? "6%" : t;
-        return subSelf;
-      };
-
-      subSelf.show = function() {
-        self.isShow = true;
-        self.$nextTick(() => {
-          let dialog = document.getElementById(self.id + "");
-          let header = dialog.getElementsByClassName("el-dialog__header")[0];
-          let hStyle = header.getAttribute("style") || "";
-          if (!self.title) hStyle = "display:none;";
-          else hStyle = "display:block;";
-          header.setAttribute("style", hStyle);
-        });
-        return subSelf;
-      };
-
-      subSelf.showClose = function(flag) {
-        self.showClose = flag;
-        return subSelf;
-      };
-
-      subSelf.closeOnClickModal = function(flag) {
-        self.closeOnClickModal = flag;
-        return subSelf;
-      };
-
-      subSelf.close = function(opt) {
-        self.isShow = false;
-        self.currentView = null;
-        if (subSelf.rjAlertCallFun) {
-          subSelf.rjAlertCallFun(opt);
+      //关闭
+      cur_this.close = function(data) {
+        _this.dialogVisible = false;
+        _this.currentView = null;
+        if (cur_this.responsedata) {
+          cur_this.responsedata(data);
         }
-        return subSelf;
+        return cur_this;
       };
 
-      subSelf.then = function(callFun) {
-        subSelf.rjAlertCallFun = callFun;
-        return subSelf;
+      //回调
+      cur_this.then = function(responsefun) {
+        cur_this.responsedata = responsefun;
+        return cur_this;
       };
     };
 
-    self.$parent.rjDialog = new rjDialog();
+    _this.$parent.Dialog = new Dialog();
   },
   methods: {
     beforeClose: function() {
-      this.$parent.rjDialog.close();
+      this.$parent.Dialog.close();
     }
   }
 };

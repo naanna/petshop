@@ -23,6 +23,7 @@ import moment from 'moment'
 Vue.prototype.moment = moment;
 import router from "./router/router.js";
 import store from "./store/main.js";
+import 'default-passive-events'
 
 axios.defaults.headers.common['Authorization'] = store.state.token
 

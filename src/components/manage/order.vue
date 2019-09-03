@@ -50,16 +50,16 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog.vue";
+import Dialog from "../dialog.vue";
 import orderdetail from "./dialog/orderdetail.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   data() {
     return {
@@ -145,12 +145,10 @@ export default {
       this.go2Query();
     },
     godetail(row) {
-      this.rjDialog
+      this.Dialog
         .title("订单详情")
         .width("800px")
         .currentView(orderdetail, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {})
         .show();
     }

@@ -93,16 +93,16 @@
         <el-button type="primary" size="small" @click="golong">确 定</el-button>
       </span>
     </el-dialog>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog";
+import Dialog from "../dialog";
 import caretable from "./caretable.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   data() {
     return {
@@ -237,12 +237,10 @@ export default {
       this.goquery();
     },
     goadd() {
-      this.rjDialog
+      this.Dialog
         .title("我要寄养")
         .width("600px")
         .currentView(caretable, {})
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })

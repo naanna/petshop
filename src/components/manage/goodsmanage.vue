@@ -95,16 +95,16 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog.vue";
+import Dialog from "../dialog.vue";
 import add_update from "./dialog/goodadd_update.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   data() {
     return {
@@ -199,12 +199,10 @@ export default {
         .catch(() => {});
     },
     goadd() {
-      this.rjDialog
+      this.Dialog
         .title("添加商品")
         .width("600px")
         .currentView(add_update, {})
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })
@@ -245,12 +243,10 @@ export default {
         .catch(() => {});
     },
     goupdate(row) {
-      this.rjDialog
+      this.Dialog
         .title("编辑商品")
         .width("600px")
         .currentView(add_update, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })

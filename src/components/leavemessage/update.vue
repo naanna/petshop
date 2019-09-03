@@ -18,8 +18,8 @@ export default {
     };
   },
   mounted() {
-    if (this.rjDialogParams().row) {
-      let obs = this.rjDialogParams().row;
+    if (this.DialogParams().row) {
+      let obs = this.DialogParams().row;
       this.textarea = obs.note;
       this.messageid = obs.messageid;
     }
@@ -37,13 +37,13 @@ export default {
           .then(res => {
             if (res.data.success) {
               this.$message.success("修改成功!");
-              this.closeRjDialog && this.closeRjDialog();
+              this.closeDialog && this.closeDialog();
             }
           });
       }
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   }
 };

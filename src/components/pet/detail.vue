@@ -74,8 +74,8 @@ export default {
     };
   },
   mounted() {
-    if (this.rjDialogParams().row) {
-      this.form = this.rjDialogParams().row;
+    if (this.DialogParams().row) {
+      this.form = this.DialogParams().row;
     }
   },
   methods: {
@@ -89,7 +89,7 @@ export default {
       this.collect = false;
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   }
 };

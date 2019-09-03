@@ -75,11 +75,11 @@ export default {
     };
   },
   created() {
-    if (this.rjDialogParams().row) {
-      this.orderid = this.rjDialogParams().row.orderid;
-      this.totalprice = this.rjDialogParams().row.totalprice;
-      this.username = this.rjDialogParams().row.username;
-      this.time = this.rjDialogParams().row.time;
+    if (this.DialogParams().row) {
+      this.orderid = this.DialogParams().row.orderid;
+      this.totalprice = this.DialogParams().row.totalprice;
+      this.username = this.DialogParams().row.username;
+      this.time = this.DialogParams().row.time;
       this.goquery();
     }
   },
@@ -99,7 +99,7 @@ export default {
         });
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   }
 };

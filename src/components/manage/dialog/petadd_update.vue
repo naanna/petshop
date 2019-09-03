@@ -107,17 +107,17 @@ export default {
   },
   mounted() {
     this.form.status = "saling";
-    if (this.rjDialogParams().row) {
-      let obs = this.rjDialogParams().row;
+    if (this.DialogParams().row) {
+      let obs = this.DialogParams().row;
       this.form = obs;
       if (obs.picture != null) this.imageUrl = obs.picture;
       this.edit = "yes";
     }
-    if (this.rjDialogParams().pet) {
+    if (this.DialogParams().pet) {
       this.form.status = "caring";
-      if (!this.rjDialogParams().pet.pet) {
-        this.form = this.rjDialogParams().pet;
-        this.imageUrl = this.rjDialogParams().pet.picture;
+      if (!this.DialogParams().pet.pet) {
+        this.form = this.DialogParams().pet;
+        this.imageUrl = this.DialogParams().pet.picture;
       }
     }
   },
@@ -131,20 +131,20 @@ export default {
           if (this.fileList.length == 0) this.form.picture = null;
           else this.form.picture = this.fileList[0].url;
           if (this.form.status == "caring") {
-            this.closeRjDialog && this.closeRjDialog(this.form);
+            this.closeDialog && this.closeDialog(this.form);
           } else {
             if (this.edit == "no") {
               this.axios.post("/api/addpet", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功添加宠物！");
-                  this.closeRjDialog && this.closeRjDialog();
+                  this.closeDialog && this.closeDialog();
                 }
               });
             } else {
               this.axios.post("/api/updatepet", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功编辑宠物！");
-                  this.closeRjDialog && this.closeRjDialog();
+                  this.closeDialog && this.closeDialog();
                 }
               });
             }
@@ -201,7 +201,7 @@ export default {
       reader.readAsDataURL(file);
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   }
 };

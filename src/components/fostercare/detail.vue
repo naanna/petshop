@@ -25,17 +25,17 @@
     <div class="button">
       <el-button size="small" @click="goclose">关闭</el-button>
     </div>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog.vue";
+import Dialog from "../dialog.vue";
 import Util from "@assets/Util.js";
 import add from "../manage/dialog/petadd_update";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   data() {
     return {
@@ -44,8 +44,8 @@ export default {
     };
   },
   mounted() {
-    if (this.rjDialogParams().row) {
-      let obs = this.rjDialogParams().row;
+    if (this.DialogParams().row) {
+      let obs = this.DialogParams().row;
       this.form = obs;
       this.goquery();
     }
@@ -67,17 +67,15 @@ export default {
         });
     },
     goadd() {
-      this.rjDialog
+      this.Dialog
         .title("添加宠物")
         .width("800px")
         .currentView(add, {})
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {})
         .show();
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   }
 };

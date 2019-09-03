@@ -51,9 +51,9 @@ export default {
     };
   },
   mounted() {
-    if (this.rjDialogParams().row) {
+    if (this.DialogParams().row) {
       this.customer = true;
-      this.customerobs = this.rjDialogParams().row;
+      this.customerobs = this.DialogParams().row;
     }
   }
 };

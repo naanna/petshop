@@ -130,16 +130,16 @@
         ></el-pagination>
       </el-tab-pane>
     </el-tabs>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog";
+import Dialog from "../dialog";
 import add_update from "./dialog/careadd_update.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   data() {
     return {
@@ -192,12 +192,10 @@ export default {
       this.$message.success("未实现");
     },
     goupdate() {
-      this.rjDialog
+      this.Dialog
         .title("修改代售记录")
         .width("800px")
         .currentView(add_update, {})
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {})
         .show();
     },

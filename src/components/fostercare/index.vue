@@ -23,17 +23,17 @@
       class="pageclass"
     ></el-pagination>
 
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog.vue";
+import Dialog from "../dialog.vue";
 import detail from "./detail.vue";
 import Util from "@assets/Util.js";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   name: "index",
   data() {
@@ -83,12 +83,10 @@ export default {
       return true;
     },
     godetail(row) {
-      this.rjDialog
+      this.Dialog
         .title("宠物详情")
         .width("450px")
         .currentView(detail, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {})
         .show();
     },

@@ -85,17 +85,17 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog";
+import Dialog from "../dialog";
 import add_update from "./useradd_update.vue";
 import psd from "./updatepsd.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   data() {
     return {
@@ -217,36 +217,30 @@ export default {
       this.goquery();
     },
     goupdatepsd(row) {
-      this.rjDialog
+      this.Dialog
         .title("修改密码")
         .width("500px")
         .currentView(psd, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })
         .show();
     },
     goadd() {
-      this.rjDialog
+      this.Dialog
         .title("添加用户")
         .width("500px")
         .currentView(add_update, {})
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })
         .show();
     },
     goupdate(row) {
-      this.rjDialog
+      this.Dialog
         .title("修改用户")
         .width("600px")
         .currentView(add_update, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })

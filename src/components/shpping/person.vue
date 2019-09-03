@@ -112,7 +112,7 @@
         style="max-width: 100%;max-height: 100%;display: block; margin: 0 auto;"
       />
     </el-dialog>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 <script>
@@ -122,11 +122,11 @@ import {
   checkspecil,
   checknum
 } from "@assets/validate.js";
-import rjDialog from "../dialog.vue";
+import Dialog from "../dialog.vue";
 import psd from "./psd.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   name: "person",
   data() {
@@ -219,12 +219,10 @@ export default {
     },
     gopsd() {
       var old = this.form;
-      this.rjDialog
+      this.Dialog
         .title("修改密码")
         .width("800px")
         .currentView(psd, { old })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.getperson();
         })

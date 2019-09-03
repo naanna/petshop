@@ -25,16 +25,16 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog";
+import Dialog from "../dialog";
 import update from "./update.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   name: "my",
   data() {
@@ -128,12 +128,10 @@ export default {
         .catch(() => {});
     },
     goupdate(row) {
-      this.rjDialog
+      this.Dialog
         .title("编辑留言")
         .width("500px")
         .currentView(update, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })

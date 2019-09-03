@@ -101,17 +101,17 @@
       <el-button type="primary" size="small" @click="gosave">提交</el-button>
       <el-button size="small" @click="goclose">取消</el-button>
     </div>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../../dialog";
+import Dialog from "../../dialog";
 import add_update from "./petadd_update.vue";
 import { checkinput } from "@assets/validate.js";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   name: "caretable",
   data() {
@@ -150,8 +150,8 @@ export default {
     };
   },
   created() {
-    if (this.rjDialogParams().row) {
-      let obs = this.rjDialogParams().row;
+    if (this.DialogParams().row) {
+      let obs = this.DialogParams().row;
       this.form = obs;
       this.show = true;
       this.goquery();
@@ -184,7 +184,7 @@ export default {
             this.axios.post("/api/updatecaretable", this.form).then(res => {
               if (res.data.success) {
                 this.$message.success("修改成功！");
-                this.closeRjDialog && this.closeRjDialog();
+                this.closeDialog && this.closeDialog();
               }
             });
           } else {
@@ -199,7 +199,7 @@ export default {
               .then(res => {
                 if (res.data.success) {
                   this.$message.success("成功提交寄养申请！");
-                  this.closeRjDialog && this.closeRjDialog();
+                  this.closeDialog && this.closeDialog();
                 }
               });
           }
@@ -210,12 +210,10 @@ export default {
     },
     goadd() {
       var pet = this.pet;
-      this.rjDialog
+      this.Dialog
         .title("我要寄养")
         .width("600px")
         .currentView(add_update, { pet })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           if (opt) {
             this.pet = opt;
@@ -224,7 +222,7 @@ export default {
         .show();
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   }
 };

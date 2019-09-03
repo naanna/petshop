@@ -149,8 +149,8 @@ export default {
     };
   },
   mounted() {
-    if (this.rjDialogParams().old) {
-      this.old = this.rjDialogParams().old;
+    if (this.DialogParams().old) {
+      this.old = this.DialogParams().old;
     }
   },
   methods: {
@@ -193,7 +193,7 @@ export default {
       }
     },
     goclose() {
-      this.closeRjDialog && this.closeRjDialog();
+      this.closeDialog && this.closeDialog();
     }
   },
   computed: {

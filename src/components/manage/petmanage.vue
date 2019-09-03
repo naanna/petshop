@@ -79,18 +79,18 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog.vue";
+import Dialog from "../dialog.vue";
 import Util from "@assets/Util.js";
 import detail from "./dialog/petdetail.vue";
 import add_update from "./dialog/petadd_update.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   data() {
     return {
@@ -166,12 +166,10 @@ export default {
         .catch(() => {});
     },
     goadd() {
-      this.rjDialog
+      this.Dialog
         .title("添加宠物")
         .width("600px")
         .currentView(add_update, {})
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })
@@ -208,14 +206,12 @@ export default {
         .catch(() => {});
     },
     goupdate(row) {
-      this.rjDialog
+      this.Dialog
         .title("编辑宠物")
         .width("600px")
         .currentView(add_update, {
           row
         })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })
@@ -237,14 +233,12 @@ export default {
       this.goquery();
     },
     godetail(row) {
-      this.rjDialog
+      this.Dialog
         .title("宠物详情")
         .width("500px")
         .currentView(detail, {
           row
         })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })

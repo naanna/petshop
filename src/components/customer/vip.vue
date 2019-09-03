@@ -42,17 +42,17 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-    <rjDialog></rjDialog>
+    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import rjDialog from "../dialog";
+import Dialog from "../dialog";
 import add_update from "./useradd_update.vue";
 import detail from "./detail.vue";
 export default {
   components: {
-    rjDialog
+    Dialog
   },
   name: "vip",
   data() {
@@ -101,12 +101,10 @@ export default {
         });
     },
     goupdate(row) {
-      this.rjDialog
+      this.Dialog
         .title("编辑信息")
         .width("500px")
         .currentView(add_update, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })
@@ -132,12 +130,10 @@ export default {
         .catch(() => {});
     },
     godetail(row) {
-      this.rjDialog
+      this.Dialog
         .title("详情信息")
         .width("550px")
         .currentView(detail, { row })
-        .showClose(true)
-        .sizeTiny()
         .then(opt => {
           this.goquery();
         })
