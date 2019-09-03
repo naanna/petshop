@@ -184,7 +184,7 @@ export default {
             this.axios.post("/api/updatecaretable", this.form).then(res => {
               if (res.data.success) {
                 this.$message.success("修改成功！");
-                this.closeDialog && this.closeDialog();
+                this.closeDialog();
               }
             });
           } else {
@@ -199,7 +199,7 @@ export default {
               .then(res => {
                 if (res.data.success) {
                   this.$message.success("成功提交寄养申请！");
-                  this.closeDialog && this.closeDialog();
+                  this.closeDialog();
                 }
               });
           }
@@ -214,7 +214,7 @@ export default {
         .title("我要寄养")
         .width("600px")
         .currentView(add_update, { pet })
-        .then(opt => {
+        .then(data => {
           if (opt) {
             this.pet = opt;
           }
@@ -222,7 +222,7 @@ export default {
         .show();
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

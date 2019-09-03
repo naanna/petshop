@@ -104,7 +104,7 @@ export default {
         .title("编辑信息")
         .width("500px")
         .currentView(add_update, { row })
-        .then(opt => {})
+        .then(data => {})
         .show();
     },
     godel(username) {
@@ -131,7 +131,7 @@ export default {
         .title("详情信息")
         .width("550px")
         .currentView(detail, { row })
-        .then(opt => {})
+        .then(data => {})
         .show();
     },
     sizeChangeHandle(val) {

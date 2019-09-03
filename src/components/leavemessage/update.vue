@@ -37,13 +37,13 @@ export default {
           .then(res => {
             if (res.data.success) {
               this.$message.success("修改成功!");
-              this.closeDialog && this.closeDialog();
+              this.closeDialog();
             }
           });
       }
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

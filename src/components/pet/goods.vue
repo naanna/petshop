@@ -239,7 +239,7 @@ export default {
         .title("宠物详情")
         .width("500px")
         .currentView(detail, {})
-        .then(opt => {})
+        .then(data => {})
         .show();
     },
     sizeChangeHandle(val) {

@@ -131,20 +131,20 @@ export default {
           if (this.fileList.length == 0) this.form.picture = null;
           else this.form.picture = this.fileList[0].url;
           if (this.form.status == "caring") {
-            this.closeDialog && this.closeDialog(this.form);
+            this.closeDialog(this.form);
           } else {
             if (this.edit == "no") {
               this.axios.post("/api/addpet", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功添加宠物！");
-                  this.closeDialog && this.closeDialog();
+                  this.closeDialog();
                 }
               });
             } else {
               this.axios.post("/api/updatepet", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功编辑宠物！");
-                  this.closeDialog && this.closeDialog();
+                  this.closeDialog();
                 }
               });
             }
@@ -201,7 +201,7 @@ export default {
       reader.readAsDataURL(file);
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

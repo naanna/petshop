@@ -203,7 +203,7 @@ export default {
               this.axios.post("/api/adduser", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功添加用户！");
-                  this.closeDialog && this.closeDialog();
+                  this.closeDialog();
                 } else {
                   loading.close();
                 }
@@ -212,7 +212,7 @@ export default {
               this.axios.post("/api/updateuser", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功编辑用户！");
-                  this.closeDialog && this.closeDialog();
+                  this.closeDialog();
                   loading.close();
                 } else {
                   loading.close();
@@ -276,7 +276,7 @@ export default {
       else this.form.level = "admin";
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

@@ -170,7 +170,7 @@ export default {
         .title("添加宠物")
         .width("600px")
         .currentView(add_update, {})
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();
@@ -212,7 +212,7 @@ export default {
         .currentView(add_update, {
           row
         })
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();
@@ -239,7 +239,7 @@ export default {
         .currentView(detail, {
           row
         })
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();

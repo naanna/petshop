@@ -223,7 +223,7 @@ export default {
         .title("修改密码")
         .width("800px")
         .currentView(psd, { old })
-        .then(opt => {
+        .then(data => {
           this.getperson();
         })
         .show();

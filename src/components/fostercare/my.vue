@@ -241,7 +241,7 @@ export default {
         .title("我要寄养")
         .width("600px")
         .currentView(caretable, {})
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();

@@ -196,7 +196,7 @@ export default {
         .title("修改代售记录")
         .width("800px")
         .currentView(add_update, {})
-        .then(opt => {})
+        .then(data => {})
         .show();
     },
     gonote() {

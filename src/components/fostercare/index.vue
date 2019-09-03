@@ -87,7 +87,7 @@ export default {
         .title("宠物详情")
         .width("450px")
         .currentView(detail, { row })
-        .then(opt => {})
+        .then(data => {})
         .show();
     },
     sizeChangeHandle(val) {

@@ -429,7 +429,7 @@ export default {
         .title("添加寄养记录")
         .width("600px")
         .currentView(add_update, {})
-        .then(opt => {
+        .then(data => {
           this.goapprovalquery();
           this.gorecodequery();
         })
@@ -471,7 +471,7 @@ export default {
         .title("修改寄养记录")
         .width("600px")
         .currentView(add_update, { row })
-        .then(opt => {
+        .then(data => {
           this.goapprovalquery();
           this.gorecodequery();
         })

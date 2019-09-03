@@ -71,11 +71,11 @@ export default {
         .title("添加宠物")
         .width("800px")
         .currentView(add, {})
-        .then(opt => {})
+        .then(data => {})
         .show();
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

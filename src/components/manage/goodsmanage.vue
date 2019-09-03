@@ -203,7 +203,7 @@ export default {
         .title("添加商品")
         .width("600px")
         .currentView(add_update, {})
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();
@@ -247,7 +247,7 @@ export default {
         .title("编辑商品")
         .width("600px")
         .currentView(add_update, { row })
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();

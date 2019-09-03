@@ -72,7 +72,7 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("修改密码成功！");
-                this.closeDialog && this.closeDialog();
+                this.closeDialog();
               }
             });
         } else {
@@ -81,7 +81,7 @@ export default {
       });
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

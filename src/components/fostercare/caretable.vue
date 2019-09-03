@@ -150,7 +150,7 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("成功提交寄养申请！");
-                this.closeDialog && this.closeDialog();
+                this.closeDialog();
               }
             });
         } else {
@@ -164,7 +164,7 @@ export default {
         .title("我要寄养")
         .width("800px")
         .currentView(add_update, { pet })
-        .then(opt => {
+        .then(data => {
           if (opt) {
             this.pet = opt;
           }
@@ -172,7 +172,7 @@ export default {
         .show();
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

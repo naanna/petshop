@@ -99,7 +99,7 @@ export default {
         });
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

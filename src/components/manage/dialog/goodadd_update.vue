@@ -109,7 +109,7 @@ export default {
               this.axios.post("/api/addgood", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功添加商品！");
-                  this.closeDialog && this.closeDialog();
+                  this.closeDialog();
                 }
               });
             }
@@ -117,7 +117,7 @@ export default {
             this.axios.post("/api/updategood", this.form).then(res => {
               if (res.data.success) {
                 this.$message.success("成功编辑商品！");
-                this.closeDialog && this.closeDialog();
+                this.closeDialog();
               }
             });
           }
@@ -173,7 +173,7 @@ export default {
       reader.readAsDataURL(file);
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

@@ -89,7 +89,7 @@ export default {
       this.collect = false;
     },
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

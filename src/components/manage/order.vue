@@ -149,7 +149,7 @@ export default {
         .title("订单详情")
         .width("800px")
         .currentView(orderdetail, { row })
-        .then(opt => {})
+        .then(data => {})
         .show();
     }
   }

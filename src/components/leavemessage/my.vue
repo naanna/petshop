@@ -132,7 +132,7 @@ export default {
         .title("编辑留言")
         .width("500px")
         .currentView(update, { row })
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();

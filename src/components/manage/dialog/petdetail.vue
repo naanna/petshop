@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     goclose() {
-      this.closeDialog && this.closeDialog();
+      this.closeDialog();
     }
   }
 };

@@ -221,7 +221,7 @@ export default {
         .title("修改密码")
         .width("500px")
         .currentView(psd, { row })
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();
@@ -231,7 +231,7 @@ export default {
         .title("添加用户")
         .width("500px")
         .currentView(add_update, {})
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();
@@ -241,7 +241,7 @@ export default {
         .title("修改用户")
         .width("600px")
         .currentView(add_update, { row })
-        .then(opt => {
+        .then(data => {
           this.goquery();
         })
         .show();
