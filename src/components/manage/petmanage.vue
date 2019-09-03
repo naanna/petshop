@@ -166,8 +166,7 @@ export default {
         .catch(() => {});
     },
     goadd() {
-      this.Dialog
-        .title("添加宠物")
+      this.Dialog.title("添加宠物")
         .width("600px")
         .currentView(add_update, {})
         .then(data => {
@@ -206,8 +205,7 @@ export default {
         .catch(() => {});
     },
     goupdate(row) {
-      this.Dialog
-        .title("编辑宠物")
+      this.Dialog.title("编辑宠物")
         .width("600px")
         .currentView(add_update, {
           row
@@ -233,8 +231,7 @@ export default {
       this.goquery();
     },
     godetail(row) {
-      this.Dialog
-        .title("宠物详情")
+      this.Dialog.title("宠物详情")
         .width("500px")
         .currentView(detail, {
           row
@@ -273,8 +270,8 @@ export default {
   margin-top: 20px;
 }
 .buttondiv {
-  float: right;
   display: inline-block;
+  float: right;
 }
 
 .timerang {

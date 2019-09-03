@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       collect: false,
-      form: [],
+      form: []
     };
   },
   mounted() {
@@ -80,7 +80,21 @@ export default {
   },
   methods: {
     goadd() {
-      console.log("add");
+      this.axios
+        .post("/api/addshopcar", {
+          petid: this.form.petid,
+          username: this.$store.state.username
+        })
+        .then(res => {
+          if (res.data.success) {
+            if (res.data.message == "宠物已达上限") {
+              this.$message.warning("购物车中数量已达最大库存！");
+            } else {
+              this.$message.success("成功加入购物车！");
+              this.closeDialog();
+            }
+          }
+        });
     },
     gocollect() {
       this.collect = true;
@@ -96,6 +110,9 @@ export default {
 </script>
 
 <style scoped>
+.el-avatar >>> img {
+  width: 100% !important;
+}
 .textarea >>> .el-textarea__inner {
   font-family: "jelly" !important;
   font-size: 20px !important;

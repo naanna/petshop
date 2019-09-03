@@ -29,7 +29,7 @@
     <div>
       <div class="petdiv" @click="godetail(item)" v-for="item in tabledata">
         <div v-if="!seeout">
-          <i class="el-icon-shopping-cart-2 shopcar" @click.stop="goaddshop"></i>
+          <i class="el-icon-shopping-cart-2 shopcar" @click.stop="goaddshop(item)"></i>
           <el-button
             v-if="item.collect"
             type="danger"
@@ -218,13 +218,26 @@ export default {
       this.money2 = "";
       this.goquery();
     },
-    goaddshop() {
+    goaddshop(row) {
       this.$confirm("确定加入购物车?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message.success("添加成功!");
+          this.axios
+            .post("/api/addshopcar", {
+              petid: row.petid,
+              username: this.$store.state.username
+            })
+            .then(res => {
+              if (res.data.success) {
+                if (res.data.message == "宠物已达上限") {
+                  this.$message.warning("购物车中数量已达最大库存！");
+                } else {
+                  this.$message.success("成功加入购物车！");
+                }
+              }
+            });
         })
         .catch(() => {});
     },
