@@ -12,6 +12,7 @@ module.exports = {
             .set('@picture', resolve('src/assets/picture'))
             .set('@common', resolve('src/common'))
             .set('@store', resolve('src/store'))
+            .set('@router', resolve('src/router'))
             .set('@', resolve('src'))
     },
     devServer: {
