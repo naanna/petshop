@@ -122,7 +122,7 @@ import {
   checkspecil,
   checknum
 } from "@assets/validate.js";
-import Dialog from "../dialog.vue";
+import Dialog from "@common/dialog.vue";
 import psd from "./psd.vue";
 export default {
   components: {

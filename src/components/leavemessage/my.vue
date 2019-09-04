@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog";
+import Dialog from "@common/dialog.vue";
 import update from "./update.vue";
 export default {
   components: {

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog.vue";
+import Dialog from "@common/dialog.vue";
 import detail from "./detail.vue";
 import Util from "@assets/Util.js";
 export default {

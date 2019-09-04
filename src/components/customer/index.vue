@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog";
+import Dialog from "@common/dialog.vue";
 import add_update from "./useradd_update.vue";
 import psd from "./updatepsd.vue";
 export default {

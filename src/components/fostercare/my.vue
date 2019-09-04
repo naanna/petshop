@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog";
+import Dialog from "@common/dialog.vue";
 import caretable from "./caretable.vue";
 export default {
   components: {

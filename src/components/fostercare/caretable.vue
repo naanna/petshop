@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog";
+import Dialog from "@common/dialog.vue";
 import add_update from "../manage/dialog/petadd_update.vue";
 import { checkinput } from "@assets/validate.js";
 export default {

@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog.vue";
+import Dialog from "@common/dialog.vue";
 import Util from "@assets/Util.js";
 import detail from "./dialog/petdetail.vue";
 import add_update from "./dialog/petadd_update.vue";

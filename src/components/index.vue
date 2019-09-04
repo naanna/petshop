@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import NavMenu from "./NavMenu";
+import NavMenu from "@common/NavMenu";
 import Menulist from "@assets/munelist.js";
 import { mapMutations } from "vuex";
 export default {

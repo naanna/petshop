@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog.vue";
+import Dialog from "@common/dialog.vue";
 import add_update from "./dialog/goodadd_update.vue";
 export default {
   components: {

@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog.vue";
+import Dialog from "@common/dialog.vue";
 import orderdetail from "./dialog/orderdetail.vue";
 export default {
   components: {

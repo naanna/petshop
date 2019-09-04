@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import Dialog from "../dialog";
+import Dialog from "@common/dialog.vue";
 import add_update from "./useradd_update.vue";
 import detail from "./detail.vue";
 export default {
