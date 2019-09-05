@@ -4,6 +4,9 @@
 ## 技术栈
 vue + element + axios + node.js + mysql
 
+## 项目地址
+[宠物商店](http://116.62.108.15:3000/)
+
 ## 项目结构
 ```
  |——— public
