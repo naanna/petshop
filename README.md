@@ -8,9 +8,12 @@ vue + element + axios + node.js + mysql
 [宠物商店](http://116.62.108.15:3000/)
 
 管理员：admin 123456
+
 客户：505 123456
 
 360浏览器请切换到急速模式打开
+
+[页面展示](#页面展示) 
 ## 项目结构
 ```
  |——— public
@@ -65,5 +68,16 @@ npm run serve
 
 ## 页面展示
 
-loading
+![login](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/login.gif)
 
+![forpsd](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/forpsd.gif)
+
+![good](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/good.gif)
+
+![person](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/person.gif)
+
+![message](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/message.gif)
+
+![user](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/user.gif)
+
+![all](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/all.gif)

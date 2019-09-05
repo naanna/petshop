@@ -117,7 +117,7 @@ export default {
       },
       code: "",
       showcode: "",
-      page: 2,
+      page: 1,
       rules: {
         username: [
           { validator: checkinput, message: "账号不能为空" },
@@ -198,6 +198,9 @@ export default {
                 if (res.data.success) {
                   this.truename = res.data.message.name;
                   this.page = 2;
+                } else {
+                  this.generatedCode();
+                  this.form.code = "";
                 }
               });
           }

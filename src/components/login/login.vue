@@ -98,6 +98,13 @@ export default {
                         _this.$router.push("/");
                       }
                     });
+                } else {
+                  _this.generatedCode();
+                  _this.loginform.code = "";
+                  _this.loginform.password = "";
+                  _this.$nextTick(() => {
+                    _this.$refs.loginform.clearValidate("password");
+                  });
                 }
               });
           }

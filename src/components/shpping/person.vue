@@ -2,13 +2,7 @@
   <div>
     <div>
       <span class="title">账号信息</span>
-      <el-form
-        label-position="right"
-        class="boder1"
-        :model="form"
-        :rules="rules"
-        ref="form"
-      >
+      <el-form label-position="right" class="boder1" :model="form" :rules="rules" ref="form">
         <el-form-item label="用户名：" label-width="300px" class="formclass">
           <span style="color: #898989;">{{form.username}}</span>
         </el-form-item>
@@ -285,7 +279,9 @@ export default {
   border-radius: 40px;
   margin-top: 10px;
 }
-
+.el-avatar >>> img {
+  width: 100% !important;
+}
 .psd1 {
   font-size: 18px;
   display: block;

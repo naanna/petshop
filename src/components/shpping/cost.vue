@@ -2,13 +2,7 @@
   <div>
     <span class="title">充值中心</span>
     <el-button type="text" size="small" style="float:right;" @click="gohistory">查看历史充值</el-button>
-    <el-form
-      label-position="right"
-      class="boder"
-      :model="form"
-      :rules="rules"
-      ref="form"
-    >
+    <el-form label-position="right" class="boder" :model="form" :rules="rules" ref="form">
       <el-form-item
         label="充值金额："
         label-width="300px"
@@ -98,6 +92,7 @@ export default {
                 if (res.data.success) {
                   this.$message.success("充值记录提交成功！");
                 }
+                this.$refs["form"].resetFields();
               });
           });
         } else {
