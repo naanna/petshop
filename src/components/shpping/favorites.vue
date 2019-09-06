@@ -167,7 +167,7 @@ export default {
   margin-top: 40px;
 }
 .image {
-  width: 173px;
+  width: 100%;
   height: 173px;
 }
 

@@ -46,7 +46,16 @@
           <div>
             <span class="money">¥ {{item.price}}元</span>
             <span class="num">{{item.num}}件</span>
-            <span class="title">{{item.name}}</span>
+            <el-tooltip
+              v-if="item.name.length>12"
+              class="title"
+              effect="dark"
+              :content="item.name"
+              placement="bottom"
+            >
+              <p class="title">{{item.name}}</p>
+            </el-tooltip>
+            <p v-else class="title">{{item.name}}</p>
             <div class="flexclass">
               <el-button
                 v-if="item.collect"
@@ -235,8 +244,7 @@ export default {
         });
     },
     godetail() {
-      this.Dialog
-        .title("宠物详情")
+      this.Dialog.title("宠物详情")
         .width("500px")
         .currentView(detail, {})
         .then(data => {})
@@ -262,7 +270,7 @@ export default {
 }
 
 .flexclass {
-  padding: 15px 10px 10px 0;
+  padding: 0 10px 10px 0;
   text-align: right;
 }
 
@@ -274,12 +282,9 @@ export default {
   font-size: 13px;
   display: block;
   text-align: center;
-  height: 30px;
   overflow: hidden;
-  -webkit-line-clamp: 2;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
 }
 
 .image {

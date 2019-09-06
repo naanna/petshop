@@ -121,6 +121,7 @@ export default {
     },
     goreset() {
       this.$refs["loginform"].resetFields();
+      this.loginform.code = "";
     },
     getHeight() {
       this.conheight.height = window.innerHeight + "px";
