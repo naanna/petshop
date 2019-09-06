@@ -20,6 +20,7 @@ export default {
   font-size: 30px;
   font-family: "jelly";
 }
+
 .el-badge__content.is-fixed {
   top: 14px !important;
   right: 26px !important;

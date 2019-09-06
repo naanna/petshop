@@ -204,6 +204,7 @@ export default {
                 if (res.data.success) {
                   this.$message.success("成功添加用户！");
                   this.closeDialog();
+                  loading.close();
                 } else {
                   loading.close();
                 }
@@ -300,5 +301,8 @@ export default {
   font-size: 50px;
   width: 100px;
   height: 100px;
+}
+.el-avatar >>> img {
+  width: 100%;
 }
 </style>

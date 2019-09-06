@@ -54,7 +54,7 @@
       <el-table-column label="注册日期" prop="regday" align="center" header-align="center"></el-table-column>
       <el-table-column label="级别" prop="leavel" align="center" header-align="center">
         <template slot-scope="scope">
-          <span v-if="scope.row.level=='vip'">初级vip</span>
+          <span v-if="scope.row.level=='vip1'">初级vip</span>
           <span v-else-if="scope.row.level=='vip2'">中级vip</span>
           <span v-else-if="scope.row.level=='vip3'">高级vip</span>
           <span v-else>管理员</span>

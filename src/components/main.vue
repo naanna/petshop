@@ -88,6 +88,7 @@
         <div>
           <div class="user" v-for="item in userdata">
             <div>
+              <span>会员</span>
               <span class="usernamecolor">{{item.nickname}}</span>
               <span class="join">加入我们</span>
             </div>
@@ -242,7 +243,8 @@ export default {
 }
 
 .titleclass {
-  font-size: 16px;
+  font-size: 18px;
+  font-family: "楷体";
   margin-left: 10px;
 }
 
@@ -313,6 +315,7 @@ export default {
   padding-left: 10px;
   padding-top: 10px;
   background: #ffffff;
+  font-family: "楷体";
   padding-bottom: 10px;
   border-bottom: 1px solid #dddddd;
 }
@@ -338,6 +341,7 @@ export default {
 }
 
 .usernamecolor {
+  margin-left: 10px;
   color: rgb(119, 193, 232);
 }
 .go {

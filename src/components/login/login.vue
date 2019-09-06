@@ -5,6 +5,7 @@
       label-position="right"
       label-width="130px"
       class="form"
+      :style="loginclass"
       :rules="rules"
       ref="loginform"
     >
@@ -35,8 +36,9 @@
 <script>
 import { mapMutations } from "vuex";
 import { checkinput } from "@assets/validate.js";
+import random from "@assets/random.js";
 export default {
-  name: "demo",
+  name: "login",
   data() {
     return {
       code: "",
@@ -48,6 +50,10 @@ export default {
       },
       conheight: {
         height: ""
+      },
+      loginclass: {
+        bottom: "",
+        right: ""
       },
       rules: {
         username: [
@@ -118,53 +124,17 @@ export default {
     },
     getHeight() {
       this.conheight.height = window.innerHeight + "px";
+      this.loginclass.bottom = window.innerHeight / 3 + "px";
+      this.loginclass.right = window.innerWidth / 6 + "px";
     },
     goForget() {
       this.$router.push("/forgetpsd");
     },
     generatedCode() {
-      const random = [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-        "I",
-        "J",
-        "K",
-        "L",
-        "M",
-        "N",
-        "O",
-        "P",
-        "Q",
-        "R",
-        "S",
-        "T",
-        "U",
-        "V",
-        "W",
-        "X",
-        "Y",
-        "Z"
-      ];
       let code = "";
       let showcode = "";
       for (let i = 0; i < 4; i++) {
-        let index = Math.floor(Math.random() * 36);
+        let index = Math.floor(Math.random() * 62);
         code += random[index];
         showcode += random[index] + " ";
       }
@@ -198,8 +168,6 @@ export default {
   position: absolute;
   background: #ffffff;
   width: 430px;
-  top: 200px;
-  right: 200px;
   padding-bottom: 20px;
   border-radius: 10px;
 }

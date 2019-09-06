@@ -79,6 +79,7 @@
 
 <script>
 import { checkinput } from "@assets/validate.js";
+import random from "@assets/random.js";
 export default {
   name: "demo",
   data() {
@@ -143,8 +144,7 @@ export default {
     };
   },
   created() {
-    window.addEventListener("resize", this.getHeight);
-    this.getHeight();
+    window.addEventListener("resize", this.getHeight());
     this.generatedCode();
   },
   methods: {
@@ -221,48 +221,10 @@ export default {
       this.generatedCode();
     },
     generatedCode() {
-      const random = [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-        "I",
-        "J",
-        "K",
-        "L",
-        "M",
-        "N",
-        "O",
-        "P",
-        "Q",
-        "R",
-        "S",
-        "T",
-        "U",
-        "V",
-        "W",
-        "X",
-        "Y",
-        "Z"
-      ];
       let code = "";
       let showcode = "";
       for (let i = 0; i < 4; i++) {
-        let index = Math.floor(Math.random() * 36);
+        let index = Math.floor(Math.random() * 62);
         showcode += random[index] + " ";
         code += random[index];
       }

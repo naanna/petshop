@@ -72,12 +72,4 @@ npm run serve
 
 ![forpsd](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/forpsd.gif)
 
-![good](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/good.gif)
-
-![person](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/person.gif)
-
 ![message](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/message.gif)
-
-![user](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/user.gif)
-
-![all](https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/all.gif)
