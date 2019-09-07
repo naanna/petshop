@@ -191,7 +191,7 @@ export default {
           row.downorup = "downorup";
           this.axios.post("/api/updategood", row).then(res => {
             if (res.data.success) {
-              this.$message.success(statusinfo + "成功！");
+              this.$message.success("操作成功！");
               this.goquery();
             }
           });

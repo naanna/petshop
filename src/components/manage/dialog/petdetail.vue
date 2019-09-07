@@ -2,7 +2,6 @@
   <div>
     <div style="display:flex;">
       <div class="div1">
-        <!-- <el-image style="width: 150px; height: 150px" :src="imurl"></el-image> -->
         <el-avatar
           shape="square"
           :src="form.picture"
@@ -66,7 +65,6 @@
 </template>
 
 <script>
-import Util from "@assets/Util.js";
 export default {
   name: "detail",
   data() {
@@ -122,6 +120,10 @@ export default {
   font-family: "jelly" !important;
   font-size: 20px !important;
   width: 350px;
+}
+
+.el-avatar >>> img {
+  width: 100%;
 }
 .buttonclass {
   margin-top: 20px;

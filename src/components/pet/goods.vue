@@ -88,18 +88,11 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-
-    <Dialog></Dialog>
   </div>
 </template>
 
 <script>
-import Dialog from "@common/dialog.vue";
-import detail from "./detail.vue";
 export default {
-  components: {
-    Dialog
-  },
   name: "goods",
   data() {
     return {
@@ -121,7 +114,8 @@ export default {
     makependingquery() {
       let query = {
         page_no: this.page_no,
-        page_size: this.page_size
+        page_size: this.page_size,
+        show: true
       };
       if (this.type == "价格") {
         if (this.money1 != "" && this.money2 == "") {
@@ -174,7 +168,7 @@ export default {
               .map(item => {
                 return item.goodid;
               });
-            this.tabledata.filter((item, index) => {
+            this.tabledata.filter(item => {
               if (this.collectobs.includes(item.goodid)) {
                 item.collect = true;
                 return this.collectobs.includes(item.goodid);
@@ -242,13 +236,6 @@ export default {
             this.$message.success("取消收藏!");
           }
         });
-    },
-    godetail() {
-      this.Dialog.title("宠物详情")
-        .width("500px")
-        .currentView(detail, {})
-        .then(data => {})
-        .show();
     },
     sizeChangeHandle(val) {
       this.page_size = val;

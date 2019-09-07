@@ -83,11 +83,9 @@ export default {
             this.$message.warning("验证码错误！");
           } else {
             this.axios
-              .get("/api/login", {
-                params: {
+              .post("/api/login", {
                   username: _this.loginform.username,
                   password: _this.loginform.password
-                }
               })
               .then(res => {
                 if (res.data.success) {
