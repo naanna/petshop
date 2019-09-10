@@ -61,12 +61,12 @@
           <span class="titleclass">宝贝照片</span>
         </div>
         <div class="picturediv">
-          <img src="@picture/cat1.png" class="picture1" />
-          <img src="@picture/dog1.png" class="picture1" />
-          <img src="@picture/pig1.png" class="picture1" />
-          <img src="@picture/cat2.png" class="picture2" />
-          <img src="@picture/dog2.png" class="picture2" />
-          <img src="@picture/pig2.png" class="picture2" />
+          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/cat1.png" class="picture1" />
+          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/dog1.png" class="picture1" />
+          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/pig1.png" class="picture1" />
+          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/cat2.png" class="picture2" />
+          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/dog2.png" class="picture2" />
+          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/pig2.png" class="picture2" />
         </div>
       </div>
       <div class="chart">

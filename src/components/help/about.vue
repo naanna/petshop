@@ -1,7 +1,7 @@
 <template>
   <div class="div1">
     <div class="picdiv">
-      <img src="@picture/touxiang.jpg" class="picture" />
+      <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/touxiang.jpg" class="picture" />
       <p class="name">mxy</p>
       <p class="name">木木周</p>
     </div>

@@ -44,13 +44,13 @@
     <p class="ruleclass1">点击图片查看如何照顾他们</p>
     <div class="picturelist">
       <div class="picturediv">
-        <img src="@picture/manualdog.jpg" class="picture" @click="gourl('./dog')" />
+        <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualdog.jpg" class="picture" @click="gourl('./dog')" />
       </div>
       <div class="picturediv">
-        <img src="@picture/manualcat.jpg" class="picture" @click="gourl('./cat')" />
+        <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualcat.jpg" class="picture" @click="gourl('./cat')" />
       </div>
       <div class="picturediv">
-        <img src="@picture/manualpig.jpg" class="picture" @click="gourl('./pig')" />
+        <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualpig.jpg" class="picture" @click="gourl('./pig')" />
       </div>
     </div>
   </div>

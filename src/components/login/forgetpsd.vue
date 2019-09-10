@@ -237,7 +237,7 @@ export default {
 
 <style scoped>
 .div1 {
-  background: url("~@/assets/picture/login.jpg");
+  background: url("https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/login.jpg");
   background-size: 100% 100%;
 }
 .width250 {
