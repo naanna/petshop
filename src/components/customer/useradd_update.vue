@@ -75,7 +75,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="余额：" label-width="100px" prop="money">
-        <el-input type="text" size="small" class="width250" v-model.number="form.money"></el-input>
+        <el-input
+          type="text"
+          size="small"
+          class="width250"
+          v-model.number="form.money"
+          oninput="if(value.length>10)value=value.slice(0,10)"
+        ></el-input>
       </el-form-item>
       <el-form-item label="生日：" label-width="100px" prop="birthday">
         <el-date-picker

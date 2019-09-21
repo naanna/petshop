@@ -85,7 +85,13 @@
     <el-dialog title="延长寄养时间" :visible.sync="centerDialogVisible" width="40%" center>
       <el-form :model="form" :rules="rules" ref="form">
         <el-form-item label="延长时长：" label-width="100px" style="margin-bottom:0px;" prop="longtime">
-          <el-input type="text" size="small" v-model.number="form.longtime" class="dhk"></el-input>
+          <el-input
+            type="text"
+            size="small"
+            v-model.number="form.longtime"
+            class="dhk"
+            oninput="if(value.length>10)value=value.slice(0,10)"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -237,8 +243,7 @@ export default {
       this.goquery();
     },
     goadd() {
-      this.Dialog
-        .title("我要寄养")
+      this.Dialog.title("我要寄养")
         .width("600px")
         .currentView(caretable, {})
         .then(data => {

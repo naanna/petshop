@@ -37,6 +37,7 @@
                 size="small"
                 class="formlist"
                 v-model.number="pet.price"
+                oninput="if(value.length>10)value=value.slice(0,10)"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -84,7 +85,13 @@
         <el-date-picker v-model="form.starttime" type="date" class="formlist" size="small"></el-date-picker>
       </el-form-item>
       <el-form-item label="寄养时长：" label-width="100px" prop="timerang">
-        <el-input type="text" size="small" class="formlist" v-model.number="form.timerang"></el-input>
+        <el-input
+          type="text"
+          size="small"
+          class="formlist"
+          v-model.number="form.timerang"
+          oninput="if(value.length>10)value=value.slice(0,10)"
+        ></el-input>
         <span style="margin-left:10px;">天</span>
       </el-form-item>
     </el-form>
@@ -160,13 +167,12 @@ export default {
     },
     goadd() {
       var pet = this.pet;
-      this.Dialog
-        .title("我要寄养")
+      this.Dialog.title("我要寄养")
         .width("800px")
         .currentView(add_update, { pet })
         .then(data => {
-          if (opt) {
-            this.pet = opt;
+          if (data) {
+            this.pet = data;
           }
         })
         .show();

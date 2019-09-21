@@ -73,7 +73,13 @@
         <el-dialog title="寄养价格" :visible.sync="centerDialogVisible" width="35%" center>
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item label="价格：" label-width="100px" style="margin-bottom:0px;" prop="price">
-              <el-input type="text" size="small" v-model.number="form.price" class="width200"></el-input>
+              <el-input
+                type="text"
+                size="small"
+                v-model.number="form.price"
+                class="width200"
+                oninput="if(value.length>10)value=value.slice(0,10)"
+              ></el-input>
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
@@ -425,8 +431,7 @@ export default {
       this.$refs["form"].resetFields();
     },
     goadd() {
-      this.Dialog
-        .title("添加寄养记录")
+      this.Dialog.title("添加寄养记录")
         .width("600px")
         .currentView(add_update, {})
         .then(data => {
@@ -467,8 +472,7 @@ export default {
         .catch(() => {});
     },
     goupdate(row) {
-      this.Dialog
-        .title("修改寄养记录")
+      this.Dialog.title("修改寄养记录")
         .width("600px")
         .currentView(add_update, { row })
         .then(data => {
