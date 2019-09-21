@@ -12,7 +12,7 @@
           v-model.number="money1"
           size="small"
           class="el-input__inner inputwidth"
-          oninput="value=value.replace(/[^\d]/g,'')"
+          oninput="value=value.replace(/[^\d]/g,'');if(value.length>10)value=value.slice(0,10)"
         />
         <span style="margin-left:5px;margin-right:5px;">-</span>
         <input
@@ -21,7 +21,7 @@
           v-model.number="money2"
           size="small"
           class="el-input__inner inputwidth"
-          oninput="value=value.replace(/[^\d]/g,'')"
+          oninput="value=value.replace(/[^\d]/g,'');if(value.length>10)value=value.slice(0,10)"
         />
         <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
       </div>
@@ -241,8 +241,7 @@ export default {
         .catch(() => {});
     },
     godetail(row) {
-      this.Dialog
-        .title("宠物详情")
+      this.Dialog.title("宠物详情")
         .width("500px")
         .currentView(detail, { row })
         .then(data => {})

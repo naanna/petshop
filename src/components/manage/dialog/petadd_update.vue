@@ -40,7 +40,13 @@
         <el-date-picker v-model="form.birthday" type="date" class="formlist" size="small"></el-date-picker>
       </el-form-item>
       <el-form-item label="价格：" label-width="100px" prop="price">
-        <el-input type="text" size="small" class="formlist" v-model.number="form.price"></el-input>
+        <el-input
+          type="text"
+          size="small"
+          class="formlist"
+          v-model.number="form.price"
+          oninput="if(value.length>10)value=value.slice(0,10)"
+        ></el-input>
       </el-form-item>
       <el-form-item label="种类：" label-width="100px" prop="type">
         <el-select size="small" class="formlist" v-model="form.type">

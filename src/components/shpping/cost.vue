@@ -10,7 +10,13 @@
         prop="money"
         :inline-message="true"
       >
-        <el-input type="text" size="small" class="width" v-model.number="form.money"></el-input>
+        <el-input
+          type="text"
+          size="small"
+          class="width"
+          v-model.number="form.money"
+          oninput="if(value.length>10)value=value.slice(0,10)"
+        ></el-input>
       </el-form-item>
       <el-form-item
         label="充值账户："

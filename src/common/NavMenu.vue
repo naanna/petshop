@@ -1,36 +1,22 @@
 
 <template>
   <div>
-    <el-submenu
-      v-for="(item,index) in navlist"
-      :key="index"
-      v-if="item.adminMenu.menuType=='list'&&($store.state.permissions=='admin'||(item.adminMenu.permissions==null &&$store.state.permissions!='admin'))"
-      :index="item.adminMenu.code"
-    >
-      <template slot="title">
-        <i class="el-icon-sunny"></i>
-        <span>{{item.adminMenu.menuName}}</span>
-      </template>
-      <NavMenu :navlist="item.children"></NavMenu>
-    </el-submenu>
+    <label v-for="(item,index) in activenavlist" :key="index">
+      <el-submenu v-if="item.adminMenu.menuType=='list'" :index="item.adminMenu.code">
+        <template slot="title">
+          <i class="el-icon-sunny"></i>
+          <span>{{item.adminMenu.menuName}}</span>
+        </template>
+        <NavMenu :navlist="item.children"></NavMenu>
+      </el-submenu>
 
-    <el-menu-item
-      v-for="(item,index) in navlist"
-      :key="index"
-      v-if="item.adminMenu.menuType=='page'&&($store.state.permissions=='admin'||(item.adminMenu.permissions==null &&$store.state.permissions!='admin'))"
-      :index="item.adminMenu.url"
-    >
-      <i class="el-icon-moon"></i>
-      <span>{{item.adminMenu.menuName}}</span>
-    </el-menu-item>
+      <el-menu-item v-if="item.adminMenu.menuType=='page'" :index="item.adminMenu.url">
+        <i class="el-icon-moon"></i>
+        <span>{{item.adminMenu.menuName}}</span>
+      </el-menu-item>
+    </label>
   </div>
 </template>
-  
-<script>
-export default {
-  name: "NavMenu"
-};
-</script>
 
 <script>
 export default {
@@ -38,6 +24,17 @@ export default {
   props: ["navlist"],
   data() {
     return {};
+  },
+  computed: {
+    activenavlist() {
+      return this.navlist.filter((item, index) => {
+        return (
+          this.$store.state.permissions == "admin" ||
+          (item.adminMenu.permissions == null &&
+            this.$store.state.permissions != "admin")
+        );
+      });
+    }
   },
   methods: {}
 };

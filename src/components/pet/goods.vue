@@ -12,7 +12,7 @@
           v-model.number="money1"
           size="small"
           class="el-input__inner inputwidth"
-          oninput="value=value.replace(/[^\d]/g,'')"
+          oninput="value=value.replace(/[^\d]/g,'');if(value.length>10)value=value.slice(0,10)"
         />
         <span style="margin-left:5px;margin-right:5px;">-</span>
         <input
@@ -21,7 +21,7 @@
           v-model.number="money2"
           size="small"
           class="el-input__inner inputwidth"
-          oninput="value=value.replace(/[^\d]/g,'')"
+          oninput="value=value.replace(/[^\d]/g,'');if(value.length>10)value=value.slice(0,10)"
         />
       </div>
 
