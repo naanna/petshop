@@ -213,9 +213,21 @@ export default {
       this.$router.push("/login");
     },
     getHeight() {
+      let type = /Android|webOS|iPhone|iPod|BlackBerry/i.test(
+        navigator.userAgent
+      )
+        ? false //移动
+        : true; //web
       this.conheight.height = window.innerHeight + "px";
       this.location.top = window.innerHeight / 3 + "px";
-      this.location.left = window.innerWidth / 3 + "px";
+      if (type) {
+        this.location.left = window.innerWidth / 3 + "px";
+        this.location.width = 500 + "px";
+      } else {
+        this.location.marginLeft = 15 + "px";
+        this.location.marginRight = 15 + "px";
+        this.location.width = 350 + "px";
+      }
     },
     gochange() {
       this.generatedCode();
