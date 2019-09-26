@@ -84,8 +84,8 @@ export default {
           } else {
             this.axios
               .post("/api/login", {
-                  username: _this.loginform.username,
-                  password: _this.loginform.password
+                username: _this.loginform.username,
+                password: _this.loginform.password
               })
               .then(res => {
                 if (res.data.success) {
@@ -122,9 +122,21 @@ export default {
       this.loginform.code = "";
     },
     getHeight() {
+      let type = /Android|webOS|iPhone|iPod|BlackBerry/i.test(
+        navigator.userAgent
+      )
+        ? false //移动
+        : true; //web
       this.conheight.height = window.innerHeight + "px";
       this.loginclass.bottom = window.innerHeight / 3 + "px";
-      this.loginclass.right = window.innerWidth / 6 + "px";
+      if (type) {
+        this.loginclass.right = window.innerWidth / 6 + "px";
+        this.loginclass.width = 430 + "px";
+      } else {
+        this.loginclass.marginLeft = 15 + "px";
+        this.loginclass.marginRight = 15 + "px";
+        this.loginclass.width = 380 + "px";
+      }
     },
     goForget() {
       this.$router.push("/forgetpsd");
@@ -164,9 +176,9 @@ export default {
   background-size: 100% 100%;
 }
 .form {
+  font-size: 18px;
   position: absolute;
   background: #ffffff;
-  width: 430px;
   padding-bottom: 20px;
   border-radius: 10px;
 }
