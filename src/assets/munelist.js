@@ -173,7 +173,7 @@ const navlist = [{
     }, {
         adminMenu: {
             id: 4,
-            menuName: "留言板",
+            menuName: "交流区",
             menuType: "list",
             pid: "0",
             url: "#",
@@ -184,7 +184,7 @@ const navlist = [{
         children: [{
                 adminMenu: {
                     id: 42,
-                    menuName: "查看评论",
+                    menuName: "留言板",
                     menuType: "page",
                     pid: "4",
                     url: "/leavemessage/look",
@@ -203,6 +203,18 @@ const navlist = [{
                     sort: 3,
                     deep: 2,
                     code: "43"
+                }
+            },
+            {
+                adminMenu: {
+                    id: 44,
+                    menuName: "视频区",
+                    menuType: "page",
+                    pid: "4",
+                    url: "/video/index",
+                    sort: 4,
+                    deep: 2,
+                    code: "44"
                 }
             }
         ]
