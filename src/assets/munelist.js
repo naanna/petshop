@@ -216,6 +216,18 @@ const navlist = [{
                     deep: 2,
                     code: "44"
                 }
+            },
+            {
+                adminMenu: {
+                    id: 45,
+                    menuName: "聊天室",
+                    menuType: "page",
+                    pid: "4",
+                    url: "/chat/index",
+                    sort: 4,
+                    deep: 2,
+                    code: "45"
+                }
             }
         ]
     }, {

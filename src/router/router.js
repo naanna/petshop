@@ -193,23 +193,33 @@ const router = new Router({
                     path: '/shpping/changepic',
                     name: 'changepic',
                     component: resolve => require(['../components/shpping/changepic.vue'], resolve)
+                },
+                {
+                    path: '/video/index',
+                    name: 'showvideo',
+                    component: resolve => require(['../components/video/index.vue'], resolve)
+                },
+                {
+                    path: '/chat/index',
+                    name: 'chat',
+                    component: resolve => require(['../components/chat/index.vue'], resolve)
                 }
             ]
         }
     ],
 })
 
-router.beforeEach((to, from, next) => {
-    if (to.path === '/login' || to.path === '/forgetpsd') {
-        next();
-    } else {
-        let token = localStorage.getItem('token');
-        if (token === null || token === '') {
-            next('/login');
-        } else {
-            next();
-        }
-    }
-});
+// router.beforeEach((to, from, next) => {
+//     if (to.path === '/login' || to.path === '/forgetpsd') {
+//         next();
+//     } else {
+//         let token = localStorage.getItem('token');
+//         if (token === null || token === '') {
+//             next('/login');
+//         } else {
+//             next();
+//         }
+//     }
+// });
 
 export default router
