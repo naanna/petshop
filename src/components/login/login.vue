@@ -1,35 +1,46 @@
 <template>
-  <div :style="conheight" class="div1">
-    <el-form
-      :model="loginform"
-      label-position="right"
-      label-width="130px"
-      class="form"
-      :style="loginclass"
-      :rules="rules"
-      ref="loginform"
-    >
-      <h2 class="pclass">登录</h2>
-      <el-form-item prop="username" label="账号:">
-        <el-input type="text" size="small" v-model="loginform.username" class="formitem"></el-input>
-      </el-form-item>
-      <el-form-item prop="password" label="密码:">
-        <el-input type="password" size="small" v-model="loginform.password" class="formitem"></el-input>
-      </el-form-item>
-      <el-form-item label="验证码:">
-        <el-input type="text" v-model="loginform.code" size="small" class="form1"></el-input>
-        <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
-          <span class="code" @click="gochange">{{showcode}}</span>
-        </el-tooltip>
-      </el-form-item>
-      <div class="butclass">
-        <el-button type="text" size="small" @click="goForget">忘记密码</el-button>
-      </div>
-      <div class="pclass">
-        <el-button type="primary" size="small" @click="gologin">登录</el-button>
-        <el-button type="primary" size="small" @click="goreset">重置</el-button>
-      </div>
-    </el-form>
+  <div class="div1">
+    <el-row type="flex" :style="conheight" style="align-items:center;">
+      <el-col :lg="{span:12, offset:12}" :md="{span:24}">
+        <el-form
+          :model="loginform"
+          label-position="right"
+          label-width="100px"
+          class="form"
+          :rules="rules"
+          ref="loginform"
+        >
+          <h2 class="pclass">登录</h2>
+          <el-form-item prop="username" label="账号:">
+            <el-row>
+              <el-input type="text" size="small" v-model="loginform.username" class="input"></el-input>
+            </el-row>
+          </el-form-item>
+          <el-form-item prop="password" label="密码:">
+            <el-input type="password" size="small" v-model="loginform.password" class="input"></el-input>
+          </el-form-item>
+          <el-form-item   prop="code" label="验证码:">
+            <el-input
+              type="text"
+              v-model="loginform.code"
+              size="small"
+              class="input"
+              style="margin-right:20px"
+            ></el-input>
+            <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
+              <span class="code" @click="gochange">{{showcode}}</span>
+            </el-tooltip>
+          </el-form-item>
+          <div class="butclass">
+            <el-button type="text" size="small" @click="goForget">忘记密码</el-button>
+          </div>
+          <div class="pclass">
+            <el-button type="primary" size="small" @click="gologin">登录</el-button>
+            <el-button type="primary" size="small" @click="goreset">重置</el-button>
+          </div>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -51,10 +62,6 @@ export default {
       conheight: {
         height: ""
       },
-      loginclass: {
-        bottom: "",
-        right: ""
-      },
       rules: {
         username: [
           { validator: checkinput, message: "账号不能为空" },
@@ -63,7 +70,8 @@ export default {
         password: [
           { validator: checkinput, message: "密码不能为空" },
           { min: 6, max: 20, message: "长度在6到20个字符", trigger: "blur" }
-        ]
+        ],
+        code: [{ validator: checkinput, message: "验证码不能为空" }]
       }
     };
   },
@@ -119,24 +127,9 @@ export default {
     },
     goreset() {
       this.$refs["loginform"].resetFields();
-      this.loginform.code = "";
     },
     getHeight() {
-      let type = /Android|webOS|iPhone|iPod|BlackBerry/i.test(
-        navigator.userAgent
-      )
-        ? false //移动
-        : true; //web
       this.conheight.height = window.innerHeight + "px";
-      this.loginclass.bottom = window.innerHeight / 3 + "px";
-      if (type) {
-        this.loginclass.right = window.innerWidth / 6 + "px";
-        this.loginclass.width = 430 + "px";
-      } else {
-        this.loginclass.marginLeft = 15 + "px";
-        this.loginclass.marginRight = 15 + "px";
-        this.loginclass.width = 380 + "px";
-      }
     },
     goForget() {
       this.$router.push("/forgetpsd");
@@ -160,9 +153,6 @@ export default {
 </script>
 
 <style scoped>
-.formitem {
-  width: 200px;
-}
 .pclass {
   text-align: center;
 }
@@ -177,10 +167,13 @@ export default {
 }
 .form {
   font-size: 18px;
-  position: absolute;
   background: #ffffff;
-  padding-bottom: 20px;
+  width: 40%;
+  min-width: 250px;
+  max-width: 450px;
+  padding: 10px 20px 20px 20px;
   border-radius: 10px;
+  margin: 0 auto;
 }
 .code {
   background: #e6e3e3;
@@ -190,12 +183,10 @@ export default {
   font-size: 18px;
   text-align: center;
   display: inline-block;
-  margin-left: 20px;
   border-radius: 5px;
   cursor: pointer;
 }
-.form1 {
-  vertical-align: middle;
-  width: 100px;
+.input {
+  max-width: 210px;
 }
 </style>
