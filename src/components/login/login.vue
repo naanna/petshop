@@ -1,6 +1,6 @@
 <template>
   <div class="div1">
-    <el-row type="flex" :style="conheight" style="align-items:center;">
+    <el-row type="flex" :style="conheight" align="middle">
       <el-col :lg="{span:12, offset:12}" :md="{span:24}">
         <el-form
           :model="loginform"

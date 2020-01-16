@@ -1,127 +1,161 @@
 <template>
   <div>
-    <div class="card">
-      <div class="carddiv">
-        <div class="headdiv">
-          <span>订单总数</span>
+    <el-row :gutter="20" class="row">
+      <el-col :span="6" :xs="{span:12}">
+        <div class="carddiv">
+          <div class="headfootdiv">
+            <span>订单总数</span>
+          </div>
+          <div class="icondiv">
+            <i class="el-icon-shopping-cart-full titleicon"></i>
+            <span>{{totalorder}}</span>
+          </div>
+          <div class="headfootdiv">
+            <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
+            <span class="go" @click="gourl('/pet/goods')" v-else>我要下单...</span>
+          </div>
         </div>
-        <div class="icondiv">
-          <i class="el-icon-shopping-cart-full titleicon"></i>
-          <span class="number">{{totalorder}}</span>
+      </el-col>
+      <el-col :span="6" :xs="{span:12}">
+        <div class="carddiv">
+          <div class="headfootdiv">
+            <span>销售总额</span>
+          </div>
+          <div class="icondiv">
+            <i class="el-icon-money titleicon"></i>
+            <span>{{totalmoeny}}</span>
+          </div>
+          <div class="headfootdiv">
+            <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
+            <span class="go" @click="gourl('/pet/index')" v-else>我要购买...</span>
+          </div>
         </div>
-        <div class="footerdiv">
-          <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
-          <span class="go" @click="gourl('/pet/goods')" v-else>我要下单...</span>
+      </el-col>
+      <el-col :span="6" :xs="{span:12}">
+        <div class="carddiv">
+          <div class="headfootdiv">
+            <span>会员总数</span>
+          </div>
+          <div class="icondiv">
+            <i class="el-icon-user titleicon"></i>
+            <span>{{totaluser}}</span>
+          </div>
+          <div class="headfootdiv">
+            <span class="go" @click="gourl('/customer/index')" v-if="permissions=='admin'">显示详细...</span>
+            <span class="go" @click="gourl('/shpping/person')" v-else>查看我的...</span>
+          </div>
         </div>
-      </div>
-      <div class="carddiv">
-        <div class="headdiv">
-          <span>销售总额</span>
+      </el-col>
+      <el-col :span="6" :xs="{span:12}">
+        <div class="carddiv">
+          <div class="headfootdiv">
+            <span>寄养总数</span>
+          </div>
+          <div class="icondiv">
+            <i class="el-icon-box titleicon"></i>
+            <span>{{totalcare}}</span>
+          </div>
+          <div class="headfootdiv">
+            <span
+              class="go"
+              @click="gourl('/manage/caremanage')"
+              v-if="permissions=='admin'"
+            >显示详细...</span>
+            <span class="go" @click="gourl('/fostercare/my')" v-else>我要寄养...</span>
+          </div>
         </div>
-        <div class="icondiv">
-          <i class="el-icon-money titleicon"></i>
-          <span class="number">{{totalmoeny}}</span>
-        </div>
-        <div class="footerdiv">
-          <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
-          <span class="go" @click="gourl('/pet/index')" v-else>我要购买...</span>
-        </div>
-      </div>
-      <div class="carddiv">
-        <div class="headdiv">
-          <span>会员总数</span>
-        </div>
-        <div class="icondiv">
-          <i class="el-icon-user titleicon"></i>
-          <span class="number">{{totaluser}}</span>
-        </div>
-        <div class="footerdiv">
-          <span class="go" @click="gourl('/customer/index')" v-if="permissions=='admin'">显示详细...</span>
-          <span class="go" @click="gourl('/shpping/person')" v-else>查看我的...</span>
-        </div>
-      </div>
-      <div class="carddiv">
-        <div class="headdiv">
-          <span>寄养总数</span>
-        </div>
-        <div class="icondiv">
-          <i class="el-icon-box titleicon"></i>
-          <span class="number">{{totalcare}}</span>
-        </div>
-        <div class="footerdiv">
-          <span class="go" @click="gourl('/manage/caremanage')" v-if="permissions=='admin'">显示详细...</span>
-          <span class="go" @click="gourl('/fostercare/my')" v-else>我要寄养...</span>
-        </div>
-      </div>
-    </div>
-    <div class="second">
-      <div class="picdiv">
+      </el-col>
+    </el-row>
+    <el-row :gutter="20" class="row">
+      <el-col :lg="{span:8}" :md="{span:24}">
         <div class="pichead">
           <i class="el-icon-chicken icon"></i>
           <span class="titleclass">宝贝照片</span>
         </div>
-        <div class="picturediv">
-          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/cat1.png" class="picture1" />
-          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/dog1.png" class="picture1" />
-          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/pig1.png" class="picture1" />
-          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/cat2.png" class="picture2" />
-          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/dog2.png" class="picture2" />
-          <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/pig2.png" class="picture2" />
-        </div>
-      </div>
-      <div class="chart">
-        <div class="charthead">
+        <el-row :gutter="20" class="row">
+          <el-col :span="8">
+            <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/cat1.png" class="picture">
+          </el-col>
+          <el-col :span="8">
+            <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/dog1.png" class="picture">
+          </el-col>
+          <el-col :span="8">
+            <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/pig1.png" class="picture">
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" class="row">
+          <el-col :span="8">
+            <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/cat2.png" class="picture">
+          </el-col>
+          <el-col :span="8">
+            <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/dog2.png" class="picture">
+          </el-col>
+          <el-col :span="8">
+            <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/pig2.png" class="picture">
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :lg="{span:16}" :md="{span:24}">
+        <div class="pichead">
           <i class="el-icon-menu icon"></i>
           <span class="titleclass">销售图表</span>
         </div>
-        <div class="chartdiv">
-          <v-chart :options="options" autoresize class="chart1"></v-chart>
-        </div>
-      </div>
-    </div>
-    <div class="third">
-      <div class="userdiv">
-        <div class="userhead">
-          <i class="el-icon-date icon"></i>
-          <span class="titleclass">用户活动</span>
-        </div>
-        <div>
-          <div class="user" v-for="item in userdata">
-            <div>
-              <span>会员</span>
-              <span class="usernamecolor">{{item.nickname}}</span>
-              <span class="join">加入我们</span>
-            </div>
-            <div>
-              <i class="el-icon-time"></i>
-              <span class="join">{{item.regday}}</span>
+        <v-chart :options="options" autoresize class="chart"></v-chart>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20" class="row">
+      <el-col :lg="{span:8}" :md="{span:24}">
+        <div class="userdiv">
+          <div class="userhead">
+            <i class="el-icon-date icon"></i>
+            <span class="titleclass">用户活动</span>
+          </div>
+          <div>
+            <div class="user userhead" v-for="(item,index) in userdata" :key="{index}">
+              <div>
+                <span>会员</span>
+                <span class="usernamecolor join">{{item.nickname}}</span>
+                <span class="join">加入我们</span>
+              </div>
+              <div>
+                <i class="el-icon-time"></i>
+                <span class="join">{{item.regday}}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="orderdiv">
-        <div class="userhead">
-          <i class="el-icon-s-grid icon"></i>
-          <span class="titleclass">今日推荐</span>
+      </el-col>
+      <el-col :lg="{span:16}" :md="{span:24}">
+        <div class="userdiv">
+          <div class="userhead">
+            <i class="el-icon-s-grid icon"></i>
+            <span class="titleclass">今日推荐</span>
+          </div>
+          <el-table :data="data" stripe highlight-current-row style="padding:7px 0;">
+            <el-table-column
+              label="图片"
+              width="100px"
+              prop="id"
+              align="center"
+              header-align="center"
+            >
+              <template slot-scope="scope">
+                <el-image style="width: 50px; height: 50px" :src="scope.row.picture" fit="full"></el-image>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="商品信息"
+              prop="name"
+              width="400px"
+              align="center"
+              header-align="center"
+            ></el-table-column>
+            <el-table-column label="价格" prop="price" align="center" header-align="center"></el-table-column>
+            <el-table-column label="库存" prop="num" align="center" header-align="center"></el-table-column>
+          </el-table>
         </div>
-        <el-table :data="data" stripe highlight-current-row style="padding:7px 0;">
-          <el-table-column label="图片" width="100px" prop="id" align="center" header-align="center">
-            <template slot-scope="scope">
-              <el-image style="width: 50px; height: 50px" :src="scope.row.picture" fit="full"></el-image>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="商品信息"
-            prop="name"
-            width="400px"
-            align="center"
-            header-align="center"
-          ></el-table-column>
-          <el-table-column label="价格" prop="price" align="center" header-align="center"></el-table-column>
-          <el-table-column label="库存" prop="num" align="center" header-align="center"></el-table-column>
-        </el-table>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -133,9 +167,23 @@ export default {
       totalmoeny: 0,
       totaluser: 0,
       totalcare: 0,
-      options: {},
+      options: {
+        xAxis: {
+          type: "category",
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        },
+        yAxis: {
+          type: "value"
+        },
+        series: [
+          {
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: "line"
+          }
+        ]
+      },
       data: [],
-      userdata: []
+      userdata: [{ nickname: "123", regday: "2007-08-05" },{ nickname: "123", regday: "2007-08-05" }, ]
     };
   },
   created() {
@@ -189,162 +237,73 @@ export default {
 };
 </script>
 <style scoped>
-.headdiv {
-  display: flex;
-  justify-content: space-between;
+.headfootdiv {
   padding-left: 10px;
-  border-radius: 10px;
 }
-
 .titleicon {
-  font-size: 35px;
   opacity: 0.3;
   transition: all 1s;
 }
 .titleicon:hover {
   opacity: 0.95;
 }
-.number {
-  font-size: 35px;
-}
-
 .icondiv {
   background: #2786c5;
   display: flex;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  line-height: 35px;
   justify-content: space-between;
+  padding: 20px;
+  font-size: 35px;
 }
-
-.footerdiv {
-  padding-left: 10px;
-  border-radius: 10px;
-}
-
 .carddiv {
+  color: #ffffff;
   background: rgb(53, 143, 201);
-  flex: 1;
   border-radius: 10px;
   line-height: 35px;
-  margin-right: 30px;
 }
-
-.card {
-  color: #ffffff;
-  display: flex;
-  line-height: 24px;
-}
-
 .icon {
   font-size: 16px;
 }
-
 .titleclass {
+  margin-left: 10px;
   font-size: 18px;
   font-family: "楷体";
-  margin-left: 10px;
 }
-
 .pichead {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-
-.picture1 {
+.picture {
   width: 160px;
   height: 160px;
-  vertical-align: bottom;
-  margin-right: 40px;
 }
-
-.picture2 {
-  width: 160px;
-  height: 160px;
-  vertical-align: bottom;
-  margin-top: 30px;
-  margin-right: 40px;
-}
-
-.picturediv {
-  margin-top: 10px;
-  padding-left: 20px;
-}
-
-.picdiv {
-  flex: 1;
-}
-
-.charthead {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.chart1 {
+.chart {
   width: 100%;
 }
-
-.chartdiv {
-  margin-top: 10px;
-}
-
-.chart {
-  flex: 1;
-  margin-left: 20px;
-}
-
-.second {
-  display: flex;
-  margin-top: 30px;
-}
-
 .userhead {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+  padding: 10px;
 }
-
 .join {
   margin-left: 10px;
 }
-
 .user {
   line-height: 20px;
-  padding-left: 10px;
-  padding-top: 10px;
   background: #ffffff;
   font-family: "楷体";
-  padding-bottom: 10px;
   border-bottom: 1px solid #dddddd;
 }
-
 .userdiv {
   background: #e4e0e0;
   border-radius: 10px;
   border: 1px solid #dddddd;
-  flex: 2;
 }
-
-.orderdiv {
-  background: #e4e0e0;
-  border-radius: 10px;
-  border: 1px solid #dddddd;
-  flex: 3;
-  margin-left: 20px;
-}
-
-.third {
-  display: flex;
-  margin-top: 30px;
-}
-
 .usernamecolor {
-  margin-left: 10px;
   color: rgb(119, 193, 232);
 }
 .go {
   cursor: pointer;
+}
+.row {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>

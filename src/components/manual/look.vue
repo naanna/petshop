@@ -42,17 +42,29 @@
       </el-collapse-item>
     </el-collapse>
     <p class="ruleclass1">点击图片查看如何照顾他们</p>
-    <div class="picturelist">
-      <div class="picturediv">
-        <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualdog.jpg" class="picture" @click="gourl('./dog')" />
-      </div>
-      <div class="picturediv">
-        <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualcat.jpg" class="picture" @click="gourl('./cat')" />
-      </div>
-      <div class="picturediv">
-        <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualpig.jpg" class="picture" @click="gourl('./pig')" />
-      </div>
-    </div>
+    <el-row :gutter="20" class="row">
+      <el-col :lg="{span:8}" :md="{span:24}">
+        <img
+          src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualdog.jpg"
+          class="picture"
+          @click="gourl('./dog')"
+        >
+      </el-col>
+      <el-col :lg="{span:8}" :md="{span:24}">
+        <img
+          src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualcat.jpg"
+          class="picture"
+          @click="gourl('./cat')"
+        >
+      </el-col>
+      <el-col :lg="{span:8}" :md="{span:24}">
+        <img
+          src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualpig.jpg"
+          class="picture"
+          @click="gourl('./pig')"
+        >
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -72,26 +84,16 @@ export default {
 </script>
 
 <style scoped>
-.biaoti {
-  text-align: center;
-}
-.picturediv {
-  display: inline-block;
-}
 .pageclass {
   width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.picturelist {
-  margin-top: 30px;
-  justify-content: space-around;
-  display: flex;
+  margin: 0 auto;
 }
 .picture {
   width: 300px;
   height: 350px;
   cursor: pointer;
+  margin: 0 auto;
+  display: block;
 }
 .ruleclass {
   text-align: center;
