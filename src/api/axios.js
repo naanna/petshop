@@ -23,7 +23,7 @@ axios.interceptors.request.use(config => {
 
 //  RESPONSE 响应异常拦截
 axios.interceptors.response.use(data => {
-    if (!data.data.success) {
+    if (!data.data.success && data.data.status != '1') {
         Message.error({ message: data.data.reason });
     }
     if (data.data.status == 403) {

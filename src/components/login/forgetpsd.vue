@@ -39,11 +39,11 @@
             <el-step title="完成" v-if="showsuccess"></el-step>
             <el-step status="error" title="完成" v-else></el-step>
           </el-steps>
-          <div v-if="active==1" class="center">
+          <div v-if="active==0" class="center">
             <span>姓名:</span>
             <el-input type="text" size="small" class="name width210" v-model="name"></el-input>
           </div>
-          <div v-else-if="active==2" style="padding:0 20px;">
+          <div v-else-if="active==1" style="padding:0 20px;">
             <el-form :model="psd" :rules="psdrules" ref="psd" class="psdform" label-width="100px">
               <el-form-item prop="pass" label="新密码:">
                 <el-input type="password" size="small" class="width210" v-model="psd.pass"></el-input>
@@ -53,7 +53,7 @@
               </el-form-item>
             </el-form>
           </div>
-          <div v-else-if="active==3" class="center">
+          <div v-else-if="active==2" class="center">
             <div v-if="showsuccess">
               <img src="@picture/success.png" class="picture">
               <p>您已成功修改密码！</p>
@@ -66,7 +66,7 @@
             </div>
           </div>
           <div class="center">
-            <el-button @click="next" v-if="active==1||active==2">下一步</el-button>
+            <el-button @click="next" v-if="active==0||active==1">下一步</el-button>
           </div>
         </div>
       </el-col>
@@ -119,7 +119,7 @@ export default {
         ],
         code: [{ validator: checkinput, message: "验证码不能为空" }]
       },
-      active: 1,
+      active: 0,
       showsuccess: true,
       psd: {
         pass: "",
@@ -143,7 +143,7 @@ export default {
   },
   methods: {
     next() {
-      if (this.active == 1) {
+      if (this.active == 0) {
         if (this.name == "") {
           this.$message.warning("请输入验证账户的姓名！");
         } else {
@@ -153,7 +153,7 @@ export default {
             this.active++;
           }
         }
-      } else if (this.active == 2) {
+      } else if (this.active == 1) {
         this.$refs["psd"].validate(valid => {
           if (valid) {
             this.axios
@@ -237,7 +237,7 @@ export default {
 }
 .formdiv {
   background: #ffffff;
-  width: 18%;
+  width: 25%;
   min-width: 330px;
   padding: 30px 0;
   border-radius: 10px;

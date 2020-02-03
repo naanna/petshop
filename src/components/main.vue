@@ -67,10 +67,10 @@
       </el-col>
     </el-row>
     <el-row :gutter="20" class="row">
-      <el-col :lg="{span:8}" :md="{span:24}">
+      <el-col :lg="{span:10}" :md="{span:24}">
         <div class="pichead">
           <i class="el-icon-chicken icon"></i>
-          <span class="titleclass">宝贝照片</span>
+          <span class="titleclass">宠物萌照</span>
         </div>
         <el-row :gutter="20" class="row">
           <el-col :span="8" v-for="(item,index) in picturelist" :key="index">
@@ -78,7 +78,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :lg="{span:16}" :md="{span:24}">
+      <el-col :lg="{span:14}" :md="{span:24}">
         <div class="pichead">
           <i class="el-icon-menu icon"></i>
           <span class="titleclass">销售图表</span>
@@ -87,7 +87,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="20" class="row">
-      <el-col :lg="{span:8}" :md="{span:24}">
+      <el-col :lg="{span:10}" :md="{span:24}">
         <div class="userdiv">
           <div class="userhead">
             <i class="el-icon-date icon"></i>
@@ -108,7 +108,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :lg="{span:16}" :md="{span:24}">
+      <el-col :lg="{span:14}" :md="{span:24}">
         <div class="userdiv">
           <div class="userhead">
             <i class="el-icon-s-grid icon"></i>
@@ -140,24 +140,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="20" class="row">
-      <el-col :lg="{span:12}" :md="{span:24}">
-        <div class="userdiv">
-          <div class="userhead">
-            <i class="el-icon-date icon"></i>
-            <span class="titleclass">日程活动</span>
-          </div>
-          <el-calendar>
-            <template slot="dateCell" slot-scope="{date, data}">
-              <p>
-                {{ data.day.split('-').slice(2)[0] }}
-                <br>
-                {{dealMyDate(data.day)}}
-              </p>
-            </template>
-          </el-calendar>
-        </div>
-      </el-col>
-      <el-col :lg="{span:12}" :md="{span:24}">
+      <el-col :lg="{span:10}" :md="{span:24}">
         <div class="userdiv">
           <div class="userhead">
             <i class="el-icon-date icon"></i>
@@ -177,8 +160,7 @@
                     :class="getweathericon(item.dayweather)"
                     style="font-size:30px;"
                   ></i>
-                  转
-                  {{item.nightweather}}
+                  转{{item.nightweather}}
                   <i
                     :class="getweathericon(item.nightweather)"
                     style="font-size:30px;"
@@ -189,6 +171,23 @@
             <el-col :span="6">{{item.nighttemp}}℃～{{item.daytemp}}℃</el-col>
             <el-col :span="6">{{item.daywind}}</el-col>
           </el-row>
+        </div>
+      </el-col>
+      <el-col :lg="{span:14}" :md="{span:24}">
+        <div class="userdiv">
+          <div class="userhead">
+            <i class="el-icon-date icon"></i>
+            <span class="titleclass">日程活动</span>
+          </div>
+          <el-calendar>
+            <template slot="dateCell" slot-scope="{date, data}">
+              <p>
+                {{ data.day.split('-').slice(2)[0] }}
+                <br />
+                {{dealMyDate(data.day)}}
+              </p>
+            </template>
+          </el-calendar>
         </div>
       </el-col>
     </el-row>
@@ -241,7 +240,7 @@ export default {
   },
   created() {
     this.permissions = this.$store.state.permissions;
-    //this.getnums();
+    this.getnums();
     this.getweather();
   },
   methods: {
