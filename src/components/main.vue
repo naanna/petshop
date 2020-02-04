@@ -144,7 +144,8 @@
         <div class="userdiv">
           <div class="userhead">
             <i class="el-icon-date icon"></i>
-            <span class="titleclass">天气预报--福州闽侯县</span>
+            <span class="titleclass">天气预报</span>
+            <AreaSelection style="float:right;margin-top: -4px;" @adcode="getadcode"></AreaSelection>
           </div>
           <el-row class="weather" v-for="(item,index) in weatherdata.casts" :key="index">
             <el-col :span="6">{{item.date.split('-').slice(2)[0]}}日({{gettimestr(item.week)}})</el-col>
@@ -194,9 +195,14 @@
   </div>
 </template>
 <script>
+import AreaSelection from "@common/AreaSelection.vue";
 export default {
+  components: {
+    AreaSelection
+  },
   data() {
     return {
+      weatheradcode: "350121",
       permissions: "",
       totalorder: 0,
       totalmoeny: 0,
@@ -248,7 +254,7 @@ export default {
       this.axios("gaode/v3/weather/weatherInfo?parameters", {
         params: {
           key: "8bbfdf6309caef7066348deed2e1f503",
-          city: "350121",
+          city: this.weatheradcode,
           extensions: "all"
         }
       }).then(res => {
@@ -256,6 +262,10 @@ export default {
           this.weatherdata = res.data.forecasts[0];
         }
       });
+    },
+    getadcode(value) {
+      this.weatheradcode = value[2];
+      this.getweather();
     },
     gettimestr(i) {
       let day = "";
