@@ -11,8 +11,8 @@
             <span>{{totalorder}}</span>
           </div>
           <div class="headfootdiv">
-            <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
-            <span class="go" @click="gourl('/pet/goods')" v-else>我要下单...</span>
+            <span class="go" @click="goUrl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
+            <span class="go" @click="goUrl('/pet/goods')" v-else>我要下单...</span>
           </div>
         </div>
       </el-col>
@@ -26,8 +26,8 @@
             <span>{{totalmoeny}}</span>
           </div>
           <div class="headfootdiv">
-            <span class="go" @click="gourl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
-            <span class="go" @click="gourl('/pet/index')" v-else>我要购买...</span>
+            <span class="go" @click="goUrl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
+            <span class="go" @click="goUrl('/pet/index')" v-else>我要购买...</span>
           </div>
         </div>
       </el-col>
@@ -41,8 +41,8 @@
             <span>{{totaluser}}</span>
           </div>
           <div class="headfootdiv">
-            <span class="go" @click="gourl('/customer/index')" v-if="permissions=='admin'">显示详细...</span>
-            <span class="go" @click="gourl('/shpping/person')" v-else>查看我的...</span>
+            <span class="go" @click="goUrl('/customer/index')" v-if="permissions=='admin'">显示详细...</span>
+            <span class="go" @click="goUrl('/shpping/person')" v-else>查看我的...</span>
           </div>
         </div>
       </el-col>
@@ -58,10 +58,10 @@
           <div class="headfootdiv">
             <span
               class="go"
-              @click="gourl('/manage/caremanage')"
+              @click="goUrl('/manage/caremanage')"
               v-if="permissions=='admin'"
             >显示详细...</span>
-            <span class="go" @click="gourl('/fostercare/my')" v-else>我要寄养...</span>
+            <span class="go" @click="goUrl('/fostercare/my')" v-else>我要寄养...</span>
           </div>
         </div>
       </el-col>
@@ -111,10 +111,10 @@
       <el-col :lg="{span:14}" :md="{span:24}">
         <div class="userdiv">
           <div class="userhead">
-            <i class="el-icon-s-grid icon"></i>
+            <i class="el-icon-s-goods icon"></i>
             <span class="titleclass">今日推荐</span>
           </div>
-          <el-table :data="data" stripe highlight-current-row style="padding:7px 0;">
+          <el-table :data="data" stripe highlight-current-row style="padding-top:10px;">
             <el-table-column
               label="图片"
               width="100px"
@@ -129,7 +129,7 @@
             <el-table-column
               label="商品信息"
               prop="name"
-              width="400px"
+              min-width="280px"
               align="center"
               header-align="center"
             ></el-table-column>
@@ -143,31 +143,25 @@
       <el-col :lg="{span:10}" :md="{span:24}">
         <div class="userdiv">
           <div class="userhead">
-            <i class="el-icon-date icon"></i>
+            <i class="el-icon-sunrise icon"></i>
             <span class="titleclass">天气预报</span>
-            <AreaSelection style="float:right;margin-top: -4px;" @adcode="getadcode"></AreaSelection>
+            <AreaSelection style="float:right;margin-top: -4px;" @adcode="getAdCode"></AreaSelection>
           </div>
           <el-row class="weather" v-for="(item,index) in weatherdata.casts" :key="index">
-            <el-col :span="6">{{item.date.split('-').slice(2)[0]}}日({{gettimestr(item.week)}})</el-col>
-            <el-col :span="6">
-              <div style="display:flex;justify-content:center;">
-                <span v-if="item.dayweather==item.nightweather">
-                  <i :class="getweathericon(item.dayweather)" style="font-size:30px;"></i>
-                  {{item.dayweather}}
-                </span>
-                <span v-else>
-                  {{item.dayweather}}
-                  <i
-                    :class="getweathericon(item.dayweather)"
-                    style="font-size:30px;"
-                  ></i>
-                  转{{item.nightweather}}
-                  <i
-                    :class="getweathericon(item.nightweather)"
-                    style="font-size:30px;"
-                  ></i>
-                </span>
-              </div>
+            <el-col :span="6">{{item.date.split('-').slice(2)[0]}}日({{getTimestr(item.week)}})</el-col>
+            <el-col :span="6" style="display:flex;justify-content:center;">
+              <span style="display:flex;align-items:center;">
+                <i :class="getWeatherIcon(item.dayweather)" style="font-size:30px;"></i>
+                {{item.dayweather}}
+              </span>
+              <span
+                v-if="item.dayweather!=item.nightweather"
+                style="display:flex;align-items:center;"
+              >
+                <span>转</span>
+                <i :class="getWeatherIcon(item.nightweather)" style="font-size:30px;"></i>
+                {{item.nightweather}}
+              </span>
             </el-col>
             <el-col :span="6">{{item.nighttemp}}℃～{{item.daytemp}}℃</el-col>
             <el-col :span="6">{{item.daywind}}</el-col>
@@ -182,10 +176,17 @@
           </div>
           <el-calendar>
             <template slot="dateCell" slot-scope="{date, data}">
-              <p>
-                {{ data.day.split('-').slice(2)[0] }}
+              <p :style="data.isSelected ? 'color:#409EFF;' : ''">
+                {{ data.day.split('-').slice(2)[0] }}{{ data.isSelected ? '✔️' : ''}}
                 <br />
-                {{dealMyDate(data.day)}}
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  :content="dealMyDate(data.day)"
+                  placement="bottom"
+                >
+                  <span>{{dealMyDate(data.day).length>4?dealMyDate(data.day).slice(0,4)+"...":dealMyDate(data.day)}}</span>
+                </el-tooltip>
               </p>
             </template>
           </el-calendar>
@@ -196,6 +197,7 @@
 </template>
 <script>
 import AreaSelection from "@common/AreaSelection.vue";
+import Util from "@assets/Util.js";
 export default {
   components: {
     AreaSelection
@@ -236,21 +238,30 @@ export default {
         "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/dog2.png",
         "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/pig2.png"
       ],
-      calendarDate: [
-        { date: "2020-01-17", content: "123" },
-        { date: "2020-01-12", content: "123" },
-        { date: "2020-01-15", content: "123" }
-      ],
+      calendarDate: [],
       weatherdata: {}
     };
   },
   created() {
     this.permissions = this.$store.state.permissions;
-    this.getnums();
-    this.getweather();
+    this.getNums();
+    this.getWeather();
+    this.getSchedule();
   },
   methods: {
-    getweather() {
+    //获取日历活动安排
+    getSchedule() {
+      this.axios.get("/api/getschedule").then(res => {
+        if (res.data.success) {
+          res.data.message.map(item => {
+            item.day = this.moment(item.day).format("YYYY-MM-DD");
+          });
+        }
+        this.calendarDate = res.data.message;
+      });
+    },
+    //高德地图接口获取天气预报
+    getWeather() {
       this.axios("gaode/v3/weather/weatherInfo?parameters", {
         params: {
           key: "8bbfdf6309caef7066348deed2e1f503",
@@ -263,85 +274,28 @@ export default {
         }
       });
     },
-    getadcode(value) {
+    getAdCode(value) {
       this.weatheradcode = value[2];
-      this.getweather();
+      this.getWeather();
     },
-    gettimestr(i) {
-      let day = "";
-      switch (parseInt(i)) {
-        case 1:
-          day = "星期一";
-          break;
-        case 2:
-          day = "星期二";
-          break;
-        case 3:
-          day = "星期三";
-          break;
-        case 4:
-          day = "星期四";
-          break;
-        case 5:
-          day = "星期五";
-          break;
-        case 6:
-          day = "星期六";
-          break;
-        case 7:
-          day = "星期日";
-          break;
-      }
-      return day;
+    getTimestr(i) {
+      return Util.getTimestr(i);
     },
-    getweathericon(i) {
-      let weatherstr = "";
-      switch (i) {
-        case "阴":
-          weatherstr = "el-icon-partly-cloudy";
-          break;
-        case "晴":
-          weatherstr = "el-icon-sunny";
-          break;
-        case "晴间多云":
-          weatherstr = "el-icon-cloudy-and-sunny";
-          break;
-        case "多云":
-          weatherstr = "el-icon-cloudy";
-          break;
-        case "阵雨":
-          weatherstr = "el-icon-light-rain";
-          break;
-        case "雷阵雨":
-          weatherstr = "el-icon-light-rain";
-          break;
-        case "小雨":
-          weatherstr = "el-icon-light-rain";
-          break;
-        case "中雨":
-          weatherstr = "el-icon-light-rain";
-          break;
-        case "大雨":
-          weatherstr = "el-icon-heavy-rain";
-          break;
-        case "暴雨":
-          weatherstr = "el-icon-heavy-rain";
-          break;
-      }
-      return weatherstr;
+    getWeatherIcon(i) {
+      return Util.getWeatherIcon(i);
     },
     dealMyDate(v) {
       let len = this.calendarDate.length;
       let res = "";
       for (let i = 0; i < len; i++) {
-        if (this.calendarDate[i].date == v) {
-          res = this.calendarDate[i].content;
+        if (this.calendarDate[i].day == v) {
+          res = this.calendarDate[i].textarea;
           break;
         }
       }
       return res;
     },
-    getnums() {
+    getNums() {
       this.axios
         .get("/api/getindex")
         .then(res => {
@@ -380,7 +334,7 @@ export default {
           }
         });
     },
-    gourl(url) {
+    goUrl(url) {
       this.$router.push(url);
     }
   }
@@ -459,9 +413,11 @@ export default {
 }
 .weather {
   background: #ffffff;
-  text-align: center;
   font-size: 18px;
+  text-align: center;
   color: #767676;
   padding: 20px;
+  display: flex;
+  align-items: center;
 }
 </style>

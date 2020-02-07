@@ -23,7 +23,7 @@ const router = new Router({
                     component: resolve => require(['../components/main.vue'], resolve)
                 }, {
                     path: '/pet/index',
-                    name: 'allpet',
+                    name: 'allPet',
                     component: resolve => require(['../components/pet/index.vue'], resolve)
                 },
                 {
@@ -47,7 +47,7 @@ const router = new Router({
                 },
                 {
                     path: '/customer/index',
-                    name: 'allcustomer',
+                    name: 'allCustomer',
                     component: resolve => require(['../components/customer/index.vue'], resolve)
                 },
                 {
@@ -61,52 +61,52 @@ const router = new Router({
                     component: resolve => require(['../components/customer/admin.vue'], resolve)
                 },
                 {
-                    path: '/fostercare/index',
-                    name: 'allfostercare',
+                    path: '/fosterCare/index',
+                    name: 'allFosterCare',
                     component: resolve => require(['../components/fostercare/index.vue'], resolve)
                 }, {
-                    path: '/fostercare/historycare',
-                    name: 'historycare',
+                    path: '/fosterCare/historyCare',
+                    name: 'historyCare',
                     component: resolve => require(['../components/fostercare/historycare.vue'], resolve)
                 },
                 {
-                    path: '/fostercare/my',
-                    name: 'myfostercare',
+                    path: '/fosterCare/my',
+                    name: 'myFosterCare',
                     component: resolve => require(['../components/fostercare/my.vue'], resolve)
                 },
                 {
-                    path: '/fostercare/rule',
-                    name: 'rulefostercare',
+                    path: '/fosterCare/rule',
+                    name: 'ruleFosterCare',
                     component: resolve => require(['../components/fostercare/rule.vue'], resolve)
                 },
                 {
-                    path: '/leavemessage/look',
-                    name: 'lookleavemessage',
+                    path: '/leaveMessage/look',
+                    name: 'lookLeaveMessage',
                     component: resolve => require(['../components/leavemessage/look.vue'], resolve)
                 },
                 {
-                    path: '/leavemessage/my',
-                    name: 'myleavemessage',
+                    path: '/leaveMessage/my',
+                    name: 'myLeaveMessage',
                     component: resolve => require(['../components/leavemessage/my.vue'], resolve)
                 },
                 {
                     path: '/manual/look',
-                    name: 'manuallook',
+                    name: 'manualLook',
                     component: resolve => require(['../components/manual/look.vue'], resolve)
                 },
                 {
                     path: '/manual/dog',
-                    name: 'manualdog',
+                    name: 'manualDog',
                     component: resolve => require(['../components/manual/dog.vue'], resolve)
                 },
                 {
                     path: '/manual/cat',
-                    name: 'manualcat',
+                    name: 'manualCat',
                     component: resolve => require(['../components/manual/cat.vue'], resolve)
                 },
                 {
                     path: '/manual/pig',
-                    name: 'manualpig',
+                    name: 'manualPig',
                     component: resolve => require(['../components/manual/pig.vue'], resolve)
                 },
                 {
@@ -126,28 +126,33 @@ const router = new Router({
                 },
                 {
                     path: '/manage/order',
-                    name: 'costorder',
+                    name: 'costOrder',
                     component: resolve => require(['../components/manage/order.vue'], resolve)
                 },
                 {
-                    path: '/manage/caremanage',
-                    name: 'caremanage',
+                    path: '/manage/careManage',
+                    name: 'careManage',
                     component: resolve => require(['../components/manage/caremanage.vue'], resolve)
                 },
                 {
-                    path: '/manage/petmanage',
-                    name: 'petmanage',
+                    path: '/manage/petManage',
+                    name: 'petManage',
                     component: resolve => require(['../components/manage/petmanage.vue'], resolve)
                 },
                 {
-                    path: '/manage/goodsmanage',
-                    name: 'goodsmanage',
+                    path: '/manage/goodsManage',
+                    name: 'goodsManage',
                     component: resolve => require(['../components/manage/goodsmanage.vue'], resolve)
                 },
                 {
-                    path: '/manage/leavemessagemanage',
-                    name: 'manageleavemessage',
+                    path: '/manage/leaveMessageManage',
+                    name: 'leaveMessageManage',
                     component: resolve => require(['../components/manage/leavemessagemanage.vue'], resolve)
+                },
+                {
+                    path: '/manage/scheduleManage',
+                    name: 'scheduleManage',
+                    component: resolve => require(['../components/manage/ScheduleManage.vue'], resolve)
                 },
                 {
                     path: '/help/help',
@@ -166,7 +171,7 @@ const router = new Router({
                 },
                 {
                     path: '/shpping/shopcar',
-                    name: 'shopcar',
+                    name: 'shopCar',
                     component: resolve => require(['../components/shpping/shopcar.vue'], resolve)
                 },
                 {
@@ -176,12 +181,12 @@ const router = new Router({
                 },
                 {
                     path: '/shpping/cost',
-                    name: 'shppingcost',
+                    name: 'shppingCost',
                     component: resolve => require(['../components/shpping/cost.vue'], resolve)
                 },
                 {
                     path: '/shpping/historycost',
-                    name: 'historycost',
+                    name: 'historyCost',
                     component: resolve => require(['../components/shpping/historycost.vue'], resolve)
                 },
                 {
@@ -191,12 +196,12 @@ const router = new Router({
                 },
                 {
                     path: '/shpping/changepic',
-                    name: 'changepic',
+                    name: 'changePic',
                     component: resolve => require(['../components/shpping/changepic.vue'], resolve)
                 },
                 {
                     path: '/video/index',
-                    name: 'showvideo',
+                    name: 'showVideo',
                     component: resolve => require(['../components/video/index.vue'], resolve)
                 },
                 {

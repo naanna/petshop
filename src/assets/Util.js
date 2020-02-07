@@ -1,10 +1,8 @@
 const Util = {
-
     //包含空格
     containSpace: function(str) {
         return / /.test(str);
     },
-
     //包含中文
     hasZh: function(str) {
         return /[\u4E00-\u9FA5]/.test(str);
@@ -54,6 +52,71 @@ const Util = {
                 return 0;
             }
         };
+    },
+    //转化星期
+    getTimestr(i) {
+        let day = "";
+        switch (parseInt(i)) {
+            case 1:
+                day = "星期一";
+                break;
+            case 2:
+                day = "星期二";
+                break;
+            case 3:
+                day = "星期三";
+                break;
+            case 4:
+                day = "星期四";
+                break;
+            case 5:
+                day = "星期五";
+                break;
+            case 6:
+                day = "星期六";
+                break;
+            case 7:
+                day = "星期日";
+                break;
+        }
+        return day;
+    },
+    //根据天气转化为对应图标
+    getWeatherIcon(i) {
+        let weatherStr = "";
+        switch (i) {
+            case "阴":
+                weatherStr = "el-icon-partly-cloudy";
+                break;
+            case "晴":
+                weatherStr = "el-icon-sunny";
+                break;
+            case "晴间多云":
+                weatherStr = "el-icon-cloudy-and-sunny";
+                break;
+            case "多云":
+                weatherStr = "el-icon-cloudy";
+                break;
+            case "阵雨":
+                weatherStr = "el-icon-light-rain";
+                break;
+            case "雷阵雨":
+                weatherStr = "el-icon-light-rain";
+                break;
+            case "小雨":
+                weatherStr = "el-icon-light-rain";
+                break;
+            case "中雨":
+                weatherStr = "el-icon-light-rain";
+                break;
+            case "大雨":
+                weatherStr = "el-icon-heavy-rain";
+                break;
+            case "暴雨":
+                weatherStr = "el-icon-heavy-rain";
+                break;
+        }
+        return weatherStr;
     },
 }
 

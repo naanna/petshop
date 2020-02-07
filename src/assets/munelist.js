@@ -139,7 +139,7 @@ const navlist = [{
                     menuName: "全部寄养",
                     menuType: "page",
                     pid: "3",
-                    url: "/fostercare/index",
+                    url: "/fosterCare/index",
                     sort: 1,
                     deep: 2,
                     code: "31"
@@ -151,7 +151,7 @@ const navlist = [{
                     menuName: "我的寄养",
                     menuType: "page",
                     pid: "3",
-                    url: "/fostercare/my",
+                    url: "/fosterCare/my",
                     sort: 2,
                     deep: 2,
                     code: "32"
@@ -163,7 +163,7 @@ const navlist = [{
                     menuName: "寄养规则",
                     menuType: "page",
                     pid: "3",
-                    url: "/fostercare/rule",
+                    url: "/fosterCare/rule",
                     sort: 3,
                     deep: 2,
                     code: "33"
@@ -187,7 +187,7 @@ const navlist = [{
                     menuName: "留言板",
                     menuType: "page",
                     pid: "4",
-                    url: "/leavemessage/look",
+                    url: "/leaveMessage/look",
                     sort: 2,
                     deep: 2,
                     code: "42"
@@ -199,7 +199,7 @@ const navlist = [{
                     menuName: "我的评论",
                     menuType: "page",
                     pid: "4",
-                    url: "/leavemessage/my",
+                    url: "/leaveMessage/my",
                     sort: 3,
                     deep: 2,
                     code: "43"
@@ -331,7 +331,7 @@ const navlist = [{
                     menuName: "寄养管理",
                     menuType: "page",
                     pid: "8",
-                    url: "/manage/caremanage",
+                    url: "/manage/careManage",
                     sort: 4,
                     deep: 2,
                     code: "74",
@@ -344,7 +344,7 @@ const navlist = [{
                     menuName: "评论管理",
                     menuType: "page",
                     pid: "8",
-                    url: "/manage/leavemessagemanage",
+                    url: "/manage/leaveMessageManage",
                     sort: 5,
                     deep: 2,
                     code: "75",
@@ -356,7 +356,7 @@ const navlist = [{
                     menuName: "宠物管理",
                     menuType: "page",
                     pid: "8",
-                    url: "/manage/petmanage",
+                    url: "/manage/petManage",
                     sort: 6,
                     deep: 2,
                     code: "76",
@@ -368,7 +368,19 @@ const navlist = [{
                     menuName: "商品管理",
                     menuType: "page",
                     pid: "8",
-                    url: "/manage/goodsmanage",
+                    url: "/manage/goodsManage",
+                    sort: 7,
+                    deep: 2,
+                    code: "77",
+                    permissions: "admin"
+                }
+            }, {
+                adminMenu: {
+                    id: 78,
+                    menuName: "日程管理",
+                    menuType: "page",
+                    pid: "8",
+                    url: "/manage/scheduleManage",
                     sort: 7,
                     deep: 2,
                     code: "77",

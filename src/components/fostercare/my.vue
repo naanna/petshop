@@ -263,7 +263,7 @@ export default {
       this.searchval = "";
     },
     gohistory() {
-      this.$router.push("historycare");
+      this.$router.push("historyCare");
     },
     goclear() {
       this.lontimeobs = "";
