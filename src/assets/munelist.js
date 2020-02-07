@@ -183,12 +183,24 @@ const navlist = [{
         },
         children: [{
                 adminMenu: {
-                    id: 42,
+                    id: 41,
                     menuName: "留言板",
                     menuType: "page",
                     pid: "4",
                     url: "/leaveMessage/look",
                     sort: 2,
+                    deep: 2,
+                    code: "41"
+                }
+            },
+            {
+                adminMenu: {
+                    id: 42,
+                    menuName: "视频区",
+                    menuType: "page",
+                    pid: "4",
+                    url: "/video/index",
+                    sort: 4,
                     deep: 2,
                     code: "42"
                 }
@@ -196,37 +208,13 @@ const navlist = [{
             {
                 adminMenu: {
                     id: 43,
-                    menuName: "我的评论",
-                    menuType: "page",
-                    pid: "4",
-                    url: "/leaveMessage/my",
-                    sort: 3,
-                    deep: 2,
-                    code: "43"
-                }
-            },
-            {
-                adminMenu: {
-                    id: 44,
-                    menuName: "视频区",
-                    menuType: "page",
-                    pid: "4",
-                    url: "/video/index",
-                    sort: 4,
-                    deep: 2,
-                    code: "44"
-                }
-            },
-            {
-                adminMenu: {
-                    id: 45,
                     menuName: "聊天室",
                     menuType: "page",
                     pid: "4",
                     url: "/chat/index",
                     sort: 4,
                     deep: 2,
-                    code: "45"
+                    code: "43"
                 }
             }
         ]

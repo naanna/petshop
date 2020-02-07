@@ -1,6 +1,8 @@
 <template>
   <div>
-    <span class="fontclass">我的评论</span>
+    <span class="fontclass">
+      <i class="el-icon-back back" @click="goBack"></i>我的评论
+    </span>
     <div>
       <el-button type="primary" size="small" @click="go2del" class="button">删除选中</el-button>
     </div>
@@ -50,6 +52,9 @@ export default {
     this.goquery();
   },
   methods: {
+    goBack() {
+      this.$router.back(-1);
+    },
     goquery() {
       let query = {
         page_no: this.page_no,
@@ -128,8 +133,7 @@ export default {
         .catch(() => {});
     },
     goupdate(row) {
-      this.Dialog
-        .title("编辑留言")
+      this.Dialog.title("编辑留言")
         .width("500px")
         .currentView(update, { row })
         .then(data => {
@@ -162,5 +166,8 @@ export default {
 .button {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.back {
+  cursor: pointer;
 }
 </style>

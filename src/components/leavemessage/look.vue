@@ -4,7 +4,15 @@
     <div class="leave">
       <p style="margin-bottom:10px;">目前已有{{total}}条评论，请发表您的留言:</p>
       <el-input type="textarea" :rows="5" v-model="textarea"></el-input>
-      <el-button type="primary" plain size="small" class="button" @click="gomessage">发表</el-button>
+      <el-button type="primary" plain size="small" class="button" @click="goMessage">发表</el-button>
+      <el-button
+        type="info"
+        plain
+        size="small"
+        class="button"
+        @click="goMy"
+        style="float:right;"
+      >查看我的</el-button>
     </div>
     <el-timeline>
       <el-timeline-item
@@ -71,7 +79,7 @@ export default {
           }
         });
     },
-    gomessage() {
+    goMessage() {
       if (this.textarea == "") {
         this.$message.warning("您还没有填写留言内容!");
       } else if (this.textarea.length > 200) {
@@ -102,6 +110,9 @@ export default {
     handleCurrentChange(val) {
       this.page_no = val;
       this.goquery();
+    },
+    goMy() {
+      this.$router.push("my");
     }
   }
 };

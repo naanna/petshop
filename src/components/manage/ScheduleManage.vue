@@ -7,6 +7,13 @@
     </div>
     <el-table :data="tabledata" highlight-current-row @selection-change="handleSelectionChange">
       <el-table-column prop="id" type="selection" width="80px" align="center" header-align="center"></el-table-column>
+
+      <el-table-column label="日期" prop="day" align="center" header-align="center" width="150px">
+        <div slot-scope="scope">
+          <span>{{moment(scope.row.day).format("YYYY-MM-DD")}}</span>
+        </div>
+      </el-table-column>
+      <el-table-column label="活动安排" prop="textarea" align="center" header-align="center"></el-table-column>
       <el-table-column
         label="操作者"
         prop="username"
@@ -14,12 +21,17 @@
         header-align="center"
         width="150px"
       ></el-table-column>
-      <el-table-column label="日期" prop="day" align="center" header-align="center" width="150px">
+      <el-table-column
+        label="最新操作时间"
+        prop="update_time"
+        align="center"
+        header-align="center"
+        width="150px"
+      >
         <div slot-scope="scope">
-          <span>{{moment(scope.row.day).format("YYYY-MM-DD")}}</span>
+           <span>{{moment(scope.row.update_time).format("YYYY-MM-DD HH:mm")}}</span>
         </div>
       </el-table-column>
-      <el-table-column label="活动安排" prop="textarea" align="center" header-align="center"></el-table-column>
       <el-table-column label="操作" align="center" header-align="center" width="150px">
         <div slot-scope="scope">
           <el-button type="text" size="small" @click="goUpdate(scope.row)">修改</el-button>
@@ -72,6 +84,10 @@ export default {
         .show();
     },
     goQuery() {
+      let aaa = this.moment("2017-03-05T15:00:00.000Z").format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      console.log(aaa)
       let query = {
         page_no: this.page_no,
         page_size: this.page_size
@@ -142,7 +158,7 @@ export default {
     goUpdate(row) {
       this.Dialog.title("编辑日程")
         .width("600px")
-        .currentView(add_update, {row})
+        .currentView(add_update, { row })
         .then(data => {
           this.goQuery();
         })
