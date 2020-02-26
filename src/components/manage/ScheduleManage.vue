@@ -84,10 +84,6 @@ export default {
         .show();
     },
     goQuery() {
-      let aaa = this.moment("2017-03-05T15:00:00.000Z").format(
-        "YYYY-MM-DD HH:mm:ss"
-      );
-      console.log(aaa)
       let query = {
         page_no: this.page_no,
         page_size: this.page_size

@@ -227,8 +227,8 @@ export default {
       },
       data: [],
       userdata: [
-        { nickname: "123", regday: "2007-08-05" },
-        { nickname: "123", regday: "2007-08-05" }
+        { nickname: "木木周", regday: "2007-08-05" },
+        { nickname: "木木周", regday: "2007-08-05" }
       ],
       picturelist: [
         "https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/cat1.png",
