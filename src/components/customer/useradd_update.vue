@@ -2,30 +2,7 @@
   <div>
     <el-form label-position="right" :model="form" :rules="rules" ref="form">
       <el-form-item label="头像：" label-width="100px">
-        <el-upload
-          :http-request="upload"
-          :multiple="true"
-          :show-file-list="false"
-          action
-          ref="upload"
-          :on-change="onchange"
-          :before-upload="beforeAvatarUpload"
-        >
-          <el-avatar
-            shape="square"
-            v-if="imageUrl&&imageUrl!='null'"
-            :src="imageUrl"
-            class="seepicture"
-            slot="trigger"
-          ></el-avatar>
-          <el-avatar
-            shape="square"
-            src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/choose.png"
-            class="seepicture"
-            slot="trigger"
-            v-else
-          ></el-avatar>
-        </el-upload>
+        <UploadImage @src="getSrc" :imageUrl="imageUrl"></UploadImage>
       </el-form-item>
       <el-form-item label="账号：" label-width="100px" prop="username">
         <el-input
@@ -36,7 +13,7 @@
           :disabled="disable"
         ></el-input>
         <el-tooltip class="item" effect="dark" content="长度不应超过16个字符且不含空格由英文和数字组成" placement="top">
-          <i class="el-icon-question incoclass"></i>
+          <i class="el-icon-question icon"></i>
         </el-tooltip>
       </el-form-item>
       <el-form-item v-if="edit=='no'" label="密码：" label-width="100px" prop="pass">
@@ -48,7 +25,7 @@
       <el-form-item label="昵称：" label-width="100px" prop="nickname">
         <el-input type="text" size="small" class="width250" v-model="form.nickname"></el-input>
         <el-tooltip class="item" effect="dark" content="长度不应超过7个字符且不含空格" placement="top">
-          <i class="el-icon-question incoclass"></i>
+          <i class="el-icon-question icon"></i>
         </el-tooltip>
       </el-form-item>
       <el-form-item label="姓名：" label-width="100px" prop="name">
@@ -94,7 +71,7 @@
       </el-form-item>
     </el-form>
     <div class="button">
-      <el-button type="primary" size="small" @click="goadd">添加</el-button>
+      <el-button type="primary" size="small" @click="goadd">{{edit==='no'?'添加':'编辑'}}</el-button>
       <el-button size="small" @click="goclose">取消</el-button>
     </div>
   </div>
@@ -108,8 +85,12 @@ import {
   checkzh,
   checkname
 } from "@assets/validate.js";
+import UploadImage from "@common/UploadImage.vue";
 export default {
   name: "add_update",
+  components: {
+    UploadImage
+  },
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
@@ -133,7 +114,6 @@ export default {
     return {
       disable: false,
       imageUrl: "",
-      fileList: [],
       edit: "no",
       form: {
         username: "",
@@ -195,88 +175,36 @@ export default {
         if (valid) {
           const loading = this.$loading({
             lock: true,
-            text: "添加用户中...",
+            text: this.edit === "no" ? "添加用户中..." : "编辑用户中...",
             spinner: "el-icon-loading",
             background: "rgba(0, 0, 0, 0.7)"
           });
           setTimeout(() => {
-            if (this.fileList.length == 0) this.form.picture = null;
-            else this.form.picture = this.fileList[0].url;
+            if (this.imageUrl == "") this.form.picture = null;
             this.form.birthday = this.moment(this.form.birthday).format(
               "YYYY-MM-DD"
             );
+            let url = "";
             if (this.edit == "no") {
-              this.axios.post("/api/adduser", this.form).then(res => {
-                if (res.data.success) {
-                  this.$message.success("成功添加用户！");
-                  this.closeDialog();
-                  loading.close();
-                } else {
-                  loading.close();
-                }
-              });
+              url = "/api/adduser";
             } else {
-              this.axios.post("/api/updateuser", this.form).then(res => {
-                if (res.data.success) {
-                  this.$message.success("成功编辑用户！");
-                  this.closeDialog();
-                  loading.close();
-                } else {
-                  loading.close();
-                }
-              });
+              url = "/api/updateuser";
             }
+            this.axios.post(url, this.form).then(res => {
+              if (res.data.success) {
+                this.$message.success("操作成功！");
+                this.closeDialog();
+                loading.close();
+              }
+            });
           }, 2000);
         } else {
           return false;
         }
       });
     },
-    upload(file) {
-      let OSS = require("ali-oss");
-      const client = new OSS({
-        region: "oss-cn-hangzhou",
-        accessKeyId: "LTAIMYW16QYY4WTH",
-        accessKeySecret: "5I2HVy0oFPyeg3BHO1fUhzHGZvjvKp",
-        bucket: "mmzdpicture"
-      });
-      var fileName = "mmzdtx" + file.file.uid;
-      client.put(fileName, file.file).then(result => {
-        this.fileList[0] = {
-          name: result.name,
-          url: result.url
-        };
-      });
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      const isPNG = file.type === "image/png";
-      if (!isJPG && !isPNG) {
-        this.$message.error("上传头像图片只能是 JPG和PNG 格式!");
-        return false;
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-        return false;
-      }
-    },
-    //当上传图片后，调用onchange方法，获取图片本地路径
-    onchange(file, fileList) {
-      var _this = this;
-      var event = event || window.event;
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      const isJPG = file.type === "image/jpeg";
-      const isPNG = file.type === "image/png";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if ((isJPG && isLt2M) || (isPNG && isLt2M)) {
-        //转base64
-        reader.onload = function(e) {
-          _this.imageUrl = e.target.result; //将图片路径赋值给src
-        };
-      }
-      reader.readAsDataURL(file);
+    getSrc(src) {
+      this.form.picture = src;
     },
     goclearlevel() {
       if (this.form.permissions == "customer") this.form.level = "vip1";
@@ -293,22 +221,10 @@ export default {
 .width250 {
   width: 250px;
 }
-.incoclass {
+.icon {
   margin-left: 10px;
 }
 .button {
   text-align: center;
-}
-.seepicture {
-  width: 100px;
-  height: 100px;
-}
-.icnoclass {
-  font-size: 50px;
-  width: 100px;
-  height: 100px;
-}
-.el-avatar >>> img {
-  width: 100%;
 }
 </style>

@@ -8,64 +8,41 @@
       ref="form"
     >
       <el-form-item label="照片：" label-width="100px">
-        <el-upload
-          :http-request="upload"
-          :multiple="true"
-          :show-file-list="false"
-          action
-          ref="upload"
-          :on-change="onchange"
-          :before-upload="beforeAvatarUpload"
-        >
-          <el-avatar
-            shape="square"
-            v-if="imageUrl&&imageUrl!='null'"
-            :src="imageUrl"
-            class="seepicture"
-            slot="trigger"
-          ></el-avatar>
-          <el-avatar
-            shape="square"
-            src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/choose.png"
-            class="seepicture"
-            slot="trigger"
-            v-else
-          ></el-avatar>
-        </el-upload>
+        <UploadImage @src="getSrc" :imageUrl="imageUrl"></UploadImage>
       </el-form-item>
       <el-form-item label="名字：" label-width="100px" prop="name">
-        <el-input type="text" size="small" class="formlist" v-model="form.name"></el-input>
+        <el-input type="text" size="small" class="width250" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="生日：" label-width="100px" prop="birthday">
-        <el-date-picker v-model="form.birthday" type="date" class="formlist" size="small"></el-date-picker>
+        <el-date-picker v-model="form.birthday" type="date" class="width250" size="small"></el-date-picker>
       </el-form-item>
       <el-form-item label="价格：" label-width="100px" prop="price">
         <el-input
           type="text"
           size="small"
-          class="formlist"
+          class="width250"
           v-model.number="form.price"
           oninput="if(value.length>10)value=value.slice(0,10)"
         ></el-input>
       </el-form-item>
       <el-form-item label="种类：" label-width="100px" prop="type">
-        <el-select size="small" class="formlist" v-model="form.type">
+        <el-select size="small" class="width250" v-model="form.type">
           <el-option value="dog" label="狗狗"></el-option>
           <el-option value="cat" label="猫咪"></el-option>
           <el-option value="pig" label="小香猪"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="品种：" label-width="100px" prop="variety">
-        <el-input type="text" size="small" class="formlist" v-model="form.variety"></el-input>
+        <el-input type="text" size="small" class="width250" v-model="form.variety"></el-input>
       </el-form-item>
       <el-form-item label="性别：" label-width="100px" prop="sex">
-        <el-select size="small" class="formlist" v-model="form.sex">
+        <el-select size="small" class="width250" v-model="form.sex">
           <el-option value="男" label="男"></el-option>
           <el-option value="女" label="女"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="备注：" label-width="100px" prop="note">
-        <el-input type="textarea" :rows="3" class="formlist" v-model="form.note"></el-input>
+        <el-input type="textarea" :rows="3" class="width250" v-model="form.note"></el-input>
       </el-form-item>
     </el-form>
     <div class="button">
@@ -77,8 +54,11 @@
 
 <script>
 import { checkname, checkinput } from "@assets/validate.js";
+import UploadImage from "@common/UploadImage.vue";
 export default {
-  name: "add_update",
+  components: {
+    UploadImage
+  },
   data() {
     return {
       form: {
@@ -92,7 +72,6 @@ export default {
         note: ""
       },
       imageUrl: "",
-      fileList: [],
       edit: "no",
       rules: {
         name: [
@@ -134,8 +113,9 @@ export default {
           this.form.birthday = this.moment(this.form.birthday).format(
             "YYYY-MM-DD"
           );
-          if (this.fileList.length == 0) this.form.picture = null;
-          else this.form.picture = this.fileList[0].url;
+          if (this.form.picture == "") {
+            this.form.picture = null;
+          } 
           if (this.form.status == "caring") {
             this.closeDialog(this.form);
           } else {
@@ -160,51 +140,8 @@ export default {
         }
       });
     },
-    upload(file) {
-      let OSS = require("ali-oss");
-      const client = new OSS({
-        region: "oss-cn-hangzhou",
-        accessKeyId: "LTAIMYW16QYY4WTH",
-        accessKeySecret: "5I2HVy0oFPyeg3BHO1fUhzHGZvjvKp",
-        bucket: "mmzdpicture"
-      });
-      var fileName = "mmzdtx" + file.file.uid;
-      client.put(fileName, file.file).then(result => {
-        this.fileList[0] = {
-          name: result.name,
-          url: result.url
-        };
-      });
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      const isPNG = file.type === "image/png";
-      if (!isJPG && !isPNG) {
-        this.$message.error("上传头像图片只能是 JPG和PNG 格式!");
-        return false;
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-        return false;
-      }
-    },
-    //当上传图片后，调用onchange方法，获取图片本地路径
-    onchange(file, fileList) {
-      var _this = this;
-      var event = event || window.event;
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      const isJPG = file.type === "image/jpeg";
-      const isPNG = file.type === "image/png";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if ((isJPG && isLt2M) || (isPNG && isLt2M)) {
-        //转base64
-        reader.onload = function(e) {
-          _this.imageUrl = e.target.result; //将图片路径赋值给src
-        };
-      }
-      reader.readAsDataURL(file);
+    getSrc(src) {
+      this.form.picture = src;
     },
     goclose() {
       this.closeDialog();
@@ -214,18 +151,10 @@ export default {
 </script>
 
 <style scoped>
-.seepicture {
-  width: 150px;
-  height: 150px;
-}
-.formlist {
+.width250 {
   width: 250px;
 }
-
 .button {
   text-align: center;
-}
-.el-avatar >>> img {
-  width: 150px;
-}
+} 
 </style>

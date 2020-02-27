@@ -1,32 +1,37 @@
 <template>
   <div>
     <el-page-header @back="goBack"></el-page-header>
-    <div class="boderclass">
-      <el-upload
-        :http-request="upload"
-        :multiple="true"
-        :show-file-list="false"
-        action
-        ref="upload"
-        class="uploadpic"
-        :on-change="onchange"
-        :before-upload="beforeAvatarUpload"
-      >
-        <img v-if="imageUrl" :src="imageUrl" class="seepicture" slot="trigger" />
-        <i v-else class="el-icon-plus icnoclass" slot="trigger"></i>
-      </el-upload>
-      <div class="lookpic">
-        <img :src="showimageurl" class="pictureclass" v-if="showimageurl" />
-        <img
-          v-else
-          src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
-          class="pictureclass"
-        />
-        <span class="spandiv" v-if="!imageUrl">当前头像</span>
-        <span class="spandiv" v-else>预览头像</span>
-      </div>
-      <p class="pdiv">请选择图片上传：大小180 * 180像素支持JPG、PNG等格式，图片需小于2M</p>
-      <div class="buttonclass">
+    <div class="bodyStyle">
+      <el-row :gutter="40">
+        <el-col :span="12" :xs="{span:24}" class="pictrueLeftDiv">
+          <el-upload
+            :http-request="upload"
+            :multiple="true"
+            :show-file-list="false"
+            action
+            ref="upload"
+            class="uploadPic"
+            :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="seePicture" slot="trigger" />
+            <i v-else class="el-icon-plus icon" slot="trigger"></i>
+          </el-upload>
+        </el-col>
+        <el-col :span="12" :xs="{span:24}" class="pictrueRightDiv">
+          <div class="lookPic">
+            <img :src="showimageurl" class="picture" v-if="showimageurl" />
+            <img
+              v-else
+              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
+              class="picture"
+            />
+            <span class="spanStyle" v-if="!imageUrl">当前头像</span>
+            <span class="spanStyle" v-else>预览头像</span>
+          </div>
+        </el-col>
+      </el-row>
+      <p class="pStyle">请选择图片上传：大小180 * 180像素支持JPG、PNG等格式，图片需小于2M</p>
+      <div class="button">
         <el-button type="primary" @click="goupdate">更新</el-button>
         <el-button @click="goclear">重置</el-button>
       </div>
@@ -36,7 +41,7 @@
 
 <script>
 export default {
-  name: "changepic",
+  name: "changePic",
   data() {
     return {
       imageUrl: "",
@@ -68,12 +73,11 @@ export default {
       if (this.imageUrl) {
         const loading = this.$loading({
           lock: true,
-          text: "头像修改中...",
+          text: "头像更新中...",
           spinner: "el-icon-loading",
           background: "rgba(0, 0, 0, 0.7)"
         });
         setTimeout(() => {
-          this.showimageurl = this.fileList[0].url;
           this.axios
             .post("/api/updateuser/picture", {
               picture: this.showimageurl,
@@ -101,12 +105,15 @@ export default {
         bucket: "mmzdpicture"
       });
       var fileName = "mmzdtx" + file.file.uid;
-      client.put(fileName, file.file).then(result => {
-        this.fileList[0] = {
-          name: result.name,
-          url: result.url
-        };
-      });
+      client
+        .put(fileName, file.file)
+        .then(result => {
+          this.imageUrl = result.url;
+          this.showimageurl = result.url;
+        })
+        .catch(err => {
+          this.$message.error("上传图片失败!");
+        });
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -121,24 +128,6 @@ export default {
         return false;
       }
     },
-    //当上传图片后，调用onchange方法，获取图片本地路径
-    onchange(file, fileList) {
-      var _this = this;
-      var event = event || window.event;
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      const isJPG = file.type === "image/jpeg";
-      const isPNG = file.type === "image/png";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if ((isJPG && isLt2M) || (isPNG && isLt2M)) {
-        //转base64
-        reader.onload = function(e) {
-          _this.imageUrl = e.target.result; //将图片路径赋值给src
-          _this.showimageurl = e.target.result;
-        };
-      }
-      reader.readAsDataURL(file);
-    },
     goclear() {
       this.showimageurl = this.old;
       this.imageUrl = "";
@@ -151,57 +140,62 @@ export default {
 </script>
 
 <style scoped>
-.pictureclass {
+.pictrueLeftDiv {
+  text-align: right;
+}
+.pictrueRightDiv {
+  text-align: left;
+}
+.picture {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   margin-top: 50px;
-  margin-left: 50px;
 }
-.seepicture {
+.seePicture {
   width: 212px;
   height: 212px;
 }
-.icnoclass {
+.icon {
   font-size: 100px;
   width: 100px;
   padding: 50px;
   height: 100px;
 }
-.boderclass {
-  padding: 100px 400px;
-}
-.uploadpic {
-  width: 212px;
-  height: 212px;
+.uploadPic {
+  min-width: 212px;
+  min-height: 212px;
   display: inline-block;
   border: 1px solid #e5e9ef;
   vertical-align: bottom;
 }
-.lookpic {
-  width: 212px;
+.lookPic {
+  min-width: 212px;
+  min-height: 212px;
   vertical-align: bottom;
-  height: 212px;
-  margin-left: 50px;
   display: inline-block;
   border: 1px solid #e5e9ef;
+  text-align: center;
 }
-.buttonclass {
+.button {
   margin-top: 40px;
-  margin-left: 150px;
+  text-align: center;
 }
-.spandiv {
+.spanStyle {
   display: block;
   margin-top: 15px;
-  margin-left: 75px;
   line-height: 16px;
   color: #99a2aa;
   font-size: 12px;
 }
-.pdiv {
+.pStyle {
   margin-top: 25px;
   line-height: 16px;
   color: #99a2aa;
   font-size: 12px;
+  text-align: center;
+}
+.bodyStyle {
+  margin-top: 25px;
 }
 </style>

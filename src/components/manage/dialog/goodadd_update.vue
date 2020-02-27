@@ -8,45 +8,22 @@
       ref="form"
     >
       <el-form-item label="图片：" label-width="100px">
-        <el-upload
-          :http-request="upload"
-          :multiple="true"
-          :show-file-list="false"
-          action
-          ref="upload"
-          :on-change="onchange"
-          :before-upload="beforeAvatarUpload"
-        >
-          <el-avatar
-            shape="square"
-            v-if="imageUrl&&imageUrl!='null'"
-            :src="imageUrl"
-            class="seepicture"
-            slot="trigger"
-          ></el-avatar>
-          <el-avatar
-            shape="square"
-            src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/choose.png"
-            class="seepicture"
-            slot="trigger"
-            v-else
-          ></el-avatar>
-        </el-upload>
+        <UploadImage @src="getSrc" :imageUrl="imageUrl"></UploadImage>
       </el-form-item>
       <el-form-item label="商品名：" label-width="100px" prop="name">
-        <el-input type="text" size="small" class="formlist" v-model="form.name"></el-input>
+        <el-input type="text" size="small" class="width250" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="价格：" label-width="100px" prop="price">
         <el-input
           type="text"
           size="small"
-          class="formlist"
+          class="width250"
           v-model.number="form.price"
           oninput="if(value.length>10)value=value.slice(0,10)"
         ></el-input>
       </el-form-item>
       <el-form-item label="种类：" label-width="100px" prop="type">
-        <el-select size="small" class="formlist" v-model="form.type">
+        <el-select size="small" class="width250" v-model="form.type">
           <el-option value="狗粮" label="狗粮"></el-option>
           <el-option value="猫粮" label="猫粮"></el-option>
           <el-option value="猪粮" label="猪粮"></el-option>
@@ -63,7 +40,7 @@
         <el-input
           type="text"
           size="small"
-          class="formlist"
+          class="width250"
           v-model.number="form.num"
           oninput="if(value.length>10)value=value.slice(0,10)"
         ></el-input>
@@ -78,7 +55,11 @@
 
 <script>
 import { checkgoodsname } from "@assets/validate.js";
+import UploadImage from "@common/UploadImage.vue";
 export default {
+  components: {
+    UploadImage
+  },
   data() {
     return {
       form: {
@@ -89,7 +70,6 @@ export default {
         num: ""
       },
       imageUrl: "",
-      fileList: [],
       edit: "no",
       rules: {
         name: [
@@ -105,7 +85,9 @@ export default {
     if (this.DialogParams().row) {
       let obs = this.DialogParams().row;
       this.form = obs;
-      if (obs.picture != null) this.imageUrl = obs.picture;
+      if (obs.picture != null) {
+        this.imageUrl = obs.picture;
+      }
       this.edit = "yes";
     }
   },
@@ -114,10 +96,9 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.edit == "no") {
-            if (this.fileList.length == 0)
+            if (this.form.picture == "") {
               this.$message.warning("请选择商品图片！");
-            else {
-              this.form.picture = this.fileList[0].url;
+            } else {
               this.axios.post("/api/addgood", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("成功添加商品！");
@@ -138,51 +119,8 @@ export default {
         }
       });
     },
-    upload(file) {
-      let OSS = require("ali-oss");
-      const client = new OSS({
-        region: "oss-cn-hangzhou",
-        accessKeyId: "LTAIMYW16QYY4WTH",
-        accessKeySecret: "5I2HVy0oFPyeg3BHO1fUhzHGZvjvKp",
-        bucket: "mmzdpicture"
-      });
-      var fileName = "mmzdtx" + file.file.uid;
-      client.put(fileName, file.file).then(result => {
-        this.fileList[0] = {
-          name: result.name,
-          url: result.url
-        };
-      });
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      const isPNG = file.type === "image/png";
-      if (!isJPG && !isPNG) {
-        this.$message.error("上传头像图片只能是 JPG和PNG 格式!");
-        return false;
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-        return false;
-      }
-    },
-    //当上传图片后，调用onchange方法，获取图片本地路径
-    onchange(file, fileList) {
-      var _this = this;
-      var event = event || window.event;
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      const isJPG = file.type === "image/jpeg";
-      const isPNG = file.type === "image/png";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if ((isJPG && isLt2M) || (isPNG && isLt2M)) {
-        //转base64
-        reader.onload = function(e) {
-          _this.imageUrl = e.target.result; //将图片路径赋值给src
-        };
-      }
-      reader.readAsDataURL(file);
+    getSrc(src) {
+      this.form.picture = src;
     },
     goclose() {
       this.closeDialog();
@@ -192,18 +130,10 @@ export default {
 </script>
 
 <style scoped>
-.seepicture {
-  width: 150px;
-  height: 150px;
-}
-.formlist {
+.width250 {
   width: 250px;
 }
-
 .button {
   text-align: center;
-}
-.el-avatar >>> img {
-  width: 150px;
 }
 </style>
