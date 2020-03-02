@@ -196,7 +196,7 @@ const navlist = [{
             {
                 adminMenu: {
                     id: 42,
-                    menuName: "视频区",
+                    menuName: "视频圈",
                     menuType: "page",
                     pid: "4",
                     url: "/video/index",
@@ -371,7 +371,19 @@ const navlist = [{
                     url: "/manage/scheduleManage",
                     sort: 7,
                     deep: 2,
-                    code: "77",
+                    code: "78",
+                    permissions: "admin"
+                }
+            }, {
+                adminMenu: {
+                    id: 79,
+                    menuName: "视频管理",
+                    menuType: "page",
+                    pid: "9",
+                    url: "/manage/videoManage",
+                    sort: 7,
+                    deep: 2,
+                    code: "79",
                     permissions: "admin"
                 }
             },

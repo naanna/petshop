@@ -23,12 +23,6 @@ import vueEcharts from 'vue-echarts'
 Vue.component('v-chart', vueEcharts)
 Vue.prototype.$echarts = echarts
 
-import VideoPlayer from 'vue-video-player'
-require('video.js/dist/video-js.css')
-require('vue-video-player/src/custom-theme.css')
-Vue.use(VideoPlayer)
-
-
 new Vue({
     render: h => h(App),
     store,

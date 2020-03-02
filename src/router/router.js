@@ -155,6 +155,11 @@ const router = new Router({
                     component: resolve => require(['../components/manage/ScheduleManage.vue'], resolve)
                 },
                 {
+                    path: '/manage/videoManage',
+                    name: 'videoManage',
+                    component: resolve => require(['../components/manage/VideoManage.vue'], resolve)
+                },
+                {
                     path: '/help/help',
                     name: 'help',
                     component: resolve => require(['../components/help/help.vue'], resolve)
@@ -201,8 +206,23 @@ const router = new Router({
                 },
                 {
                     path: '/video/index',
-                    name: 'showVideo',
+                    name: 'showIndex',
                     component: resolve => require(['../components/video/index.vue'], resolve)
+                },
+                {
+                    path: '/video/uploadManage',
+                    name: 'uploadManage',
+                    component: resolve => require(['../components/video/MyManage.vue'], resolve)
+                },
+                {
+                    path: '/video/myUpload',
+                    name: 'myUpload',
+                    component: resolve => require(['../components/video/MyUpload.vue'], resolve)
+                },
+                {
+                    path: '/video/:id',
+                    name: 'Watch',
+                    component: resolve => require(['../components/video/Watch.vue'], resolve)
                 },
                 {
                     path: '/chat/index',

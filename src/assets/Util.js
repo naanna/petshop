@@ -35,6 +35,17 @@ const Util = {
             return birthSpan.year + "岁" + birthSpan.month + "个月";
         }
     },
+    //计算视频长度
+    countTime: function(s) {
+        var min;
+        min = Math.floor(s / 60);
+        s = Math.round(s % 60);
+        min += "";
+        s += "";
+        min = min.length == 1 ? "0" + min : min;
+        s = s.length == 1 ? "0" + s : s;
+        return min + ":" + s;
+    },
     //按某一个属性排序数组对象--从大到小
     objSort(prop) {
         return function(obj1, obj2) {

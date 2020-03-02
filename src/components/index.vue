@@ -19,6 +19,7 @@
               <span v-else-if="item.type=='care'">寄养申请被</span>
               <span v-else-if="item.type=='long'">延长申请被</span>
               <span v-else-if="item.type=='back'">领回申请被</span>
+              <span v-else-if="item.type=='upload'">投稿申请被</span>
 
               <span v-if="item.status=='yes'">同意啦！</span>
               <span v-else-if="item.status=='refuse'">拒绝啦！</span>
@@ -130,6 +131,13 @@ export default {
           }
         ];
       }
+      if (row.videoid) {
+        refobs = [
+          {
+            videoid: row.videoid
+          }
+        ];
+      }
       this.axios
         .post("/api/readunread", {
           refobs
@@ -151,6 +159,11 @@ export default {
         if (this.list[i].careid) {
           refobs.push({
             careid: this.list[i].careid
+          });
+        }
+        if (this.list[i].videoid) {
+          refobs.push({
+            videoid: this.list[i].videoid
           });
         }
       }

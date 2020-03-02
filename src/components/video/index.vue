@@ -1,140 +1,234 @@
 <template>
   <div>
-    <!-- <video-player
-      class="video-player vjs-custom-skin"
-      ref="videoPlayer"
-      :playsinline="true"
-      :options="playerOptions"
-    ></video-player>-->
-    <video-player
-      class="video-player vjs-custom-skin"
-      ref="videoPlayer"
-      :playsinline="true"
-      v-if="fileList[0].url!=''"
-      :options="{
-        playbackRates: [0.7, 1.0, 1.5, 2.0],
-        autoplay: false,
-        muted: false,
-        loop: false,
-        preload: 'auto', 
-        language: 'zh-CN',
-        aspectRatio: '16:9',
-        fluid: true,
-        sources: [{
-          type:'',
-          src:fileList[0].url
-        }],
-        poster: '../../static/images/test.jpg', 
-        notSupportedMessage: '此视频暂无法播放，请稍后再试',
-         controlBar: {
-          timeDivider: true,
-          durationDisplay: true,
-          remainingTimeDisplay: false,
-          fullscreenToggle: true 
-        }
-      }"
-    ></video-player>
-    <el-upload
-      :http-request="upload"
-      :multiple="true"
-      :show-file-list="false"
-      action
-      ref="upload"
-      :on-change="onchange"
-      :before-upload="beforeAvatarUpload"
-    >
-      <el-button size="small" type="primary" lot="trigger">点击上传</el-button>
-    </el-upload>
+    <p class="ruleclass">视 频 圈</p>
+    <div class="button">
+      <el-popover placement="bottom" width="150" trigger="hover">
+        <el-row>
+          <el-col :span="12" class="center">
+            <div @click="goUrl('myUpload')">
+              <i class="el-icon-video-camera-solid icon"></i>
+              <span class="icontitle">视频投稿</span>
+            </div>
+          </el-col>
+          <el-col :span="12" class="center">
+            <div @click="goUrl('uploadManage')">
+              <i class="el-icon-s-tools icon"></i>
+              <span class="icontitle">投稿管理</span>
+            </div>
+          </el-col>
+        </el-row>
+        <el-button slot="reference" type="info" plain size="small">投稿</el-button>
+      </el-popover>
+    </div>
+    <el-row :gutter="20">
+      <el-col
+        :span="8"
+        :xs="{span:24}"
+        v-for="(item,index) in fileList"
+        class="videoshow"
+        :key="index"
+      >
+        <div @click="goWatch(item)">
+          <div class="videobox">
+            <video
+              :poster="item.cover"
+              width="100%"
+              :id="item.videoid"
+              :src="item.src"
+            ></video>
+            <div class="videomask">
+              <i class="el-icon-video-play videoicon"></i>
+              <span class="time">{{item.length}}</span>
+            </div>
+          </div>
+          <div>
+            <p class="videotitle" :title="item.title">{{item.title}}</p>
+            <el-row class="number">
+              <el-col :span="12">
+                <i class="el-icon-user" style="margin-right:5px;"></i>
+                <span>{{item.nickname}}</span>
+              </el-col>
+              <el-col :span="12">
+                <i class="el-icon-view" style="margin-right:5px;"></i>
+                <span>{{item.count}}</span>
+              </el-col>
+            </el-row>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+    <el-pagination
+      @current-change="currentChangeHandle"
+      :current-page.sync="page_no"
+      :page-size="6"
+      layout="total,  prev, pager, next, jumper"
+      class="fyclass"
+      :total="total"
+    ></el-pagination>
   </div>
 </template>
 
 <script>
+import Util from "@assets/Util.js";
 export default {
-  name: "video",
   data() {
     return {
-      fileList: [
-        {
-          src: ""
-        }
-      ],
-      playerOptions: {
-        playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
-        autoplay: false, //如果true,浏览器准备好时开始回放。
-        muted: false, // 默认情况下将会消除任何音频。
-        loop: false, // 导致视频一结束就重新开始。
-        preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-        language: "zh-CN",
-        aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-        fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-        sources: [
-          {
-            type: "", //这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-            src:
-              "https://mmzdvideo.oss-cn-hangzhou.aliyuncs.com/mmzdsp1577521338930" //url地址
-          }
-        ],
-        poster: "../../static/images/test.jpg", //你的封面地址
-        // width: document.documentElement.clientWidth, //播放器宽度
-        notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
-        controlBar: {
-          timeDivider: true,
-          durationDisplay: true,
-          remainingTimeDisplay: false,
-          fullscreenToggle: true //全屏按钮
-        }
-      }
+      total: 0,
+      page_no: 1,
+      fileList: []
     };
   },
-  created() {},
+  created() {
+    this.goQuery();
+  },
   methods: {
-    upload(file) {
-      let OSS = require("ali-oss");
-      const client = new OSS({
-        region: "oss-cn-hangzhou",
-        accessKeyId: "LTAIMYW16QYY4WTH",
-        accessKeySecret: "5I2HVy0oFPyeg3BHO1fUhzHGZvjvKp",
-        bucket: "mmzdvideo"
-      });
-      var fileName = "mmzdsp" + file.file.uid + ".mp4";
-      client.put(fileName, file.file).then(result => {
-        this.fileList[0] = {
-          name: result.name,
-          url: result.url
-        };
-        console.log("fileList", this.fileList);
-        console.log(this.fileList[0]);
-        console.log(this.fileList[0].url);
+    goQuery() {
+      let query = {};
+      query.page_no = this.page_no;
+      query.page_size = 6;
+      query.type = "watch";
+      this.axios
+        .get("/api/video/getvideo", {
+          params: {
+            ...query
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            var results = res.data;
+            this.fileList = results.message;
+            this.total = results.total;
+            setTimeout(() => {
+              this.getTime();
+            }, 500);
+          }
+        });
+    },
+    goUpload() {},
+    //获取视频长度--需要配合定时器
+    getTime() {
+      this.fileList.forEach(item => {
+        this.$set(
+          item,
+          "length",
+          Util.countTime(document.getElementById(item.videoid).duration)
+        );
       });
     },
-    beforeAvatarUpload(file) {
-      const isMP4 = file.type === "video/mp4";
-      // const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isMP4) {
-        this.$message.error("请上传正确的mp4视频格式!");
-        return false;
-      }
+    goUrl(url) {
+      window.open("/video/" + url);
     },
-    //当上传图片后，调用onchange方法，获取图片本地路径
-    onchange(file, fileList) {
-      var _this = this;
-      var event = event || window.event;
-      var file = event.target.files[0];
-      // var reader = new FileReader();
-      // const isJPG = file.type === "image/jpeg";
-      // const isPNG = file.type === "image/png";
-      // const isLt2M = file.size / 1024 / 1024 < 2;
-      // if ((isJPG && isLt2M) || (isPNG && isLt2M)) {
-      //   //转base64
-      //   reader.onload = function(e) {
-      //     _this.imageUrl = e.target.result; //将图片路径赋值给src
-      //   };
-      // }
-      // reader.readAsDataURL(file);
+    goWatch(item) {
+      window.open("/video/" + item.videoid);
+    },
+    currentChangeHandle(val) {
+      this.page_no = val;
+      this.goQuery();
     }
   }
 };
 </script>
 
 <style scoped>
+.ruleclass {
+  background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+  -webkit-background-clip: text;
+  text-align: center;
+  font-size: 100px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: "华文行楷";
+  color: transparent;
+}
+.videoshow {
+  position: relative;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.videotitle {
+  margin: 0;
+  padding-top: 8px;
+  width: 100%;
+  height: 40px;
+  color: #222;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.number {
+  display: block;
+  background: white;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 20px;
+  font-size: 12px;
+  line-height: 20px;
+  color: #99a2aa;
+  transition: transform 0.5s;
+  transform: scaleY(1);
+  transform-origin: 0 0;
+}
+.videoshow:hover .number {
+  transform: scaleY(0);
+  transform-origin: 100% 100%;
+}
+.videoshow:hover .videotitle {
+  color: #00a1d6;
+}
+.button {
+  text-align: right;
+  margin-bottom: 10px;
+}
+.icon {
+  display: block;
+  font-size: 24px;
+}
+.center {
+  text-align: center;
+}
+.icontitle {
+  font-size: 12px;
+}
+.center:hover {
+  cursor: pointer;
+  color: #00a1d6;
+}
+.videobox {
+  position: relative;
+}
+.videomask {
+  width: 100%;
+  height: 100%;
+  background: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.videoshow:hover .videomask {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.2);
+}
+.time {
+  position: absolute;
+  color: white;
+  bottom: 2px;
+  left: 10px;
+}
+.videoicon {
+  font-size: 60px;
+  color: white;
+}
+.videoshow:hover .videoicon {
+  opacity: 1;
+}
 </style>
