@@ -1,46 +1,37 @@
 <template>
   <div>
-    <span class="title">充值中心</span>
+    <span class="font-25">充值中心</span>
     <el-button type="text" size="small" style="float:right;" @click="gohistory">查看历史充值</el-button>
-    <el-form label-position="right" class="boder" :model="form" :rules="rules" ref="form">
-      <el-form-item
-        label="充值金额："
-        label-width="300px"
-        class="formclass"
-        prop="money"
-        :inline-message="true"
-      >
-        <el-input
-          type="text"
-          size="small"
-          class="width"
-          v-model.number="form.money"
-          oninput="if(value.length>10)value=value.slice(0,10)"
-        ></el-input>
-      </el-form-item>
-      <el-form-item
-        label="充值账户："
-        label-width="300px"
-        class="formclass"
-        prop="user"
-        :inline-message="true"
-      >
-        <el-input type="text" size="small" class="width" v-model="form.user"></el-input>
-        <span class="confire" style="color: #898989;">请确认账户是否正确</span>
-      </el-form-item>
-    </el-form>
-    <div class="button">
+    <div class="cost-boder">
+      <el-form label-position="right" class="form" :model="form" :rules="rules" ref="form">
+        <el-form-item label="充值金额：" class="form-item-padding" prop="money" :inline-message="true">
+          <el-input
+            type="text"
+            size="small"
+            class="formlist"
+            v-model.number="form.money"
+            oninput="if(value.length>10)value=value.slice(0,10)"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="充值账户：" class="form-item-padding" prop="user" :inline-message="true">
+          <el-input type="text" size="small" class="formlist" v-model="form.user"></el-input>
+          <br />
+          <span style="color: #898989;">请确认账户是否正确</span>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="center">
       <el-button type="primary" size="small" @click="gosave">提交申请</el-button>
       <el-button size="small" @click="goclear">取消</el-button>
     </div>
-    <p class="text">充值说明</p>
-    <p class="text">
+    <p class="cost-text">充值说明</p>
+    <p class="cost-text">
       本商店采用充值系统进行采购；
       <br />充值前请联系客服交付需要充值的金额的现金，再输入金额提交申请；
       <br />提交申请审批成功后，可以在个人账户页面内看到自己的账户余额；
       <br />因涉虚拟交易及促销返点等项目，因此不提供退款服务；
     </p>
-    <p class="text">客服电话：400-870-5552。【工作时间：周一至周日，如遇忙线请稍后再拨。】</p>
+    <p class="cost-text">客服电话：400-870-5552。【工作时间：周一至周日，如遇忙线请稍后再拨。】</p>
   </div>
 </template>
 
@@ -117,40 +108,23 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  font-size: 25px;
-}
-
-.formclass {
-  padding-top: 5px;
-  padding-bottom: 5px;
+.form-item-padding {
+  padding: 5px 0;
   margin-bottom: 0;
 }
-
-.width {
-  width: 250px;
-}
-
-.confire {
-  margin-left: 10px;
-}
-
-.boder {
+.cost-boder {
   background: #ffffff;
   border: 1px solid #dddddd;
-  padding-top: 10px;
-  margin-top: 20px;
-  padding-bottom: 10px;
+  padding: 10px 0;
+  margin: 20px 0;
+  min-width: 400px;
 }
-
-.button {
-  text-align: center;
-  padding-top: 20px;
-  padding-bottom: 10px;
-}
-
-.text {
+.cost-text {
   margin-top: 20px;
   color: #898989;
+}
+.form {
+  width: 350px;
+  margin: 0 auto;
 }
 </style>

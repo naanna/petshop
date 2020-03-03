@@ -1,9 +1,9 @@
 <template>
   <div>
     <div>
-      <v-chart :options="options" autoresize class="chart1"></v-chart>
-      <v-chart :options="option1" autoresize class="chart1"></v-chart>
-      <v-chart :options="option2" autoresize class="chart2"></v-chart>
+      <v-chart :options="options" autoresize class="chart"></v-chart>
+      <v-chart :options="option1" autoresize class="chart"></v-chart>
+      <v-chart :options="option2" autoresize class="chart"></v-chart>
     </div>
   </div>
 </template>
@@ -162,10 +162,7 @@ export default {
 </script>
 
 <style scoped>
-.chart2 {
+.chart {
   margin: 0 auto;
-}
-.chart1 {
-  display: inline-block;
 }
 </style>

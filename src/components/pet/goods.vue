@@ -39,7 +39,7 @@
       </el-select>
       <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
     </div>
-    <el-row>
+    <el-row style="min-width:1120px;max-width:1350px;width:100%">
       <el-col :span="4" v-for="(item, index) in tabledata" :key="index">
         <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
           <el-image class="image" :src="item.picture"></el-image>

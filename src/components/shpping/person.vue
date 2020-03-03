@@ -1,101 +1,97 @@
 <template>
   <div>
     <div>
-      <span class="title">账号信息</span>
-      <el-form label-position="right" class="boder1" :model="form" :rules="rules" ref="form">
-        <el-form-item label="用户名：" label-width="300px" class="formclass">
-          <span style="color: #898989;">{{form.username}}</span>
-        </el-form-item>
-        <el-form-item
-          label="昵称："
-          label-width="300px"
-          class="formclass"
-          prop="nickname"
-          :inline-message="true"
-        >
-          <el-input type="text" size="small" class="widthclass" v-model="form.nickname"></el-input>
-        </el-form-item>
-        <el-form-item
-          label="姓名："
-          label-width="300px"
-          class="formclass"
-          prop="name"
-          :inline-message="true"
-        >
-          <el-input type="text" size="small" class="widthclass" v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="性别：" label-width="300px" class="formclass" prop="sex">
-          <el-select size="small" class="widthclass" v-model="form.sex">
-            <el-option value="男" label="男"></el-option>
-            <el-option value="女" label="女"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          label="生日："
-          label-width="300px"
-          class="formclass"
-          prop="birthday"
-          :inline-message="true"
-        >
-          <el-date-picker type="date" size="small" class="widthclass" v-model="form.birthday"></el-date-picker>
-          <el-tooltip class="item" effect="dark" content="亲，生日当月将赠送优惠券（每年只享受一次）" placement="top">
-            <i class="el-icon-question icon"></i>
-          </el-tooltip>
-        </el-form-item>
-        <el-form-item label="注册日期：" label-width="300px" class="formclass">
-          <span style="color: #898989;">{{form.regday}}</span>
-        </el-form-item>
-        <div class="button1">
-          <el-button type="primary" size="small" @click="gosave">保存</el-button>
-          <el-button size="small" @click="goclear">取消</el-button>
-        </div>
-      </el-form>
-    </div>
-    <div style="margin-top:20px;">
-      <span class="title">会员信息</span>
-      <el-form class="boder1">
-        <el-form-item label="账户余额：" label-width="300px" class="formclass">
-          <span style="color: #898989;">{{form.money}}</span>
-        </el-form-item>
-        <el-form-item label="会员等级：" label-width="300px" class="formclass">
-          <div style="margin-top:10px;display:inline-block;">
-            <img src="@picture/vip1.png" style="height:25px" v-if="form.level=='vip'" />
-            <img src="@picture/vip2.png" style="height:25px" v-else-if="form.level=='vip2'" />
-            <img src="@picture/vip3.png" style="height:25px" v-else />
+      <span class="font-25">账号信息</span>
+      <div class="person-boder">
+        <el-form label-position="right" :model="form" :rules="rules" ref="form" class="form">
+          <el-form-item label="用户名：" class="form-item-padding">
+            <span style="color: #898989;">{{form.username}}</span>
+          </el-form-item>
+          <el-form-item
+            label="昵称："
+            class="form-item-padding"
+            prop="nickname"
+            :inline-message="true"
+          >
+            <el-input type="text" size="small" class="formlist" v-model="form.nickname"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名：" class="form-item-padding" prop="name" :inline-message="true">
+            <el-input type="text" size="small" class="formlist" v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="性别：" class="form-item-padding" prop="sex">
+            <el-select size="small" class="formlist" v-model="form.sex">
+              <el-option value="男" label="男"></el-option>
+              <el-option value="女" label="女"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            label="生日："
+            class="form-item-padding"
+            prop="birthday"
+            :inline-message="true"
+          >
+            <el-date-picker type="date" size="small" class="formlist" v-model="form.birthday"></el-date-picker>
+            <el-tooltip class="item" effect="dark" content="亲，生日当月将赠送优惠券（每年只享受一次）" placement="top">
+              <i class="el-icon-question icon"></i>
+            </el-tooltip>
+          </el-form-item>
+          <el-form-item label="注册日期：" class="form-item-padding">
+            <span style="color: #898989;">{{form.regday}}</span>
+          </el-form-item>
+          <div class="center">
+            <el-button type="primary" size="small" @click="gosave">保存</el-button>
+            <el-button size="small" @click="goclear">取消</el-button>
           </div>
-        </el-form-item>
-      </el-form>
-    </div>
-    <div>
-      <span class="title">我的头像</span>
-      <div class="picturedivclass">
-        <el-button class="lookpic" circle @click="isShowImageDialog=true">
-          <p style="margin:0px;">查看</p>
-          <p style="margin:0px;">头像</p>
-        </el-button>
-        <div class="boder">
-          <el-avatar class="pictureclass" :src="form.picture" @error="errorHandler">
-            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-          </el-avatar>
-        </div>
-        <el-button class="changepic" circle @click="gourl('./changepic')">
-          <p style="margin:0px;">更改</p>
-          <p style="margin:0px;">头像</p>
-        </el-button>
+        </el-form>
       </div>
     </div>
     <div style="margin-top:20px;">
-      <span class="title">账号安全</span>
-      <div class="psd">
+      <span class="font-25">会员信息</span>
+      <div class="person-boder">
+        <el-form class="form">
+          <el-form-item label="账户余额：" class="form-item-padding">
+            <span style="color: #898989;">{{form.money}}</span>
+          </el-form-item>
+          <el-form-item label="会员等级：" class="form-item-padding">
+            <div style="margin-top:10px;display:inline-block;">
+              <img src="@picture/vip1.png" style="height:25px" v-if="form.level=='vip'" />
+              <img src="@picture/vip2.png" style="height:25px" v-else-if="form.level=='vip2'" />
+              <img src="@picture/vip3.png" style="height:25px" v-else />
+            </div>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+    <div>
+      <span class="font-25">我的头像</span>
+      <div class="person-boder">
+        <div class="picture-box">
+          <el-button class="look-botton" circle @click="isShowImageDialog=true">
+            查看
+            <br />头像
+          </el-button>
+          <el-avatar class="picture" :src="form.picture" @error="errorHandler">
+            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+          </el-avatar>
+          <el-button class="change-button" circle @click="gourl('./changepic')">
+            更改
+            <br />头像
+          </el-button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;">
+      <span class="font-25">账号安全</span>
+      <div class="psd-box">
         <div>
           <img src="@picture/psdicon.png" class="psdpicture" />
         </div>
-        <div class="psd2">
-          <span class="psd1">我的密码</span>
-          <span class="psd3">修改密码，账号更安全</span>
-          <div class="psd4">
-            <img src="@picture/set.png" class="psd6" />
-            <span class="psd5" @click="gopsd">更改密码></span>
+        <div class="psd-info-box">
+          <span class="psd-info-title">我的密码</span>
+          <span class="psd-info">修改密码，账号更安全</span>
+          <div class="psd-change-box">
+            <img src="@picture/set.png" class="psd-change-pic" />
+            <span class="psd-change-title" @click="gopsd">更改密码></span>
           </div>
         </div>
       </div>
@@ -213,8 +209,7 @@ export default {
     },
     gopsd() {
       var old = this.form;
-      this.Dialog
-        .title("修改密码")
+      this.Dialog.title("修改密码")
         .width("800px")
         .currentView(psd, { old })
         .then(data => {
@@ -233,45 +228,19 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  font-size: 25px;
-  color: #000000;
-}
-
-.widthclass {
-  width: 250px;
-}
-
 .icon {
   margin-left: 10px;
 }
-
-.formclass {
+.form-item-padding {
   margin-bottom: 0;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px 0;
 }
-
-.boder1 {
+.person-boder {
   background: #ffffff;
   border: 1px solid #dddddd;
-  padding-top: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-}
-
-.button1 {
-  text-align: center;
-  padding-top: 20px;
-  padding-bottom: 10px;
-  box-shadow: 0px 0px;
-}
-.psd {
-  margin-top: 20px;
-  margin-left: 20px;
-  width: 350px;
-  display: flex;
+  padding: 10px 0;
+  margin: 20px 0;
+  min-width: 420px;
 }
 .psdpicture {
   width: 80px;
@@ -282,75 +251,71 @@ export default {
 .el-avatar >>> img {
   width: 100% !important;
 }
-.psd1 {
+.psd-box {
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 350px;
+  display: flex;
+}
+.psd-info-title {
   font-size: 18px;
   display: block;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 0;
 }
-
-.psd3 {
+.psd-info {
   font-size: 14px;
   color: #898989;
   display: block;
 }
-.psd2 {
+.psd-info-box {
   flex: 1;
   margin-left: 20px;
 }
-.psd6 {
+.psd-change-pic {
   vertical-align: middle;
   border-radius: 10px;
 }
-
-.psd5 {
+.psd-change-title {
   color: #52d0f3;
   vertical-align: middle;
   cursor: pointer;
   font-size: 14px;
   margin-left: 10px;
 }
-
-.psd4 {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.psd-change-box {
+  padding: 10px 0;
 }
-.boder {
+.picture-box {
   width: 100px;
   height: 100px;
   border: 1px solid #e5e9ef;
   border-radius: 50%;
   padding: 40px;
+  margin: 0 auto;
+  position: relative;
 }
-.pictureclass {
+.picture {
   width: 100px;
   height: 100px;
   border-radius: 50%;
 }
-.picturedivclass {
-  background: #ffffff;
-  border: 1px solid #dddddd;
-  padding-top: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding-left: 300px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  position: relative;
-}
-.changepic {
+.change-button {
   position: absolute;
-  top: 100px;
-  left: 450px;
+  top: 65px;
+  right: -25px;
   color: #ffffff;
   background-color: #00a1d6;
 }
-.lookpic {
+.look-botton {
   position: absolute;
-  top: 100px;
-  left: 270px;
+  top: 65px;
+  left: -25px;
   color: #00a1d6;
   border: 1px solid #00a1d6;
   background-color: #ffffff;
+}
+.form {
+  width: 350px;
+  margin: 0 auto;
 }
 </style>

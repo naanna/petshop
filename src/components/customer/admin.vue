@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="fontclass">管理员</span>
-    <el-row>
+    <el-row style="min-width:1120px;max-width:1350px;width:100%">
       <el-col :span="6" v-for="(item, index) in tabledata" :key="index">
         <el-card class="card" shadow="hover">
           <i class="el-icon-close close" @click="godel(item.username)"></i>
@@ -30,12 +30,11 @@
         </el-card>
       </el-col>
     </el-row>
-
     <el-pagination
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
       :current-page="page_no"
-      :page-sizes="[10,20,50,100]"
+      :page-sizes="[8,16,32,64]"
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"

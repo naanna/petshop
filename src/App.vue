@@ -39,7 +39,6 @@ export default {
   font-size: 30px;
   font-family: "jelly";
 }
-
 .el-badge__content.is-fixed {
   top: 14px !important;
   right: 26px !important;
@@ -48,7 +47,16 @@ export default {
   margin-top: 20px;
   text-align: right;
 }
+.formlist {
+  width: 250px !important;
+}
 .is-horizontal {
   display: none;
+}
+.center {
+  text-align: center;
+}
+.font-25{
+  font-size: 25px;
 }
 </style>

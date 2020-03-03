@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-page-header @back="goBack" style="display: inline-block;"></el-page-header>
-    <span class="title">充值历史</span>
+    <span class="font-25">充值历史</span>
     <div class="table">
       <el-date-picker
         v-model="searchval"
@@ -108,10 +108,6 @@ export default {
 };
 </script>
 <style scoped>
-.title {
-  font-size: 25px;
-}
-
 .table {
   margin-top: 20px;
 }

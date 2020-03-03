@@ -64,7 +64,7 @@
         </el-scrollbar>
 
         <el-scrollbar style="height:100%;width:100%;">
-          <el-main>
+          <el-main style="height:100%;width:100%;">
             <router-view></router-view>
           </el-main>
         </el-scrollbar>
@@ -216,5 +216,8 @@ export default {
 }
 .el-scrollbar >>> .el-scrollbar__wrap {
   overflow-x: hidden !important;
+}
+.el-scrollbar >>> .el-scrollbar__view {
+  height: 100% !important;
 }
 </style>

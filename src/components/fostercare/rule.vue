@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-width: 760px;">
     <p class="ruleclass">寄养规则</p>
     <div class="div1">
       <el-collapse v-model="activeName" accordion>

@@ -2,7 +2,11 @@
   <div>
     <span class="fontclass">我的收藏夹</span>
     <el-scrollbar style="height:100%;">
-      <el-row v-infinite-scroll="load" infinite-scroll-disabled="disabled">
+      <el-row
+        v-infinite-scroll="load"
+        infinite-scroll-disabled="disabled"
+        style="min-width:1120px;max-width:1350px;width:100%"
+      >
         <el-col :span="4" v-for="(item, index) in showtable" :key="index">
           <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
             <el-image
