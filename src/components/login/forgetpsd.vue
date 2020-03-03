@@ -179,7 +179,7 @@ export default {
         if (valid) {
           if (this.form.code == "") {
             this.$message.warning("请输入验证码！");
-          } else if (this.form.code != this.code) {
+          } else if (this.form.code.toLowerCase()  != this.code.toLowerCase() ) {
             this.$message.warning("验证码错误！");
           } else {
             this.axios

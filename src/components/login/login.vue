@@ -19,7 +19,7 @@
           <el-form-item prop="password" label="密码:">
             <el-input type="password" size="small" v-model="loginform.password" class="input"></el-input>
           </el-form-item>
-          <el-form-item   prop="code" label="验证码:">
+          <el-form-item prop="code" label="验证码:">
             <el-input
               type="text"
               v-model="loginform.code"
@@ -87,7 +87,9 @@ export default {
           let _this = this;
           if (_this.loginform.code == "") {
             this.$message.warning("请输入验证码！");
-          } else if (_this.loginform.code != _this.code) {
+          } else if (
+            _this.loginform.code.toLowerCase() != _this.code.toLowerCase()
+          ) {
             this.$message.warning("验证码错误！");
           } else {
             this.axios
