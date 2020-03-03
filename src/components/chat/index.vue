@@ -1,40 +1,43 @@
 <template>
   <div class="chat-box">
     <p class="title">公共聊天室人数：{{count}}</p>
-    <div class="msg-box" ref="msg-box">
-      <el-scrollbar class="scroll" ref="myScrollbar">
-        <div v-for="(i,index) in list" :key="index">
-          <div
-            class="time"
-            v-if="showtime(i.createtime,index)"
-          >{{timestampFormat(i.createtime/1000)}}</div>
-          <div class="user-msg-box" :style="i.userId == userId?'justify-content: flex-end;':''">
-            <!-- 左边的 -->
-            <div class="user-msg-content" v-if="i.userId != userId" style="padding-right:10px;">
-              <el-avatar size="small" :src="i.userPicture"></el-avatar>
-              <span
-                class="triangle"
-                style="border-color: transparent #f1f1f1 transparent transparent;right:0;"
-              ></span>
-            </div>
-            <!-- 文字 -->
-            <div style="flex:25" :style="i.userId == userId?'text-align:right;':''">
-              <span class="user-msg-username">{{i.nickName}}</span>
-              <span class="user-msg" :class="i.userId == userId?'right':'left'">{{i.content}}</span>
-            </div>
-            <!-- 右边的 -->
-            <div class="user-msg-content" v-if="i.userId == userId" style="padding-left:10px;">
-              <span
-                class="triangle"
-                style="border-color: transparent transparent transparent #d1f2fd;left:0;"
-              ></span>
-              <el-avatar size="small" :src="i.userPicture">></el-avatar>
+    <div class="box">
+      <div class="msg-box" ref="msg-box">
+        <el-scrollbar class="scroll" ref="myScrollbar">
+          <div v-for="(i,index) in list" :key="index">
+            <div
+              class="time"
+              v-if="showtime(i.createtime,index)"
+            >{{timestampFormat(i.createtime/1000)}}</div>
+            <div class="user-msg-box" :style="i.userId == userId?'justify-content: flex-end;':''">
+              <!-- 左边的 -->
+              <div class="user-msg-content" v-if="i.userId != userId" style="padding-right:10px;">
+                <el-avatar size="small" :src="i.userPicture"></el-avatar>
+                <span
+                  class="triangle"
+                  style="border-color: transparent #f1f1f1 transparent transparent;right:0;top:25px;"
+                ></span>
+              </div>
+              <!-- 文字 -->
+              <div style="flex:25" :style="i.userId == userId?'text-align:right;':''">
+                <span class="user-msg-username">{{i.nickName}}</span>
+                <span class="user-msg" :class="i.userId == userId?'right':'left'">{{i.content}}</span>
+              </div>
+              <!-- 右边的 -->
+              <div class="user-msg-content" v-if="i.userId == userId" style="padding-left:10px;">
+                <span
+                  class="triangle"
+                  style="border-color: transparent transparent transparent #d1f2fd;left:0;top:25px;"
+                ></span>
+                <el-avatar size="small" :src="i.userPicture">></el-avatar>
+              </div>
             </div>
           </div>
-        </div>
-      </el-scrollbar>
+        </el-scrollbar>
+      </div>
+      <p class="warn">您的发言将所有人可见！拒绝发布有害/违法/黄色信息！</p>
     </div>
-    <p class="warn">您的发言将所有人可见！拒绝发布有害/违法/黄色信息！</p>
+
     <div class="center">
       <el-input v-model="contentText" placeholder="请输入内容" ref="sendMsg" class="input"></el-input>
       <el-button @click="sendText()" style="margin-left:30px;">发送</el-button>
@@ -208,6 +211,10 @@ export default {
 </script>
 
 <style scoped>
+.box {
+  width: 800px;
+  margin: 0 auto;
+}
 .chat-box {
   min-width: 800px;
 }
@@ -216,7 +223,6 @@ export default {
   margin-top: 0;
 }
 .msg-box {
-  width: 800px;
   height: 400px;
   border: 1px solid #e5e5e5;
   margin: 10px auto;

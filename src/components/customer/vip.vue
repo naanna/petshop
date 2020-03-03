@@ -19,7 +19,7 @@
                 icon="el-icon-edit"
                 @click="goupdate(item)"
               ></el-button>
-              <el-switch v-model="switchvalue" disabled></el-switch>
+              <el-switch v-model="item.online" disabled></el-switch>
               <el-button
                 type="info"
                 size="mini"

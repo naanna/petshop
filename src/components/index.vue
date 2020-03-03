@@ -2,16 +2,16 @@
   <div>
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <span class="mouser" @click="gourl('/')">
+        <span class="mouser" @click="goUrl('/')">
           <i class="el-icon-s-home"></i>首页
         </span>
-        <span class="mouser" @click="gourl('/shpping/shopcar')">
+        <span class="mouser" @click="goUrl('/shpping/shopcar')">
           <i class="el-icon-shopping-cart-full"></i>购物车
         </span>
-        <span class="mouser" @click="gourl('/shpping/favorites')">
+        <span class="mouser" @click="goUrl('/shpping/favorites')">
           <i class="el-icon-collection"></i>收藏夹
         </span>
-        <i v-if="num==0" class="el-icon-message-solid messagesolid"></i>
+        <i v-if="num==0" class="el-icon-message-solid menu-icon"></i>
         <el-badge v-else :value="num" class="item">
           <el-popover placement="bottom" width="180" trigger="click">
             <p v-for="item in list">
@@ -29,16 +29,16 @@
               <i
                 class="el-icon-circle-close"
                 style="margin-left:30px;cursor: pointer;"
-                @click="goread(item)"
+                @click="goRead(item)"
               ></i>
             </p>
             <p style="text-align:center; margin-bottom:0px;">
-              <el-button size="mini" @click="goallread">全部已读</el-button>
+              <el-button size="mini" @click="goAllRead">全部已读</el-button>
             </p>
-            <i class="el-icon-message-solid messagesolid" slot="reference"></i>
+            <i class="el-icon-message-solid menu-icon" slot="reference"></i>
           </el-popover>
         </el-badge>
-        <el-dropdown @command="gourl">
+        <el-dropdown @command="goUrl">
           <span class="mouser">{{$store.state.nickname}}</span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="/shpping/person">个人中心</el-dropdown-item>
@@ -49,7 +49,7 @@
         </el-dropdown>
       </el-header>
 
-      <el-container :style="conheight">
+      <el-container :style="conHeight">
         <el-scrollbar class="scroll">
           <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
             <el-menu
@@ -58,7 +58,7 @@
               :unique-opened="true"
               router
             >
-              <NavMenu :navlist="menulist"></NavMenu>
+              <NavMenu :navlist="menuList"></NavMenu>
             </el-menu>
           </el-aside>
         </el-scrollbar>
@@ -84,8 +84,8 @@ export default {
   },
   data() {
     return {
-      menulist: Menulist.navlist,
-      conheight: {
+      menuList: Menulist.navlist,
+      conHeight: {
         height: "",
         border: "1px solid #eee"
       },
@@ -96,11 +96,12 @@ export default {
   created() {
     window.addEventListener("resize", this.getHeight);
     this.getHeight();
-    this.getunread();
+    this.getUnRead();
+    this.initWebSocket();
   },
   methods: {
     ...mapMutations(["delToken"]),
-    getunread() {
+    getUnRead() {
       this.axios
         .get("/api/getunread", {
           params: {
@@ -115,7 +116,7 @@ export default {
           }
         });
     },
-    goread(row) {
+    goRead(row) {
       let refobs = [];
       if (row.investid) {
         refobs = [
@@ -138,17 +139,9 @@ export default {
           }
         ];
       }
-      this.axios
-        .post("/api/readunread", {
-          refobs
-        })
-        .then(res => {
-          if (res.data.success) {
-            this.getunread();
-          }
-        });
+      this.read(refobs);
     },
-    goallread() {
+    goAllRead() {
       let refobs = [];
       for (let i in this.list) {
         if (this.list[i].investid) {
@@ -167,25 +160,46 @@ export default {
           });
         }
       }
-
+      this.read(refobs);
+    },
+    read(refobs) {
       this.axios
         .post("/api/readunread", {
           refobs
         })
         .then(res => {
           if (res.data.success) {
-            this.getunread();
+            this.getUnRead();
           }
         });
     },
-    gourl(url) {
+    goUrl(url) {
       if (url == "/login") {
         this.delToken();
       }
       this.$router.push(url);
     },
     getHeight() {
-      this.conheight.height = window.innerHeight - 78 + "px";
+      this.conHeight.height = window.innerHeight - 60 + "px";
+    },
+    initWebSocket() {
+      let _this = this; //判断页面有没有存在websocket连接
+      let params = { userId: this.$store.state.username };
+      if (window.WebSocket) {
+        // 192.168.80.1是我本地IP地址 此处的 :8182 端口号 要与后端配置的一致
+        let ws = new WebSocket("ws://192.168.80.1:8182");
+        _this.ws = ws;
+        ws.onopen = function(e) {
+          console.log("服务器连接成功");
+          _this.ws.send(JSON.stringify(params));
+        };
+        ws.onclose = function(e) {
+          console.log("服务器连接关闭");
+        };
+        ws.onerror = function() {
+          console.log("服务器连接出错");
+        };
+      }
     }
   }
 };
@@ -197,7 +211,6 @@ export default {
   color: #333;
   line-height: 60px;
 }
-
 .el-aside {
   color: #333;
 }
@@ -209,7 +222,7 @@ export default {
   height: 100%;
   width: 220px;
 }
-.messagesolid {
+.menu-icon {
   font-size: 18px;
   margin-right: 15px;
   cursor: pointer;
