@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="clicked">
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
         <span class="mouser" @click="goUrl('/')">
@@ -90,7 +90,10 @@ export default {
         border: "1px solid #eee"
       },
       num: 0,
-      list: []
+      list: [],
+      timer: "",
+      lastTime: new Date().getTime(), // 最后一次点击的时间
+      outTime: 2 * 60 * 60 * 1000 //超时时间2h
     };
   },
   created() {
@@ -98,6 +101,13 @@ export default {
     this.getHeight();
     this.getUnRead();
     this.initWebSocket();
+  },
+  mounted() {
+    //每隔十分钟判断一次有无操作
+    this.timer = setInterval(this.tTime, 1000*60*10);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
   methods: {
     ...mapMutations(["delToken"]),
@@ -190,7 +200,6 @@ export default {
         let ws = new WebSocket("ws://192.168.80.1:8182");
         _this.ws = ws;
         ws.onopen = function(e) {
-          console.log("服务器连接成功");
           _this.ws.send(JSON.stringify(params));
         };
         ws.onclose = function(e) {
@@ -199,6 +208,17 @@ export default {
         ws.onerror = function() {
           console.log("服务器连接出错");
         };
+      }
+    },
+    clicked() {
+      this.lastTime = new Date().getTime(); //当界面被点击更新点击时间
+    },
+    tTime() {
+      let nowTime = new Date().getTime();
+      if (nowTime - this.lastTime > this.outTime) {
+        clearInterval(this.timer);
+        this.delToken();
+        this.$router.push("/login");
       }
     }
   }
