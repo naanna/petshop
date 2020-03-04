@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-input type="textarea" :rows="5" v-model="textarea"></el-input>
-    <div class="button">
+    <div class="leave-update-button center">
       <el-button type="primary" size="small" @click="goSave">保存</el-button>
       <el-button size="small" @click="goClose">取消</el-button>
     </div>
@@ -50,8 +50,7 @@ export default {
 </script>
 
 <style scoped>
-.button {
+.leave-update-button {
   margin-top: 10px;
-  text-align: center;
 }
 </style>

@@ -1,16 +1,16 @@
 <template>
   <div>
     <div style="display:flex;">
-      <div class="div1">
+      <div class="detail-box">
         <el-avatar
           shape="square"
           :src="form.picture"
           style="width: 150px; height: 150px"
           slot="trigger"
         ></el-avatar>
-        <p class="pclass">粥粥</p>
+        <p class="detail-name">粥粥</p>
       </div>
-      <div class="div2">
+      <div class="detail-info-box">
         <div>
           <span>编号：</span>
           <span>{{form.petid}}</span>
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div>
-      <p class="pclass1">介绍：</p>
+      <p class="detail-info">介绍：</p>
       <el-input
         type="textarea"
         :rows="3"
@@ -57,16 +57,15 @@
         v-model="form.note"
       ></el-input>
     </div>
-
-    <div class="buttonclass">
-      <el-button size="small" @click="goclose">关闭</el-button>
+    <div class="center">
+      <el-button size="small" @click="goClose">关闭</el-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "detail",
+  name: "petdetail",
   data() {
     return {
       form: []
@@ -78,7 +77,7 @@ export default {
     }
   },
   methods: {
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }
@@ -86,12 +85,12 @@ export default {
 </script>
 
 <style scoped>
-.div1 {
+.detail-box {
   flex: 1;
   padding-left: 30px;
   padding-top: 30px;
 }
-.div2 {
+.detail-info-box {
   line-height: 30px;
   font-size: 20px;
   margin-left: 40px;
@@ -99,7 +98,7 @@ export default {
   flex: 2;
   color: #cc496e;
 }
-.pclass {
+.detail-name {
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
@@ -108,25 +107,19 @@ export default {
   color: rgb(155, 155, 155);
   font-family: "jelly";
 }
-.pclass1 {
+.detail-info {
   padding-left: 30px;
   font-family: "jelly";
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
 .textarea >>> .el-textarea__inner {
   font-family: "jelly" !important;
   font-size: 20px !important;
   width: 350px;
 }
-
 .el-avatar >>> img {
   width: 100%;
-}
-.buttonclass {
-  margin-top: 20px;
-  text-align: center;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-page-header @back="goback" content="猫咪贴士" style="margin-bottom:20px;"></el-page-header>
+    <el-page-header @back="goBack" content="猫咪贴士" style="margin-bottom:20px;"></el-page-header>
     <el-collapse v-model="activeName" accordion>
       <el-collapse-item name="1">
         <template slot="title">
@@ -177,7 +177,7 @@ export default {
     };
   },
   methods: {
-    goback() {
+    goBack() {
       this.$router.replace("./look");
     }
   }

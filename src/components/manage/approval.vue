@@ -4,13 +4,13 @@
     <el-tabs value="first" class="tabs">
       <el-tab-pane label="充值审批" name="first">
         <div>
-          <div class="button">
-            <el-button type="primary" size="small" @click="go2yes">批量同意</el-button>
-            <el-button type="primary" size="small" @click="go2refuse">批量拒绝</el-button>
+          <div class="button-box">
+            <el-button type="primary" size="small" @click="go2Agree">批量同意</el-button>
+            <el-button type="primary" size="small" @click="go2Refuse">批量拒绝</el-button>
           </div>
-          <div class="search">
+          <div class="search-box">
             <el-date-picker
-              v-model="pendingquery.historydata"
+              v-model="pendingQuery.historyData"
               type="daterange"
               size="small"
               style=" margin-right: 10px;"
@@ -18,11 +18,11 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
             ></el-date-picker>
-            <el-button type="primary" size="small" class="searchbut" @click="gopendingsearch">搜索</el-button>
+            <el-button type="primary" size="small" class="search-button" @click="goPendingSearch">搜索</el-button>
           </div>
         </div>
         <el-table
-          :data="pendingdata"
+          :data="pendingData"
           stripe
           highlight-current-row
           class="table"
@@ -41,18 +41,18 @@
           <el-table-column label="充值时间" prop="time" align="center" header-align="center"></el-table-column>
           <el-table-column label="操作" align="center" header-align="center">
             <div slot-scope="scope">
-              <el-button type="text" size="small" @click="goyes(scope.row)">同意</el-button>
-              <el-button type="text" size="small" @click="gorefuse(scope.row)">拒绝</el-button>
+              <el-button type="text" size="small" @click="goAgree(scope.row)">同意</el-button>
+              <el-button type="text" size="small" @click="goRefuse(scope.row)">拒绝</el-button>
             </div>
           </el-table-column>
         </el-table>
         <el-pagination
           @size-change="sizeChangeHandle"
           @current-change="currentChangeHandle"
-          :current-page="pendingquery.page_no"
+          :current-page="pendingQuery.page_no"
           :page-sizes="[10,20,50,100]"
-          :page-size="pendingquery.page_size"
-          :total="pendingquery.total"
+          :page-size="pendingQuery.page_size"
+          :total="pendingQuery.total"
           layout="total, sizes, prev, pager, next, jumper"
           class="fyclass"
         ></el-pagination>
@@ -60,7 +60,7 @@
 
       <el-tab-pane label="充值记录" name="second">
         <div>
-          <el-select size="small" class="width200" v-model="type" @change="selectchange">
+          <el-select size="small" class="width200" v-model="type" @change="selectChange">
             <el-option value="审批者" label="审批者"></el-option>
             <el-option value="充值账号" label="充值账号"></el-option>
             <el-option value="充值日期" label="充值日期"></el-option>
@@ -68,7 +68,7 @@
           </el-select>
           <el-date-picker
             v-if="type=='充值日期'"
-            v-model="recordquery.historydata"
+            v-model="recordQuery.historyData"
             type="daterange"
             size="small"
             style=" margin-right: 10px;"
@@ -81,7 +81,7 @@
             size="small"
             class="width200"
             clearable
-            v-model="recordquery.searchval"
+            v-model="recordQuery.searchVal"
             v-else-if="type=='状态'"
           >
             <el-option value="yes" label="已同意"></el-option>
@@ -92,12 +92,12 @@
             v-else
             placeholder="请输入内容"
             type="text"
-            v-model="recordquery.searchval"
+            v-model="recordQuery.searchVal"
             clearable
             size="small"
             class="width200"
           ></el-input>
-          <el-button type="primary" size="small" @click="gorecordsearch">搜索</el-button>
+          <el-button type="primary" size="small" @click="goRecordSearch">搜索</el-button>
         </div>
         <el-table :data="data" stripe border highlight-current-row class="table">
           <el-table-column label="充值单号 " prop="investid" align="center" header-align="center"></el-table-column>
@@ -116,10 +116,10 @@
         <el-pagination
           @size-change="sizeChangeHandle1"
           @current-change="currentChangeHandle1"
-          :current-page="recordquery.page_no"
+          :current-page="recordQuery.page_no"
           :page-sizes="[10,20,50,100]"
-          :page-size="recordquery.page_size"
-          :total="recordquery.total"
+          :page-size="recordQuery.page_size"
+          :total="recordQuery.total"
           layout="total, sizes, prev, pager, next, jumper"
           class="fyclass"
         ></el-pagination>
@@ -132,19 +132,19 @@
 export default {
   data() {
     return {
-      pendingquery: {
+      pendingQuery: {
         total: 0,
         page_no: 1,
         page_size: 10,
-        historydata: ""
+        historyData: ""
       },
-      pendingdata: [],
-      recordquery: {
+      pendingData: [],
+      recordQuery: {
         total: 0,
         page_no: 1,
         page_size: 10,
-        historydata: "",
-        searchval: ""
+        historyData: "",
+        searchVal: ""
       },
       data: [],
       type: "审批者",
@@ -153,24 +153,24 @@ export default {
     };
   },
   created() {
-    this.getpending();
-    this.getrecord();
+    this.getPending();
+    this.getRecord();
     this.approval = this.$store.state.username;
   },
   methods: {
-    makependingquery() {
+    makePendingQuery() {
       let query = {
-        page_no: this.pendingquery.page_no,
-        page_size: this.pendingquery.page_size
+        page_no: this.pendingQuery.page_no,
+        page_size: this.pendingQuery.page_size
       };
       if (
-        this.pendingquery.historydata != null &&
-        this.pendingquery.historydata != ""
+        this.pendingQuery.historyData != null &&
+        this.pendingQuery.historyData != ""
       ) {
-        var time = this.moment(this.pendingquery.historydata[0]).format(
+        var time = this.moment(this.pendingQuery.historyData[0]).format(
           "YYYY-MM-DD"
         );
-        var time1 = this.moment(this.pendingquery.historydata[1]).format(
+        var time1 = this.moment(this.pendingQuery.historyData[1]).format(
           "YYYY-MM-DD"
         );
         query.starttime = time;
@@ -178,8 +178,8 @@ export default {
       }
       return query;
     },
-    getpending() {
-      let query = this.makependingquery();
+    getPending() {
+      let query = this.makePendingQuery();
       this.axios
         .get("/api/invest/pending", {
           params: {
@@ -189,30 +189,30 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.pendingdata = results.message;
-            this.pendingquery.total = results.total;
-            for (let i in this.pendingdata) {
-              this.pendingdata[i].time = this.moment(
-                this.pendingdata[i].time
+            this.pendingData = results.message;
+            this.pendingQuery.total = results.total;
+            for (let i in this.pendingData) {
+              this.pendingData[i].time = this.moment(
+                this.pendingData[i].time
               ).format("YYYY-MM-DD HH:mm:ss");
             }
           }
         });
     },
-    makerecordquery() {
+    makeRecordQuery() {
       let query = {
-        page_no: this.recordquery.page_no,
-        page_size: this.recordquery.page_size
+        page_no: this.recordQuery.page_no,
+        page_size: this.recordQuery.page_size
       };
       if (this.type == "充值日期") {
         if (
-          this.recordquery.historydata != null &&
-          this.recordquery.historydata != ""
+          this.recordQuery.historyData != null &&
+          this.recordQuery.historyData != ""
         ) {
-          var time = this.moment(this.recordquery.historydata[0]).format(
+          var time = this.moment(this.recordQuery.historyData[0]).format(
             "YYYY-MM-DD"
           );
-          var time1 = this.moment(this.recordquery.historydata[1]).format(
+          var time1 = this.moment(this.recordQuery.historyData[1]).format(
             "YYYY-MM-DD"
           );
           query.starttime = time;
@@ -221,21 +221,21 @@ export default {
       }
 
       if (this.type == "充值账号") {
-        if (this.recordquery.searchval != "")
-          query.username = this.recordquery.searchval;
+        if (this.recordQuery.searchVal != "")
+          query.username = this.recordQuery.searchVal;
       }
       if (this.type == "审批者") {
-        if (this.recordquery.searchval != "")
-          query.approval = this.recordquery.searchval;
+        if (this.recordQuery.searchVal != "")
+          query.approval = this.recordQuery.searchVal;
       }
       if (this.type == "状态") {
-        if (this.recordquery.searchval != "")
-          query.status = this.recordquery.searchval;
+        if (this.recordQuery.searchVal != "")
+          query.status = this.recordQuery.searchVal;
       }
       return query;
     },
-    getrecord() {
-      let query = this.makerecordquery();
+    getRecord() {
+      let query = this.makeRecordQuery();
       this.axios
         .get("/api/invest/getall", {
           params: {
@@ -246,7 +246,7 @@ export default {
           if (res.data.success) {
             var results = res.data;
             this.data = results.message;
-            this.recordquery.total = results.total;
+            this.recordQuery.total = results.total;
             for (let i in this.data) {
               this.data[i].time = this.moment(this.data[i].time).format(
                 "YYYY-MM-DD HH:mm:ss"
@@ -255,7 +255,7 @@ export default {
           }
         });
     },
-    goyes(row) {
+    goAgree(row) {
       this.$confirm("确认同意账号" + row.username + "的充值申请吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -276,13 +276,13 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已同意！");
-                this.getpending();
+                this.getPending();
               }
             });
         })
         .catch(() => {});
     },
-    gorefuse(row) {
+    goRefuse(row) {
       this.$confirm("确认拒绝账号" + row.username + "的充值申请吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -301,13 +301,13 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已成功拒绝！");
-                this.getpending();
+                this.getPending();
               }
             });
         })
         .catch(() => {});
     },
-    go2yes() {
+    go2Agree() {
       let refobs = [];
       this.selectObj.forEach(item => {
         refobs.push({
@@ -334,13 +334,13 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已同意！");
-                this.getpending();
+                this.getPending();
               }
             });
         })
         .catch(() => {});
     },
-    go2refuse() {
+    go2Refuse() {
       let refobs = [];
       this.selectObj.forEach(item => {
         refobs.push({
@@ -366,39 +366,39 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已拒绝！");
-                this.getpending();
+                this.getPending();
               }
             });
         })
         .catch(() => {});
     },
-    gorecordsearch() {
-      this.recordquery.page_no = 1;
-      this.getrecord();
+    goRecordSearch() {
+      this.recordQuery.page_no = 1;
+      this.getRecord();
     },
-    gopendingsearch() {
-      this.pendingquery.page_no = 1;
-      this.getpending();
+    goPendingSearch() {
+      this.pendingQuery.page_no = 1;
+      this.getPending();
     },
     sizeChangeHandle(val) {
-      this.pendingquery.page_size = val;
-      this.getpending();
+      this.pendingQuery.page_size = val;
+      this.getPending();
     },
     currentChangeHandle(val) {
-      this.pendingquery.page_no = val;
-      this.getpending();
+      this.pendingQuery.page_no = val;
+      this.getPending();
     },
     sizeChangeHandle1(val) {
-      this.recordquery.page_size = val;
-      this.getrecord();
+      this.recordQuery.page_size = val;
+      this.getRecord();
     },
     currentChangeHandle1(val) {
-      this.recordquery.page_no = val;
-      this.getrecord();
+      this.recordQuery.page_no = val;
+      this.getRecord();
     },
-    selectchange() {
-      this.recordquery.searchval = "";
-      this.recordquery.historydata = "";
+    selectChange() {
+      this.recordQuery.searchVal = "";
+      this.recordQuery.historyData = "";
     },
     handleSelectionChange(val) {
       let self = this;
@@ -417,25 +417,20 @@ export default {
   width: 200px;
   margin-right: 10px;
 }
-
-.searchbut {
+.search-button {
   margin-left: 10px;
 }
-
 .table {
   margin-top: 10px;
 }
-
-.button {
+.button-box {
   display: inline-block;
   vertical-align: bottom;
 }
-
-.search {
+.search-box {
   float: right;
   display: inline-block;
 }
-
 .tabs {
   margin-left: 10px;
   margin-top: 10px;

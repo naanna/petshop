@@ -16,7 +16,7 @@
         <el-tag v-for="(item,index) in form.tag" :key="index" class="tag">{{item}}</el-tag>
       </el-form-item>
     </el-form>
-    <div class="button">
+    <div class="center">
       <el-button size="small" @click="goclose">关闭</el-button>
     </div>
   </div>
@@ -45,9 +45,6 @@ export default {
 </script>
 
 <style scoped>
-.button {
-  text-align: center;
-}
 .tag {
   margin-left: 10px;
 }

@@ -1,40 +1,39 @@
 <template>
   <div>
-    <img src="@picture/person.png" class="picture" />
-    <div class="div1">
-      <span class="span1">我们相识已经有</span>
-      <span class="span1">{{day}}</span>
-      <span class="span1">天啦！</span>
-      <p class="span1" style="margin:0;">在这里您</p>
+    <img src="@picture/person.png" class="life-picture" />
+    <div class="life-box">
+      <span class="life-span">我们相识已经有</span>
+      <span class="life-span">{{day}}</span>
+      <span class="life-span">天啦！</span>
+      <p class="life-span" style="margin:0;">在这里您</p>
     </div>
 
-    <img src="@picture/money.png" class="picture" />
-    <div class="div1">
-      <span class="span1">消费了</span>
-      <span class="span1">{{money}}</span>
-      <span class="span1">元</span>
+    <img src="@picture/money.png" class="life-picture" />
+    <div class="life-box">
+      <span class="life-span">消费了</span>
+      <span class="life-span">{{money}}</span>
+      <span class="life-span">元</span>
     </div>
-    <img src="@picture/shop.png" class="picture" />
-    <div class="div1">
-      <span class="span1">购买过</span>
-      <span class="span1">{{num}}</span>
-      <span class="span1">件商品</span>
+    <img src="@picture/shop.png" class="life-picture" />
+    <div class="life-box">
+      <span class="life-span">购买过</span>
+      <span class="life-span">{{num}}</span>
+      <span class="life-span">件商品</span>
     </div>
-    <img src="@picture/kj.png" class="picture" />
-    <div class="div1">
-      <span class="span1">拥有</span>
-      <span class="span1">{{pet}}</span>
-      <span class="span1">只小可爱</span>
+    <img src="@picture/kj.png" class="life-picture" />
+    <div class="life-box">
+      <span class="life-span">拥有</span>
+      <span class="life-span">{{pet}}</span>
+      <span class="life-span">只小可爱</span>
     </div>
-    <img src="@picture/message.png" class="picture" />
-    <div class="div1">
-      <span class="span1">发表了</span>
-      <span class="span1">{{note}}</span>
-      <span class="span1">次留言</span>
+    <img src="@picture/message.png" class="life-picture" />
+    <div class="life-box">
+      <span class="life-span">发表了</span>
+      <span class="life-span">{{note}}</span>
+      <span class="life-span">次留言</span>
     </div>
-
-    <p class="p1">感谢您的陪伴与支持</p>
-    <p class="p1">让我们一起继续守护可爱的宠物宝宝们</p>
+    <p class="life-text">感谢您的陪伴与支持</p>
+    <p class="life-text">让我们一起继续守护可爱的宠物宝宝们</p>
   </div>
 </template>
 
@@ -80,20 +79,20 @@ export default {
 </script>
 
 <style scoped>
-.span1 {
+.life-span {
   font-size: 50px;
   font-family: "jelly";
   color: rgb(12, 131, 211);
 }
-.div1 {
+.life-box {
   margin: 20px 0 20px 0;
   text-align: center;
 }
-.picture {
+.life-picture {
   display: block;
   margin: 0 auto;
 }
-.p1 {
+.life-text {
   font-size: 50px;
   font-family: "jelly";
   text-align: center;

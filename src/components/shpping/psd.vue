@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="div1">
+    <div class="center">
       <div :class="get1fontclass">
         <div :class="get1boderclass">
           <span class="number">1</span>
@@ -22,7 +22,7 @@
     </div>
     <el-form
       label-position="right"
-      class="formclass1"
+      class="psd-form"
       v-show="nextpage=='1'"
       :model="form"
       :rules="rules"
@@ -31,11 +31,11 @@
       <el-form-item
         label="原密码："
         label-width="100px"
-        class="formclass"
+        class="psd-form-item"
         prop="oldpsd"
         :inline-message="true"
       >
-        <el-input show-password size="small" class="formwidth" v-model="form.oldpsd"></el-input>
+        <el-input show-password size="small" class="formlist" v-model="form.oldpsd"></el-input>
       </el-form-item>
     </el-form>
     <el-form
@@ -44,12 +44,12 @@
       ref="ruleForm"
       v-show="nextpage=='2'"
       label-width="100px"
-      class="formclass1"
+      class="psd-form"
     >
       <el-form-item
         label="密码："
         label-width="100px"
-        class="formclass"
+        class="psd-form-item"
         prop="pass"
         :inline-message="true"
       >
@@ -58,7 +58,7 @@
           size="small"
           v-model="ruleForm.pass"
           autocomplete="off"
-          class="formwidth"
+          class="formlist"
         ></el-input>
         <el-tooltip class="item" effect="dark" content="密码长度在6-20个字符间" placement="top">
           <i class="el-icon-question icon"></i>
@@ -68,7 +68,7 @@
         prop="checkPass"
         label="确认密码："
         label-width="100px"
-        class="formclass"
+        class="psd-form-item"
         :inline-message="true"
       >
         <el-input
@@ -76,15 +76,15 @@
           type="password"
           v-model="ruleForm.checkPass"
           autocomplete="off"
-          class="formwidth"
+          class="formlist"
         ></el-input>
       </el-form-item>
     </el-form>
-    <p class="div1" style="margin-top: 30px;margin-bottom: 20px;" v-if="nextpage=='3'">您的密码已经修改成功！</p>
-    <div class="div1" style="margin-top: 10px;">
-      <el-button type="primary" size="small" @click="goup" v-show="nextpage==2">上一步</el-button>
-      <el-button type="primary" size="small" @click="gonext" v-show="nextpage!=3">下一步</el-button>
-      <el-button type="primary" size="small" @click="goclose" v-show="nextpage==3">关闭</el-button>
+    <p class="center" style="margin-top: 30px;margin-bottom: 20px;" v-if="nextpage=='3'">您的密码已经修改成功！</p>
+    <div class="center" style="margin-top: 10px;">
+      <el-button type="primary" size="small" @click="goUp" v-show="nextpage==2">上一步</el-button>
+      <el-button type="primary" size="small" @click="goNext" v-show="nextpage!=3">下一步</el-button>
+      <el-button type="primary" size="small" @click="goClose" v-show="nextpage==3">关闭</el-button>
     </div>
   </div>
 </template>
@@ -154,10 +154,10 @@ export default {
     }
   },
   methods: {
-    goup() {
+    goUp() {
       this.nextpage--;
     },
-    gonext() {
+    goNext() {
       if (this.nextpage == "1") {
         this.$refs["form"].validate(valid => {
           if (valid) {
@@ -192,7 +192,7 @@ export default {
         });
       }
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   },
@@ -244,17 +244,12 @@ export default {
 </script>
 
 <style scoped>
-.formwidth {
-  width: 250px;
-}
-
-.formclass {
+.psd-form-item {
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 0;
 }
-
-.formclass1 {
+.psd-form {
   width: 500px;
   display: block;
   margin-left: auto;
@@ -268,7 +263,6 @@ export default {
   text-align: center;
   margin-top: 2px;
 }
-
 .boder-pink {
   width: 30px;
   height: 30px;
@@ -291,16 +285,11 @@ export default {
   vertical-align: middle;
   border-radius: 17px;
 }
-
 .font-grlay {
   color: #ccd0d7;
   display: inline-block;
   vertical-align: bottom;
   margin-left: 40px;
-}
-
-.div1 {
-  text-align: center;
 }
 .icon {
   margin-left: 10px;

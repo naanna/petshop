@@ -2,60 +2,60 @@
   <div>
     <el-row :gutter="20" class="row">
       <el-col :span="6" :xs="{span:12}">
-        <div class="carddiv">
-          <div class="headfootdiv">
+        <div class="card-box">
+          <div class="padding-left-10">
             <span>订单总数</span>
           </div>
-          <div class="icondiv">
-            <i class="el-icon-shopping-cart-full titleicon"></i>
+          <div class="card-icon-box">
+            <i class="el-icon-shopping-cart-full card-title-icon"></i>
             <span>{{totalorder}}</span>
           </div>
-          <div class="headfootdiv">
+          <div class="padding-left-10">
             <span class="go" @click="goUrl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
             <span class="go" @click="goUrl('/pet/goods')" v-else>我要下单...</span>
           </div>
         </div>
       </el-col>
       <el-col :span="6" :xs="{span:12}">
-        <div class="carddiv">
-          <div class="headfootdiv">
+        <div class="card-box">
+          <div class="padding-left-10">
             <span>销售总额</span>
           </div>
-          <div class="icondiv">
-            <i class="el-icon-money titleicon"></i>
+          <div class="card-icon-box">
+            <i class="el-icon-money card-title-icon"></i>
             <span>{{totalmoeny}}</span>
           </div>
-          <div class="headfootdiv">
+          <div class="padding-left-10">
             <span class="go" @click="goUrl('/manage/order')" v-if="permissions=='admin'">显示详细...</span>
             <span class="go" @click="goUrl('/pet/index')" v-else>我要购买...</span>
           </div>
         </div>
       </el-col>
       <el-col :span="6" :xs="{span:12}">
-        <div class="carddiv">
-          <div class="headfootdiv">
+        <div class="card-box">
+          <div class="padding-left-10">
             <span>会员总数</span>
           </div>
-          <div class="icondiv">
-            <i class="el-icon-user titleicon"></i>
+          <div class="card-icon-box">
+            <i class="el-icon-user card-title-icon"></i>
             <span>{{totaluser}}</span>
           </div>
-          <div class="headfootdiv">
+          <div class="padding-left-10">
             <span class="go" @click="goUrl('/customer/index')" v-if="permissions=='admin'">显示详细...</span>
             <span class="go" @click="goUrl('/shpping/person')" v-else>查看我的...</span>
           </div>
         </div>
       </el-col>
       <el-col :span="6" :xs="{span:12}">
-        <div class="carddiv">
-          <div class="headfootdiv">
+        <div class="card-box">
+          <div class="padding-left-10">
             <span>寄养总数</span>
           </div>
-          <div class="icondiv">
-            <i class="el-icon-box titleicon"></i>
+          <div class="card-icon-box">
+            <i class="el-icon-box card-title-icon"></i>
             <span>{{totalcare}}</span>
           </div>
-          <div class="headfootdiv">
+          <div class="padding-left-10">
             <span
               class="go"
               @click="goUrl('/manage/caremanage')"
@@ -68,9 +68,9 @@
     </el-row>
     <el-row :gutter="20" class="row">
       <el-col :lg="{span:10}" :md="{span:24}">
-        <div class="pichead">
+        <div class="second-head-box">
           <i class="el-icon-chicken icon"></i>
-          <span class="titleclass">宠物萌照</span>
+          <span class="title">宠物萌照</span>
         </div>
         <el-row :gutter="20" class="row">
           <el-col :span="8" v-for="(item,index) in picturelist" :key="index">
@@ -79,40 +79,40 @@
         </el-row>
       </el-col>
       <el-col :lg="{span:14}" :md="{span:24}">
-        <div class="pichead">
+        <div class="second-head-box">
           <i class="el-icon-menu icon"></i>
-          <span class="titleclass">销售图表</span>
+          <span class="title">销售图表</span>
         </div>
         <v-chart :options="options" autoresize class="chart"></v-chart>
       </el-col>
     </el-row>
     <el-row :gutter="20" class="row">
       <el-col :lg="{span:10}" :md="{span:24}">
-        <div class="userdiv">
-          <div class="userhead">
+        <div class="user-box">
+          <div class="third-head-box">
             <i class="el-icon-date icon"></i>
-            <span class="titleclass">用户活动</span>
+            <span class="title">用户活动</span>
           </div>
           <div>
-            <div class="user userhead" v-for="(item,index) in userdata" :key="index">
+            <div class="user third-head-box" v-for="(item,index) in userdata" :key="index">
               <div>
                 <span>会员</span>
-                <span class="usernamecolor join">{{item.nickname}}</span>
-                <span class="join">加入我们</span>
+                <span class="user-name margin-left-10">{{item.nickname}}</span>
+                <span class="margin-left-10">加入我们</span>
               </div>
               <div>
                 <i class="el-icon-time"></i>
-                <span class="join">{{item.regday}}</span>
+                <span class="margin-left-10">{{item.regday}}</span>
               </div>
             </div>
           </div>
         </div>
       </el-col>
       <el-col :lg="{span:14}" :md="{span:24}">
-        <div class="userdiv">
-          <div class="userhead">
+        <div class="user-box">
+          <div class="third-head-box">
             <i class="el-icon-s-goods icon"></i>
-            <span class="titleclass">今日推荐</span>
+            <span class="title">今日推荐</span>
           </div>
           <el-table :data="data" stripe highlight-current-row style="padding-top:10px;">
             <el-table-column
@@ -141,10 +141,10 @@
     </el-row>
     <el-row :gutter="20" class="row">
       <el-col :lg="{span:10}" :md="{span:24}">
-        <div class="userdiv">
-          <div class="userhead">
+        <div class="user-box">
+          <div class="third-head-box">
             <i class="el-icon-sunrise icon"></i>
-            <span class="titleclass">天气预报</span>
+            <span class="title">天气预报</span>
             <AreaSelection style="float:right;margin-top: -4px;" @adcode="getAdCode"></AreaSelection>
           </div>
           <el-row class="weather" v-for="(item,index) in weatherdata.casts" :key="index">
@@ -169,10 +169,10 @@
         </div>
       </el-col>
       <el-col :lg="{span:14}" :md="{span:24}">
-        <div class="userdiv">
-          <div class="userhead">
+        <div class="user-box">
+          <div class="third-head-box">
             <i class="el-icon-date icon"></i>
-            <span class="titleclass">日程活动</span>
+            <span class="title">日程活动</span>
           </div>
           <el-calendar>
             <template slot="dateCell" slot-scope="{date, data}">
@@ -341,24 +341,24 @@ export default {
 };
 </script>
 <style scoped>
-.headfootdiv {
+.padding-left-10 {
   padding-left: 10px;
 }
-.titleicon {
+.card-title-icon {
   opacity: 0.3;
   transition: all 1s;
 }
-.titleicon:hover {
+.card-title-icon:hover {
   opacity: 0.95;
 }
-.icondiv {
+.card-icon-box {
   background: #2786c5;
   display: flex;
   justify-content: space-between;
   padding: 20px;
   font-size: 35px;
 }
-.carddiv {
+.card-box {
   color: #ffffff;
   background: rgb(53, 143, 201);
   border-radius: 10px;
@@ -367,14 +367,13 @@ export default {
 .icon {
   font-size: 16px;
 }
-.titleclass {
+.title {
   margin-left: 10px;
   font-size: 18px;
   font-family: "楷体";
 }
-.pichead {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.second-head-box {
+  padding: 10px 0;
 }
 .picture {
   width: 160px;
@@ -384,10 +383,10 @@ export default {
 .chart {
   width: 100%;
 }
-.userhead {
+.third-head-box {
   padding: 10px;
 }
-.join {
+.margin-left-10 {
   margin-left: 10px;
 }
 .user {
@@ -396,12 +395,12 @@ export default {
   font-family: "楷体";
   border-bottom: 1px solid #dddddd;
 }
-.userdiv {
+.user-box {
   background: #ebeff3;
   border-radius: 10px;
   border: 1px solid #dddddd;
 }
-.usernamecolor {
+.user-name {
   color: rgb(119, 193, 232);
 }
 .go {

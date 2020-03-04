@@ -1,14 +1,14 @@
 <template>
   <div>
-    <el-form label-position="right" :model="form" :rules="rules" ref="form">
-      <el-form-item label="头像：" label-width="100px">
+    <el-form label-position="right" :model="form" :rules="rules" ref="form" label-width="100px">
+      <el-form-item label="头像：">
         <UploadImage @src="getSrc" :imageUrl="imageUrl"></UploadImage>
       </el-form-item>
-      <el-form-item label="账号：" label-width="100px" prop="username">
+      <el-form-item label="账号：" prop="username">
         <el-input
           type="text"
           size="small"
-          class="width250"
+          class="formlist"
           v-model="form.username"
           :disabled="disable"
         ></el-input>
@@ -16,61 +16,61 @@
           <i class="el-icon-question icon"></i>
         </el-tooltip>
       </el-form-item>
-      <el-form-item v-if="edit=='no'" label="密码：" label-width="100px" prop="pass">
-        <el-input type="password" v-model="form.pass" size="small" class="width250"></el-input>
+      <el-form-item v-if="!edit" label="密码：" prop="pass">
+        <el-input type="password" v-model="form.pass" size="small" class="formlist"></el-input>
       </el-form-item>
-      <el-form-item v-if="edit=='no'" label="确认密码：" label-width="100px" prop="checkPass">
-        <el-input type="password" v-model="form.checkPass" size="small" class="width250"></el-input>
+      <el-form-item v-if="!edit" label="确认密码：" prop="checkPass">
+        <el-input type="password" v-model="form.checkPass" size="small" class="formlist"></el-input>
       </el-form-item>
-      <el-form-item label="昵称：" label-width="100px" prop="nickname">
-        <el-input type="text" size="small" class="width250" v-model="form.nickname"></el-input>
+      <el-form-item label="昵称：" prop="nickname">
+        <el-input type="text" size="small" class="formlist" v-model="form.nickname"></el-input>
         <el-tooltip class="item" effect="dark" content="长度不应超过7个字符且不含空格" placement="top">
           <i class="el-icon-question icon"></i>
         </el-tooltip>
       </el-form-item>
-      <el-form-item label="姓名：" label-width="100px" prop="name">
-        <el-input type="text" size="small" class="width250" v-model="form.name"></el-input>
+      <el-form-item label="姓名：" prop="name">
+        <el-input type="text" size="small" class="formlist" v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="权限：" label-width="100px" prop="permissions">
-        <el-select size="small" class="width250" v-model="form.permissions" @change="goclearlevel">
+      <el-form-item label="权限：" prop="permissions">
+        <el-select size="small" class="formlist" v-model="form.permissions" @change="goclearlevel">
           <el-option value="customer" label="客户"></el-option>
           <el-option value="admin" label="管理员"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="性别：" label-width="100px" prop="sex">
-        <el-select size="small" class="width250" v-model="form.sex">
+      <el-form-item label="性别：" prop="sex">
+        <el-select size="small" class="formlist" v-model="form.sex">
           <el-option value="男" label="男"></el-option>
           <el-option value="女" label="女"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="等级：" label-width="100px" prop="level">
-        <el-select size="small" class="width250" v-model="form.level">
+      <el-form-item label="等级：" prop="level">
+        <el-select size="small" class="formlist" v-model="form.level">
           <el-option value="vip1" label="初级vip" v-if="form.permissions=='customer'"></el-option>
           <el-option value="vip2" label="中级vip" v-if="form.permissions=='customer'"></el-option>
           <el-option value="vip3" label="高级vip" v-if="form.permissions=='customer'"></el-option>
           <el-option value="admin" label="管理员" v-if="form.permissions=='admin'"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="余额：" label-width="100px" prop="money">
+      <el-form-item label="余额：" prop="money">
         <el-input
           type="text"
           size="small"
-          class="width250"
+          class="formlist"
           v-model.number="form.money"
           oninput="if(value.length>10)value=value.slice(0,10)"
         ></el-input>
       </el-form-item>
-      <el-form-item label="生日：" label-width="100px" prop="birthday">
+      <el-form-item label="生日：" prop="birthday">
         <el-date-picker
           v-model="form.birthday"
           type="date"
           placeholder="选择日期"
           size="small"
-          class="width250"
+          class="formlist"
         ></el-date-picker>
       </el-form-item>
     </el-form>
-    <div class="button">
+    <div class="center">
       <el-button type="primary" size="small" @click="goadd">{{edit==='no'?'添加':'编辑'}}</el-button>
       <el-button size="small" @click="goclose">取消</el-button>
     </div>
@@ -114,7 +114,7 @@ export default {
     return {
       disable: false,
       imageUrl: "",
-      edit: "no",
+      edit: false,
       form: {
         username: "",
         pass: "",
@@ -166,7 +166,7 @@ export default {
       this.form.pass = obs.psd;
       this.form.checkPass = obs.psd;
       if (obs.picture != null) this.imageUrl = obs.picture;
-      this.edit = "yes";
+      this.edit = true;
     }
   },
   methods: {
@@ -175,7 +175,7 @@ export default {
         if (valid) {
           const loading = this.$loading({
             lock: true,
-            text: this.edit === "no" ? "添加用户中..." : "编辑用户中...",
+            text: this.edit ? "编辑用户中..." : "添加用户中...",
             spinner: "el-icon-loading",
             background: "rgba(0, 0, 0, 0.7)"
           });
@@ -185,10 +185,10 @@ export default {
               "YYYY-MM-DD"
             );
             let url = "";
-            if (this.edit == "no") {
-              url = "/api/adduser";
-            } else {
+            if (this.edit) {
               url = "/api/updateuser";
+            } else {
+              url = "/api/adduser";
             }
             this.axios.post(url, this.form).then(res => {
               if (res.data.success) {
@@ -218,13 +218,7 @@ export default {
 </script>
 
 <style scoped>
-.width250 {
-  width: 250px;
-}
 .icon {
   margin-left: 10px;
-}
-.button {
-  text-align: center;
 }
 </style>

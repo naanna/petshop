@@ -1,13 +1,13 @@
 <template>
   <div>
     <span class="fontclass">我的寄养</span>
-    <el-button type="primary" size="small" class="float" @click="goadd">我要寄养</el-button>
-    <div class="botton">
-      <el-select size="small" class="select" v-model="type" @change="change">
+    <el-button type="primary" size="small" class="float" @click="goAdd">我要寄养</el-button>
+    <div class="seach-button">
+      <el-select size="small" class="seach-select" v-model="type" @change="change">
         <el-option value="宠物种类" label="宠物种类"></el-option>
         <el-option value="寄养单号" label="寄养单号"></el-option>
       </el-select>
-      <el-select size="small" class="select" v-model="searchval" v-if="type=='宠物种类'" clearable>
+      <el-select size="small" class="seach-select" v-model="searchval" v-if="type=='宠物种类'" clearable>
         <el-option value="cat" label="猫咪"></el-option>
         <el-option value="dog" label="狗狗"></el-option>
         <el-option value="pig" label="香猪"></el-option>
@@ -18,14 +18,13 @@
         type="text"
         clearable
         size="small"
-        class="select"
+        class="seach-select"
         v-model="searchval"
       ></el-input>
-      <el-button type="primary" size="small" @click="gosearch">搜索</el-button>
-      <el-button type="text" size="small" style="float:right;" @click="gohistory">查看历史寄养</el-button>
+      <el-button type="primary" size="small" @click="goSearch">搜索</el-button>
+      <el-button type="text" size="small" style="float:right;" @click="goHistory">查看历史寄养</el-button>
     </div>
-
-    <el-table :data="tabledata" stripe highlight-current-row class="table">
+    <el-table :data="tabledata" stripe highlight-current-row>
       <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物名" prop="name" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物种类" prop="type" align="center" header-align="center">
@@ -54,19 +53,19 @@
           <el-button
             type="text"
             size="small"
-            @click="gotolong(scope.row)"
+            @click="goTolong(scope.row)"
             v-if="scope.row.carestatus=='agreed'||scope.row.carestatus=='refused'"
           >延长</el-button>
           <el-button
             type="text"
             size="small"
-            @click="godel(scope.row)"
+            @click="goDel(scope.row)"
             v-if="scope.row.carestatus=='agreed'||scope.row.carestatus=='refused'"
           >结束</el-button>
           <el-button
             type="text"
             size="small"
-            @click="goover(scope.row)"
+            @click="goOver(scope.row)"
             v-if="scope.row.carestatus=='agreeing'"
           >取消</el-button>
         </div>
@@ -82,21 +81,20 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-    <el-dialog title="延长寄养时间" :visible.sync="centerDialogVisible" width="40%" center>
+    <el-dialog title="延长寄养时间" :visible.sync="centerDialogVisible" width="400px" center>
       <el-form :model="form" :rules="rules" ref="form">
         <el-form-item label="延长时长：" label-width="100px" style="margin-bottom:0px;" prop="longtime">
           <el-input
             type="text"
             size="small"
             v-model.number="form.longtime"
-            class="dhk"
             oninput="if(value.length>10)value=value.slice(0,10)"
           ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="goclear">取 消</el-button>
-        <el-button type="primary" size="small" @click="golong">确 定</el-button>
+        <el-button size="small" @click="goClear">取 消</el-button>
+        <el-button type="primary" size="small" @click="goLong">确 定</el-button>
       </span>
     </el-dialog>
     <Dialog></Dialog>
@@ -129,10 +127,10 @@ export default {
     };
   },
   created() {
-    this.goquery();
+    this.goQuery();
   },
   methods: {
-    makequery() {
+    makeQuery() {
       let query = {
         page_no: this.page_no,
         page_size: this.page_size,
@@ -148,8 +146,8 @@ export default {
       }
       return query;
     },
-    goquery() {
-      const query = this.makequery();
+    goQuery() {
+      const query = this.makeQuery();
       this.axios
         .get("/api/getcaretable/person", {
           params: {
@@ -169,7 +167,7 @@ export default {
           }
         });
     },
-    godel(row) {
+    goDel(row) {
       this.$confirm("您确定要提前结束寄养?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -183,17 +181,17 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已成功提交结束申请，请等待管理员处理");
-                this.goquery();
+                this.goQuery();
               }
             });
         })
         .catch(() => {});
     },
-    gotolong(row) {
+    goTolong(row) {
       this.centerDialogVisible = true;
       this.lontimeobs = row;
     },
-    golong() {
+    goLong() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
@@ -207,7 +205,7 @@ export default {
                 this.centerDialogVisible = false;
                 this.$refs["form"].resetFields();
                 this.$message.success("您已成功提交延长申请，请等待管理员处理");
-                this.goquery();
+                this.goQuery();
               }
             });
         } else {
@@ -215,7 +213,7 @@ export default {
         }
       });
     },
-    goover(row) {
+    goOver(row) {
       this.$confirm("您确定要取消寄养申请?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -232,40 +230,40 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已成功取消申请！");
-                this.goquery();
+                this.goQuery();
               }
             });
         })
         .catch(() => {});
     },
-    gosearch() {
+    goSearch() {
       this.page_no = 1;
-      this.goquery();
+      this.goQuery();
     },
-    goadd() {
+    goAdd() {
       this.Dialog.title("我要寄养")
         .width("600px")
         .currentView(caretable, {})
         .then(data => {
-          this.goquery();
+          this.goQuery();
         })
         .show();
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.goquery();
+      this.goQuery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.goquery();
+      this.goQuery();
     },
     change() {
       this.searchval = "";
     },
-    gohistory() {
+    goHistory() {
       this.$router.push("historyCare");
     },
-    goclear() {
+    goClear() {
       this.lontimeobs = "";
       this.centerDialogVisible = false;
       this.$refs["form"].resetFields();
@@ -278,25 +276,13 @@ export default {
 .float {
   float: right;
 }
-.select {
+.seach-select {
   width: 200px;
   display: inline-block;
   margin-right: 10px;
   vertical-align: bottom;
 }
-.dhk {
-  width: 200px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.table {
-  margin-top: 10px;
-}
-.time {
-  margin-right: 10px;
-}
-.botton {
-  margin-top: 20px;
+.seach-button {
+  margin: 20px 0 10px 0;
 }
 </style>

@@ -1,16 +1,16 @@
 <template>
-  <div class="div1">
-    <el-row type="flex" :style="conheight" align="middle">
+  <div class="box">
+    <el-row type="flex" :style="conHeight" align="middle">
       <el-col :lg="{span:12, offset:12}" :md="{span:24}">
         <el-form
           :model="loginform"
           label-position="right"
           label-width="100px"
-          class="form"
+          class="login-form"
           :rules="rules"
           ref="loginform"
         >
-          <h2 class="pclass">登录</h2>
+          <h2 class="center">登录</h2>
           <el-form-item prop="username" label="账号:">
             <el-row>
               <el-input type="text" size="small" v-model="loginform.username" class="input"></el-input>
@@ -28,15 +28,15 @@
               style="margin-right:20px"
             ></el-input>
             <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
-              <span class="code" @click="gochange">{{showcode}}</span>
+              <span class="code" @click="goChange">{{showCode}}</span>
             </el-tooltip>
           </el-form-item>
-          <div class="butclass">
+          <div class="forget-button">
             <el-button type="text" size="small" @click="goForget">忘记密码</el-button>
           </div>
-          <div class="pclass">
-            <el-button type="primary" size="small" @click="gologin">登录</el-button>
-            <el-button type="primary" size="small" @click="goreset">重置</el-button>
+          <div class="center">
+            <el-button type="primary" size="small" @click="goLogin">登录</el-button>
+            <el-button type="primary" size="small" @click="goReset">重置</el-button>
           </div>
         </el-form>
       </el-col>
@@ -53,13 +53,13 @@ export default {
   data() {
     return {
       code: "",
-      showcode: "",
+      showCode: "",
       loginform: {
         username: "",
         password: "",
         code: ""
       },
-      conheight: {
+      conHeight: {
         height: ""
       },
       rules: {
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setToken", "setUser"]),
-    gologin() {
+    goLogin() {
       this.$refs["loginform"].validate(valid => {
         if (valid) {
           let _this = this;
@@ -125,27 +125,27 @@ export default {
         }
       });
     },
-    goreset() {
+    goReset() {
       this.$refs["loginform"].resetFields();
     },
     getHeight() {
-      this.conheight.height = window.innerHeight + "px";
+      this.conHeight.height = window.innerHeight + "px";
     },
     goForget() {
       this.$router.push("/forgetpsd");
     },
     generatedCode() {
       let code = "";
-      let showcode = "";
+      let showCode = "";
       for (let i = 0; i < 4; i++) {
         let index = Math.floor(Math.random() * 62);
         code += random[index];
-        showcode += random[index] + " ";
+        showCode += random[index] + " ";
       }
       this.code = code;
-      this.showcode = showcode;
+      this.showCode = showCode;
     },
-    gochange() {
+    goChange() {
       this.generatedCode();
     }
   }
@@ -153,19 +153,16 @@ export default {
 </script>
 
 <style scoped>
-.pclass {
-  text-align: center;
-}
-.butclass {
+.forget-button {
   padding-right: 50px;
   margin-bottom: 5px;
   text-align: right;
 }
-.div1 {
+.box {
   background: url("https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/login.jpg");
   background-size: 100% 100%;
 }
-.form {
+.login-form {
   font-size: 18px;
   background: #ffffff;
   width: 40%;

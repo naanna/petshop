@@ -1,15 +1,15 @@
 <template>
   <div>
     <p class="ruleclass">留 言 板</p>
-    <div class="leave">
+    <div class="leave-box">
       <p style="margin-bottom:10px;">目前已有{{total}}条评论，请发表您的留言:</p>
       <el-input type="textarea" :rows="5" v-model="textarea"></el-input>
-      <el-button type="primary" plain size="small" class="button" @click="goMessage">发表</el-button>
+      <el-button type="primary" plain size="small" class="leave-button" @click="goMessage">发表</el-button>
       <el-button
         type="info"
         plain
         size="small"
-        class="button"
+        class="leave-button"
         @click="goMy"
         style="float:right;"
       >查看我的</el-button>
@@ -18,7 +18,7 @@
       <el-timeline-item
         :timestamp="item.simpletime"
         placement="top"
-        v-for="(item,index) in tabledata"
+        v-for="(item,index) in tableData"
       >
         <el-card>
           <h4 style="white-space: pre-wrap;">{{item.note}}</h4>
@@ -45,14 +45,14 @@ export default {
       total: 0,
       page_no: 1,
       page_size: 15,
-      tabledata: []
+      tableData: []
     };
   },
   created() {
-    this.goquery();
+    this.goQuery();
   },
   methods: {
-    goquery() {
+    goQuery() {
       let query = {
         page_no: this.page_no,
         page_size: this.page_size
@@ -66,14 +66,14 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.tabledata = results.message;
+            this.tableData = results.message;
             this.total = results.total;
-            for (let i in this.tabledata) {
-              this.tabledata[i].time = this.moment(
-                this.tabledata[i].time
+            for (let i in this.tableData) {
+              this.tableData[i].time = this.moment(
+                this.tableData[i].time
               ).format("YYYY-MM-DD HH:mm:ss");
-              this.tabledata[i].simpletime = this.moment(
-                this.tabledata[i].time
+              this.tableData[i].simpletime = this.moment(
+                this.tableData[i].time
               ).format("YYYY-MM-DD");
             }
           }
@@ -98,7 +98,7 @@ export default {
               })
               .then(res => {
                 if (res.data.success) {
-                  this.goquery();
+                  this.goQuery();
                   this.textarea = "";
                   this.$message.success("发表成功!");
                 }
@@ -109,7 +109,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.page_no = val;
-      this.goquery();
+      this.goQuery();
     },
     goMy() {
       this.$router.push("my");
@@ -129,10 +129,10 @@ export default {
   font-family: "华文行楷";
   color: transparent;
 }
-.button {
+.leave-button {
   margin-top: 10px;
 }
-.leave {
+.leave-box {
   margin: 10px 0 40px 40px;
 }
 </style>

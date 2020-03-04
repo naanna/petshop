@@ -2,11 +2,11 @@
   <div>
     <span class="fontclass">宠物管理</span>
     <div>
-      <div class="button">
-        <el-button type="primary" size="small" @click="goadd">添加宠物</el-button>
-        <el-button type="primary" size="small" @click="go2del">批量删除</el-button>
+      <div class="button-left-box">
+        <el-button type="primary" size="small" @click="goAdd">添加宠物</el-button>
+        <el-button type="primary" size="small" @click="go2Del">批量删除</el-button>
       </div>
-      <div class="buttondiv">
+      <div class="button-right-box">
         <el-select size="small" class="select" v-model="type" @change="change">
           <el-option value="编号" label="编号"></el-option>
           <el-option value="状态" label="状态"></el-option>
@@ -15,13 +15,13 @@
         <el-input
           v-if="type=='编号'"
           placeholder="请输入搜索内容"
-          v-model="searchval"
+          v-model="searchVal"
           type="text"
           size="small"
           clearable
           class="select"
         ></el-input>
-        <el-select v-else clearable size="small" class="select" v-model="searchval">
+        <el-select v-else clearable size="small" class="select" v-model="searchVal">
           <el-option v-if="type=='种类'" value="cat" label="猫咪"></el-option>
           <el-option v-if="type=='种类'" value="dog" label="狗狗"></el-option>
           <el-option v-if="type=='种类'" value="pig" label="香猪"></el-option>
@@ -30,11 +30,11 @@
           <el-option v-if="type=='状态'" value="caring" label="寄养"></el-option>
           <el-option v-if="type=='状态'" value="cared" label="领回"></el-option>
         </el-select>
-        <el-button type="primary" size="small" @click="gosearch">搜索</el-button>
+        <el-button type="primary" size="small" @click="goSearch">搜索</el-button>
       </div>
     </div>
     <el-table
-      :data="tabledata"
+      :data="tableData"
       highlight-current-row
       class="table"
       @selection-change="handleSelectionChange"
@@ -63,9 +63,9 @@
       <el-table-column label="性别" prop="sex" align="center" header-align="center"></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <div slot-scope="scope">
-          <el-button type="text" size="small" @click="godetail(scope.row)">详情</el-button>
-          <el-button type="text" size="small" @click="goupdate(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
+          <el-button type="text" size="small" @click="goDetail(scope.row)">详情</el-button>
+          <el-button type="text" size="small" @click="goUpdate(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="goDel(scope.row)">删除</el-button>
         </div>
       </el-table-column>
     </el-table>
@@ -95,36 +95,35 @@ export default {
   data() {
     return {
       type: "编号",
-      searchval: "",
-      tabledata: [],
+      searchVal: "",
+      tableData: [],
       total: 0,
       page_no: 1,
       page_size: 10
     };
   },
   created() {
-    this.goquery();
+    this.goQuery();
   },
   methods: {
-    makependingquery() {
+    makePendingQuery() {
       let query = {
         page_no: this.page_no,
         page_size: this.page_size
       };
-      if (this.searchval != "") {
+      if (this.searchVal != "") {
         if (this.type == "编号") {
-          query.petid = this.searchval;
+          query.petid = this.searchVal;
         } else if (this.type == "种类") {
-          query.type = this.searchval;
+          query.type = this.searchVal;
         } else if (this.type == "状态") {
-          query.status = this.searchval;
+          query.status = this.searchVal;
         }
       }
-
       return query;
     },
-    goquery() {
-      const query = this.makependingquery();
+    goQuery() {
+      const query = this.makePendingQuery();
       this.axios
         .get("/api/getpet", {
           params: {
@@ -134,19 +133,19 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.tabledata = results.message;
+            this.tableData = results.message;
             this.total = results.total;
-            for (let i in this.tabledata) {
+            for (let i in this.tableData) {
               var now = this.moment(
                 this.moment(new Date()).format("YYYY-MM-DD")
               );
-              var age = Util.displayAge(this.tabledata[i].birthday, now);
-              this.tabledata[i].age = age;
+              var age = Util.displayAge(this.tableData[i].birthday, now);
+              this.tableData[i].age = age;
             }
           }
         });
     },
-    godel(row) {
+    goDel(row) {
       this.$confirm("您确定要删除该宠物信息吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -158,23 +157,23 @@ export default {
             })
             .then(res => {
               if (res.data.success) {
-                this.goquery();
+                this.goQuery();
                 this.$message.success("删除成功！");
               }
             });
         })
         .catch(() => {});
     },
-    goadd() {
+    goAdd() {
       this.Dialog.title("添加宠物")
         .width("600px")
         .currentView(add_update, {})
         .then(data => {
-          this.goquery();
+          this.goQuery();
         })
         .show();
     },
-    go2del() {
+    go2Del() {
       let delobs = [];
       this.selectObj.forEach(item => {
         delobs.push({
@@ -198,46 +197,46 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
-                this.goquery();
+                this.goQuery();
               }
             });
         })
         .catch(() => {});
     },
-    goupdate(row) {
+    goUpdate(row) {
       this.Dialog.title("编辑宠物")
         .width("600px")
         .currentView(add_update, {
           row
         })
         .then(data => {
-          this.goquery();
+          this.goQuery();
         })
         .show();
     },
-    gosearch() {
+    goSearch() {
       this.page_no = 1;
-      this.goquery();
+      this.goQuery();
     },
     change() {
-      this.searchval = "";
+      this.searchVal = "";
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.goquery();
+      this.goQuery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.goquery();
+      this.goQuery();
     },
-    godetail(row) {
+    goDetail(row) {
       this.Dialog.title("宠物详情")
         .width("500px")
         .currentView(detail, {
           row
         })
         .then(data => {
-          this.goquery();
+          this.goQuery();
         })
         .show();
     },
@@ -260,22 +259,15 @@ export default {
   vertical-align: bottom;
   margin-right: 10px;
 }
-
 .table {
   margin-top: 10px;
 }
-
-.button {
+.button-left-box {
   display: inline-block;
   margin-top: 20px;
 }
-.buttondiv {
+.button-right-box {
   display: inline-block;
   float: right;
-}
-
-.timerang {
-  margin-left: 10px;
-  margin-right: 10px;
 }
 </style>

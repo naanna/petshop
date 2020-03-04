@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="ruleclass">了解如何照顾宠物</p>
-    <el-collapse v-model="activeNames" class="pageclass">
+    <el-collapse v-model="activeNames" class="manual-box">
       <el-collapse-item name="1">
         <template slot="title">
           <i class="header-icon el-icon-petchongwu icno"></i>
@@ -46,22 +46,22 @@
       <el-col :lg="{span:8}" :md="{span:24}">
         <img
           src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualdog.jpg"
-          class="picture"
-          @click="gourl('./dog')"
+          class="manual-picture"
+          @click="goUrl('./dog')"
         >
       </el-col>
       <el-col :lg="{span:8}" :md="{span:24}">
         <img
           src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualcat.jpg"
-          class="picture"
-          @click="gourl('./cat')"
+          class="manual-picture"
+          @click="goUrl('./cat')"
         >
       </el-col>
       <el-col :lg="{span:8}" :md="{span:24}">
         <img
           src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/manualpig.jpg"
-          class="picture"
-          @click="gourl('./pig')"
+          class="manual-picture"
+          @click="goUrl('./pig')"
         >
       </el-col>
     </el-row>
@@ -76,7 +76,7 @@ export default {
     };
   },
   methods: {
-    gourl(url) {
+    goUrl(url) {
       this.$router.replace(url);
     }
   }
@@ -84,11 +84,11 @@ export default {
 </script>
 
 <style scoped>
-.pageclass {
+.manual-box {
   width: 500px;
   margin: 0 auto;
 }
-.picture {
+.manual-picture {
   width: 300px;
   height: 350px;
   cursor: pointer;

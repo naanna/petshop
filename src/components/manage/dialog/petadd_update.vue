@@ -11,43 +11,43 @@
         <UploadImage @src="getSrc" :imageUrl="imageUrl"></UploadImage>
       </el-form-item>
       <el-form-item label="名字：" label-width="100px" prop="name">
-        <el-input type="text" size="small" class="width250" v-model="form.name"></el-input>
+        <el-input type="text" size="small" class="formlist" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="生日：" label-width="100px" prop="birthday">
-        <el-date-picker v-model="form.birthday" type="date" class="width250" size="small"></el-date-picker>
+        <el-date-picker v-model="form.birthday" type="date" class="formlist" size="small"></el-date-picker>
       </el-form-item>
       <el-form-item label="价格：" label-width="100px" prop="price">
         <el-input
           type="text"
           size="small"
-          class="width250"
+          class="formlist"
           v-model.number="form.price"
           oninput="if(value.length>10)value=value.slice(0,10)"
         ></el-input>
       </el-form-item>
       <el-form-item label="种类：" label-width="100px" prop="type">
-        <el-select size="small" class="width250" v-model="form.type">
+        <el-select size="small" class="formlist" v-model="form.type">
           <el-option value="dog" label="狗狗"></el-option>
           <el-option value="cat" label="猫咪"></el-option>
           <el-option value="pig" label="小香猪"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="品种：" label-width="100px" prop="variety">
-        <el-input type="text" size="small" class="width250" v-model="form.variety"></el-input>
+        <el-input type="text" size="small" class="formlist" v-model="form.variety"></el-input>
       </el-form-item>
       <el-form-item label="性别：" label-width="100px" prop="sex">
-        <el-select size="small" class="width250" v-model="form.sex">
+        <el-select size="small" class="formlist" v-model="form.sex">
           <el-option value="男" label="男"></el-option>
           <el-option value="女" label="女"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="备注：" label-width="100px" prop="note">
-        <el-input type="textarea" :rows="3" class="width250" v-model="form.note"></el-input>
+        <el-input type="textarea" :rows="3" class="formlist" v-model="form.note"></el-input>
       </el-form-item>
     </el-form>
-    <div class="button">
-      <el-button type="primary" size="small" @click="goadd">添加</el-button>
-      <el-button size="small" @click="goclose">取消</el-button>
+    <div class="center">
+      <el-button type="primary" size="small" @click="goAdd">添加</el-button>
+      <el-button size="small" @click="goClose">取消</el-button>
     </div>
   </div>
 </template>
@@ -107,7 +107,7 @@ export default {
     }
   },
   methods: {
-    goadd() {
+    goAdd() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.form.birthday = this.moment(this.form.birthday).format(
@@ -143,7 +143,7 @@ export default {
     getSrc(src) {
       this.form.picture = src;
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }
@@ -151,10 +151,4 @@ export default {
 </script>
 
 <style scoped>
-.width250 {
-  width: 250px;
-}
-.button {
-  text-align: center;
-} 
 </style>

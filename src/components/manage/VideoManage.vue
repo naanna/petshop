@@ -4,11 +4,11 @@
     <el-tabs value="first" class="tabs" @tab-click="handleClick">
       <el-tab-pane label="投稿审批" name="first">
         <div>
-          <div class="button">
+          <div class="button-box">
             <el-button type="primary" size="small" @click="go2Yes">批量同意</el-button>
             <el-button type="primary" size="small" @click="go2Refuse">批量拒绝</el-button>
           </div>
-          <div class="search">
+          <div class="search-box">
             <el-date-picker
               v-model="pendingQuery.historyData"
               type="daterange"
@@ -18,7 +18,7 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
             ></el-date-picker>
-            <el-button type="primary" size="small" class="searchbut" @click="goPendingSearch">搜索</el-button>
+            <el-button type="primary" size="small" class="search-button" @click="goPendingSearch">搜索</el-button>
           </div>
         </div>
         <el-table
@@ -479,25 +479,20 @@ export default {
   width: 200px;
   margin-right: 10px;
 }
-
-.searchbut {
+.search-button {
   margin-left: 10px;
 }
-
 .table {
   margin-top: 10px;
 }
-
-.button {
+.button-box {
   display: inline-block;
   vertical-align: bottom;
 }
-
-.search {
+.search-box {
   float: right;
   display: inline-block;
 }
-
 .tabs {
   margin-left: 10px;
   margin-top: 10px;

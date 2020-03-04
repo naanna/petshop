@@ -11,19 +11,19 @@
         <UploadImage @src="getSrc" :imageUrl="imageUrl"></UploadImage>
       </el-form-item>
       <el-form-item label="商品名：" label-width="100px" prop="name">
-        <el-input type="text" size="small" class="width250" v-model="form.name"></el-input>
+        <el-input type="text" size="small" class="formlist" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="价格：" label-width="100px" prop="price">
         <el-input
           type="text"
           size="small"
-          class="width250"
+          class="formlist"
           v-model.number="form.price"
           oninput="if(value.length>10)value=value.slice(0,10)"
         ></el-input>
       </el-form-item>
       <el-form-item label="种类：" label-width="100px" prop="type">
-        <el-select size="small" class="width250" v-model="form.type">
+        <el-select size="small" class="formlist" v-model="form.type">
           <el-option value="狗粮" label="狗粮"></el-option>
           <el-option value="猫粮" label="猫粮"></el-option>
           <el-option value="猪粮" label="猪粮"></el-option>
@@ -40,15 +40,15 @@
         <el-input
           type="text"
           size="small"
-          class="width250"
+          class="formlist"
           v-model.number="form.num"
           oninput="if(value.length>10)value=value.slice(0,10)"
         ></el-input>
       </el-form-item>
     </el-form>
-    <div class="button">
-      <el-button type="primary" size="small" @click="goadd">保存</el-button>
-      <el-button size="small" @click="goclose">取消</el-button>
+    <div class="center">
+      <el-button type="primary" size="small" @click="goAdd">保存</el-button>
+      <el-button size="small" @click="goClose">取消</el-button>
     </div>
   </div>
 </template>
@@ -70,7 +70,7 @@ export default {
         num: ""
       },
       imageUrl: "",
-      edit: "no",
+      edit: false,
       rules: {
         name: [
           { validator: checkgoodsname },
@@ -88,14 +88,21 @@ export default {
       if (obs.picture != null) {
         this.imageUrl = obs.picture;
       }
-      this.edit = "yes";
+      this.edit = true;
     }
   },
   methods: {
-    goadd() {
+    goAdd() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.edit == "no") {
+          if (this.edit) {
+            this.axios.put("/api/updategood", this.form).then(res => {
+              if (res.data.success) {
+                this.$message.success("编辑成功！");
+                this.closeDialog();
+              }
+            });
+          } else {
             if (this.form.picture == "") {
               this.$message.warning("请选择商品图片！");
             } else {
@@ -106,13 +113,6 @@ export default {
                 }
               });
             }
-          } else {
-            this.axios.put("/api/updategood", this.form).then(res => {
-              if (res.data.success) {
-                this.$message.success("编辑成功！");
-                this.closeDialog();
-              }
-            });
           }
         } else {
           return false;
@@ -122,7 +122,7 @@ export default {
     getSrc(src) {
       this.form.picture = src;
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }
@@ -130,10 +130,4 @@ export default {
 </script>
 
 <style scoped>
-.width250 {
-  width: 250px;
-}
-.button {
-  text-align: center;
-}
 </style>

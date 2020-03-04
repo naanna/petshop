@@ -3,7 +3,7 @@
     <span class="fontclass">帮助中心</span>
     <div class="flex">
       <div>
-        <el-menu default-active="1" class="menu" @select="handleSelect">
+        <el-menu default-active="1" class="help-menu" @select="handleSelect">
           <el-menu-item index="1">
             <span slot="title">购买流程</span>
           </el-menu-item>
@@ -25,7 +25,7 @@
         </el-menu>
       </div>
 
-      <div class="divclass" v-if="key==1">
+      <div class="help-info-box" v-if="key==1">
         <p class="center">购物流程</p>
         <div>
           <p>为您介绍下详细购物步骤：</p>
@@ -36,7 +36,7 @@
           <p>5.核对完信息无误之后就可以支付啦！</p>
         </div>
       </div>
-      <div class="divclass" v-else-if="key==2">
+      <div class="help-info-box" v-else-if="key==2">
         <p class="center">寄养流程</p>
         <div>
           <p>为您介绍下详细寄养步骤：</p>
@@ -48,7 +48,7 @@
           <p>6.提前结束寄养不会退还金额！请谨慎决定寄养时长。</p>
         </div>
       </div>
-      <div class="divclass" v-else-if="key==4">
+      <div class="help-info-box" v-else-if="key==4">
         <p class="center">留言功能</p>
         <div>
           <p>宠物商店内发布涉及色情、广告、暴力反动，招嫖，买卖枪支，毒品，或者诈骗，侵权，以及传播病毒广告等信息，都属于违规行为。</p>
@@ -61,7 +61,7 @@
           <p>登录到你的账号，点击导航上的【留言板】->【我的评论】，选择相关留言进行删除即可。</p>
         </div>
       </div>
-      <div class="divclass" v-else-if="key==5">
+      <div class="help-info-box" v-else-if="key==5">
         <p class="center">会员等级</p>
         <div>
           <p>本店采用会员等级制</p>
@@ -70,7 +70,7 @@
           <p>3.高级vip生日礼将跟多</p>
         </div>
       </div>
-      <div class="divclass" v-else-if="key==6">
+      <div class="help-info-box" v-else-if="key==6">
         <p class="center">联系我们</p>
         <div>
           <p>售后电话：1000110001</p>
@@ -79,7 +79,7 @@
           <p>欢迎加入我们！</p>
         </div>
       </div>
-      <div class="divclass" v-else-if="key==7">
+      <div class="help-info-box" v-else-if="key==7">
         <p class="center">关于我们</p>
         <div>
           <p>名字：飞宠大乱斗</p>
@@ -116,22 +116,17 @@ export default {
   font-family: "jelly";
   color: #fd7821;
 }
-.menu {
+.help-menu {
   flex: 1;
   border: 1px solid #e9e9e9;
 }
-.divclass {
+.help-info-box {
   margin-left: 20px;
   flex: 8;
 }
 .flex {
   padding: 50px 150px 0 150px;
   display: flex;
-
-  height: 590px;
   justify-content: space-between;
-}
-.pdiv {
-  text-align: center;
 }
 </style>

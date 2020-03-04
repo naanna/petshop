@@ -95,7 +95,7 @@
         <span style="margin-left:10px;">天</span>
       </el-form-item>
     </el-form>
-    <div class="button">
+    <div class="center">
       <el-button type="primary" size="small" @click="gosave">提交</el-button>
       <el-button size="small" @click="goclose">取消</el-button>
     </div>
@@ -189,20 +189,10 @@ export default {
 </script>
 
 <style scoped>
-.seepicture {
-  width: 150px;
-  height: 150px;
-}
 .title {
   text-align: center;
   font-size: 25px;
   margin-top: 0px;
-}
-.formlist {
-  width: 250px;
-}
-.button {
-  text-align: center;
 }
 .icon {
   font-size: 20px;

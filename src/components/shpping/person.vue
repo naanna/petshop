@@ -39,8 +39,8 @@
             <span style="color: #898989;">{{form.regday}}</span>
           </el-form-item>
           <div class="center">
-            <el-button type="primary" size="small" @click="gosave">保存</el-button>
-            <el-button size="small" @click="goclear">取消</el-button>
+            <el-button type="primary" size="small" @click="goSave">保存</el-button>
+            <el-button size="small" @click="goClear">取消</el-button>
           </div>
         </el-form>
       </div>
@@ -73,7 +73,7 @@
           <el-avatar class="picture" :src="form.picture" @error="errorHandler">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
-          <el-button class="change-button" circle @click="gourl('./changepic')">
+          <el-button class="change-button" circle @click="goUrl('./changepic')">
             <span style="display:block;">更改</span>
             <span>头像</span>
           </el-button>
@@ -84,14 +84,14 @@
       <span class="font-25">账号安全</span>
       <div class="psd-box">
         <div>
-          <img src="@picture/psdicon.png" class="psdpicture" />
+          <img src="@picture/psdicon.png" class="psd-picture" />
         </div>
         <div class="psd-info-box">
           <span class="psd-info-title">我的密码</span>
           <span class="psd-info">修改密码，账号更安全</span>
           <div class="psd-change-box">
             <img src="@picture/set.png" class="psd-change-pic" />
-            <span class="psd-change-title" @click="gopsd">更改密码></span>
+            <span class="psd-change-title" @click="goPsd">更改密码></span>
           </div>
         </div>
       </div>
@@ -148,10 +148,10 @@ export default {
     };
   },
   created() {
-    this.getperson();
+    this.getPerson();
   },
   methods: {
-    getperson() {
+    getPerson() {
       this.axios
         .get("/api/getuser", {
           params: {
@@ -173,7 +173,7 @@ export default {
           }
         });
     },
-    gosave() {
+    goSave() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.$confirm("确认保存修改的资料吗？", "提示", {
@@ -191,7 +191,7 @@ export default {
               })
               .then(res => {
                 if (res.data.success) {
-                  this.getperson();
+                  this.getPerson();
                   this.$message.success("修改信息成功！");
                 }
               });
@@ -201,26 +201,26 @@ export default {
         }
       });
     },
-    goclear() {
+    goClear() {
       this.form.nickname = this.old.nickname;
       this.form.name = this.old.name;
       this.form.sex = this.old.sex;
       this.form.birthday = this.old.birthday;
     },
-    gopsd() {
+    goPsd() {
       var old = this.form;
       this.Dialog.title("修改密码")
         .width("800px")
         .currentView(psd, { old })
         .then(data => {
-          this.getperson();
+          this.getPerson();
         })
         .show();
     },
     errorHandler() {
       return true;
     },
-    gourl(url) {
+    goUrl(url) {
       this.$router.push(url);
     }
   }
@@ -242,7 +242,7 @@ export default {
   margin: 20px 0;
   min-width: 420px;
 }
-.psdpicture {
+.psd-picture {
   width: 80px;
   height: 80px;
   border-radius: 40px;

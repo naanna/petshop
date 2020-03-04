@@ -2,13 +2,13 @@
   <div>
     <el-form label-position="right" :model="form" :rules="rules" ref="form">
       <el-form-item label="密码：" label-width="100px" prop="pass">
-        <el-input type="password" v-model="form.pass" size="small" class="width250"></el-input>
+        <el-input type="password" v-model="form.pass" size="small" class="formlist"></el-input>
       </el-form-item>
       <el-form-item label="确认密码：" label-width="100px" prop="checkPass">
-        <el-input type="password" v-model="form.checkPass" size="small" class="width250"></el-input>
+        <el-input type="password" v-model="form.checkPass" size="small" class="formlist"></el-input>
       </el-form-item>
     </el-form>
-    <div class="button">
+    <div class="center">
       <el-button type="primary" size="small" @click="goadd">确定</el-button>
       <el-button size="small" @click="goclose">关闭</el-button>
     </div>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "add_update",
+  name: "updatepsd",
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
@@ -88,10 +88,4 @@ export default {
 </script>
 
 <style scoped>
-.width250 {
-  width: 250px;
-}
-.button {
-  text-align: center;
-}
 </style>

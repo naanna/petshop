@@ -1,39 +1,39 @@
 <template>
   <div>
     <el-page-header @back="goBack"></el-page-header>
-    <div class="bodyStyle">
+    <div class="pictrue-box">
       <el-row :gutter="40">
-        <el-col :span="12" :xs="{span:24}" class="pictrueLeftDiv">
+        <el-col :span="12" :xs="{span:24}" class="pictrue-left-box">
           <el-upload
             :http-request="upload"
             :multiple="true"
             :show-file-list="false"
             action
             ref="upload"
-            class="uploadPic"
+            class="upload-pictrue"
             :before-upload="beforeAvatarUpload"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="seePicture" slot="trigger" />
+            <img v-if="imageUrl" :src="imageUrl" class="new-pictrue" slot="trigger" />
             <i v-else class="el-icon-plus icon" slot="trigger"></i>
           </el-upload>
         </el-col>
-        <el-col :span="12" :xs="{span:24}" class="pictrueRightDiv">
-          <div class="lookPic">
-            <img :src="showimageurl" class="picture" v-if="showimageurl" />
+        <el-col :span="12" :xs="{span:24}" class="pictrue-right-box">
+          <div class="show-pictrue-box">
+            <img :src="showImageurl" class="show-pictrue" v-if="showImageurl" />
             <img
               v-else
               src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
-              class="picture"
+              class="show-pictrue"
             />
-            <span class="spanStyle" v-if="!imageUrl">当前头像</span>
-            <span class="spanStyle" v-else>预览头像</span>
+            <span class="pictrue-span" v-if="!imageUrl">当前头像</span>
+            <span class="pictrue-span" v-else>预览头像</span>
           </div>
         </el-col>
       </el-row>
-      <p class="pStyle">请选择图片上传：大小180 * 180像素支持JPG、PNG等格式，图片需小于2M</p>
-      <div class="button">
-        <el-button type="primary" @click="goupdate">更新</el-button>
-        <el-button @click="goclear">重置</el-button>
+      <p class="pictrue-info">请选择图片上传：大小180 * 180像素支持JPG、PNG等格式，图片需小于2M</p>
+      <div class="center">
+        <el-button type="primary" @click="goUpdate">更新</el-button>
+        <el-button @click="goClear">重置</el-button>
       </div>
     </div>
   </div>
@@ -46,15 +46,15 @@ export default {
     return {
       imageUrl: "",
       fileList: [],
-      showimageurl: "",
+      showImageurl: "",
       old: ""
     };
   },
   created() {
-    this.getpicture();
+    this.getPicture();
   },
   methods: {
-    getpicture() {
+    getPicture() {
       this.axios
         .get("/api/getuser", {
           params: {
@@ -64,12 +64,12 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
-            this.showimageurl = results.picture;
+            this.showImageurl = results.picture;
             this.old = results.picture;
           }
         });
     },
-    goupdate() {
+    goUpdate() {
       if (this.imageUrl) {
         const loading = this.$loading({
           lock: true,
@@ -80,14 +80,14 @@ export default {
         setTimeout(() => {
           this.axios
             .put("/api/updateuser/picture", {
-              picture: this.showimageurl,
+              picture: this.showImageurl,
               username: this.$store.state.username
             })
             .then(res => {
               if (res.data.success) {
                 this.$message.success("修改头像成功！");
                 this.imageUrl = "";
-                this.getpicture();
+                this.getPicture();
                 loading.close();
               }
             });
@@ -109,7 +109,7 @@ export default {
         .put(fileName, file.file)
         .then(result => {
           this.imageUrl = result.url;
-          this.showimageurl = result.url;
+          this.showImageurl = result.url;
         })
         .catch(err => {
           this.$message.error("上传图片失败!");
@@ -128,8 +128,8 @@ export default {
         return false;
       }
     },
-    goclear() {
-      this.showimageurl = this.old;
+    goClear() {
+      this.showImageurl = this.old;
       this.imageUrl = "";
     },
     goBack() {
@@ -140,19 +140,19 @@ export default {
 </script>
 
 <style scoped>
-.pictrueLeftDiv {
+.pictrue-left-box {
   text-align: right;
 }
-.pictrueRightDiv {
+.pictrue-right-box {
   text-align: left;
 }
-.picture {
+.show-pictrue {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   margin-top: 50px;
 }
-.seePicture {
+.new-pictrue {
   width: 212px;
   height: 212px;
 }
@@ -162,14 +162,14 @@ export default {
   padding: 50px;
   height: 100px;
 }
-.uploadPic {
+.upload-pictrue {
   min-width: 212px;
   min-height: 212px;
   display: inline-block;
   border: 1px solid #e5e9ef;
   vertical-align: bottom;
 }
-.lookPic {
+.show-pictrue-box {
   min-width: 212px;
   min-height: 212px;
   vertical-align: bottom;
@@ -177,25 +177,22 @@ export default {
   border: 1px solid #e5e9ef;
   text-align: center;
 }
-.button {
-  margin-top: 40px;
-  text-align: center;
-}
-.spanStyle {
+.pictrue-span {
   display: block;
   margin-top: 15px;
   line-height: 16px;
   color: #99a2aa;
   font-size: 12px;
 }
-.pStyle {
+.pictrue-info {
   margin-top: 25px;
+  margin-bottom: 40px;
   line-height: 16px;
   color: #99a2aa;
   font-size: 12px;
   text-align: center;
 }
-.bodyStyle {
+.pictrue-box {
   margin-top: 25px;
 }
 </style>

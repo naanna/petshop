@@ -1,11 +1,11 @@
 <template>
   <div>
     <div style="display:flex;">
-      <div class="div1">
+      <div class="pet-detail-box">
         <el-avatar shape="square" :size="120" :src="form.picture"></el-avatar>
-        <p class="pclass">{{form.name}}</p>
+        <p class="pet-name">{{form.name}}</p>
       </div>
-      <div class="div2">
+      <div class="pet-info-box">
         <div>
           <span>编号：</span>
           <span>{{form.petid}}</span>
@@ -42,23 +42,23 @@
       </div>
     </div>
     <div>
-      <p class="pclass1">介绍：</p>
+      <p class="pet-info">介绍：</p>
       <el-input type="textarea" :rows="3" :readonly="true" class="textarea" v-model="form.note"></el-input>
     </div>
 
-    <div class="buttondiv">
+    <div class="pet-button-box">
       <el-button
         v-if="collect"
         type="danger"
         size="small"
         icon="el-icon-star-on"
         circle
-        @click="gonocollect"
+        @click="goNoCollect"
       ></el-button>
-      <el-button v-else size="small" icon="el-icon-star-off" circle @click="gocollect"></el-button>
-      <div class="buttonclass">
-        <el-button type="primary" size="small" @click="goadd">加入购物车</el-button>
-        <el-button size="small" @click="goclose">关闭</el-button>
+      <el-button v-else size="small" icon="el-icon-star-off" circle @click="goCollect"></el-button>
+      <div class="pet-button">
+        <el-button type="primary" size="small" @click="goAdd">加入购物车</el-button>
+        <el-button size="small" @click="goClose">关闭</el-button>
       </div>
     </div>
   </div>
@@ -79,7 +79,7 @@ export default {
     }
   },
   methods: {
-    goadd() {
+    goAdd() {
       this.axios
         .post("/api/addshopcar", {
           petid: this.form.petid,
@@ -96,13 +96,13 @@ export default {
           }
         });
     },
-    gocollect() {
+    goCollect() {
       this.collect = true;
     },
-    gonocollect() {
+    goNoCollect() {
       this.collect = false;
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }
@@ -119,20 +119,20 @@ export default {
   width: 350px;
   margin-left: 30px;
 }
-.div1 {
+.pet-detail-box {
   flex: 2;
   text-align: center;
   padding-left: 30px;
   padding-top: 30px;
 }
-.div2 {
+.pet-info-box {
   line-height: 30px;
   font-size: 20px;
   font-family: "jelly", "Microsoft YaHei", "黑体", "宋体", sans-serif;
   flex: 2;
   color: #cc496e;
 }
-.pclass {
+.pet-name {
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
@@ -141,17 +141,17 @@ export default {
   color: rgb(155, 155, 155);
   font-family: "jelly";
 }
-.pclass1 {
+.pet-info {
   padding-left: 30px;
   font-family: "jelly";
   font-size: 20px;
   margin-bottom: 10px;
 }
-.buttondiv {
+.pet-button-box {
   padding-left: 30px;
   margin-top: 20px;
 }
-.buttonclass {
+.pet-button {
   margin-left: 80px;
   display: inline-block;
 }

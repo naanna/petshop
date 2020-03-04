@@ -1,9 +1,9 @@
 <template>
   <div>
     <span class="font-25">充值中心</span>
-    <el-button type="text" size="small" style="float:right;" @click="gohistory">查看历史充值</el-button>
+    <el-button type="text" size="small" style="float:right;" @click="goHistory">查看历史充值</el-button>
     <div class="cost-boder">
-      <el-form label-position="right" class="form" :model="form" :rules="rules" ref="form">
+      <el-form label-position="right" class="cost-form" :model="form" :rules="rules" ref="form">
         <el-form-item label="充值金额：" class="form-item-padding" prop="money" :inline-message="true">
           <el-input
             type="text"
@@ -21,8 +21,8 @@
       </el-form>
     </div>
     <div class="center">
-      <el-button type="primary" size="small" @click="gosave">提交申请</el-button>
-      <el-button size="small" @click="goclear">取消</el-button>
+      <el-button type="primary" size="small" @click="goSave">提交申请</el-button>
+      <el-button size="small" @click="goClear">取消</el-button>
     </div>
     <p class="cost-text">充值说明</p>
     <p class="cost-text">
@@ -72,7 +72,7 @@ export default {
     };
   },
   methods: {
-    gosave() {
+    goSave() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.$confirm("确认充值给" + this.form.user + "吗？", "提示", {
@@ -97,10 +97,10 @@ export default {
         }
       });
     },
-    gohistory() {
+    goHistory() {
       this.$router.push("/shpping/historycost");
     },
-    goclear() {
+    goClear() {
       this.$refs["form"].resetFields();
     }
   }
@@ -123,7 +123,7 @@ export default {
   margin-top: 20px;
   color: #898989;
 }
-.form {
+.cost-form {
   width: 350px;
   margin: 0 auto;
 }

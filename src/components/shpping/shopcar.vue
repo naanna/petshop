@@ -4,14 +4,14 @@
     <el-steps :active="active" finish-status="success" simple class="step">
       <el-step title="放进购物车"></el-step>
       <el-step title="确认支付"></el-step>
-      <el-step title="订单信息" v-if="showsuccess"></el-step>
+      <el-step title="订单信息" v-if="showSuccess"></el-step>
       <el-step status="error" title="订单信息" v-else></el-step>
     </el-steps>
     <div v-show="active==1">
-      <el-button type="primary" size="small" @click="go2del">删除选中</el-button>
-      <el-button size="small" v-if="failure" @click="goclear">清空失效</el-button>
+      <el-button type="primary" size="small" @click="go2Del">删除选中</el-button>
+      <el-button size="small" v-if="failure" @click="goCear">清空失效</el-button>
       <el-table
-        :data="tabledata"
+        :data="tableData"
         highlight-current-row
         class="table"
         @selection-change="handleSelectionChange"
@@ -39,7 +39,7 @@
         <el-table-column label="价格" width="160px" prop="price" align="center" header-align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.status=='soldout'||scope.row.status=='saled'" type="info">失效</el-tag>
-            <span class="money1" v-else>￥{{scope.row.price}}</span>
+            <span class="shopcar-money1" v-else>￥{{scope.row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column label="数量" width="160px" prop="num" align="center" header-align="center">
@@ -51,7 +51,7 @@
               v-else
               :min="1"
               :max="scope.row.goodnum"
-              @change="changenum(scope.row)"
+              @change="changeNum(scope.row)"
             ></el-input-number>
           </template>
         </el-table-column>
@@ -64,22 +64,22 @@
         >
           <template slot-scope="scope">
             <span v-if="scope.row.status=='soldout'||scope.row.status=='saled'">不能够买，请联系卖家</span>
-            <span v-else class="money2">￥{{scope.row.num*scope.row.price}}</span>
+            <span v-else class="shopcar-money2">￥{{scope.row.num*scope.row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="160px" align="center" header-align="center">
           <div slot-scope="scope">
-            <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
+            <el-button type="text" size="small" @click="goDel(scope.row)">删除</el-button>
           </div>
         </el-table-column>
       </el-table>
 
-      <div class="info">
+      <div class="shopcar-info-box">
         <span>已选商品</span>
-        <span class="price">{{totalnum}}</span>
-        <span class="spanclass">件</span>
+        <span class="shopcar-price">{{totalnum}}</span>
+        <span class="shopcar-span">件</span>
         <span>合计：</span>
-        <span class="price">￥{{totalprice}}</span>
+        <span class="shopcar-price">￥{{totalprice}}</span>
       </div>
     </div>
     <div v-show="active==2">
@@ -100,7 +100,7 @@
         <el-table-column prop="name" header-align="center"></el-table-column>
         <el-table-column label="单价" width="160px" prop="price" align="center" header-align="center">
           <template slot-scope="scope">
-            <span class="money1">￥{{scope.row.price}}</span>
+            <span class="shopcar-money1">￥{{scope.row.price}}</span>
           </template>
         </el-table-column>
         <el-table-column label="数量" width="160px" prop="num" align="center" header-align="center"></el-table-column>
@@ -112,53 +112,53 @@
           header-align="center"
         >
           <template slot-scope="scope">
-            <span class="money2">￥{{scope.row.num*scope.row.price}}</span>
+            <span class="shopcar-money2">￥{{scope.row.num*scope.row.price}}</span>
           </template>
         </el-table-column>
       </el-table>
-      <div class="info">
+      <div class="shopcar-info-box">
         <span>实付款：</span>
-        <span class="price1">￥{{totalprice}}</span>
+        <span class="shopcar-price1">￥{{totalprice}}</span>
       </div>
     </div>
     <div v-show="active==3">
-      <div v-if="showsuccess">
-        <img src="@picture/success.png" class="picture" />
-        <div class="successdiv">
+      <div v-if="showSuccess">
+        <img src="@picture/success.png" class="shopcar-picture" />
+        <div class="success-box">
           <strong>支付成功！</strong>
           <p>恭喜您，您的支付已经成功！</p>
           <p>订单信息如下显示！</p>
           <p>如有其它问题，请立即与我们客服人员联系。</p>
           <span>返回</span>
-          <span class="car" @click="goback">购物车</span>
+          <span class="car" @click="goBack">购物车</span>
         </div>
-        <el-form label-position="right" class="formclass">
+        <el-form label-position="right" class="shopcar-order-form">
           <el-form-item label="订单号：" label-width="100px" prop="name">
-            <span class="spanclass">{{form.orderid}}</span>
+            <span class="shopcar-span">{{form.orderid}}</span>
           </el-form-item>
           <el-form-item label="支付金额：" label-width="100px" prop="price">
-            <span class="spanclass">{{form.totalprice}}</span>
+            <span class="shopcar-span">{{form.totalprice}}</span>
           </el-form-item>
           <el-form-item label="下单时间：" label-width="100px" prop="type">
-            <span class="spanclass">{{form.time}}</span>
+            <span class="shopcar-span">{{form.time}}</span>
           </el-form-item>
           <el-form-item label="下单账户：" label-width="100px" prop="num">
-            <span class="spanclass">{{form.username}}</span>
+            <span class="shopcar-span">{{form.username}}</span>
           </el-form-item>
         </el-form>
       </div>
       <div v-else>
-        <img src="@picture/wrong.png" class="picture" />
-        <div class="successdiv">
+        <img src="@picture/wrong.png" class="shopcar-picture" />
+        <div class="success-box">
           <strong>支付失败！</strong>
           <p>对不起，无法购买！</p>
           <p>当前访问页面失效，可能您停留时间过长，请重新提交申请！</p>
           <span>返回</span>
-          <span class="car" @click="goback">购物车</span>
+          <span class="car" @click="goBack">购物车</span>
         </div>
       </div>
     </div>
-    <div class="info">
+    <div class="shopcar-info-box">
       <el-button type="primary" @click="next" :disabled="count" v-if="active==1">结算</el-button>
       <el-button v-if="active==2" @click="up">返回购物车</el-button>
       <el-button v-if="active==2" type="primary" @click="next">提交订单</el-button>
@@ -177,8 +177,8 @@ export default {
       totalprice: 0,
       count: true,
       selectObj: [],
-      tabledata: [],
-      showsuccess: true,
+      tableData: [],
+      showSuccess: true,
       // 超时定时器
       overTimer: null,
       // 是否超时
@@ -188,7 +188,7 @@ export default {
     };
   },
   created() {
-    this.getshopcar();
+    this.getShopCar();
   },
   watch: {
     active: function() {
@@ -204,7 +204,7 @@ export default {
     clearTimeout(this.overTimer);
   },
   methods: {
-    getshopcar() {
+    getShopCar() {
       this.axios
         .get("/api/getshopcar", {
           params: {
@@ -215,9 +215,9 @@ export default {
           if (res.data.success) {
             var results = res.data.message;
             let i = 0;
-            this.tabledata = results.sort(Util.objSort("shopcarid"));
-            this.tabledata = this.tabledata.sort(this.Sortfailure("status"));
-            this.tabledata.forEach(item => {
+            this.tableData = results.sort(Util.objSort("shopcarid"));
+            this.tableData = this.tableData.sort(this.Sortfailure("status"));
+            this.tableData.forEach(item => {
               if (item.petid) item.goodnum = 1;
               if (item.status == "saled" || item.status == "soldout") i++;
             });
@@ -243,7 +243,7 @@ export default {
         }
       };
     },
-    godel(row) {
+    goDel(row) {
       this.$confirm("确认删除吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -256,13 +256,13 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
-                this.getshopcar();
+                this.getShopCar();
               }
             });
         })
         .catch(() => {});
     },
-    go2del() {
+    go2Del() {
       let delobs = [];
       this.selectObj.forEach(item => {
         delobs.push({
@@ -286,7 +286,7 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
-                this.getshopcar();
+                this.getShopCar();
               }
             });
         })
@@ -295,7 +295,7 @@ export default {
     next() {
       if (this.active == 2) {
         if (this.isOvertime) {
-          this.showsuccess = false;
+          this.showSuccess = false;
           this.active++;
         } else {
           const loading = this.$loading({
@@ -329,9 +329,9 @@ export default {
             .then(res => {
               if (res.data.success) {
                 if (res.data.message == "购物车内商品库存不足") {
-                  this.showsuccess = false;
+                  this.showSuccess = false;
                 } else if (res.data.message == "购物车内宠物售出购买失败") {
-                  this.showsuccess = false;
+                  this.showSuccess = false;
                 }
               }
             });
@@ -343,8 +343,8 @@ export default {
         }
       } else this.active++;
     },
-    goclear() {
-      let delobs = this.tabledata.filter(item => {
+    goCear() {
+      let delobs = this.tableData.filter(item => {
         return item.status == "saled" || item.status == "soldout";
       });
       this.$confirm("确认删除所选吗？", "提示", {
@@ -359,7 +359,7 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("清空成功！");
-                this.getshopcar();
+                this.getShopCar();
               }
             });
         })
@@ -368,10 +368,10 @@ export default {
     up() {
       this.active--;
     },
-    goback() {
+    goBack() {
       this.$router.go(0);
     },
-    changenum(row) {
+    changeNum(row) {
       if (row.num == undefined) {
         row.num = 1;
       }
@@ -383,7 +383,7 @@ export default {
           })
           .then(res => {
             if (res.data.success) {
-              this.getshopcar();
+              this.getShopCar();
             }
           });
       }
@@ -424,50 +424,49 @@ export default {
 
 <style scoped>
 .step {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
-.spanclass {
+.shopcar-span {
   margin-right: 20px;
 }
-.price {
+.shopcar-price {
   color: #f40;
   font-size: 18px;
   margin: 0 5px 0 5px;
 }
-.price1 {
+.shopcar-price1 {
   color: #f40;
   font-size: 30px;
   margin: 0 5px 0 5px;
 }
-.info {
+.shopcar-info-box {
   display: block;
   text-align: right;
   margin-top: 20px;
 }
-.money1 {
+.shopcar-money1 {
   font-size: 20px;
 }
-.money2 {
+.shopcar-money2 {
   font-size: 20px;
   color: #f40;
 }
-.formclass {
+.shopcar-order-form {
   margin-top: 40px;
   margin-left: 500px;
 }
-.picture {
+.shopcar-picture {
   width: 160px;
   margin-left: 400px;
   margin-right: 20px;
   height: 160px;
 }
-.successdiv {
+.success-box {
   display: inline-block;
   vertical-align: top;
   padding-top: 10px;
 }
-.spanclass {
+.shopcar-span {
   color: rgb(82, 80, 80);
 }
 .car {

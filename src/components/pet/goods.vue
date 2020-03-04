@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style=" text-align: right;">
-      <el-select size="small" class="search" v-model="type" @change="change">
+      <el-select size="small" class="goods-search" v-model="type" @change="change">
         <el-option value="价格" label="价格"></el-option>
         <el-option value="种类" label="种类"></el-option>
       </el-select>
@@ -24,8 +24,7 @@
           oninput="value=value.replace(/[^\d]/g,'');if(value.length>10)value=value.slice(0,10)"
         />
       </div>
-
-      <el-select size="small" style="width:200px;" v-model="searchval" v-else clearable>
+      <el-select size="small" style="width:200px;" v-model="searchVal" v-else clearable>
         <el-option value="狗粮" label="狗粮"></el-option>
         <el-option value="猫粮" label="猫粮"></el-option>
         <el-option value="猪粮" label="猪粮"></el-option>
@@ -37,47 +36,46 @@
         <el-option value="睡窝" label="睡窝"></el-option>
         <el-option value="宠物箱" label="宠物箱"></el-option>
       </el-select>
-      <el-button type="primary" size="small" style="margin-left:10px;" @click="gosearch">搜索</el-button>
+      <el-button type="primary" size="small" style="margin-left:10px;" @click="goSearch">搜索</el-button>
     </div>
     <el-row style="min-width:1120px;max-width:1350px;width:100%">
-      <el-col :span="4" v-for="(item, index) in tabledata" :key="index">
-        <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
-          <el-image class="image" :src="item.picture"></el-image>
+      <el-col :span="4" v-for="(item, index) in tableData" :key="index">
+        <el-card class="goods-card" shadow="hover" :body-style="{ padding: '0px' }">
+          <el-image class="goods-image" :src="item.picture"></el-image>
           <div>
-            <span class="money">¥ {{item.price}}元</span>
-            <span class="num">{{item.num}}件</span>
+            <span class="goods-money">¥ {{item.price}}元</span>
+            <span class="goods-num">{{item.num}}件</span>
             <el-tooltip
               v-if="item.name.length>12"
-              class="title"
+              class="goods-title"
               effect="dark"
               :content="item.name"
               placement="bottom"
             >
-              <p class="title">{{item.name}}</p>
+              <p class="goods-title">{{item.name}}</p>
             </el-tooltip>
-            <p v-else class="title">{{item.name}}</p>
-            <div class="flexclass">
+            <p v-else class="goods-title">{{item.name}}</p>
+            <div class="goods-button-box">
               <el-button
                 v-if="item.collect"
                 type="danger"
                 size="small"
                 icon="el-icon-star-off"
-                @click="gonocollect(item)"
+                @click="goNoCollect(item)"
               ></el-button>
-              <el-button v-else size="small" icon="el-icon-star-off" plain @click="gocollect(item)"></el-button>
+              <el-button v-else size="small" icon="el-icon-star-off" plain @click="goCollect(item)"></el-button>
               <el-button
                 type="primary"
                 size="mini"
                 plain
                 icon="el-icon-shopping-cart-1"
-                @click="goaddshop(item)"
+                @click="goAddShop(item)"
               ></el-button>
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
-
     <el-pagination
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
@@ -97,21 +95,21 @@ export default {
   data() {
     return {
       type: "价格",
-      searchval: "狗粮",
+      searchVal: "狗粮",
       money1: "",
       money2: "",
       total: 0,
       page_no: 1,
       page_size: 12,
-      tabledata: [],
-      collectobs: []
+      tableData: [],
+      collectObs: []
     };
   },
   created() {
-    this.goquery();
+    this.goQuery();
   },
   methods: {
-    makependingquery() {
+    makePendingQuery() {
       let query = {
         page_no: this.page_no,
         page_size: this.page_size,
@@ -133,12 +131,12 @@ export default {
           query.big = this.money2;
         }
       } else {
-        if (this.searchval != "") query.type = this.searchval;
+        if (this.searchVal != "") query.type = this.searchVal;
       }
       return query;
     },
-    goquery() {
-      let query = this.makependingquery();
+    goQuery() {
+      let query = this.makePendingQuery();
       this.axios
         .get("/api/getgood", {
           params: {
@@ -148,10 +146,10 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.tabledata = results.message;
+            this.tableData = results.message;
             this.total = results.total;
-            for (let i in this.tabledata) {
-              this.$set(this.tabledata[i], "collect", false);
+            for (let i in this.tableData) {
+              this.$set(this.tableData[i], "collect", false);
             }
             return this.axios.get("/api/getcollect", {
               params: {
@@ -163,25 +161,25 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
-            this.collectobs = results
+            this.collectObs = results
               .filter(item => item.status == "sale")
               .map(item => {
                 return item.goodid;
               });
-            this.tabledata.filter(item => {
-              if (this.collectobs.includes(item.goodid)) {
+            this.tableData.filter(item => {
+              if (this.collectObs.includes(item.goodid)) {
                 item.collect = true;
-                return this.collectobs.includes(item.goodid);
+                return this.collectObs.includes(item.goodid);
               }
             });
           }
         });
     },
-    gosearch() {
+    goSearch() {
       this.page_no = 1;
-      this.goquery();
+      this.goQuery();
     },
-    goaddshop(row) {
+    goAddShop(row) {
       this.$confirm("您确认要加入购物车吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -207,9 +205,9 @@ export default {
     change() {
       this.money1 = "";
       this.money2 = "";
-      this.searchval = "";
+      this.searchVal = "";
     },
-    gocollect(row) {
+    goCollect(row) {
       this.axios
         .post("/api/addcollect", {
           username: this.$store.state.username,
@@ -222,7 +220,7 @@ export default {
           }
         });
     },
-    gonocollect(row) {
+    goNoCollect(row) {
       this.axios
         .delete("/api/deletecollect", {
           data: {
@@ -239,11 +237,11 @@ export default {
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.goquery();
+      this.goQuery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.goquery();
+      this.goQuery();
     }
   }
 };
@@ -255,17 +253,15 @@ export default {
   line-height: 32px;
   width: 70px;
 }
-
-.flexclass {
+.goods-button-box {
   padding: 0 10px 10px 0;
   text-align: right;
 }
-
-.card {
+.goods-card {
   margin-right: 40px;
   margin-top: 40px;
 }
-.title {
+.goods-title {
   font-size: 13px;
   display: block;
   text-align: center;
@@ -273,22 +269,21 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.image {
+.goods-image {
   width: 100%;
   height: 160px;
   display: block;
 }
-.money {
+.goods-money {
   display: block;
   color: #f40;
   padding: 10px 0 0 10px;
 }
-.search {
+.goods-search {
   width: 200px;
   margin-right: 10px;
 }
-.num {
+.goods-num {
   text-align: right;
   display: block;
   color: #999;

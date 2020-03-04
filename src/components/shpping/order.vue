@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span class="font-25">消费记录</span>
-    <el-tabs value="first" class="page">
+    <span class="fontclass">消费记录</span>
+    <el-tabs value="first">
       <el-tab-pane label="购物" name="first">
         <buy></buy>
       </el-tab-pane>
@@ -27,7 +27,4 @@ export default {
 };
 </script>
 <style scoped>
-.page {
-  margin-top: 20px;
-}
 </style>

@@ -4,7 +4,7 @@
     <el-tabs value="first" class="tabs">
       <el-tab-pane label="寄养申请" name="first">
         <div style="margin-bottom:10px;">
-          <div class="floatdiv">
+          <div class="right">
             <el-select size="small" class="width2001" v-model="approval.type" @change="change1">
               <el-option value="寄养者" label="寄养者"></el-option>
               <el-option value="寄养单号" label="寄养单号"></el-option>
@@ -14,7 +14,7 @@
               v-if="approval.type=='申请类型'"
               size="small"
               class="width200"
-              v-model="approval.searchval"
+              v-model="approval.searchVal"
               clearable
             >
               <el-option value="care" label="寄养"></el-option>
@@ -27,13 +27,13 @@
               type="text"
               size="small"
               class="width200"
-              v-model="approval.searchval"
+              v-model="approval.searchVal"
               clearable
             ></el-input>
-            <el-button type="primary" size="small" @click="goapprovalsearch">搜索</el-button>
+            <el-button type="primary" size="small" @click="goApprovaSearch">搜索</el-button>
           </div>
         </div>
-        <el-table :data="approvaldata" stripe highlight-current-row>
+        <el-table :data="approvalData" stripe highlight-current-row>
           <el-table-column
             prop="id"
             type="selection"
@@ -55,8 +55,8 @@
           <el-table-column label="寄养者" prop="username" align="center" header-align="center"></el-table-column>
           <el-table-column label="操作" width="130" align="center" header-align="center">
             <div slot-scope="scope">
-              <el-button type="text" size="small" @click="goagree(scope.row)">同意</el-button>
-              <el-button type="text" size="small" @click="gorefused(scope.row)">拒绝</el-button>
+              <el-button type="text" size="small" @click="goAgree(scope.row)">同意</el-button>
+              <el-button type="text" size="small" @click="goRefuse(scope.row)">拒绝</el-button>
             </div>
           </el-table-column>
         </el-table>
@@ -83,18 +83,18 @@
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="goclose">取 消</el-button>
-            <el-button type="primary" @click="goyes">确 定</el-button>
+            <el-button @click="goClose">取 消</el-button>
+            <el-button type="primary" @click="goYes">确 定</el-button>
           </span>
         </el-dialog>
       </el-tab-pane>
       <el-tab-pane label="记录管理" name="second">
         <div style="margin-bottom:10px;">
-          <div class="button">
-            <el-button type="primary" size="small" @click="goadd">添加寄养</el-button>
-            <el-button type="primary" size="small" @click="go2del">批量删除</el-button>
+          <div class="button-box">
+            <el-button type="primary" size="small" @click="goAdd">添加寄养</el-button>
+            <el-button type="primary" size="small" @click="go2Del">批量删除</el-button>
           </div>
-          <div class="floatdiv">
+          <div class="right">
             <el-select size="small" class="width2001" v-model="recode.type" @change="change">
               <el-option value="寄养者" label="寄养者"></el-option>
               <el-option value="寄养时间" label="寄养时间"></el-option>
@@ -104,7 +104,7 @@
               v-if="recode.type=='类型'"
               size="small"
               class="width200"
-              v-model="recode.searchval"
+              v-model="recode.searchVal"
               clearable
             >
               <el-option value="care" label="寄养"></el-option>
@@ -117,23 +117,23 @@
               type="text"
               size="small"
               class="width200"
-              v-model="recode.searchval"
+              v-model="recode.searchVal"
               clearable
             ></el-input>
             <el-date-picker
               v-if="recode.type=='寄养时间'"
-              v-model="recode.searchval"
+              v-model="recode.searchVal"
               type="daterange"
               size="small"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
             ></el-date-picker>
-            <el-button type="primary" size="small" class="searchbut" @click="gorecodesearch">搜索</el-button>
+            <el-button type="primary" size="small" class="search-button" @click="goRecodeSearch">搜索</el-button>
           </div>
         </div>
         <el-table
-          :data="recodedata"
+          :data="recodeData"
           stripe
           highlight-current-row
           @selection-change="handleSelectionChange"
@@ -177,8 +177,8 @@
           </el-table-column>
           <el-table-column label="操作" width="130" align="center" header-align="center">
             <div slot-scope="scope">
-              <el-button type="text" size="small" @click="goupdate(scope.row)">编辑</el-button>
-              <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
+              <el-button type="text" size="small" @click="goUpdate(scope.row)">编辑</el-button>
+              <el-button type="text" size="small" @click="goDel(scope.row)">删除</el-button>
             </div>
           </el-table-column>
         </el-table>
@@ -217,18 +217,18 @@ export default {
         ]
       },
       selectObj: [],
-      approvaldata: [],
-      recodedata: [],
+      approvalData: [],
+      recodeData: [],
       approval: {
         type: "寄养者",
-        searchval: "",
+        searchVal: "",
         total: 0,
         page_no: 1,
         page_size: 10
       },
       recode: {
         type: "寄养者",
-        searchval: "",
+        searchVal: "",
         total: 0,
         page_no: 1,
         page_size: 10
@@ -236,28 +236,28 @@ export default {
     };
   },
   created() {
-    this.goapprovalquery();
-    this.gorecodequery();
+    this.goApprovalQuery();
+    this.goRecodeQuery();
   },
   methods: {
-    makeapprovalquery() {
+    makeApprovalQuery() {
       let query = {
         page_no: this.approval.page_no,
         page_size: this.approval.page_size
       };
-      if (this.approval.searchval != "") {
+      if (this.approval.searchVal != "") {
         if (this.approval.type == "寄养者") {
-          query.username = this.approval.searchval;
+          query.username = this.approval.searchVal;
         } else if (this.approval.type == "寄养单号") {
-          query.careid = this.approval.searchval;
+          query.careid = this.approval.searchVal;
         } else if (this.approval.type == "申请类型") {
-          query.type = this.approval.searchval;
+          query.type = this.approval.searchVal;
         }
       }
       return query;
     },
-    goapprovalquery() {
-      let query = this.makeapprovalquery();
+    goApprovalQuery() {
+      let query = this.makeApprovalQuery();
       this.axios
         .get("/api/getcaretable", {
           params: {
@@ -267,42 +267,42 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.approvaldata = results.message;
-            for (let i in this.approvaldata) {
-              this.approvaldata[i].starttime = this.moment(
-                this.approvaldata[i].starttime
+            this.approvalData = results.message;
+            for (let i in this.approvalData) {
+              this.approvalData[i].starttime = this.moment(
+                this.approvalData[i].starttime
               ).format("YYYY-MM-DD");
-              this.approvaldata[i].endtime = this.moment(
-                this.approvaldata[i].endtime
+              this.approvalData[i].endtime = this.moment(
+                this.approvalData[i].endtime
               ).format("YYYY-MM-DD");
             }
             this.approval.total = results.total;
           }
         });
     },
-    makerecodequery() {
+    makeRecodeQuery() {
       let query = {
         page_no: this.recode.page_no,
         page_size: this.recode.page_size
       };
-      if (this.recode.searchval != "" && this.recode.searchval != null) {
+      if (this.recode.searchVal != "" && this.recode.searchVal != null) {
         if (this.recode.type == "寄养者") {
-          query.username = this.recode.searchval;
+          query.username = this.recode.searchVal;
         } else if (this.recode.type == "寄养时间") {
-          var time = this.moment(this.recode.searchval[0]).format("YYYY-MM-DD");
-          var time1 = this.moment(this.recode.searchval[1]).format(
+          var time = this.moment(this.recode.searchVal[0]).format("YYYY-MM-DD");
+          var time1 = this.moment(this.recode.searchVal[1]).format(
             "YYYY-MM-DD"
           );
           query.starttime = time;
           query.endtime = time1;
         } else if (this.recode.type == "类型") {
-          query.type = this.recode.searchval;
+          query.type = this.recode.searchVal;
         }
       }
       return query;
     },
-    gorecodequery() {
-      let query = this.makerecodequery();
+    goRecodeQuery() {
+      let query = this.makeRecodeQuery();
       this.axios
         .get("/api/getallcaretable", {
           params: {
@@ -312,20 +312,20 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.recodedata = results.message;
-            for (let i in this.recodedata) {
-              this.recodedata[i].starttime = this.moment(
-                this.recodedata[i].starttime
+            this.recodeData = results.message;
+            for (let i in this.recodeData) {
+              this.recodeData[i].starttime = this.moment(
+                this.recodeData[i].starttime
               ).format("YYYY-MM-DD");
-              this.recodedata[i].endtime = this.moment(
-                this.recodedata[i].endtime
+              this.recodeData[i].endtime = this.moment(
+                this.recodeData[i].endtime
               ).format("YYYY-MM-DD");
             }
             this.recode.total = results.total;
           }
         });
     },
-    gorefused(row) {
+    goRefuse(row) {
       this.$confirm("您确定要拒绝本条申请?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -341,14 +341,14 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已成功拒绝！");
-                this.goapprovalquery();
-                this.gorecodequery();
+                this.goApprovalQuery();
+                this.goRecodeQuery();
               }
             });
         })
         .catch(() => {});
     },
-    goagree(row) {
+    goAgree(row) {
       if (row.caretype == "back") {
         this.$confirm("您确定要同意本条领回申请记录?", "提示", {
           confirmButtonText: "确定",
@@ -366,8 +366,8 @@ export default {
               .then(res => {
                 if (res.data.success) {
                   this.$message.success("您已同意！");
-                  this.goapprovalquery();
-                  this.gorecodequery();
+                  this.goApprovalQuery();
+                  this.goRecodeQuery();
                 }
               });
           })
@@ -377,7 +377,7 @@ export default {
         this.obs = row;
       }
     },
-    goyes() {
+    goYes() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
@@ -394,8 +394,8 @@ export default {
                 this.centerDialogVisible = false;
                 this.$message.success("您已成功同意延迟寄养！");
                 this.$refs["form"].resetFields();
-                this.goapprovalquery();
-                this.gorecodequery();
+                this.goApprovalQuery();
+                this.goRecodeQuery();
               }
             });
         } else {
@@ -403,7 +403,7 @@ export default {
         }
       });
     },
-    godel(row) {
+    goDel(row) {
       this.$confirm("您确定要删除本条寄养记录?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -419,28 +419,28 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已成功删除");
-                this.goapprovalquery();
-                this.gorecodequery();
+                this.goApprovalQuery();
+                this.goRecodeQuery();
               }
             });
         })
         .catch(() => {});
     },
-    goclose() {
+    goClose() {
       this.centerDialogVisible = false;
       this.$refs["form"].resetFields();
     },
-    goadd() {
+    goAdd() {
       this.Dialog.title("添加寄养记录")
         .width("600px")
         .currentView(add_update, {})
         .then(data => {
-          this.goapprovalquery();
-          this.gorecodequery();
+          this.goApprovalQuery();
+          this.goRecodeQuery();
         })
         .show();
     },
-    go2del() {
+    go2Del() {
       let delobs = [];
       this.selectObj.forEach(item => {
         delobs.push({
@@ -464,52 +464,52 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
-                this.goapprovalquery();
-                this.gorecodequery();
+                this.goApprovalQuery();
+                this.goRecodeQuery();
               }
             });
         })
         .catch(() => {});
     },
-    goupdate(row) {
+    goUpdate(row) {
       this.Dialog.title("修改寄养记录")
         .width("600px")
         .currentView(add_update, { row })
         .then(data => {
-          this.goapprovalquery();
-          this.gorecodequery();
+          this.goApprovalQuery();
+          this.goRecodeQuery();
         })
         .show();
     },
     change() {
-      this.recode.searchval = "";
+      this.recode.searchVal = "";
     },
     change1() {
-      this.approval.searchval = "";
+      this.approval.searchVal = "";
     },
-    gorecodesearch() {
+    goRecodeSearch() {
       this.recode.page_no = 1;
-      this.gorecodequery();
+      this.goRecodeQuery();
     },
-    goapprovalsearch() {
+    goApprovaSearch() {
       this.approval.page_no = 1;
-      this.goapprovalquery();
+      this.goApprovalQuery();
     },
     sizeChangeHandle1(val) {
       this.approval.page_size = val;
-      this.goapprovalquery();
+      this.goApprovalQuery();
     },
     currentChangeHandle1(val) {
       this.approval.page_no = val;
-      this.goapprovalquery();
+      this.goApprovalQuery();
     },
     sizeChangeHandle(val) {
       this.recode.page_size = val;
-      this.gorecodequery();
+      this.goRecodeQuery();
     },
     currentChangeHandle(val) {
       this.recode.page_nopage_no = val;
-      this.gorecodequery();
+      this.goRecodeQuery();
     },
     handleSelectionChange(val) {
       let self = this;
@@ -529,29 +529,24 @@ export default {
   margin-left: 10px;
   margin-top: 10px;
 }
-.button {
+.button-box {
   display: inline-block;
   vertical-align: bottom;
 }
-
 .width2001 {
   width: 200px;
   display: inline-block;
   margin-right: 10px;
   vertical-align: bottom;
 }
-
 .width200 {
   width: 200px;
   margin-right: 10px;
 }
-
-.searchbut {
+.search-button {
   margin-left: 10px;
 }
-
-.floatdiv {
-  float: right;
-  display: inline-block;
+.right {
+  text-align: right;
 }
 </style>

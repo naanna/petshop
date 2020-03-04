@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div class="headclass">
-      <div class="headerinfo">
-        <span class="textclass">交易单号</span>
+    <div class="head-box">
+      <div class="head-info">
+        <span class="head-title">交易单号:</span>
         <span>{{orderid}}</span>
       </div>
-      <div class="headerinfo">
-        <span class="textclass">交易时间</span>
+      <div class="head-info">
+        <span class="head-title">交易时间:</span>
         <span>{{time}}</span>
       </div>
     </div>
-    <el-table :data="tabledata" class="table">
+    <el-table :data="tableData" class="table">
       <el-table-column
         label="商品信息"
         prop="picture"
@@ -47,16 +47,16 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="textdiv1">
+    <div class="footer-box">
       <span>实付款：</span>
       <span>￥{{totalprice}}</span>
     </div>
-    <div class="textdiv1">
+    <div class="footer-box">
       <span>下单账户：</span>
       <span>{{username}}</span>
     </div>
-    <div class="button">
-      <el-button size="small" @click="goclose">关闭</el-button>
+    <div class="center">
+      <el-button size="small" @click="goClose">关闭</el-button>
     </div>
   </div>
 </template>
@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       orderid: "",
-      tabledata: [],
+      tableData: [],
       totalprice: "",
       username: "",
       time: ""
@@ -80,11 +80,11 @@ export default {
       this.totalprice = this.DialogParams().row.totalprice;
       this.username = this.DialogParams().row.username;
       this.time = this.DialogParams().row.time;
-      this.goquery();
+      this.goQuery();
     }
   },
   methods: {
-    goquery() {
+    goQuery() {
       this.axios
         .get("/api/getorderdetail", {
           params: {
@@ -94,11 +94,11 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
-            this.tabledata = results.sort(Util.objSort("orderdetailid"));
+            this.tableData = results.sort(Util.objSort("orderdetailid"));
           }
         });
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }
@@ -106,29 +106,21 @@ export default {
 </script>
 
 <style scoped>
-.formclass {
-  margin-bottom: 0px;
-}
-.headclass {
+.head-box {
   line-height: 32px;
   font-size: 17px;
   display: flex;
   justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 0 20px;
   margin-bottom: 20px;
 }
-.headerinfo {
+.head-info {
   display: inline-block;
 }
-.textclass {
+.head-title {
   margin-right: 10px;
 }
-.button {
-  text-align: center;
-  padding-top: 20px;
-}
-.textdiv1 {
+.footer-box {
   text-align: right;
   margin: 20px 20px 0 0;
   font-size: 18px;

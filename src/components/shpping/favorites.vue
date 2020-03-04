@@ -8,13 +8,13 @@
         style="min-width:1120px;max-width:1350px;width:100%"
       >
         <el-col :span="4" v-for="(item, index) in showtable" :key="index">
-          <el-card class="card" shadow="hover" :body-style="{ padding: '0px' }">
+          <el-card class="favorites-card" shadow="hover" :body-style="{ padding: '0px' }">
             <el-image
               v-if="item.status=='soldout'||item.status=='saled'"
-              class="image gray"
+              class="favorites-image gray"
               :src="item.picture"
             ></el-image>
-            <el-image v-else class="image" :src="item.picture"></el-image>
+            <el-image v-else class="favorites-image" :src="item.picture"></el-image>
             <el-tooltip
               v-if="item.name.length>11"
               class="item"
@@ -22,29 +22,29 @@
               :content="item.name"
               placement="bottom"
             >
-              <p class="textclass2">{{item.name}}</p>
+              <p class="favorites-title">{{item.name}}</p>
             </el-tooltip>
-            <p v-else class="textclass2">{{item.name}}</p>
-            <p v-if="item.status=='soldout'||item.status=='saled'" class="textclass">已下架</p>
-            <div v-if="item.status=='soldout'||item.status=='saled'" class="soldout">
+            <p v-else class="favorites-title">{{item.name}}</p>
+            <p v-if="item.status=='soldout'||item.status=='saled'" class="favorites-price">已下架</p>
+            <div v-if="item.status=='soldout'||item.status=='saled'" class="favorites-soldout">
               <el-tag type="info" size="medium">失效</el-tag>
-              <el-button size="mini" @click="godel(item)">删除</el-button>
+              <el-button size="mini" @click="goDel(item)">删除</el-button>
             </div>
             <div v-else>
-              <p class="textclass">¥{{item.price}}</p>
+              <p class="favorites-price">¥{{item.price}}</p>
               <el-button
                 size="mini"
                 icon="el-icon-delete"
-                class="delete"
-                @click="godel(item,index)"
+                class="favorites-delete"
+                @click="goDel(item,index)"
               ></el-button>
-              <el-button size="mini" class="button" @click="goadd(item)">加入购物车</el-button>
+              <el-button size="mini" class="favorites-button" @click="goAdd(item)">加入购物车</el-button>
             </div>
           </el-card>
         </el-col>
       </el-row>
-      <p class="textclass1" v-if="loading">加载中...</p>
-      <p class="textclass1" v-if="noMore">没有更多了</p>
+      <p class="favorites-load" v-if="loading">加载中...</p>
+      <p class="favorites-load" v-if="noMore">没有更多了</p>
     </el-scrollbar>
   </div>
 </template>
@@ -73,10 +73,10 @@ export default {
     }
   },
   created() {
-    this.getfavorites();
+    this.getFavorites();
   },
   methods: {
-    getfavorites() {
+    getFavorites() {
       this.axios
         .get("/api/getcollect", {
           params: {
@@ -106,7 +106,7 @@ export default {
         this.loading = false;
       }, 2000);
     },
-    goadd(row) {
+    goAdd(row) {
       let id = {};
       if (row.petid) id.petid = row.petid;
       if (row.goodid) id.goodid = row.goodid;
@@ -134,7 +134,7 @@ export default {
         })
         .catch(() => {});
     },
-    godel(row, index) {
+    goDel(row, index) {
       this.$confirm("您确认取消收藏吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -166,42 +166,41 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.favorites-card {
   margin-right: 40px;
   margin-top: 40px;
 }
-.image {
+.favorites-image {
   width: 100%;
   height: 173px;
 }
-
-.textclass {
+.favorites-price {
   text-align: center;
   margin: 10px 0;
 }
-.textclass2 {
+.favorites-title {
   font-size: 14px;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.textclass1 {
+.favorites-load {
   font-size: 18px;
   text-align: center;
   font-family: "jelly";
 }
-.button {
+.favorites-button {
   float: right;
   margin: 0 10px 10px 0;
 }
-.delete {
+.favorites-delete {
   cursor: pointer;
   position: absolute;
   display: none;
   margin-left: 10px;
 }
-.card:hover .delete {
+.favorites-card:hover .favorites-delete {
   display: block;
 }
 .gray {
@@ -212,7 +211,7 @@ export default {
   filter: grayscale(100%);
   filter: gray;
 }
-.soldout {
+.favorites-soldout {
   display: flex;
   justify-content: space-between;
   margin: 0 10px 10px 10px;

@@ -21,9 +21,9 @@
         <el-input type="textarea" :rows="2" size="small" class="formlist" v-model="form.textarea"></el-input>
       </el-form-item>
     </el-form>
-    <div class="button">
-      <el-button type="primary" size="small" @click="goadd">保存</el-button>
-      <el-button size="small" @click="goclose">取消</el-button>
+    <div class="center">
+      <el-button type="primary" size="small" @click="goAdd">保存</el-button>
+      <el-button size="small" @click="goClose">取消</el-button>
     </div>
   </div>
 </template>
@@ -65,7 +65,7 @@ export default {
     }
   },
   methods: {
-    goadd() {
+    goAdd() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.edit) {
@@ -99,7 +99,7 @@ export default {
         }
       });
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }
@@ -107,10 +107,4 @@ export default {
 </script>
 
 <style scoped>
-.formlist {
-  width: 250px;
-}
-.button {
-  text-align: center;
-}
 </style>

@@ -1,18 +1,18 @@
 <template>
-  <div class="div1">
-    <div class="picdiv">
-      <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/touxiang.jpg" class="picture" />
-      <p class="name">mxy</p>
-      <p class="name">木木周</p>
+  <div class="about-box">
+    <div class="about-picture-box">
+      <img src="https://mmzdpicture.oss-cn-hangzhou.aliyuncs.com/touxiang.jpg" class="about-picture" />
+      <p class="about-name">mxy</p>
+      <p class="about-name">木木周</p>
     </div>
-    <div class="pdiv">
+    <div class="about-info-box">
       <p class="p">技术栈</p>
-      <span class="english">The skill of my shop</span>
+      <span class="about-English">The skill of my shop</span>
       <el-divider></el-divider>
       <p>整个项目基于vue-cli</p>
       <p>vue+element+axios+node.js+mysql</p>
       <p class="p">关于我</p>
-      <span class="english">The info about me</span>
+      <span class="about-English">The info about me</span>
       <el-divider></el-divider>
       <p>昵称:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;壮壮</p>
       <p>来自:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;福州</p>
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped>
-.div1 {
+.about-box {
   position: absolute;
   top: 0;
   left: 0;
@@ -41,23 +41,23 @@ export default {
   background-color: #9ad4e2;
   background-image: url("~@/assets/picture/fish.png");
 }
-.picdiv {
+.about-picture-box {
   flex: 1;
   text-align: center;
   padding-top: 140px;
 }
-.picture {
+.about-picture {
   height: 250px;
   width: 250px;
   border-radius: 50%;
 }
-.name {
+.about-name {
   font-family: "楷体";
   margin-top: 10px;
   margin-bottom: 0px;
   font-size: 25px;
 }
-.pdiv {
+.about-info-box {
   flex: 2;
   margin-left: 20px;
 }
@@ -70,7 +70,7 @@ export default {
   background-color: #949aa0 !important;
   margin-top: 10px !important;
 }
-.english {
+.about-English {
   font-family: "Times new roman";
 }
 </style>

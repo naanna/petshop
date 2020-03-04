@@ -1,11 +1,11 @@
 <template>
   <div>
     <span class="fontclass">日程管理</span>
-    <div>
-      <el-button type="primary" size="small" @click="goAdd" class="button">添加日程</el-button>
-      <el-button type="primary" size="small" @click="go2Del" class="button">删除选中</el-button>
+    <div class="button-box">
+      <el-button type="primary" size="small" @click="goAdd">添加日程</el-button>
+      <el-button type="primary" size="small" @click="go2Del">删除选中</el-button>
     </div>
-    <el-table :data="tabledata" highlight-current-row @selection-change="handleSelectionChange">
+    <el-table :data="tableData" highlight-current-row @selection-change="handleSelectionChange">
       <el-table-column prop="id" type="selection" width="80px" align="center" header-align="center"></el-table-column>
 
       <el-table-column label="日期" prop="day" align="center" header-align="center" width="150px">
@@ -29,7 +29,7 @@
         width="150px"
       >
         <div slot-scope="scope">
-           <span>{{moment(scope.row.update_time).format("YYYY-MM-DD HH:mm")}}</span>
+          <span>{{moment(scope.row.update_time).format("YYYY-MM-DD HH:mm")}}</span>
         </div>
       </el-table-column>
       <el-table-column label="操作" align="center" header-align="center" width="150px">
@@ -63,7 +63,7 @@ export default {
   },
   data() {
     return {
-      tabledata: [],
+      tableData: [],
       total: 0,
       page_no: 1,
       page_size: 10,
@@ -97,7 +97,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.tabledata = results.message;
+            this.tableData = results.message;
             this.total = results.total;
           }
         });
@@ -182,7 +182,7 @@ export default {
 </script>
 
 <style scoped>
-.button {
+.button-box {
   margin-top: 20px;
   margin-bottom: 10px;
 }
