@@ -157,7 +157,7 @@ export default {
         this.$refs["psd"].validate(valid => {
           if (valid) {
             this.axios
-              .post("/api/updateuser/psd", {
+              .put("/api/updateuser/psd", {
                 psd: this.psd.pass,
                 username: this.form.username
               })

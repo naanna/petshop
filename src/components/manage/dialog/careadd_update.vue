@@ -188,27 +188,31 @@ export default {
             "YYYY-MM-DD"
           );
           if (this.show) {
-            this.axios.post("/api/updatecaretable", this.form).then(res => {
+            this.axios.put("/api/updatecaretable", this.form).then(res => {
               if (res.data.success) {
                 this.$message.success("修改成功！");
                 this.closeDialog();
               }
             });
           } else {
-            this.axios
-              .post("/api/addpet", this.pet)
-              .then(res => {
-                if (res.data.success) {
-                  this.form.petid = res.data.petid;
-                  return this.axios.post("/api/addcaretable", this.form);
-                }
-              })
-              .then(res => {
-                if (res.data.success) {
-                  this.$message.success("成功提交寄养申请！");
-                  this.closeDialog();
-                }
-              });
+             if(this.pet.status){
+              this.axios
+                .post("/api/addpet", this.pet)
+                .then(res => {
+                  if (res.data.success) {
+                    this.form.petid = res.data.petid;
+                    return this.axios.post("/api/addcaretable", this.form);
+                  }
+                })
+                .then(res => {
+                  if (res.data.success) {
+                    this.$message.success("成功提交寄养申请！");
+                    this.closeDialog();
+                  }
+                });
+             }else{
+               this.$message.warning("请添加宠物！");
+             }
           }
         } else {
           return false;
@@ -221,8 +225,8 @@ export default {
         .width("600px")
         .currentView(add_update, { pet })
         .then(data => {
-          if (opt) {
-            this.pet = opt;
+          if (data) {
+            this.pet = data;
           }
         })
         .show();

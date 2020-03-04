@@ -15,7 +15,7 @@
       </el-table-column>
       <el-table-column label="活动安排" prop="textarea" align="center" header-align="center"></el-table-column>
       <el-table-column
-        label="操作者"
+        label="操作账号"
         prop="username"
         align="center"
         header-align="center"

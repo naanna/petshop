@@ -79,7 +79,7 @@ export default {
         });
         setTimeout(() => {
           this.axios
-            .post("/api/updateuser/picture", {
+            .put("/api/updateuser/picture", {
               picture: this.showimageurl,
               username: this.$store.state.username
             })

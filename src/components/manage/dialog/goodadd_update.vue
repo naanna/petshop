@@ -101,15 +101,15 @@ export default {
             } else {
               this.axios.post("/api/addgood", this.form).then(res => {
                 if (res.data.success) {
-                  this.$message.success("成功添加商品！");
+                  this.$message.success("添加成功！");
                   this.closeDialog();
                 }
               });
             }
           } else {
-            this.axios.post("/api/updategood", this.form).then(res => {
+            this.axios.put("/api/updategood", this.form).then(res => {
               if (res.data.success) {
-                this.$message.success("成功编辑商品！");
+                this.$message.success("编辑成功！");
                 this.closeDialog();
               }
             });

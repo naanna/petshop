@@ -332,7 +332,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .post("/api/long_backcare/yesorno", {
+            .put("/api/long_backcare/yesorno", {
               careid: row.careid,
               type: row.caretype,
               typestatus: "no",
@@ -356,7 +356,7 @@ export default {
         })
           .then(() => {
             this.axios
-              .post("/api/long_backcare/yesorno", {
+              .put("/api/long_backcare/yesorno", {
                 careid: row.careid,
                 type: row.caretype,
                 petid: row.petid,
@@ -381,7 +381,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
-            .post("/api/long_backcare/yesorno", {
+            .put("/api/long_backcare/yesorno", {
               careid: this.obs.careid,
               type: this.obs.caretype,
               typestatus: "yes",

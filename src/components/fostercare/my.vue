@@ -176,7 +176,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .post("/api/long_backcare", {
+            .put("/api/long_backcare", {
               careid: row.careid,
               type: "back"
             })
@@ -197,7 +197,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
-            .post("/api/long_backcare", {
+            .put("/api/long_backcare", {
               careid: this.lontimeobs.careid,
               longtime: this.form.longtime,
               type: "long"

@@ -72,7 +72,7 @@ export default {
         note: ""
       },
       imageUrl: "",
-      edit: "no",
+      edit: false,
       rules: {
         name: [
           { validator: checkname, types: "名字" },
@@ -96,7 +96,7 @@ export default {
       let obs = this.DialogParams().row;
       this.form = obs;
       if (obs.picture != null) this.imageUrl = obs.picture;
-      this.edit = "yes";
+      this.edit = true;
     }
     if (this.DialogParams().pet) {
       this.form.status = "caring";
@@ -116,20 +116,20 @@ export default {
           if (this.form.picture == "") {
             this.form.picture = null;
           } 
-          if (this.form.status == "caring") {
+           if (this.form.status == "caring") {
             this.closeDialog(this.form);
           } else {
-            if (this.edit == "no") {
-              this.axios.post("/api/addpet", this.form).then(res => {
+             if (this.edit) {
+              this.axios.put("/api/updatepet", this.form).then(res => {
                 if (res.data.success) {
-                  this.$message.success("成功添加宠物！");
+                  this.$message.success("编辑成功！");
                   this.closeDialog();
                 }
               });
             } else {
-              this.axios.post("/api/updatepet", this.form).then(res => {
+                this.axios.post("/api/addpet", this.form).then(res => {
                 if (res.data.success) {
-                  this.$message.success("成功编辑宠物！");
+                  this.$message.success("添加成功！");
                   this.closeDialog();
                 }
               });

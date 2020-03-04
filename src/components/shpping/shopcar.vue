@@ -377,7 +377,7 @@ export default {
       }
       if (row.goodid) {
         this.axios
-          .post("/api/updateshopcar", {
+          .put("/api/updateshopcar", {
             shopcarid: row.shopcarid,
             num: row.num
           })

@@ -111,7 +111,7 @@
               <span v-else>被拒绝</span>
             </template>
           </el-table-column>
-          <el-table-column label="审批者" prop="approval" align="center" header-align="center"></el-table-column>
+          <el-table-column label="审批账号" prop="approval" align="center" header-align="center"></el-table-column>
         </el-table>
         <el-pagination
           @size-change="sizeChangeHandle1"

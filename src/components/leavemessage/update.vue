@@ -2,8 +2,8 @@
   <div>
     <el-input type="textarea" :rows="5" v-model="textarea"></el-input>
     <div class="button">
-      <el-button type="primary" size="small" @click="gosave">保存</el-button>
-      <el-button size="small" @click="goclose">取消</el-button>
+      <el-button type="primary" size="small" @click="goSave">保存</el-button>
+      <el-button size="small" @click="goClose">取消</el-button>
     </div>
   </div>
 </template>
@@ -25,12 +25,12 @@ export default {
     }
   },
   methods: {
-    gosave() {
+    goSave() {
       if (this.textarea == "") {
         this.$message.warning("您还没有填写留言内容!");
       } else {
         this.axios
-          .post("/api/updatemessage", {
+          .put("/api/updatemessage", {
             messageid: this.messageid,
             note: this.textarea
           })
@@ -42,7 +42,7 @@ export default {
           });
       }
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }

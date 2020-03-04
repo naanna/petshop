@@ -145,8 +145,9 @@ export default {
           this.form.starttime = this.moment(this.form.starttime).format(
             "YYYY-MM-DD"
           );
-          this.form.username = this.$store.state.username;
-          this.axios
+          if(this.pet.status){
+            this.form.username = this.$store.state.username;
+            this.axios
             .post("/api/addpet", this.pet)
             .then(res => {
               if (res.data.success) {
@@ -160,6 +161,9 @@ export default {
                 this.closeDialog();
               }
             });
+          }else{
+            this.$message.warning("请添加宠物！");
+          }
         } else {
           return false;
         }

@@ -70,13 +70,13 @@ export default {
         if (valid) {
           if (this.edit) {
             this.axios
-              .post("/api/updateschedule", {
+              .put("/api/updateschedule", {
                 scheduleid: this.DialogParams().row.scheduleid,
                 textarea: this.form.textarea
               })
               .then(res => {
                 if (res.data.success) {
-                  this.$message.success("编辑添加！");
+                  this.$message.success("编辑成功！");
                   this.closeDialog();
                 }
               });
@@ -89,7 +89,7 @@ export default {
               })
               .then(res => {
                 if (res.data.success) {
-                  this.$message.success("成功添加！");
+                  this.$message.success("添加成功！");
                   this.closeDialog();
                 }
               });

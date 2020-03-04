@@ -174,7 +174,7 @@ export default {
     },
     read(refobs) {
       this.axios
-        .post("/api/readunread", {
+        .put("/api/readunread", {
           refobs
         })
         .then(res => {

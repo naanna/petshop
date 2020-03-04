@@ -67,15 +67,15 @@
       <div class="person-boder">
         <div class="picture-box">
           <el-button class="look-botton" circle @click="isShowImageDialog=true">
-            查看
-            <br />头像
+            <span style="display:block;">查看</span>
+            <span>头像</span>
           </el-button>
           <el-avatar class="picture" :src="form.picture" @error="errorHandler">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
           <el-button class="change-button" circle @click="gourl('./changepic')">
-            更改
-            <br />头像
+            <span style="display:block;">更改</span>
+            <span>头像</span>
           </el-button>
         </div>
       </div>
