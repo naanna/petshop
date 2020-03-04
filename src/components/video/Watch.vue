@@ -156,4 +156,7 @@ export default {
   height: 30px;
   display: block;
 }
+.el-avatar >>> img {
+  width: 100% !important;
+}
 </style>
