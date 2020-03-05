@@ -175,7 +175,7 @@ export default {
             })
               .then(() => {
                 this.axios
-                  .put("/api/updateuser/psd", {
+                  .put("/api/user/update/psd", {
                     psd: this.ruleForm.pass,
                     username: this.old.username
                   })

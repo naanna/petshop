@@ -92,7 +92,7 @@ export default {
     goquery() {
       const query = this.makequery();
       this.axios
-        .get("/api/getcaretable/person", {
+        .get("/api/caretable/getperson", {
           params: {
             ...query
           }

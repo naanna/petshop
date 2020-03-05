@@ -123,39 +123,43 @@
     </div>
     <div v-show="active==3">
       <div v-if="showSuccess">
-        <img src="@picture/success.png" class="shopcar-picture" />
         <div class="success-box">
-          <strong>支付成功！</strong>
-          <p>恭喜您，您的支付已经成功！</p>
-          <p>订单信息如下显示！</p>
-          <p>如有其它问题，请立即与我们客服人员联系。</p>
-          <span>返回</span>
-          <span class="car" @click="goBack">购物车</span>
+          <img src="@picture/success.png" class="shopcar-picture" />
+          <div class="success-info-box">
+            <strong>支付成功！</strong>
+            <p>恭喜您，您的支付已经成功！</p>
+            <p>订单信息如下显示！</p>
+            <p>如有其它问题，请立即与我们客服人员联系。</p>
+            <span>返回</span>
+            <span class="car" @click="goBack">购物车</span>
+          </div>
         </div>
-        <el-form label-position="right" class="shopcar-order-form">
-          <el-form-item label="订单号：" label-width="100px" prop="name">
+        <el-form label-position="right"  class="shopcar-order-form">
+          <el-form-item label="订单号：" label-width="100px">
             <span class="shopcar-span">{{form.orderid}}</span>
           </el-form-item>
-          <el-form-item label="支付金额：" label-width="100px" prop="price">
+          <el-form-item label="支付金额：" label-width="100px">
             <span class="shopcar-span">{{form.totalprice}}</span>
           </el-form-item>
-          <el-form-item label="下单时间：" label-width="100px" prop="type">
+          <el-form-item label="下单时间：" label-width="100px">
             <span class="shopcar-span">{{form.time}}</span>
           </el-form-item>
-          <el-form-item label="下单账户：" label-width="100px" prop="num">
+          <el-form-item label="下单账户：" label-width="100px">
             <span class="shopcar-span">{{form.username}}</span>
           </el-form-item>
         </el-form>
       </div>
-      <div v-else>
-        <img src="@picture/wrong.png" class="shopcar-picture" />
+      <div v-else >
         <div class="success-box">
-          <strong>支付失败！</strong>
-          <p>对不起，无法购买！</p>
-          <p>当前访问页面失效，可能您停留时间过长，请重新提交申请！</p>
-          <span>返回</span>
-          <span class="car" @click="goBack">购物车</span>
-        </div>
+          <img src="@picture/wrong.png" class="shopcar-picture" />
+          <div class="success-info-box">
+            <strong>支付失败！</strong>
+            <p>对不起，无法购买！</p>
+            <p>当前访问页面失效，可能您停留时间过长，请重新提交申请！</p>
+            <span>返回</span>
+            <span class="car" @click="goBack">购物车</span>
+          </div>
+       </div>
       </div>
     </div>
     <div class="shopcar-info-box">
@@ -183,7 +187,7 @@ export default {
       overTimer: null,
       // 是否超时
       isOvertime: false,
-      form: "",
+      form: {},
       failure: false
     };
   },
@@ -206,7 +210,7 @@ export default {
   methods: {
     getShopCar() {
       this.axios
-        .get("/api/getshopcar", {
+        .get("/api/shopcar/get", {
           params: {
             username: this.$store.state.username
           }
@@ -250,7 +254,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/deteleshopcar", {
+            .delete("/api/shopcar/delete", {
               data: [{ shopcarid: row.shopcarid }]
             })
             .then(res => {
@@ -280,7 +284,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/deteleshopcar", {
+            .delete("/api/shopcar/delete", {
               data: delobs
             })
             .then(res => {
@@ -310,7 +314,7 @@ export default {
           this.form.username = this.$store.state.username;
           this.form.totalprice = this.totalprice;
           this.axios
-            .post("/api/addorder", {
+            .post("/api/order/add", {
               username: this.form.username,
               totalprice: this.form.totalprice,
               time: this.form.time
@@ -318,7 +322,7 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.form.orderid = res.data.orderid;
-                return this.axios.post("/api/addorderdetail", {
+                return this.axios.post("/api/order/detail/add", {
                   orderid: res.data.orderid,
                   totalprice: this.totalprice,
                   username: this.$store.state.username,
@@ -333,9 +337,10 @@ export default {
                 } else if (res.data.message == "购物车内宠物售出购买失败") {
                   this.showSuccess = false;
                 }
+              } else {
+                this.showSuccess = false;
               }
             });
-
           setTimeout(() => {
             loading.close();
             this.active++;
@@ -353,7 +358,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/deteleshopcar", {
+            .delete("/api/shopcar/delete", {
               data: delobs
             })
             .then(res => {
@@ -377,7 +382,7 @@ export default {
       }
       if (row.goodid) {
         this.axios
-          .put("/api/updateshopcar", {
+          .put("/api/shopcar/update", {
             shopcarid: row.shopcarid,
             num: row.num
           })
@@ -452,19 +457,21 @@ export default {
   color: #f40;
 }
 .shopcar-order-form {
-  margin-top: 40px;
-  margin-left: 500px;
+  margin:0 auto;
+  width: 500px;
 }
 .shopcar-picture {
   width: 160px;
-  margin-left: 400px;
   margin-right: 20px;
   height: 160px;
 }
-.success-box {
+.success-box{
+  text-align: center;
+  margin-bottom: 40px;
+}
+.success-info-box {
   display: inline-block;
-  vertical-align: top;
-  padding-top: 10px;
+  text-align: left;
 }
 .shopcar-span {
   color: rgb(82, 80, 80);
@@ -472,6 +479,6 @@ export default {
 .car {
   cursor: pointer;
   margin-left: 10px;
-  color: rgb(82, 80, 80);
+  color: #00a1d6;
 }
 </style>

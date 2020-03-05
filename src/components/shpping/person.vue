@@ -153,7 +153,7 @@ export default {
   methods: {
     getPerson() {
       this.axios
-        .get("/api/getuser", {
+        .get("/api/user/get", {
           params: {
             id: this.$store.state.username
           }
@@ -182,7 +182,7 @@ export default {
           }).then(() => {
             var time = this.moment(this.form.birthday).format("YYYY-MM-DD");
             this.axios
-              .post("/api/updateuser", {
+              .post("/api/user/update", {
                 nickname: this.form.nickname,
                 name: this.form.name,
                 sex: this.form.sex,

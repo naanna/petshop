@@ -79,7 +79,7 @@ export default {
     goquery() {
       let query = this.makependingquery();
       this.axios
-        .get("/api/getalluser", {
+        .get("/api/user/getall", {
           params: {
             ...query
           }
@@ -116,7 +116,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/deteleuser", {
+            .delete("/api/user/delete", {
               data: [{ username: username }]
             })
             .then(res => {

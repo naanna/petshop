@@ -78,7 +78,7 @@ export default {
   methods: {
     getFavorites() {
       this.axios
-        .get("/api/getcollect", {
+        .get("/api/collect/get", {
           params: {
             username: this.$store.state.username
           }
@@ -117,7 +117,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .post("/api/addshopcar", {
+            .post("/api/shopcar/add", {
               ...id
             })
             .then(res => {
@@ -147,7 +147,7 @@ export default {
             body.petid = row.petid;
           }
           this.axios
-            .delete("/api/deletecollect", {
+            .delete("/api/collect/delete", {
               data: {
                 ...body
               }

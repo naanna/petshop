@@ -96,7 +96,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.edit) {
-            this.axios.put("/api/updategood", this.form).then(res => {
+            this.axios.put("/api/goods/update", this.form).then(res => {
               if (res.data.success) {
                 this.$message.success("编辑成功！");
                 this.closeDialog();
@@ -106,7 +106,7 @@ export default {
             if (this.form.picture == "") {
               this.$message.warning("请选择商品图片！");
             } else {
-              this.axios.post("/api/addgood", this.form).then(res => {
+              this.axios.post("/api/goods/add", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("添加成功！");
                   this.closeDialog();

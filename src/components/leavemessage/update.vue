@@ -30,7 +30,7 @@ export default {
         this.$message.warning("您还没有填写留言内容!");
       } else {
         this.axios
-          .put("/api/updatemessage", {
+          .put("/api/message/update", {
             messageid: this.messageid,
             note: this.textarea
           })

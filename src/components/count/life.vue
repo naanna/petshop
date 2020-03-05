@@ -59,7 +59,7 @@ export default {
   methods: {
     getlife() {
       this.axios
-        .get("/api/getlife", {
+        .get("/api/count/getlife", {
           params: {
             username: this.$store.state.username
           }

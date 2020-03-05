@@ -148,11 +148,11 @@ export default {
           if(this.pet.status){
             this.form.username = this.$store.state.username;
             this.axios
-            .post("/api/addpet", this.pet)
+            .post("/api/pet/add", this.pet)
             .then(res => {
               if (res.data.success) {
                 this.form.petid = res.data.petid;
-                return this.axios.post("/api/addcaretable", this.form);
+                return this.axios.post("/api/caretable/add", this.form);
               }
             })
             .then(res => {

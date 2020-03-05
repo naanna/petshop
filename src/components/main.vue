@@ -251,7 +251,7 @@ export default {
   methods: {
     //获取日历活动安排
     getSchedule() {
-      this.axios.get("/api/getschedule").then(res => {
+      this.axios.get("/api/schedule/get").then(res => {
         if (res.data.success) {
           res.data.message.map(item => {
             item.day = this.moment(item.day).format("YYYY-MM-DD");
@@ -297,7 +297,7 @@ export default {
     },
     getNums() {
       this.axios
-        .get("/api/getindex")
+        .get("/api/index/getnum")
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
@@ -306,14 +306,14 @@ export default {
             this.totaluser = results.totaluser;
             this.totalcare = results.totalcare;
           }
-          return this.axios.get("/api/getrecommended");
+          return this.axios.get("/api/index/getrecommended");
         })
         .then(res => {
           if (res.data.success) {
             var results = res.data.message;
             this.data = results;
           }
-          return this.axios.get("/api/getuseractivity");
+          return this.axios.get("/api/index/getuseractivity");
         })
         .then(res => {
           if (res.data.success) {
@@ -325,7 +325,7 @@ export default {
               ).format("YYYY-MM-DD");
             }
           }
-          return this.axios.get("/api/getsales");
+          return this.axios.get("/api/index/getsales");
         })
         .then(res => {
           if (res.data.success) {

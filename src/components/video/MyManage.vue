@@ -111,7 +111,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/video/detelevideo", {
+            .delete("/api/video/delete", {
               data: { videoId: item.videoid }
             })
             .then(res => {

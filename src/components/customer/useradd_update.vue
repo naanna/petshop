@@ -186,9 +186,9 @@ export default {
             );
             let url = "";
             if (this.edit) {
-              url = "/api/updateuser";
+              url = "/api/user/update";
             } else {
-              url = "/api/adduser";
+              url = "/api/user/add";
             }
             this.axios.post(url, this.form).then(res => {
               if (res.data.success) {

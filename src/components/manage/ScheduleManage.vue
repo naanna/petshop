@@ -2,8 +2,17 @@
   <div>
     <span class="fontclass">日程管理</span>
     <div class="button-box">
-      <el-button type="primary" size="small" @click="goAdd">添加日程</el-button>
-      <el-button type="primary" size="small" @click="go2Del">删除选中</el-button>
+      <div>
+        <el-button type="primary" size="small" @click="goAdd">添加日程</el-button>
+        <el-button type="primary" size="small" @click="go2Del">删除选中</el-button>
+      </div>
+      <el-dropdown @command="goExport">
+        <el-button size="small">导出Excel</el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="current">当前</el-dropdown-item>
+          <el-dropdown-item command="all">全部</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <el-table :data="tableData" highlight-current-row @selection-change="handleSelectionChange">
       <el-table-column prop="id" type="selection" width="80px" align="center" header-align="center"></el-table-column>
@@ -15,7 +24,7 @@
       </el-table-column>
       <el-table-column label="活动安排" prop="textarea" align="center" header-align="center"></el-table-column>
       <el-table-column
-        label="操作账号"
+        label="创建账号"
         prop="username"
         align="center"
         header-align="center"
@@ -27,11 +36,7 @@
         align="center"
         header-align="center"
         width="150px"
-      >
-        <div slot-scope="scope">
-          <span>{{moment(scope.row.update_time).format("YYYY-MM-DD HH:mm")}}</span>
-        </div>
-      </el-table-column>
+      ></el-table-column>
       <el-table-column label="操作" align="center" header-align="center" width="150px">
         <div slot-scope="scope">
           <el-button type="text" size="small" @click="goUpdate(scope.row)">修改</el-button>
@@ -89,7 +94,7 @@ export default {
         page_size: this.page_size
       };
       this.axios
-        .get("/api/getschedule", {
+        .get("/api/schedule/get", {
           params: {
             ...query
           }
@@ -108,12 +113,17 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
+          let length = this.tableData.length;
           this.axios
-            .delete("/api/deteleschedule", {
+            .delete("/api/schedule/delete", {
               data: [{ scheduleid: row.scheduleid }]
             })
             .then(res => {
               if (res.data.success) {
+                //只剩一条时返回上一页
+                if (length === 1 && this.page_no != 1) {
+                  this.page_no = this.page_no - 1;
+                }
                 this.$message.success("删除成功！");
                 this.goQuery();
               }
@@ -138,6 +148,8 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
+          let length = this.tableData.length;
+          let selecLength = this.selectObj.length;
           this.axios
             .delete("/api/deteleschedule", {
               data: delobs
@@ -145,6 +157,10 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
+                //全部删除时返回上一页
+                if (length === selecLength && this.page_no != 1) {
+                  this.page_no = this.page_no - 1;
+                }
                 this.goQuery();
               }
             });
@@ -159,6 +175,41 @@ export default {
           this.goQuery();
         })
         .show();
+    },
+    goExport(value) {
+      let obs = { type: value };
+      if (value == "current") {
+        obs.page_no = this.page_no;
+        obs.page_size = this.page_size;
+      }
+      this.axios
+        .post(
+          "/api/schedule/export",
+          {
+            ...obs
+          },
+          { responseType: "arraybuffer" }
+        )
+        .then(_res => {
+          const blob = new Blob([_res.data], {
+            type: "application/vnd.ms-excel;"
+          });
+          const a = document.createElement("a");
+          // 生成文件路径
+          let href = window.URL.createObjectURL(blob);
+          a.href = href;
+          let _fileName = _res.headers["content-disposition"]
+            .split(";")[1]
+            .split("=")[1]
+            .split(".")[0];
+          // 文件名中有中文 则对文件名进行转码
+          a.download = decodeURIComponent(_fileName);
+          // 利用a标签做下载
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(href);
+        });
     },
     sizeChangeHandle(val) {
       this.page_size = val;
@@ -185,5 +236,7 @@ export default {
 .button-box {
   margin-top: 20px;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -62,7 +62,7 @@ export default {
         username: this.$store.state.username
       };
       this.axios
-        .get("/api/getmessage", {
+        .get("/api/message/get", {
           params: {
             ...query
           }
@@ -90,7 +90,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/detelemessage", {
+            .delete("/api/message/delete", {
               data: [{ messageid: row.messageid }]
             })
             .then(res => {
@@ -120,7 +120,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/detelemessage", {
+            .delete("/api/message/delete", {
               data: delobs
             })
             .then(res => {

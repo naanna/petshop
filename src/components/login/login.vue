@@ -101,7 +101,7 @@ export default {
                 if (res.data.success) {
                   _this.setToken({ token: res.data.token }); //store中的为token赋值方法
                   _this.axios
-                    .get("/api/getuser", {
+                    .get("/api/user/get", {
                       params: {
                         id: _this.loginform.username
                       }

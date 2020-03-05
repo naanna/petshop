@@ -59,7 +59,7 @@ export default {
     goquery() {
       const query = this.makependingquery();
       this.axios
-        .get("/api/getpet", {
+        .get("/api/pet/get", {
           params: {
             ...query
           }

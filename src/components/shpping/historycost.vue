@@ -2,17 +2,27 @@
   <div>
     <el-page-header @back="goBack" style="display: inline-block;"></el-page-header>
     <span class="font-25">充值历史</span>
-    <div class="history-search-box">
-      <el-date-picker
-        v-model="searchVal"
-        type="daterange"
-        size="small"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-      ></el-date-picker>
-      <el-button type="primary" size="small" @click="goSearch" style="margin-left:10px;">搜索</el-button>
+    <div class="button-box">
+      <div>
+        <el-date-picker
+          v-model="searchVal"
+          type="daterange"
+          size="small"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
+        <el-button type="primary" size="small" @click="goSearch" style="margin-left:10px;">搜索</el-button>
+      </div>
+      <el-dropdown @command="goExport">
+        <el-button size="small">导出Excel</el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="current">当前</el-dropdown-item>
+          <el-dropdown-item command="all">全部</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
+
     <el-table :data="tableData" stripe border highlight-current-row>
       <el-table-column label="充值单号 " prop="investid" align="center" header-align="center"></el-table-column>
       <el-table-column label="充值金额" prop="money" align="center" header-align="center"></el-table-column>
@@ -47,7 +57,8 @@ export default {
       tableData: [],
       total: 0,
       page_no: 1,
-      page_size: 10
+      page_size: 10,
+      query: {}
     };
   },
   created() {
@@ -69,11 +80,11 @@ export default {
       return query;
     },
     goQuery() {
-      let query = this.makeQuery();
+      this.query = this.makeQuery();
       this.axios
         .get("/api/invest/getall", {
           params: {
-            ...query
+            ...this.query
           }
         })
         .then(res => {
@@ -81,12 +92,44 @@ export default {
             var results = res.data;
             this.tableData = results.message;
             this.total = results.total;
-            for (let i in this.tableData) {
-              this.tableData[i].time = this.moment(
-                this.tableData[i].time
-              ).format("YYYY-MM-DD HH:mm:ss");
-            }
           }
+        });
+    },
+    goExport(value) {
+      let obs = {};
+      if (value == "current") {
+        obs = this.query;
+      } else {
+        obs.username = this.$store.state.username;
+      }
+      obs.exportType = value;
+      this.axios
+        .post(
+          "/api/invest/export",
+          {
+            ...obs
+          },
+          { responseType: "arraybuffer" }
+        )
+        .then(_res => {
+          const blob = new Blob([_res.data], {
+            type: "application/vnd.ms-excel;"
+          });
+          const a = document.createElement("a");
+          // 生成文件路径
+          let href = window.URL.createObjectURL(blob);
+          a.href = href;
+          let _fileName = _res.headers["content-disposition"]
+            .split(";")[1]
+            .split("=")[1]
+            .split(".")[0];
+          // 文件名中有中文 则对文件名进行转码
+          a.download = decodeURIComponent(_fileName);
+          // 利用a标签做下载
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(href);
         });
     },
     goSearch() {
@@ -108,7 +151,9 @@ export default {
 };
 </script>
 <style scoped>
-.history-search-box {
-  margin: 20px 0;
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 10px 0;
 }
 </style>

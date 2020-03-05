@@ -53,7 +53,7 @@ export default {
   methods: {
     goquery() {
       this.axios
-        .get("/api/getcaretable/starttime", {
+        .get("/api/caretable/getstarttime", {
           params: {
             petid: this.form.petid
           }

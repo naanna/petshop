@@ -1,34 +1,43 @@
 <template>
   <div>
     <span class="fontclass">订单管理</span>
-    <div style="  margin-top: 20px;">
-      <el-select size="small" class="width200" v-model="type">
-        <el-option value="订单号" label="订单号"></el-option>
-        <el-option value="下单账户" label="下单账户"></el-option>
-        <el-option value="下单日期" label="下单日期"></el-option>
-      </el-select>
-      <el-date-picker
-        v-if="type=='下单日期'"
-        v-model="searchVal"
-        type="daterange"
-        class="time-rang"
-        size="small"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-      ></el-date-picker>
-      <el-input
-        v-if="type!='下单日期'"
-        v-model="searchVal"
-        placeholder="请输入搜索内容"
-        type="text"
-        size="small"
-        clearable
-        class="input200"
-      ></el-input>
-      <el-button type="primary" size="small" @click="goSearch">搜索</el-button>
+    <div class="button-box">
+      <div>
+        <el-select size="small" class="width200" v-model="type">
+          <el-option value="订单号" label="订单号"></el-option>
+          <el-option value="下单账户" label="下单账户"></el-option>
+          <el-option value="下单日期" label="下单日期"></el-option>
+        </el-select>
+        <el-date-picker
+          v-if="type=='下单日期'"
+          v-model="searchVal"
+          type="daterange"
+          class="time-rang"
+          size="small"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
+        <el-input
+          v-if="type!='下单日期'"
+          v-model="searchVal"
+          placeholder="请输入搜索内容"
+          type="text"
+          size="small"
+          clearable
+          class="width200"
+        ></el-input>
+        <el-button type="primary" size="small" @click="goSearch">搜索</el-button>
+      </div>
+      <el-dropdown @command="goExport">
+        <el-button size="small">导出Excel</el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="current">当前</el-dropdown-item>
+          <el-dropdown-item command="all">全部</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
-    <el-table :data="tableData" stripe highlight-current-row class="table">
+    <el-table :data="tableData" stripe highlight-current-row>
       <el-table-column label="订单号" prop="orderid" align="center" header-align="center"></el-table-column>
       <el-table-column label="总价" prop="totalprice" align="center" header-align="center"></el-table-column>
       <el-table-column label="下单时间" sortable prop="time" align="center" header-align="center"></el-table-column>
@@ -68,7 +77,8 @@ export default {
       tableData: [],
       total: 0,
       page_no: 1,
-      page_size: 10
+      page_size: 10,
+      query: {}
     };
   },
   created() {
@@ -95,11 +105,11 @@ export default {
       return query;
     },
     goQuery() {
-      let query = this.makePendingQuery();
+      this.query = this.makePendingQuery();
       this.axios
-        .get("/api/getorder", {
+        .get("/api/order/get", {
           params: {
-            ...query
+            ...this.query
           }
         })
         .then(res => {
@@ -126,7 +136,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/detelorder?orderid=" + row.orderid)
+            .delete("/api/order/delete?orderid=" + row.orderid)
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
@@ -135,6 +145,41 @@ export default {
             });
         })
         .catch(() => {});
+    },
+    goExport(value) {
+      let obs = {};
+      if (value == "current") {
+        obs = this.query;
+      }
+      obs.exportType = value;
+      this.axios
+        .post(
+          "/api/order/export",
+          {
+            ...obs
+          },
+          { responseType: "arraybuffer" }
+        )
+        .then(_res => {
+          const blob = new Blob([_res.data], {
+            type: "application/vnd.ms-excel;"
+          });
+          const a = document.createElement("a");
+          // 生成文件路径
+          let href = window.URL.createObjectURL(blob);
+          a.href = href;
+          let _fileName = _res.headers["content-disposition"]
+            .split(";")[1]
+            .split("=")[1]
+            .split(".")[0];
+          // 文件名中有中文 则对文件名进行转码
+          a.download = decodeURIComponent(_fileName);
+          // 利用a标签做下载
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(href);
+        });
     },
     sizeChangeHandle(val) {
       this.page_size = val;
@@ -145,8 +190,7 @@ export default {
       this.go2Query();
     },
     goDetail(row) {
-      this.Dialog
-        .title("订单详情")
+      this.Dialog.title("订单详情")
         .width("800px")
         .currentView(orderdetail, { row })
         .then(data => {})
@@ -158,21 +202,14 @@ export default {
 <style scoped>
 .width200 {
   width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
-}
-.input200 {
-  width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
-  margin-left: 10px;
   margin-right: 10px;
-}
-.table {
-  margin-top: 10px;
 }
 .time-rang {
-  margin-left: 10px;
   margin-right: 10px;
+}
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 10px 0;
 }
 </style>

@@ -56,7 +56,7 @@ export default {
   methods: {
     getPicture() {
       this.axios
-        .get("/api/getuser", {
+        .get("/api/user/get", {
           params: {
             id: this.$store.state.username
           }
@@ -79,7 +79,7 @@ export default {
         });
         setTimeout(() => {
           this.axios
-            .put("/api/updateuser/picture", {
+            .put("/api/user/update/picture", {
               picture: this.showImageurl,
               username: this.$store.state.username
             })

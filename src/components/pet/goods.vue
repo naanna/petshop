@@ -138,7 +138,7 @@ export default {
     goQuery() {
       let query = this.makePendingQuery();
       this.axios
-        .get("/api/getgood", {
+        .get("/api/goods/get", {
           params: {
             ...query
           }
@@ -151,7 +151,7 @@ export default {
             for (let i in this.tableData) {
               this.$set(this.tableData[i], "collect", false);
             }
-            return this.axios.get("/api/getcollect", {
+            return this.axios.get("/api/collect/get", {
               params: {
                 username: this.$store.state.username
               }
@@ -186,7 +186,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .post("/api/addshopcar", {
+            .post("/api/shopcar/add", {
               goodid: row.goodid,
               username: this.$store.state.username
             })
@@ -209,7 +209,7 @@ export default {
     },
     goCollect(row) {
       this.axios
-        .post("/api/addcollect", {
+        .post("/api/collect/add", {
           username: this.$store.state.username,
           goodid: row.goodid
         })
@@ -222,7 +222,7 @@ export default {
     },
     goNoCollect(row) {
       this.axios
-        .delete("/api/deletecollect", {
+        .delete("/api/collect/delete", {
           data: {
             username: this.$store.state.username,
             goodid: row.goodid

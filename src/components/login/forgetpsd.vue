@@ -156,7 +156,7 @@ export default {
         this.$refs["psd"].validate(valid => {
           if (valid) {
             this.axios
-              .put("/api/updateuser/psd", {
+              .put("/api/user/update/psd", {
                 psd: this.psd.pass,
                 username: this.form.username
               })
@@ -182,7 +182,7 @@ export default {
             this.$message.warning("验证码错误！");
           } else {
             this.axios
-              .get("/api/getuser", {
+              .get("/api/user/get", {
                 params: {
                   id: this.form.username
                 }

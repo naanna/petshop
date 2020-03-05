@@ -1,12 +1,19 @@
 <template>
   <div>
     <span class="fontclass">宠物管理</span>
-    <div>
-      <div class="button-left-box">
+    <div class="button-box">
+      <div>
         <el-button type="primary" size="small" @click="goAdd">添加宠物</el-button>
-        <el-button type="primary" size="small" @click="go2Del">批量删除</el-button>
+        <el-button type="primary" size="small" @click="go2Del" class="margin-right-10">批量删除</el-button>
+        <el-dropdown @command="goExport">
+          <el-button size="small">导出Excel</el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="current">当前</el-dropdown-item>
+            <el-dropdown-item command="all">全部</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
-      <div class="button-right-box">
+      <div>
         <el-select size="small" class="select" v-model="type" @change="change">
           <el-option value="编号" label="编号"></el-option>
           <el-option value="状态" label="状态"></el-option>
@@ -99,7 +106,8 @@ export default {
       tableData: [],
       total: 0,
       page_no: 1,
-      page_size: 10
+      page_size: 10,
+      query: {}
     };
   },
   created() {
@@ -123,11 +131,11 @@ export default {
       return query;
     },
     goQuery() {
-      const query = this.makePendingQuery();
+      this.query = this.makePendingQuery();
       this.axios
-        .get("/api/getpet", {
+        .get("/api/pet/get", {
           params: {
-            ...query
+            ...this.query
           }
         })
         .then(res => {
@@ -135,10 +143,8 @@ export default {
             var results = res.data;
             this.tableData = results.message;
             this.total = results.total;
+            var now = this.moment(this.moment(new Date()).format("YYYY-MM-DD"));
             for (let i in this.tableData) {
-              var now = this.moment(
-                this.moment(new Date()).format("YYYY-MM-DD")
-              );
               var age = Util.displayAge(this.tableData[i].birthday, now);
               this.tableData[i].age = age;
             }
@@ -152,7 +158,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/deletepet", {
+            .delete("/api/pet/delete", {
               data: [{ petid: row.petid }]
             })
             .then(res => {
@@ -191,7 +197,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/deletepet", {
+            .delete("/api/pet/delete", {
               data: delobs
             })
             .then(res => {
@@ -202,6 +208,41 @@ export default {
             });
         })
         .catch(() => {});
+    },
+    goExport(value) {
+      let obs = {};
+      if (value == "current") {
+        obs = this.query;
+      }
+      obs.exportType = value;
+      this.axios
+        .post(
+          "/api/pet/export",
+          {
+            ...obs
+          },
+          { responseType: "arraybuffer" }
+        )
+        .then(_res => {
+          const blob = new Blob([_res.data], {
+            type: "application/vnd.ms-excel;"
+          });
+          const a = document.createElement("a");
+          // 生成文件路径
+          let href = window.URL.createObjectURL(blob);
+          a.href = href;
+          let _fileName = _res.headers["content-disposition"]
+            .split(";")[1]
+            .split("=")[1]
+            .split(".")[0];
+          // 文件名中有中文 则对文件名进行转码
+          a.download = decodeURIComponent(_fileName);
+          // 利用a标签做下载
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(href);
+        });
     },
     goUpdate(row) {
       this.Dialog.title("编辑宠物")
@@ -255,19 +296,17 @@ export default {
 <style scoped>
 .select {
   width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
   margin-right: 10px;
 }
 .table {
   margin-top: 10px;
 }
-.button-left-box {
-  display: inline-block;
-  margin-top: 20px;
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 10px 0;
 }
-.button-right-box {
-  display: inline-block;
-  float: right;
+.margin-right-10 {
+  margin-right: 10px;
 }
 </style>

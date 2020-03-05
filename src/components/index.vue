@@ -113,7 +113,7 @@ export default {
     ...mapMutations(["delToken"]),
     getUnRead() {
       this.axios
-        .get("/api/getunread", {
+        .get("/api/index/getunread", {
           params: {
             username: this.$store.state.username
           }
@@ -174,7 +174,7 @@ export default {
     },
     read(refobs) {
       this.axios
-        .put("/api/readunread", {
+        .put("/api/index/read", {
           refobs
         })
         .then(res => {

@@ -101,7 +101,7 @@ export default {
     goQuery() {
       let query = this.makePendingQuery();
       this.axios
-        .get("/api/getcaretable/record", {
+        .get("/api/caretable/record/get", {
           params: {
             ...query
           }

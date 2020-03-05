@@ -5,7 +5,7 @@
       <el-tab-pane label="寄养申请" name="first">
         <div style="margin-bottom:10px;">
           <div class="right">
-            <el-select size="small" class="width2001" v-model="approval.type" @change="change1">
+            <el-select size="small" class="width200" v-model="approval.type" @change="change1">
               <el-option value="寄养者" label="寄养者"></el-option>
               <el-option value="寄养单号" label="寄养单号"></el-option>
               <el-option value="申请类型" label="申请类型"></el-option>
@@ -89,13 +89,13 @@
         </el-dialog>
       </el-tab-pane>
       <el-tab-pane label="记录管理" name="second">
-        <div style="margin-bottom:10px;">
-          <div class="button-box">
+        <div class="button-box">
+          <div>
             <el-button type="primary" size="small" @click="goAdd">添加寄养</el-button>
             <el-button type="primary" size="small" @click="go2Del">批量删除</el-button>
           </div>
-          <div class="right">
-            <el-select size="small" class="width2001" v-model="recode.type" @change="change">
+          <div>
+            <el-select size="small" class="width200" v-model="recode.type" @change="change">
               <el-option value="寄养者" label="寄养者"></el-option>
               <el-option value="寄养时间" label="寄养时间"></el-option>
               <el-option value="类型" label="类型"></el-option>
@@ -259,7 +259,7 @@ export default {
     goApprovalQuery() {
       let query = this.makeApprovalQuery();
       this.axios
-        .get("/api/getcaretable", {
+        .get("/api/caretable/get", {
           params: {
             ...query
           }
@@ -304,7 +304,7 @@ export default {
     goRecodeQuery() {
       let query = this.makeRecodeQuery();
       this.axios
-        .get("/api/getallcaretable", {
+        .get("/api/caretable/getall", {
           params: {
             ...query
           }
@@ -332,7 +332,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .put("/api/long_backcare/yesorno", {
+            .put("/api/caretable/long_back/yesorno", {
               careid: row.careid,
               type: row.caretype,
               typestatus: "no",
@@ -356,7 +356,7 @@ export default {
         })
           .then(() => {
             this.axios
-              .put("/api/long_backcare/yesorno", {
+              .put("/api/caretable/long_back/yesorno", {
                 careid: row.careid,
                 type: row.caretype,
                 petid: row.petid,
@@ -381,7 +381,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
-            .put("/api/long_backcare/yesorno", {
+            .put("/api/caretable/long_back/yesorno", {
               careid: this.obs.careid,
               type: this.obs.caretype,
               typestatus: "yes",
@@ -411,7 +411,7 @@ export default {
         .then(() => {
           let delobs = { careid: row.careid };
           this.axios
-            .delete("/api/detelecaretable", {
+            .delete("/api/caretable/delete", {
               data: {
                 delobs
               }
@@ -458,7 +458,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/detelecaretable", {
+            .delete("/api/caretable/delete", {
               data: delobs
             })
             .then(res => {
@@ -530,14 +530,9 @@ export default {
   margin-top: 10px;
 }
 .button-box {
-  display: inline-block;
-  vertical-align: bottom;
-}
-.width2001 {
-  width: 200px;
-  display: inline-block;
-  margin-right: 10px;
-  vertical-align: bottom;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 .width200 {
   width: 200px;
@@ -545,8 +540,5 @@ export default {
 }
 .search-button {
   margin-left: 10px;
-}
-.right {
-  text-align: right;
 }
 </style>

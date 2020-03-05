@@ -1,12 +1,19 @@
 <template>
   <div>
     <span class="fontclass">商品管理</span>
-    <div>
-      <div class="botton-box">
+    <div class="botton-box">
+      <div>
         <el-button type="primary" size="small" @click="goAdd">添加商品</el-button>
-        <el-button type="primary" size="small" @click="go2Del">批量删除</el-button>
+        <el-button type="primary" size="small" @click="go2Del" class="margin-right-10">批量删除</el-button>
+        <el-dropdown @command="goExport">
+          <el-button size="small">导出Excel</el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="current">当前</el-dropdown-item>
+            <el-dropdown-item command="all">全部</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
-      <div class="search-box">
+      <div>
         <el-select size="small" class="select" v-model="type" @change="change">
           <el-option value="编号" label="编号"></el-option>
           <el-option value="商品名" label="商品名"></el-option>
@@ -114,7 +121,8 @@ export default {
       total: 0,
       page_no: 1,
       page_size: 10,
-      selectObj: []
+      selectObj: [],
+      query: {}
     };
   },
   created() {
@@ -135,15 +143,14 @@ export default {
           query.type = this.searchVal;
         }
       }
-
       return query;
     },
     goQuery() {
-      let query = this.makePendingQuery();
+      this.query = this.makePendingQuery();
       this.axios
-        .get("/api/getgood", {
+        .get("/api/goods/get", {
           params: {
-            ...query
+            ...this.query
           }
         })
         .then(res => {
@@ -164,12 +171,17 @@ export default {
         }
       )
         .then(() => {
+          let length = this.tableData.length;
           this.axios
-            .delete("/api/deletegood", {
+            .delete("/api/goods/delete", {
               data: [{ goodid: row.goodid }]
             })
             .then(res => {
               if (res.data.success) {
+                //只剩一条时返回上一页
+                if (length === 1 && this.page_no != 1) {
+                  this.page_no = this.page_no - 1;
+                }
                 this.$message.success("删除成功！");
                 this.goQuery();
               }
@@ -199,8 +211,7 @@ export default {
         .catch(() => {});
     },
     goAdd() {
-      this.Dialog
-        .title("添加商品")
+      this.Dialog.title("添加商品")
         .width("600px")
         .currentView(add_update, {})
         .then(data => {
@@ -229,12 +240,18 @@ export default {
         }
       )
         .then(() => {
+          let length = this.tableData.length;
+          let selecLength = this.selectObj.length;
           this.axios
-            .delete("/api/deletegood", {
+            .delete("/api/goods/delete", {
               data: delobs
             })
             .then(res => {
               if (res.data.success) {
+                //全部删除时返回上一页
+                if (length === selecLength && this.page_no != 1) {
+                  this.page_no = this.page_no - 1;
+                }
                 this.$message.success("删除成功！");
                 this.goQuery();
               }
@@ -243,14 +260,48 @@ export default {
         .catch(() => {});
     },
     goUpdate(row) {
-      this.Dialog
-        .title("编辑商品")
+      this.Dialog.title("编辑商品")
         .width("600px")
         .currentView(add_update, { row })
         .then(data => {
           this.goQuery();
         })
         .show();
+    },
+    goExport(value) {
+      let obs = {};
+      if (value == "current") {
+        obs = this.query;
+      }
+      obs.exportType = value;
+      this.axios
+        .post(
+          "/api/goods/export",
+          {
+            ...obs
+          },
+          { responseType: "arraybuffer" }
+        )
+        .then(_res => {
+          const blob = new Blob([_res.data], {
+            type: "application/vnd.ms-excel;"
+          });
+          const a = document.createElement("a");
+          // 生成文件路径
+          let href = window.URL.createObjectURL(blob);
+          a.href = href;
+          let _fileName = _res.headers["content-disposition"]
+            .split(";")[1]
+            .split("=")[1]
+            .split(".")[0];
+          // 文件名中有中文 则对文件名进行转码
+          a.download = decodeURIComponent(_fileName);
+          // 利用a标签做下载
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(href);
+        });
     },
     goSearch() {
       this.page_no = 1;
@@ -290,16 +341,16 @@ export default {
   margin-top: 10px;
 }
 .botton-box {
-  display: inline-block;
-  margin-top: 20px;
-}
-.search-box {
-  float: right;
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 10px 0;
 }
 .icon {
   font-size: 18px;
   margin-left: 5px;
   cursor: pointer;
+}
+.margin-right-10 {
+  margin-right: 10px;
 }
 </style>

@@ -3,10 +3,17 @@
     <span class="fontclass">全部账户</span>
     <div class="but1">
       <div class="button">
-        <el-button type="primary" size="small" @click="goadd">增加账户</el-button>
-        <el-button type="primary" size="small" @click="go2del">删除选中</el-button>
+        <el-button type="primary" size="small" @click="goAdd">增加账户</el-button>
+        <el-button type="primary" size="small" @click="go2Del" class="margin-right10">删除选中</el-button>
+        <el-dropdown @command="goExport">
+          <el-button size="small">导出Excel</el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="current">当前</el-dropdown-item>
+            <el-dropdown-item command="all">全部</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
-      <div class="div1">
+      <div>
         <el-select size="small" class="select" v-model="type" @change="change">
           <el-option value="注册日期" label="注册日期"></el-option>
           <el-option value="生日" label="生日"></el-option>
@@ -19,28 +26,28 @@
           type="text"
           size="small"
           class="select"
-          v-model="searchval"
+          v-model="searchVal"
           clearable
         ></el-input>
-        <el-select v-else-if="type=='权限'" class="select" size="small" v-model="searchval" clearable>
+        <el-select v-else-if="type=='权限'" class="select" size="small" v-model="searchVal" clearable>
           <el-option value="customer" label="客户"></el-option>
           <el-option value="admin" label="管理员"></el-option>
         </el-select>
         <el-date-picker
           v-else
-          v-model="historydata"
+          v-model="historyData"
           type="daterange"
           size="small"
-          class="timerange"
+          class="margin-right10"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
-        <el-button type="primary" size="small" @click="goserach">搜索</el-button>
+        <el-button type="primary" size="small" @click="goSearch">搜索</el-button>
       </div>
     </div>
     <el-table
-      :data="tabledata"
+      :data="tableData"
       stripe
       highlight-current-row
       @selection-change="handleSelectionChange"
@@ -69,9 +76,9 @@
       </el-table-column>
       <el-table-column label="操作" width="150" align="center" header-align="center">
         <div slot-scope="scope">
-          <el-button type="text" size="small" @click="goupdatepsd(scope.row)">修改密码</el-button>
-          <el-button type="text" size="small" @click="goupdate(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="godel(scope.row)">删除</el-button>
+          <el-button type="text" size="small" @click="goUpdatePsd(scope.row)">修改密码</el-button>
+          <el-button type="text" size="small" @click="goUpdate(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="goDel(scope.row)">删除</el-button>
         </div>
       </el-table-column>
     </el-table>
@@ -100,89 +107,82 @@ export default {
   data() {
     return {
       type: "名字",
-      historydata: "",
-      searchval: "",
+      historyData: "",
+      searchVal: "",
       selectObj: [],
-      tabledata: [{ id: 1 }],
+      tableData: [{ id: 1 }],
       total: 0,
       page_no: 1,
-      page_size: 10
+      page_size: 10,
+      query: {}
     };
   },
   created() {
-    this.goquery();
+    this.goQuery();
   },
   methods: {
-    makependingquery() {
+    makePendingQuery() {
       let query = {
         page_no: this.page_no,
         page_size: this.page_size
       };
-      if (this.type == "名字" && this.searchval != "") {
-        query.name = this.searchval;
+      if (this.type == "名字" && this.searchVal != "") {
+        query.name = this.searchVal;
       }
 
-      if (this.type == "权限" && this.searchval != "") {
-        query.permissions = this.searchval;
+      if (this.type == "权限" && this.searchVal != "") {
+        query.permissions = this.searchVal;
       }
-      if (this.type == "注册日期" && this.historydata != "") {
-        var regdaystart = this.moment(this.historydata[0]).format("YYYY-MM-DD");
-        var regdayend = this.moment(this.historydata[1]).format("YYYY-MM-DD");
+      if (this.type == "注册日期" && this.historyData != "") {
+        var regdaystart = this.moment(this.historyData[0]).format("YYYY-MM-DD");
+        var regdayend = this.moment(this.historyData[1]).format("YYYY-MM-DD");
         query.regday = [regdaystart, regdayend];
       }
-      if (this.type == "生日" && this.historydata != "") {
-        var birthdaystart = this.moment(this.historydata[0]).format(
+      if (this.type == "生日" && this.historyData != "") {
+        var birthdaystart = this.moment(this.historyData[0]).format(
           "YYYY-MM-DD"
         );
-        var birthdayend = this.moment(this.historydata[1]).format("YYYY-MM-DD");
+        var birthdayend = this.moment(this.historyData[1]).format("YYYY-MM-DD");
         query.birthday = [birthdaystart, birthdayend];
       }
       return query;
     },
-    goquery() {
-      let query = this.makependingquery();
+    goQuery() {
+      this.query = this.makePendingQuery();
       this.axios
-        .get("/api/getalluser", {
+        .get("/api/user/getall", {
           params: {
-            ...query
+            ...this.query
           }
         })
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.tabledata = results.message;
+            this.tableData = results.message;
             this.total = results.total;
-            for (let i in this.tabledata) {
-              this.tabledata[i].birthday = this.moment(
-                this.tabledata[i].birthday
-              ).format("YYYY-MM-DD");
-              this.tabledata[i].regday = this.moment(
-                this.tabledata[i].regday
-              ).format("YYYY-MM-DD");
-            }
           }
         });
     },
-    godel(row) {
+    goDel(row) {
       this.$confirm("确认删除账户?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
           this.axios
-            .delete("/api/deteleuser", {
+            .delete("/api/user/delete", {
               data: [{ username: row.username }]
             })
             .then(res => {
               if (res.data.success) {
-                this.goquery();
+                this.goQuery();
                 this.$message.success("删除成功！");
               }
             });
         })
         .catch(() => {});
     },
-    go2del() {
+    go2Del() {
       let delobs = [];
       this.selectObj.forEach(item => {
         delobs.push({
@@ -200,63 +200,95 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/deteleuser", {
+            .delete("/api/user/delete", {
               data: delobs
             })
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
-                this.goquery();
+                this.goQuery();
               }
             });
         })
         .catch(() => {});
     },
-    goserach() {
+    goSearch() {
       this.page_no = 1;
-      this.goquery();
+      this.goQuery();
     },
-    goupdatepsd(row) {
-      this.Dialog
-        .title("修改密码")
+    goUpdatePsd(row) {
+      this.Dialog.title("修改密码")
         .width("500px")
         .currentView(psd, { row })
         .then(data => {
-          this.goquery();
+          this.goQuery();
         })
         .show();
     },
-    goadd() {
-      this.Dialog
-        .title("添加用户")
+    goAdd() {
+      this.Dialog.title("添加用户")
         .width("500px")
         .currentView(add_update, {})
         .then(data => {
-          this.goquery();
+          this.goQuery();
         })
         .show();
     },
-    goupdate(row) {
-      this.Dialog
-        .title("修改用户")
+    goUpdate(row) {
+      this.Dialog.title("修改用户")
         .width("600px")
         .currentView(add_update, { row })
         .then(data => {
-          this.goquery();
+          this.goQuery();
         })
         .show();
     },
     change() {
-      this.searchval = "";
-      this.historydata = "";
+      this.searchVal = "";
+      this.historyData = "";
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.goquery();
+      this.goQuery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.goquery();
+      this.goQuery();
+    },
+    goExport(value) {
+      let obs = {};
+      if (value == "current") {
+        obs = this.query;
+      }
+      obs.exportType = value;
+      this.axios
+        .post(
+          "/api/user/export",
+          {
+            ...obs
+          },
+          { responseType: "arraybuffer" }
+        )
+        .then(_res => {
+          const blob = new Blob([_res.data], {
+            type: "application/vnd.ms-excel;"
+          });
+          const a = document.createElement("a");
+          // 生成文件路径
+          let href = window.URL.createObjectURL(blob);
+          a.href = href;
+          let _fileName = _res.headers["content-disposition"]
+            .split(";")[1]
+            .split("=")[1]
+            .split(".")[0];
+          // 文件名中有中文 则对文件名进行转码
+          a.download = decodeURIComponent(_fileName);
+          // 利用a标签做下载
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(href);
+        });
     },
     handleSelectionChange(val) {
       let self = this;
@@ -272,29 +304,16 @@ export default {
 </script>
 
 <style scoped>
-.button {
-  display: inline-block;
-  vertical-align: bottom;
-}
-
 .select {
   width: 200px;
-  display: inline-block;
-  vertical-align: bottom;
   margin-right: 10px;
 }
-
-.timerange {
+.margin-right10 {
   margin-right: 10px;
 }
-
-.div1 {
-  float: right;
-  display: inline-block;
-}
-
 .but1 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

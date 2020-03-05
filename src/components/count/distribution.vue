@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     getfavoritegood() {
-      this.axios.get("/api/getfavoritegood").then(res => {
+      this.axios.get("/api/count/getfavoritegood").then(res => {
         if (res.data.success) {
           var message = res.data.message;
           this.options.series[0].data = message.sex;

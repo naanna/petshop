@@ -149,7 +149,7 @@ export default {
     goQuery() {
       const query = this.makeQuery();
       this.axios
-        .get("/api/getcaretable/person", {
+        .get("/api/caretable/getperson", {
           params: {
             ...query
           }
@@ -174,7 +174,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .put("/api/long_backcare", {
+            .put("/api/caretable/long_back", {
               careid: row.careid,
               type: "back"
             })
@@ -195,7 +195,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
-            .put("/api/long_backcare", {
+            .put("/api/caretable/long_back", {
               careid: this.lontimeobs.careid,
               longtime: this.form.longtime,
               type: "long"
@@ -220,7 +220,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .delete("/api/cancelcaretable", {
+            .delete("/api/caretable/cancel", {
               data: {
                 careid: row.careid,
                 petid: row.petid,

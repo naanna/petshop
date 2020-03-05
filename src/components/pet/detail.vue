@@ -81,7 +81,7 @@ export default {
   methods: {
     goAdd() {
       this.axios
-        .post("/api/addshopcar", {
+        .post("/api/shopcar/add", {
           petid: this.form.petid,
           username: this.$store.state.username
         })

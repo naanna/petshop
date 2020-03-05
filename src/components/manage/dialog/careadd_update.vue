@@ -167,7 +167,7 @@ export default {
   methods: {
     goQuery() {
       this.axios
-        .get("/api/getpet", {
+        .get("/api/pet/get", {
           params: {
             page_no: 1,
             page_size: 10,
@@ -188,7 +188,7 @@ export default {
             "YYYY-MM-DD"
           );
           if (this.show) {
-            this.axios.put("/api/updatecaretable", this.form).then(res => {
+            this.axios.put("/api/caretable/update", this.form).then(res => {
               if (res.data.success) {
                 this.$message.success("修改成功！");
                 this.closeDialog();
@@ -197,11 +197,11 @@ export default {
           } else {
              if(this.pet.status){
               this.axios
-                .post("/api/addpet", this.pet)
+                .post("/api/pet/add", this.pet)
                 .then(res => {
                   if (res.data.success) {
                     this.form.petid = res.data.petid;
-                    return this.axios.post("/api/addcaretable", this.form);
+                    return this.axios.post("/api/caretable/add", this.form);
                   }
                 })
                 .then(res => {

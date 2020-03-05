@@ -46,7 +46,7 @@
       </el-form-item>
     </el-form>
     <div class="center">
-      <el-button type="primary" size="small" @click="goAdd">添加</el-button>
+      <el-button type="primary" size="small" @click="goAdd">保存</el-button>
       <el-button size="small" @click="goClose">取消</el-button>
     </div>
   </div>
@@ -60,6 +60,17 @@ export default {
     UploadImage
   },
   data() {
+    var checkBirthday = (rule, value, callback) => {
+      if (
+        this.moment(value).valueOf() >
+        this.moment()
+          .startOf("day")
+          .valueOf()
+      ) {
+        return callback(new Error("生日必须大于当天"));
+      }
+      callback();
+    };
     return {
       form: {
         picture: "",
@@ -79,7 +90,12 @@ export default {
           { min: 1, max: 5, message: "长度在1到5个字符" }
         ],
         birthday: [
-          { validator: checkinput, trigger: "blur", message: "生日不能为空" }
+          { validator: checkinput, trigger: "blur", message: "生日不能为空" },
+          {
+            validator: checkBirthday,
+            trigger: "blur",
+            message: "生日必须大于当天"
+          }
         ],
         price: [{ type: "number", message: "价格必须为数字值" }],
         variety: [
@@ -115,19 +131,19 @@ export default {
           );
           if (this.form.picture == "") {
             this.form.picture = null;
-          } 
-           if (this.form.status == "caring") {
+          }
+          if (this.form.status == "caring" && !this.edit) {
             this.closeDialog(this.form);
           } else {
-             if (this.edit) {
-              this.axios.put("/api/updatepet", this.form).then(res => {
+            if (this.edit) {
+              this.axios.put("/api/pet/update", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("编辑成功！");
                   this.closeDialog();
                 }
               });
             } else {
-                this.axios.post("/api/addpet", this.form).then(res => {
+              this.axios.post("/api/pet/add", this.form).then(res => {
                 if (res.data.success) {
                   this.$message.success("添加成功！");
                   this.closeDialog();

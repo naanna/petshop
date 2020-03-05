@@ -32,6 +32,17 @@
 import { checkinput } from "@assets/validate.js";
 export default {
   data() {
+    var checkDay = (rule, value, callback) => {
+      if (
+        this.moment(value).valueOf() <
+        this.moment()
+          .startOf("day")
+          .valueOf()
+      ) {
+        return callback(new Error("不能选择过去的日期"));
+      }
+      callback();
+    };
     return {
       form: {
         day: "",
@@ -44,6 +55,11 @@ export default {
             validator: checkinput,
             trigger: "blur",
             message: "日期不能为空"
+          },
+          {
+            validator: checkDay,
+            trigger: "blur",
+            message: "不能选择过去的日期"
           }
         ],
         textarea: [
@@ -70,7 +86,7 @@ export default {
         if (valid) {
           if (this.edit) {
             this.axios
-              .put("/api/updateschedule", {
+              .put("/api/schedule/update", {
                 scheduleid: this.DialogParams().row.scheduleid,
                 textarea: this.form.textarea
               })
@@ -82,7 +98,7 @@ export default {
               });
           } else {
             this.axios
-              .post("/api/addschedule", {
+              .post("/api/schedule/add", {
                 username: this.$store.state.username,
                 textarea: this.form.textarea,
                 day: this.moment(this.form.day).format("YYYY-MM-DD")

@@ -24,7 +24,10 @@ axios.interceptors.request.use(config => {
 //  RESPONSE 响应异常拦截
 axios.interceptors.response.use(data => {
     if (!data.data.success && data.data.status != '1') {
-        Message.error({ message: data.data.reason });
+        if (data.data.byteLength != 246 && data.data instanceof ArrayBuffer) {
+            return data;
+        }
+        Message.error({ message: data.data instanceof ArrayBuffer ? '导出失败!' : data.data.reason });
     }
     if (data.data.status == 403) {
         store.commit('delToken');

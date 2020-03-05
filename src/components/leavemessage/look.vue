@@ -55,10 +55,11 @@ export default {
     goQuery() {
       let query = {
         page_no: this.page_no,
-        page_size: this.page_size
+        page_size: this.page_size,
+        type: "show"
       };
       this.axios
-        .get("/api/getmessage", {
+        .get("/api/message/get", {
           params: {
             ...query
           }
@@ -91,7 +92,7 @@ export default {
         })
           .then(() => {
             this.axios
-              .post("/api/addmessage", {
+              .post("/api/message/add", {
                 username: this.$store.state.username,
                 note: this.textarea,
                 time: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss")

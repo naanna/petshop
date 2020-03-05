@@ -130,7 +130,7 @@ export default {
     goQuery() {
       const query = this.makePendingQuery();
       this.axios
-        .get("/api/getpet", {
+        .get("/api/pet/get", {
           params: {
             ...query
           }
@@ -148,7 +148,7 @@ export default {
               var age = Util.displayAge(this.tableData[i].birthday, now);
               this.tableData[i].age = age;
             }
-            return this.axios.get("/api/getcollect", {
+            return this.axios.get("/api/collect/get", {
               params: {
                 username: this.$store.state.username
               }
@@ -178,7 +178,7 @@ export default {
     },
     goCollect(row) {
       this.axios
-        .post("/api/addcollect", {
+        .post("/api/collect/add", {
           username: this.$store.state.username,
           petid: row.petid
         })
@@ -191,7 +191,7 @@ export default {
     },
     goNoCollect(row) {
       this.axios
-        .delete("/api/deletecollect", {
+        .delete("/api/collect/delete", {
           data: {
             username: this.$store.state.username,
             petid: row.petid
@@ -225,7 +225,7 @@ export default {
       })
         .then(() => {
           this.axios
-            .post("/api/addshopcar", {
+            .post("/api/shopcar/add", {
               petid: row.petid,
               username: this.$store.state.username
             })

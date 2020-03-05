@@ -3,12 +3,12 @@
     <span class="fontclass">充值管理</span>
     <el-tabs value="first" class="tabs">
       <el-tab-pane label="充值审批" name="first">
-        <div>
-          <div class="button-box">
+        <div class="button-box">
+          <div>
             <el-button type="primary" size="small" @click="go2Agree">批量同意</el-button>
             <el-button type="primary" size="small" @click="go2Refuse">批量拒绝</el-button>
           </div>
-          <div class="search-box">
+          <div>
             <el-date-picker
               v-model="pendingQuery.historyData"
               type="daterange"
@@ -18,7 +18,7 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
             ></el-date-picker>
-            <el-button type="primary" size="small" class="search-button" @click="goPendingSearch">搜索</el-button>
+            <el-button type="primary" size="small" @click="goPendingSearch">搜索</el-button>
           </div>
         </div>
         <el-table
@@ -59,45 +59,54 @@
       </el-tab-pane>
 
       <el-tab-pane label="充值记录" name="second">
-        <div>
-          <el-select size="small" class="width200" v-model="type" @change="selectChange">
-            <el-option value="审批者" label="审批者"></el-option>
-            <el-option value="充值账号" label="充值账号"></el-option>
-            <el-option value="充值日期" label="充值日期"></el-option>
-            <el-option value="状态" label="状态"></el-option>
-          </el-select>
-          <el-date-picker
-            v-if="type=='充值日期'"
-            v-model="recordQuery.historyData"
-            type="daterange"
-            size="small"
-            style=" margin-right: 10px;"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            clearable
-          ></el-date-picker>
-          <el-select
-            size="small"
-            class="width200"
-            clearable
-            v-model="recordQuery.searchVal"
-            v-else-if="type=='状态'"
-          >
-            <el-option value="yes" label="已同意"></el-option>
-            <el-option value="no" label="待审批"></el-option>
-            <el-option value="refuse" label="被拒绝"></el-option>
-          </el-select>
-          <el-input
-            v-else
-            placeholder="请输入内容"
-            type="text"
-            v-model="recordQuery.searchVal"
-            clearable
-            size="small"
-            class="width200"
-          ></el-input>
-          <el-button type="primary" size="small" @click="goRecordSearch">搜索</el-button>
+        <div class="button-box">
+          <div>
+            <el-select size="small" class="width200" v-model="type" @change="selectChange">
+              <el-option value="审批者" label="审批者"></el-option>
+              <el-option value="充值账号" label="充值账号"></el-option>
+              <el-option value="充值日期" label="充值日期"></el-option>
+              <el-option value="状态" label="状态"></el-option>
+            </el-select>
+            <el-date-picker
+              v-if="type=='充值日期'"
+              v-model="recordQuery.historyData"
+              type="daterange"
+              size="small"
+              style=" margin-right: 10px;"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              clearable
+            ></el-date-picker>
+            <el-select
+              size="small"
+              class="width200"
+              clearable
+              v-model="recordQuery.searchVal"
+              v-else-if="type=='状态'"
+            >
+              <el-option value="yes" label="已同意"></el-option>
+              <el-option value="no" label="待审批"></el-option>
+              <el-option value="refuse" label="被拒绝"></el-option>
+            </el-select>
+            <el-input
+              v-else
+              placeholder="请输入内容"
+              type="text"
+              v-model="recordQuery.searchVal"
+              clearable
+              size="small"
+              class="width200"
+            ></el-input>
+            <el-button type="primary" size="small" @click="goRecordSearch">搜索</el-button>
+          </div>
+          <el-dropdown @command="goExport">
+            <el-button size="small">导出Excel</el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="current">当前</el-dropdown-item>
+              <el-dropdown-item command="all">全部</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
         <el-table :data="data" stripe border highlight-current-row class="table">
           <el-table-column label="充值单号 " prop="investid" align="center" header-align="center"></el-table-column>
@@ -149,7 +158,8 @@ export default {
       data: [],
       type: "审批者",
       approval: "",
-      selectObj: []
+      selectObj: [],
+      query: {}
     };
   },
   created() {
@@ -191,11 +201,6 @@ export default {
             var results = res.data;
             this.pendingData = results.message;
             this.pendingQuery.total = results.total;
-            for (let i in this.pendingData) {
-              this.pendingData[i].time = this.moment(
-                this.pendingData[i].time
-              ).format("YYYY-MM-DD HH:mm:ss");
-            }
           }
         });
     },
@@ -235,11 +240,11 @@ export default {
       return query;
     },
     getRecord() {
-      let query = this.makeRecordQuery();
+      this.query = this.makeRecordQuery();
       this.axios
         .get("/api/invest/getall", {
           params: {
-            ...query
+            ...this.query
           }
         })
         .then(res => {
@@ -247,11 +252,6 @@ export default {
             var results = res.data;
             this.data = results.message;
             this.recordQuery.total = results.total;
-            for (let i in this.data) {
-              this.data[i].time = this.moment(this.data[i].time).format(
-                "YYYY-MM-DD HH:mm:ss"
-              );
-            }
           }
         });
     },
@@ -372,6 +372,41 @@ export default {
         })
         .catch(() => {});
     },
+    goExport(value) {
+      let obs = {};
+      if (value == "current") {
+        obs = this.query;
+      }
+      obs.exportType = value;
+      this.axios
+        .post(
+          "/api/invest/export",
+          {
+            ...obs
+          },
+          { responseType: "arraybuffer" }
+        )
+        .then(_res => {
+          const blob = new Blob([_res.data], {
+            type: "application/vnd.ms-excel;"
+          });
+          const a = document.createElement("a");
+          // 生成文件路径
+          let href = window.URL.createObjectURL(blob);
+          a.href = href;
+          let _fileName = _res.headers["content-disposition"]
+            .split(";")[1]
+            .split("=")[1]
+            .split(".")[0];
+          // 文件名中有中文 则对文件名进行转码
+          a.download = decodeURIComponent(_fileName);
+          // 利用a标签做下载
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(href);
+        });
+    },
     goRecordSearch() {
       this.recordQuery.page_no = 1;
       this.getRecord();
@@ -417,19 +452,13 @@ export default {
   width: 200px;
   margin-right: 10px;
 }
-.search-button {
-  margin-left: 10px;
-}
 .table {
   margin-top: 10px;
 }
 .button-box {
-  display: inline-block;
-  vertical-align: bottom;
-}
-.search-box {
-  float: right;
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 .tabs {
   margin-left: 10px;

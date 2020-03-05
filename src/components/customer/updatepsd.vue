@@ -65,7 +65,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
-            .put("/api/updateuser/psd", {
+            .put("/api/user/update/psd", {
               psd: this.form.pass,
               username: this.form.username
             })
