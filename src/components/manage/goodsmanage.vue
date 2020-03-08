@@ -6,12 +6,13 @@
         <el-button type="primary" size="small" @click="goAdd">添加商品</el-button>
         <el-button type="primary" size="small" @click="go2Del" class="margin-right-10">批量删除</el-button>
         <el-dropdown @command="goExport">
-          <el-button size="small">导出Excel</el-button>
+          <el-button size="small" class="margin-right-10">导出Excel</el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="current">当前</el-dropdown-item>
             <el-dropdown-item command="all">全部</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+        <el-button size="small" @click="goImport">导入Excel</el-button>
       </div>
       <div>
         <el-select size="small" class="select" v-model="type" @change="change">
@@ -109,6 +110,7 @@
 <script>
 import Dialog from "@common/dialog.vue";
 import add_update from "./dialog/goodadd_update.vue";
+import GoodsImport from "./dialog/GoodsImport.vue";
 export default {
   components: {
     Dialog
@@ -210,15 +212,6 @@ export default {
         })
         .catch(() => {});
     },
-    goAdd() {
-      this.Dialog.title("添加商品")
-        .width("600px")
-        .currentView(add_update, {})
-        .then(data => {
-          this.goQuery();
-        })
-        .show();
-    },
     go2Del() {
       let delobs = [];
       this.selectObj.forEach(item => {
@@ -258,6 +251,24 @@ export default {
             });
         })
         .catch(() => {});
+    },
+    goAdd() {
+      this.Dialog.title("添加商品")
+        .width("600px")
+        .currentView(add_update, {})
+        .then(data => {
+          this.goQuery();
+        })
+        .show();
+    },
+    goImport() {
+      this.Dialog.title("导入商品")
+        .width("400px")
+        .currentView(GoodsImport, {})
+        .then(data => {
+          this.goQuery();
+        })
+        .show();
     },
     goUpdate(row) {
       this.Dialog.title("编辑商品")
