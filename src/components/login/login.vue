@@ -33,6 +33,7 @@
           </el-form-item>
           <div class="forget-button">
             <el-button type="text" size="small" @click="goForget">忘记密码</el-button>
+            <el-button type="text" size="small" @click="goRegister">注册</el-button>
           </div>
           <div class="center">
             <el-button type="primary" size="small" @click="goLogin">登录</el-button>
@@ -134,6 +135,9 @@ export default {
     goForget() {
       this.$router.push("/forgetpsd");
     },
+    goRegister() {
+      this.$router.push("/register");
+    },
     generatedCode() {
       let code = "";
       let showCode = "";
@@ -154,7 +158,6 @@ export default {
 
 <style scoped>
 .forget-button {
-  padding-right: 50px;
   margin-bottom: 5px;
   text-align: right;
 }

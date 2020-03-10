@@ -32,7 +32,7 @@
         <el-input type="text" size="small" class="formlist" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="权限：" prop="permissions">
-        <el-select size="small" class="formlist" v-model="form.permissions" @change="goclearlevel">
+        <el-select size="small" class="formlist" v-model="form.permissions" @change="goClearLevel">
           <el-option value="customer" label="客户"></el-option>
           <el-option value="admin" label="管理员"></el-option>
         </el-select>
@@ -71,8 +71,8 @@
       </el-form-item>
     </el-form>
     <div class="center">
-      <el-button type="primary" size="small" @click="goadd">{{edit==='no'?'添加':'编辑'}}</el-button>
-      <el-button size="small" @click="goclose">取消</el-button>
+      <el-button type="primary" size="small" @click="goAdd">{{edit==='no'?'添加':'编辑'}}</el-button>
+      <el-button size="small" @click="goClose">取消</el-button>
     </div>
   </div>
 </template>
@@ -170,7 +170,7 @@ export default {
     }
   },
   methods: {
-    goadd() {
+    goAdd() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           const loading = this.$loading({
@@ -206,11 +206,11 @@ export default {
     getSrc(src) {
       this.form.picture = src;
     },
-    goclearlevel() {
+    goClearLevel() {
       if (this.form.permissions == "customer") this.form.level = "vip1";
       else this.form.level = "admin";
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }

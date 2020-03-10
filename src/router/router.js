@@ -13,6 +13,10 @@ const router = new Router({
             path: '/forgetpsd',
             name: 'forgetpsd',
             component: resolve => require(['../components/login/forgetpsd.vue'], resolve)
+        }, {
+            path: '/register',
+            name: 'register',
+            component: resolve => require(['../components/login/register.vue'], resolve)
         },
         {
             path: '/',
@@ -235,7 +239,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.path === '/login' || to.path === '/forgetpsd') {
+    if (to.path === '/login' || to.path === '/forgetpsd' || to.path === '/register') {
         next();
     } else {
         let token = localStorage.getItem('token');
