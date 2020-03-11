@@ -194,7 +194,8 @@ export default {
             this.axios
               .get("/api/user/get", {
                 params: {
-                  id: this.form.username
+                  id: this.form.username,
+                  type:'forget'
                 }
               })
               .then(res => {

@@ -113,6 +113,17 @@ export default {
   },
   name: "caretable",
   data() {
+    var checkDay = (rule, value, callback) => {
+      if (
+        this.moment(value).valueOf() <
+        this.moment()
+          .startOf("day")
+          .valueOf()
+      ) {
+        return callback(new Error("开始时间不得早于当前"));
+      }
+      callback();
+    };
     return {
       form: {
         starttime: "",
@@ -125,6 +136,11 @@ export default {
             validator: checkinput,
             trigger: "blur",
             message: "开始日期不能为空"
+          },
+          {
+            validator: checkDay,
+            trigger: "blur",
+            message: "开始时间不得早于当前"
           }
         ],
         timerang: [
@@ -145,23 +161,23 @@ export default {
           this.form.starttime = this.moment(this.form.starttime).format(
             "YYYY-MM-DD"
           );
-          if(this.pet.status){
+          if (this.pet.status) {
             this.form.username = this.$store.state.username;
             this.axios
-            .post("/api/pet/add", this.pet)
-            .then(res => {
-              if (res.data.success) {
-                this.form.petid = res.data.petid;
-                return this.axios.post("/api/caretable/add", this.form);
-              }
-            })
-            .then(res => {
-              if (res.data.success) {
-                this.$message.success("成功提交寄养申请！");
-                this.closeDialog();
-              }
-            });
-          }else{
+              .post("/api/pet/add", this.pet)
+              .then(res => {
+                if (res.data.success) {
+                  this.form.petid = res.data.petid;
+                  return this.axios.post("/api/caretable/add", this.form);
+                }
+              })
+              .then(res => {
+                if (res.data.success) {
+                  this.$message.success("成功提交寄养申请！");
+                  this.closeDialog();
+                }
+              });
+          } else {
             this.$message.warning("请添加宠物！");
           }
         } else {

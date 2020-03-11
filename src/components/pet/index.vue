@@ -27,7 +27,12 @@
       </div>
     </div>
     <div>
-      <div class="pet-list-box" @click="goDetail(item)" v-for="(item,index) in tableData" :key="index">
+      <div
+        class="pet-list-box"
+        @click="goDetail(item)"
+        v-for="(item,index) in tableData"
+        :key="index"
+      >
         <div v-if="!seeOut">
           <i class="el-icon-shopping-cart-2 pet-shopcar" @click.stop="goAddShop(item)"></i>
           <el-button
@@ -304,6 +309,9 @@ export default {
   color: #6e6b6b;
   font-family: "jelly";
   font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .pet-info-box {
   display: flex;

@@ -73,7 +73,7 @@ const navlist = [{
     }, {
         adminMenu: {
             id: 2,
-            menuName: "会员管理",
+            menuName: "用户管理",
             menuType: "list",
             pid: "0",
             url: "#",
@@ -353,7 +353,7 @@ const navlist = [{
             }, {
                 adminMenu: {
                     id: 77,
-                    menuName: "商品管理",
+                    menuName: "用品管理",
                     menuType: "page",
                     pid: "8",
                     url: "/manage/goodsManage",

@@ -169,6 +169,7 @@ export default {
 .favorites-card {
   margin-right: 40px;
   margin-top: 40px;
+  height: 280px;
 }
 .favorites-image {
   width: 100%;

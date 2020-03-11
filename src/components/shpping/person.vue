@@ -31,7 +31,7 @@
             :inline-message="true"
           >
             <el-date-picker type="date" size="small" class="formlist" v-model="form.birthday"></el-date-picker>
-            <el-tooltip class="item" effect="dark" content="亲，生日当月将赠送优惠券（每年只享受一次）" placement="top">
+            <el-tooltip class="item" effect="dark" content="亲，生日当月将有小惊喜哦（每年只享受一次）" placement="top">
               <i class="el-icon-question icon"></i>
             </el-tooltip>
           </el-form-item>
@@ -208,10 +208,9 @@ export default {
       this.form.birthday = this.old.birthday;
     },
     goPsd() {
-      var old = this.form;
       this.Dialog.title("修改密码")
         .width("800px")
-        .currentView(psd, { old })
+        .currentView(psd, { })
         .then(data => {
           this.getPerson();
         })

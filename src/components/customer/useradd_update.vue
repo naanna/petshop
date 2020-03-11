@@ -161,7 +161,7 @@ export default {
   mounted() {
     if (this.DialogParams().row) {
       this.disable = true;
-      let obs = this.DialogParams().row;
+      let obs = Object.assign({},this.DialogParams().row);
       this.form = obs;
       this.form.pass = obs.psd;
       this.form.checkPass = obs.psd;
@@ -205,6 +205,7 @@ export default {
     },
     getSrc(src) {
       this.form.picture = src;
+      this.imageUrl=src;
     },
     goClearLevel() {
       if (this.form.permissions == "customer") this.form.level = "vip1";

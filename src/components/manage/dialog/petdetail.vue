@@ -52,7 +52,7 @@
         type="textarea"
         :rows="3"
         :readonly="true"
-        style="padding-left:30px;"
+        style="padding-left:30px;margin-bottom:10px;"
         class="textarea"
         v-model="form.note"
       ></el-input>

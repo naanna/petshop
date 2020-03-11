@@ -286,4 +286,7 @@ export default {
   color: #636e72;
   margin: 0 0 10px 1px;
 }
+.el-avatar >>> img {
+  width: 100% !important;
+}
 </style>

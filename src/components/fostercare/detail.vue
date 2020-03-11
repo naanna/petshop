@@ -23,7 +23,7 @@
       v-model="form.note"
     ></el-input>
     <div class="button">
-      <el-button size="small" @click="goclose">关闭</el-button>
+      <el-button size="small" @click="goClose">关闭</el-button>
     </div>
     <Dialog></Dialog>
   </div>
@@ -47,11 +47,12 @@ export default {
     if (this.DialogParams().row) {
       let obs = this.DialogParams().row;
       this.form = obs;
-      this.goquery();
+      console.log(this.form)
+      this.goQuery();
     }
   },
   methods: {
-    goquery() {
+    goQuery() {
       this.axios
         .get("/api/caretable/getstarttime", {
           params: {
@@ -62,19 +63,21 @@ export default {
           if (res.data.success) {
             var results = res.data;
             var now = this.moment(this.moment(new Date()).format("YYYY-MM-DD"));
-            this.days = Util.displayAge(results.message, now);
+            var day=this.moment(results.message).format("YYYY-MM-DD")
+            console.log(day)
+            this.days = Util.displayAge(day, now);
+            console.log(Util.displayAge(day, now));
           }
         });
     },
-    goadd() {
-      this.Dialog
-        .title("添加宠物")
+    goAdd() {
+      this.Dialog.title("添加宠物")
         .width("800px")
         .currentView(add, {})
         .then(data => {})
         .show();
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }

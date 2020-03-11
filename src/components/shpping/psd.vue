@@ -96,8 +96,6 @@ export default {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
-      } else if (value === this.old.psd) {
-        callback(new Error("该密码与原密码相同！请重新输入！"));
       } else {
         if (this.ruleForm.checkPass !== "") {
           this.$refs.ruleForm.validateField("checkPass");
@@ -114,12 +112,9 @@ export default {
         callback();
       }
     };
-    var checkold = (rule, value, callback) => {
+    var checkoOld = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("原密码不能为空"));
-      }
-      if (value != this.old.psd) {
-        return callback(new Error("原密码错误，请重新输入"));
       }
       callback();
     };
@@ -139,19 +134,13 @@ export default {
         ]
       },
       nextpage: "1",
-      old: {},
       form: {
         oldpsd: ""
       },
       rules: {
-        oldpsd: [{ validator: checkold, trigger: "blur" }]
+        oldpsd: [{ validator: checkoOld, trigger: "blur" }]
       }
     };
-  },
-  mounted() {
-    if (this.DialogParams().old) {
-      this.old = this.DialogParams().old;
-    }
   },
   methods: {
     goUp() {
@@ -161,7 +150,16 @@ export default {
       if (this.nextpage == "1") {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            this.nextpage++;
+            this.axios
+              .post("/api/user/check/psd", {
+                psd: this.form.oldpsd,
+                username: this.$store.state.username
+              })
+              .then(res => {
+                if (res.data.success) {
+                  this.nextpage++;
+                }
+              });
           } else {
             return false;
           }
@@ -177,7 +175,7 @@ export default {
                 this.axios
                   .put("/api/user/update/psd", {
                     psd: this.ruleForm.pass,
-                    username: this.old.username
+                    username: this.$store.state.username
                   })
                   .then(res => {
                     if (res.data.success) {
