@@ -28,7 +28,7 @@
               style="margin-right:20px"
             ></el-input>
             <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
-              <span class="code" @click="goChange">{{showCode}}</span>
+              <span class="code" @click="generatedCode">{{showCode}}</span>
             </el-tooltip>
           </el-form-item>
           <div class="forget-button">
@@ -148,9 +148,6 @@ export default {
       }
       this.code = code;
       this.showCode = showCode;
-    },
-    goChange() {
-      this.generatedCode();
     }
   }
 };

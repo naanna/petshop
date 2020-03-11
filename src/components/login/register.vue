@@ -10,7 +10,7 @@
           ref="form"
           label-width="100px"
           class="register-form"
-        >
+        >，
           <h2 class="center">注册账号</h2>
           <el-form-item label="账号：" prop="username">
             <el-input type="text" size="mini" class="formlist" v-model="form.username"></el-input>
@@ -64,7 +64,7 @@
           </el-form-item>
             <el-form-item>
             <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
-              <span class="code" @click="goChange">{{showCode}}</span>
+              <span class="code" @click="generatedCode">{{showCode}}</span>
             </el-tooltip> 
           </el-form-item>
           <div class="center">
@@ -209,9 +209,6 @@ export default {
       }
       this.code = code;
       this.showCode = showCode;
-    },
-    goChange() {
-      this.generatedCode();
     },
     goBack() {
       this.$router.push("/login");

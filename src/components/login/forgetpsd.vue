@@ -24,7 +24,7 @@
               v-model="form.code"
             ></el-input>
             <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
-              <span class="code" @click="goChange">{{showCode}}</span>
+              <span class="code" @click="generatedCode">{{showCode}}</span>
             </el-tooltip>
           </el-form-item>
           <div class="center">
@@ -54,12 +54,12 @@
           </div>
           <div v-else-if="active==2" class="center">
             <div v-if="showSuccess">
-              <img src="@picture/success.png" class="picture">
+              <img src="@picture/success.png" class="picture" />
               <p>您已成功修改密码！</p>
               <span class="back" @click="goBack">点击返回登录</span>
             </div>
             <div v-else>
-              <img src="@picture/wrong.png" class="picture">
+              <img src="@picture/wrong.png" class="picture" />
               <p>修改密码失败！</p>
               <span class="back" @click="goBack">点击返回登录</span>
             </div>
@@ -146,11 +146,21 @@ export default {
         if (this.name == "") {
           this.$message.warning("请输入验证账户的姓名！");
         } else {
-          if (this.name != this.trueName) {
-            this.$message.warning("姓名错误！");
-          } else {
-            this.active++;
-          }
+          this.axios
+            .get("/api/user/get", {
+              params: {
+                id: this.form.username,
+                name: this.name
+              }
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.active++;
+              } else {
+                this.generatedCode();
+                this.form.code = "";
+              }
+            });
         }
       } else if (this.active == 1) {
         this.$refs["psd"].validate(valid => {
@@ -178,7 +188,7 @@ export default {
         if (valid) {
           if (this.form.code == "") {
             this.$message.warning("请输入验证码！");
-          } else if (this.form.code.toLowerCase()  != this.code.toLowerCase() ) {
+          } else if (this.form.code.toLowerCase() != this.code.toLowerCase()) {
             this.$message.warning("验证码错误！");
           } else {
             this.axios
@@ -189,11 +199,9 @@ export default {
               })
               .then(res => {
                 if (res.data.success) {
-                  this.trueName = res.data.message.name;
                   this.page = 2;
                 } else {
                   this.generatedCode();
-                  this.form.code = "";
                 }
               });
           }
@@ -207,9 +215,6 @@ export default {
     },
     getHeight() {
       this.conHeight.height = window.innerHeight + "px";
-    },
-    goChange() {
-      this.generatedCode();
     },
     generatedCode() {
       let code = "";
@@ -271,6 +276,6 @@ export default {
 .back {
   cursor: pointer;
   font-size: 14px;
-  color:gary;
+  color: gary;
 }
 </style>
