@@ -71,7 +71,7 @@
       </el-form-item>
     </el-form>
     <div class="center">
-      <el-button type="primary" size="small" @click="goAdd">{{edit==='no'?'添加':'编辑'}}</el-button>
+      <el-button type="primary" size="small" @click="goAdd">{{edit?'编辑':'添加'}}</el-button>
       <el-button size="small" @click="goClose">取消</el-button>
     </div>
   </div>
@@ -110,6 +110,17 @@ export default {
       } else {
         callback();
       }
+    };
+    var checkBirthday = (rule, value, callback) => {
+      if (
+        this.moment(value).valueOf() >
+        this.moment()
+          .startOf("day")
+          .valueOf()
+      ) {
+        return callback(new Error("生日必须大于当天"));
+      }
+      callback();
     };
     return {
       disable: false,
@@ -153,7 +164,10 @@ export default {
           { validator: checkspecil, message: "账号不能包含特殊字符" },
           { min: 1, max: 16, message: "长度在1到16个字符" }
         ],
-        birthday: [{ validator: checkinput, message: "生日不能为空" }],
+        birthday: [
+          { validator: checkinput, message: "生日不能为空" },
+          { validator: checkBirthday, message: "生日必须大于当天" }
+        ],
         money: [{ type: "number", message: "余额必须为数字值" }]
       }
     };
@@ -161,7 +175,7 @@ export default {
   mounted() {
     if (this.DialogParams().row) {
       this.disable = true;
-      let obs = Object.assign({},this.DialogParams().row);
+      let obs = Object.assign({}, this.DialogParams().row);
       this.form = obs;
       this.form.pass = obs.psd;
       this.form.checkPass = obs.psd;
@@ -205,7 +219,7 @@ export default {
     },
     getSrc(src) {
       this.form.picture = src;
-      this.imageUrl=src;
+      this.imageUrl = src;
     },
     goClearLevel() {
       if (this.form.permissions == "customer") this.form.level = "vip1";

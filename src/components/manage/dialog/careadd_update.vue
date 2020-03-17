@@ -122,6 +122,17 @@ export default {
   },
   name: "caretable",
   data() {
+    var checkDay = (rule, value, callback) => {
+      if (
+        this.moment(value).valueOf() <
+        this.moment()
+          .startOf("day")
+          .valueOf()
+      ) {
+        return callback(new Error("开始时间不得早于当前"));
+      }
+      callback();
+    };
     return {
       show: false,
       form: {
@@ -143,6 +154,11 @@ export default {
             validator: checkinput,
             trigger: "blur",
             message: "开始日期不能为空"
+          },
+          {
+            validator: checkDay,
+            trigger: "blur",
+            message: "开始时间不得早于当前"
           }
         ],
         timerang: [
@@ -195,7 +211,7 @@ export default {
               }
             });
           } else {
-             if(this.pet.status){
+            if (this.pet.status) {
               this.axios
                 .post("/api/pet/add", this.pet)
                 .then(res => {
@@ -210,9 +226,9 @@ export default {
                     this.closeDialog();
                   }
                 });
-             }else{
-               this.$message.warning("请添加宠物！");
-             }
+            } else {
+              this.$message.warning("请添加宠物！");
+            }
           }
         } else {
           return false;

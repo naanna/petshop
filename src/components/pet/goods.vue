@@ -50,7 +50,7 @@
               class="goods-title"
               effect="dark"
               :content="item.name"
-              placement="bottom"
+              placement="top"
             >
               <p class="goods-title">{{item.name}}</p>
             </el-tooltip>

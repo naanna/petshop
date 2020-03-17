@@ -7,7 +7,7 @@
         <el-option value="宠物种类" label="宠物种类"></el-option>
         <el-option value="寄养单号" label="寄养单号"></el-option>
       </el-select>
-      <el-select size="small" class="seach-select" v-model="searchval" v-if="type=='宠物种类'" clearable>
+      <el-select size="small" class="seach-select" v-model="searchVal" v-if="type=='宠物种类'" clearable>
         <el-option value="cat" label="猫咪"></el-option>
         <el-option value="dog" label="狗狗"></el-option>
         <el-option value="pig" label="香猪"></el-option>
@@ -19,12 +19,12 @@
         clearable
         size="small"
         class="seach-select"
-        v-model="searchval"
+        v-model="searchVal"
       ></el-input>
       <el-button type="primary" size="small" @click="goSearch">搜索</el-button>
       <el-button type="text" size="small" style="float:right;" @click="goHistory">查看历史寄养</el-button>
     </div>
-    <el-table :data="tabledata" stripe highlight-current-row>
+    <el-table :data="tableData" stripe highlight-current-row>
       <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物名" prop="name" align="center" header-align="center"></el-table-column>
       <el-table-column label="宠物种类" prop="type" align="center" header-align="center">
@@ -111,13 +111,13 @@ export default {
   data() {
     return {
       centerDialogVisible: false,
-      tabledata: [],
+      tableData: [],
       type: "寄养单号",
       form: {
         longtime: ""
       },
-      lontimeobs: "",
-      searchval: "",
+      longTimeObs: "",
+      searchVal: "",
       total: 0,
       page_no: 1,
       page_size: 10,
@@ -137,11 +137,11 @@ export default {
         username: this.$store.state.username
       };
 
-      if (this.searchval != "" && this.searchval != null) {
+      if (this.searchVal != "" && this.searchVal != null) {
         if (this.type == "寄养单号") {
-          query.careid = this.searchval;
+          query.careid = this.searchVal;
         } else if (this.type == "宠物种类") {
-          query.pettype = this.searchval;
+          query.pettype = this.searchVal;
         }
       }
       return query;
@@ -157,11 +157,11 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.tabledata = results.message;
+            this.tableData = results.message;
             this.total = results.total;
-            for (let i in this.tabledata) {
-              this.tabledata[i].starttime = this.moment(
-                this.tabledata[i].starttime
+            for (let i in this.tableData) {
+              this.tableData[i].starttime = this.moment(
+                this.tableData[i].starttime
               ).format("YYYY-MM-DD");
             }
           }
@@ -189,14 +189,14 @@ export default {
     },
     goTolong(row) {
       this.centerDialogVisible = true;
-      this.lontimeobs = row;
+      this.longTimeObs = row;
     },
     goLong() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
             .put("/api/caretable/long_back", {
-              careid: this.lontimeobs.careid,
+              careid: this.longTimeObs.careid,
               longtime: this.form.longtime,
               type: "long"
             })
@@ -258,13 +258,13 @@ export default {
       this.goQuery();
     },
     change() {
-      this.searchval = "";
+      this.searchVal = "";
     },
     goHistory() {
       this.$router.push("historyCare");
     },
     goClear() {
-      this.lontimeobs = "";
+      this.longTimeObs = "";
       this.centerDialogVisible = false;
       this.$refs["form"].resetFields();
     }

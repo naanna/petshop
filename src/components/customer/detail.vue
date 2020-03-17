@@ -1,41 +1,37 @@
 <template>
   <div style="display:flex;">
-    <div class="div1">
-      <el-avatar shape="square" :size="180" :src="customerobs.picture"></el-avatar>
-      <p class="pclass">{{customerobs.nickname}}</p>
+    <div class="customer-detail-title">
+      <el-avatar shape="square" :size="180" :src="customerObs.picture"></el-avatar>
+      <p class="pclass">{{customerObs.nickname}}</p>
     </div>
-    <div class="div2">
+    <div class="customer-info-box">
       <div>
         <span>账号：</span>
-        <span>{{customerobs.username}}</span>
+        <span>{{customerObs.username}}</span>
       </div>
       <div>
         <span>姓名：</span>
-        <span>{{customerobs.name}}</span>
+        <span>{{customerObs.name}}</span>
       </div>
       <div>
         <span>性别：</span>
-        <span>{{customerobs.sex}}</span>
+        <span>{{customerObs.sex}}</span>
       </div>
       <div>
         <span>余额：</span>
-        <span>{{customerobs.money}}</span>
+        <span>{{customerObs.money}}</span>
       </div>
       <div v-if="customer">
         <span>等级：</span>
-        <span>{{customerobs.level}}</span>
+        <span>{{customerObs.level}}</span>
       </div>
-      <!-- <div>
-        <span>历史消费：</span>
-        <span>{{customerobs.money}}</span>
-      </div> -->
       <div>
         <span>生日：</span>
-        <span>{{customerobs.birthday}}</span>
+        <span>{{customerObs.birthday}}</span>
       </div>
       <div>
         <span>注册日期：</span>
-        <span>{{customerobs.regday}}</span>
+        <span>{{customerObs.regday}}</span>
       </div>
     </div>
   </div>
@@ -47,24 +43,24 @@ export default {
   data() {
     return {
       customer: false,
-      customerobs: []
+      customerObs: []
     };
   },
   mounted() {
     if (this.DialogParams().row) {
       this.customer = true;
-      this.customerobs = this.DialogParams().row;
+      this.customerObs = this.DialogParams().row;
     }
   }
 };
 </script>
 
 <style scoped>
-.div1 {
+.customer-detail-title {
   flex: 1;
   padding-left: 30px;
 }
-.div2 {
+.customer-info-box {
   line-height: 30px;
   font-size: 25px;
   margin-left: 40px;

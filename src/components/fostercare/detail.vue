@@ -47,7 +47,6 @@ export default {
     if (this.DialogParams().row) {
       let obs = this.DialogParams().row;
       this.form = obs;
-      console.log(this.form)
       this.goQuery();
     }
   },
@@ -63,10 +62,7 @@ export default {
           if (res.data.success) {
             var results = res.data;
             var now = this.moment(this.moment(new Date()).format("YYYY-MM-DD"));
-            var day=this.moment(results.message).format("YYYY-MM-DD")
-            console.log(day)
-            this.days = Util.displayAge(day, now);
-            console.log(Util.displayAge(day, now));
+            this.days = Util.displayAge(results.message.starttime, now);
           }
         });
     },

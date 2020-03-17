@@ -120,6 +120,17 @@ export default {
   },
   name: "person",
   data() {
+    var checkBirthday = (rule, value, callback) => {
+      if (
+        this.moment(value).valueOf() >
+        this.moment()
+          .startOf("day")
+          .valueOf()
+      ) {
+        return callback(new Error("生日必须大于当天"));
+      }
+      callback();
+    };
     return {
       isShowImageDialog: false,
       imageUrl: "",
@@ -143,7 +154,10 @@ export default {
           { validator: checkspace, message: "姓名不能包含空格" },
           { min: 1, max: 10, message: "长度在1到10个字符" }
         ],
-        birthday: [{ validator: checkinput, message: "生日不能为空" }]
+        birthday: [
+          { validator: checkinput, message: "生日不能为空" },
+          { validator: checkBirthday, message: "生日必须大于当天" }
+        ]
       }
     };
   },
@@ -210,7 +224,7 @@ export default {
     goPsd() {
       this.Dialog.title("修改密码")
         .width("800px")
-        .currentView(psd, { })
+        .currentView(psd, {})
         .then(data => {
           this.getPerson();
         })

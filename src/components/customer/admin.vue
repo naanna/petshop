@@ -2,9 +2,9 @@
   <div>
     <span class="fontclass">管理员</span>
     <el-row style="min-width:1120px;max-width:1350px;width:100%">
-      <el-col :span="6" v-for="(item, index) in tabledata" :key="index">
+      <el-col :span="6" v-for="(item, index) in tableData" :key="index">
         <el-card class="card" shadow="hover">
-          <i class="el-icon-close close" @click="godel(item.username)"></i>
+          <i class="el-icon-close close" @click="goDel(item.username)"></i>
           <el-image class="image" :src="item.picture" :preview-src-list="[item.picture]"></el-image>
           <div style="padding: 14px;">
             <span style=" display: block; text-align: center;">{{item.name}}</span>
@@ -15,7 +15,7 @@
                 plain
                 size="mini"
                 icon="el-icon-edit"
-                @click="goupdate(item)"
+                @click="goUpdate(item)"
               ></el-button>
               <el-switch v-model="item.online" disabled></el-switch>
               <el-button
@@ -23,7 +23,7 @@
                 size="mini"
                 plain
                 icon="el-icon-postcard"
-                @click="godetail(item)"
+                @click="goDetail(item)"
               ></el-button>
             </div>
           </div>
@@ -55,18 +55,17 @@ export default {
   name: "admin",
   data() {
     return {
-      switchvalue: true,
       total: 0,
       page_no: 1,
       page_size: 8,
-      tabledata: []
+      tableData: []
     };
   },
   created() {
-    this.goquery();
+    this.goQuery();
   },
   methods: {
-    makependingquery() {
+    makeQuery() {
       let query = {
         page_no: this.page_no,
         page_size: this.page_size
@@ -74,8 +73,8 @@ export default {
       query.admin = true;
       return query;
     },
-    goquery() {
-      let query = this.makependingquery();
+    goQuery() {
+      let query = this.makeQuery();
       this.axios
         .get("/api/user/getall", {
           params: {
@@ -85,20 +84,20 @@ export default {
         .then(res => {
           if (res.data.success) {
             var results = res.data;
-            this.tabledata = results.message;
+            this.tableData = results.message;
             this.total = results.total;
-            for (let i in this.tabledata) {
-              this.tabledata[i].birthday = this.moment(
-                this.tabledata[i].birthday
+            for (let i in this.tableData) {
+              this.tableData[i].birthday = this.moment(
+                this.tableData[i].birthday
               ).format("YYYY-MM-DD");
-              this.tabledata[i].regday = this.moment(
-                this.tabledata[i].regday
+              this.tableData[i].regday = this.moment(
+                this.tableData[i].regday
               ).format("YYYY-MM-DD");
             }
           }
         });
     },
-    goupdate(row) {
+    goUpdate(row) {
       this.Dialog
         .title("编辑信息")
         .width("500px")
@@ -106,7 +105,7 @@ export default {
         .then(data => {})
         .show();
     },
-    godel(username) {
+    goDel(username) {
       this.$confirm("确认删除该管理员账号?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -118,14 +117,14 @@ export default {
             })
             .then(res => {
               if (res.data.success) {
-                this.goquery();
+                this.goQuery();
                 this.$message.success("删除成功！");
               }
             });
         })
         .catch(() => {});
     },
-    godetail(row) {
+    goDetail(row) {
       this.Dialog
         .title("详情信息")
         .width("550px")
@@ -135,11 +134,11 @@ export default {
     },
     sizeChangeHandle(val) {
       this.page_size = val;
-      this.goquery();
+      this.goQuery();
     },
     currentChangeHandle(val) {
       this.page_no = val;
-      this.goquery();
+      this.goQuery();
     }
   }
 };
@@ -154,13 +153,11 @@ export default {
 .card:hover .close {
   display: block;
 }
-
 .flexclass {
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
 }
-
 .card {
   margin-top: 40px;
   margin-left: 40px;
@@ -172,7 +169,6 @@ export default {
   display: block;
   text-align: center;
 }
-
 .image {
   width: 100px;
   height: 100px;

@@ -9,8 +9,8 @@
       </el-form-item>
     </el-form>
     <div class="center">
-      <el-button type="primary" size="small" @click="goadd">确定</el-button>
-      <el-button size="small" @click="goclose">关闭</el-button>
+      <el-button type="primary" size="small" @click="goAdd">确定</el-button>
+      <el-button size="small" @click="goClose">关闭</el-button>
     </div>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
     }
   },
   methods: {
-    goadd() {
+    goAdd() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.axios
@@ -80,7 +80,7 @@ export default {
         }
       });
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }

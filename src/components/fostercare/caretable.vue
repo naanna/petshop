@@ -9,8 +9,8 @@
       ref="form"
     >
       <el-form-item label="宠物信息：" label-width="100px" prop="name">
-        <el-button size="small" @click="goadd" v-if="pet.pet">添加宠物</el-button>
-        <el-button size="small" @click="goadd" v-else>编辑宠物</el-button>
+        <el-button size="small" @click="goAdd" v-if="pet.pet">添加宠物</el-button>
+        <el-button size="small" @click="goAdd" v-else>编辑宠物</el-button>
         <el-popover placement="right" width="400" trigger="click">
           <el-form label-position="right">
             <el-form-item label="名字：" label-width="100px" prop="name">
@@ -96,8 +96,8 @@
       </el-form-item>
     </el-form>
     <div class="center">
-      <el-button type="primary" size="small" @click="gosave">提交</el-button>
-      <el-button size="small" @click="goclose">取消</el-button>
+      <el-button type="primary" size="small" @click="goSave">提交</el-button>
+      <el-button size="small" @click="goClose">取消</el-button>
     </div>
     <Dialog></Dialog>
   </div>
@@ -155,7 +155,7 @@ export default {
     };
   },
   methods: {
-    gosave() {
+    goSave() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.form.starttime = this.moment(this.form.starttime).format(
@@ -185,7 +185,7 @@ export default {
         }
       });
     },
-    goadd() {
+    goAdd() {
       var pet = this.pet;
       this.Dialog.title("我要寄养")
         .width("800px")
@@ -197,7 +197,7 @@ export default {
         })
         .show();
     },
-    goclose() {
+    goClose() {
       this.closeDialog();
     }
   }

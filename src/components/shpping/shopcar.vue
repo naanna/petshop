@@ -134,7 +134,7 @@
             <span class="car" @click="goBack">购物车</span>
           </div>
         </div>
-        <el-form label-position="right"  class="shopcar-order-form">
+        <el-form label-position="right" class="shopcar-order-form">
           <el-form-item label="订单号：" label-width="100px">
             <span class="shopcar-span">{{form.orderid}}</span>
           </el-form-item>
@@ -149,7 +149,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div v-else >
+      <div v-else>
         <div class="success-box">
           <img src="@picture/wrong.png" class="shopcar-picture" />
           <div class="success-info-box">
@@ -159,7 +159,7 @@
             <span>返回</span>
             <span class="car" @click="goBack">购物车</span>
           </div>
-       </div>
+        </div>
       </div>
     </div>
     <div class="shopcar-info-box">
@@ -328,6 +328,8 @@ export default {
                   username: this.$store.state.username,
                   list: this.selectObj
                 });
+              } else {
+                this.showSuccess = false;
               }
             })
             .then(res => {
@@ -457,7 +459,7 @@ export default {
   color: #f40;
 }
 .shopcar-order-form {
-  margin:0 auto;
+  margin: 0 auto;
   width: 500px;
 }
 .shopcar-picture {
@@ -465,7 +467,7 @@ export default {
   margin-right: 20px;
   height: 160px;
 }
-.success-box{
+.success-box {
   text-align: center;
   margin-bottom: 40px;
 }

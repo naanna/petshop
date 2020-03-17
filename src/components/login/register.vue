@@ -10,7 +10,8 @@
           ref="form"
           label-width="100px"
           class="register-form"
-        >，
+        >
+          ，
           <h2 class="center">注册账号</h2>
           <el-form-item label="账号：" prop="username">
             <el-input type="text" size="mini" class="formlist" v-model="form.username"></el-input>
@@ -62,10 +63,10 @@
               style="margin-right:20px"
             ></el-input>
           </el-form-item>
-            <el-form-item>
+          <el-form-item>
             <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
               <span class="code" @click="generatedCode">{{showCode}}</span>
-            </el-tooltip> 
+            </el-tooltip>
           </el-form-item>
           <div class="center">
             <el-button type="primary" size="mini" @click="goRegister">注册</el-button>
@@ -119,6 +120,17 @@ export default {
         callback();
       }
     };
+    var checkBirthday = (rule, value, callback) => {
+      if (
+        this.moment(value).valueOf() >
+        this.moment()
+          .startOf("day")
+          .valueOf()
+      ) {
+        return callback(new Error("生日必须大于当天"));
+      }
+      callback();
+    };
     return {
       imageUrl: "",
       code: "",
@@ -156,12 +168,15 @@ export default {
         ],
         username: [
           { validator: checkinput, message: "账号不能为空" },
-          { validator: checkspace, message: "姓名不能包含空格" },
+          { validator: checkspace, message: "账号不能包含空格" },
           { validator: checkzh, message: "账号不能包含中文" },
           { validator: checkspecil, message: "账号不能包含特殊字符" },
           { min: 1, max: 16, message: "长度在1到16个字符" }
         ],
-        birthday: [{ validator: checkinput, message: "生日不能为空" }],
+        birthday: [
+          { validator: checkinput, message: "生日不能为空" },
+          { validator: checkBirthday, message: "生日必须大于当天" }
+        ],
         code: [
           { validator: checkinput, message: "验证码不能为空" },
           { validator: checkCode, trigger: "blur" }

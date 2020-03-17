@@ -129,11 +129,10 @@ export default {
           this.form.birthday = this.moment(this.form.birthday).format(
             "YYYY-MM-DD"
           );
-          if (this.form.picture == "") {
-            this.form.picture = null;
-          }
           if (this.form.status == "caring" && !this.edit) {
             this.closeDialog(this.form);
+          } else if (this.form.picture == "") {
+            this.$message.warning("请选择图片！");
           } else {
             if (this.edit) {
               this.axios.put("/api/pet/update", this.form).then(res => {

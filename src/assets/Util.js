@@ -35,6 +35,22 @@ const Util = {
             return birthSpan.year + "岁" + birthSpan.month + "个月";
         }
     },
+    //通过时间计算寄养时长
+    displayTime: function(startTime, target) {
+        let months = target.diff(startTime, "months", true);
+        let birthSpan = {
+            year: Math.floor(months / 12),
+            month: Math.floor(months) % 12,
+            day: Math.round((months % 1) * target.daysInMonth(), 0)
+        };
+        if (birthSpan.year < 1 && birthSpan.month < 1) {
+            return birthSpan.day + "天";
+        } else if (birthSpan.year < 1) {
+            return birthSpan.month + "个月" + birthSpan.day + "天";
+        } else {
+            return birthSpan.year + "岁" + birthSpan.month + "个月";
+        }
+    },
     //计算视频长度
     countTime: function(s) {
         var min;
