@@ -4,6 +4,7 @@
       <el-select size="small" class="goods-search" v-model="type" @change="change">
         <el-option value="价格" label="价格"></el-option>
         <el-option value="种类" label="种类"></el-option>
+        <el-option value="商品名" label="商品名"></el-option>
       </el-select>
       <div style=" display:inline-block;" v-if="type=='价格'">
         <input
@@ -24,7 +25,7 @@
           oninput="value=value.replace(/[^\d]/g,'');if(value.length>10)value=value.slice(0,10)"
         />
       </div>
-      <el-select size="small" style="width:200px;" v-model="searchVal" v-else clearable>
+      <el-select size="small" class="width200" v-model="searchVal" v-else-if="type=='种类'" clearable>
         <el-option value="狗粮" label="狗粮"></el-option>
         <el-option value="猫粮" label="猫粮"></el-option>
         <el-option value="猪粮" label="猪粮"></el-option>
@@ -36,9 +37,10 @@
         <el-option value="睡窝" label="睡窝"></el-option>
         <el-option value="宠物箱" label="宠物箱"></el-option>
       </el-select>
+      <el-input v-model="searchVal" v-else size="small" class="width200" clearable></el-input>
       <el-button type="primary" size="small" style="margin-left:10px;" @click="goSearch">搜索</el-button>
     </div>
-    <el-row style="min-width:1120px;max-width:1350px;width:100%">
+    <el-row style="min-width:1120px;max-width:1350px;width:100%" v-if="tableData.length!=0">
       <el-col :span="4" v-for="(item, index) in tableData" :key="index">
         <el-card class="goods-card" shadow="hover" :body-style="{ padding: '0px' }">
           <el-image class="goods-image" :src="item.picture"></el-image>
@@ -76,6 +78,12 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-card class="box-card goods-card-box" v-else>
+      <div slot="header" class="clearfix">
+        <span>告示</span>
+      </div>
+      <p>暂无符合搜索要求的商品</p>
+    </el-card>
     <el-pagination
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
@@ -101,7 +109,7 @@ export default {
       total: 0,
       page_no: 1,
       page_size: 12,
-      tableData: [],
+      tableData: [{}],
       collectObs: []
     };
   },
@@ -130,6 +138,8 @@ export default {
           query.small = this.money1;
           query.big = this.money2;
         }
+      } else if (this.type == "商品名") {
+        if (this.searchVal != "") query.name = this.searchVal;
       } else {
         if (this.searchVal != "") query.type = this.searchVal;
       }
@@ -248,6 +258,9 @@ export default {
 </script>
 
 <style scoped>
+.width200 {
+  width: 200px;
+}
 .inputwidth {
   height: 32px;
   line-height: 32px;
@@ -288,5 +301,10 @@ export default {
   display: block;
   color: #999;
   padding-right: 10px;
+}
+.goods-card-box {
+  width: 300px;
+  text-align: center;
+  margin: 50px auto;
 }
 </style>

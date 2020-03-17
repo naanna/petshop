@@ -129,7 +129,6 @@ export default {
       if (this.type == "名字" && this.searchVal != "") {
         query.name = this.searchVal;
       }
-
       if (this.type == "权限" && this.searchVal != "") {
         query.permissions = this.searchVal;
       }

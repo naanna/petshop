@@ -26,7 +26,7 @@
         <el-button type="primary" size="small" style="margin-left:10px;" @click="goSearch">搜索</el-button>
       </div>
     </div>
-    <div>
+    <div v-if="tableData.length!=0">
       <div
         class="pet-list-box"
         @click="goDetail(item)"
@@ -65,6 +65,12 @@
         </div>
       </div>
     </div>
+    <el-card class="box-card pet-card-box" v-else>
+      <div slot="header" class="clearfix">
+        <span>告示</span>
+      </div>
+      <p>暂无符合搜索要求的宠物</p>
+    </el-card>
     <el-pagination
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
@@ -75,7 +81,6 @@
       layout="total, sizes, prev, pager, next, jumper"
       class="fyclass"
     ></el-pagination>
-
     <Dialog></Dialog>
   </div>
 </template>
@@ -97,7 +102,7 @@ export default {
       page_no: 1,
       page_size: 12,
       seeOut: false,
-      tableData: [],
+      tableData: [{}],
       collectObs: []
     };
   },
@@ -335,5 +340,10 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-right: 20px;
+}
+.pet-card-box {
+  width: 300px;
+  text-align: center;
+  margin: 50px auto;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class>
     <span class="fontclass">充值管理</span>
-    <el-tabs value="first" class="tabs">
+    <el-tabs value="first" class="tabs" @tab-click="handleClick">
       <el-tab-pane label="充值审批" name="first">
         <div class="button-box">
           <div>
@@ -62,7 +62,7 @@
         <div class="button-box">
           <div>
             <el-select size="small" class="width200" v-model="type" @change="selectChange">
-              <el-option value="审批者" label="审批者"></el-option>
+              <el-option value="审批账号" label="审批账号"></el-option>
               <el-option value="充值账号" label="充值账号"></el-option>
               <el-option value="充值日期" label="充值日期"></el-option>
               <el-option value="状态" label="状态"></el-option>
@@ -156,16 +156,13 @@ export default {
         searchVal: ""
       },
       data: [],
-      type: "审批者",
-      approval: "",
+      type: "审批账号",
       selectObj: [],
       query: {}
     };
   },
   created() {
     this.getPending();
-    this.getRecord();
-    this.approval = this.$store.state.username;
   },
   methods: {
     makePendingQuery() {
@@ -227,9 +224,9 @@ export default {
 
       if (this.type == "充值账号") {
         if (this.recordQuery.searchVal != "")
-          query.username = this.recordQuery.searchVal;
+          query.userName = this.recordQuery.searchVal;
       }
-      if (this.type == "审批者") {
+      if (this.type == "审批账号") {
         if (this.recordQuery.searchVal != "")
           query.approval = this.recordQuery.searchVal;
       }
@@ -265,7 +262,7 @@ export default {
             .post("/api/invest/approval", {
               refobs: [
                 {
-                  approval: this.approval,
+                  approval: this.$store.state.username,
                   id: row.investid,
                   type: "yes",
                   money: row.money,
@@ -292,7 +289,7 @@ export default {
             .post("/api/invest/approval", {
               refobs: [
                 {
-                  approval: this.approval,
+                  approval: this.$store.state.username,
                   id: row.investid,
                   type: "refuse"
                 }
@@ -311,7 +308,7 @@ export default {
       let refobs = [];
       this.selectObj.forEach(item => {
         refobs.push({
-          approval: this.approval,
+          approval: this.$store.state.username,
           id: item.investid,
           type: "yes",
           money: item.money,
@@ -344,7 +341,7 @@ export default {
       let refobs = [];
       this.selectObj.forEach(item => {
         refobs.push({
-          approval: this.approval,
+          approval: this.$store.state.username,
           id: item.investid,
           type: "refuse"
         });
@@ -442,6 +439,13 @@ export default {
       for (var i = 0; i < obj.length; i++) {
         var temp = obj[i];
         self.selectObj.push(temp);
+      }
+    },
+    handleClick(tab, event) {
+      if (tab.index == "1") {
+        this.getRecord();
+      } else {
+        this.getPending();
       }
     }
   }

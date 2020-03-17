@@ -19,9 +19,10 @@
           <el-option value="编号" label="编号"></el-option>
           <el-option value="商品名" label="商品名"></el-option>
           <el-option value="种类" label="种类"></el-option>
+          <el-option value="状态" label="状态"></el-option>
         </el-select>
         <el-input
-          v-if="type!='种类'"
+          v-if="type!='种类'&&type!='状态'"
           placeholder="请输入搜索内容"
           v-model="searchVal"
           type="text"
@@ -30,16 +31,18 @@
           class="select"
         ></el-input>
         <el-select size="small" class="select" v-model="searchVal" v-else clearable>
-          <el-option value="狗粮" label="狗粮"></el-option>
-          <el-option value="猫粮" label="猫粮"></el-option>
-          <el-option value="猪粮" label="猪粮"></el-option>
-          <el-option value="玩具" label="玩具"></el-option>
-          <el-option value="日用品" label="日用品"></el-option>
-          <el-option value="颈链" label="颈链"></el-option>
-          <el-option value="洗浴" label="洗浴"></el-option>
-          <el-option value="医疗" label="医疗"></el-option>
-          <el-option value="睡窝" label="睡窝"></el-option>
-          <el-option value="宠物箱" label="宠物箱"></el-option>
+          <el-option value="狗粮" label="狗粮" v-if="type=='种类'"></el-option>
+          <el-option value="猫粮" label="猫粮" v-if="type=='种类'"></el-option>
+          <el-option value="猪粮" label="猪粮" v-if="type=='种类'"></el-option>
+          <el-option value="玩具" label="玩具" v-if="type=='种类'"></el-option>
+          <el-option value="日用品" label="日用品" v-if="type=='种类'"></el-option>
+          <el-option value="颈链" label="颈链" v-if="type=='种类'"></el-option>
+          <el-option value="洗浴" label="洗浴" v-if="type=='种类'"></el-option>
+          <el-option value="医疗" label="医疗" v-if="type=='种类'"></el-option>
+          <el-option value="睡窝" label="睡窝" v-if="type=='种类'"></el-option>
+          <el-option value="宠物箱" label="宠物箱" v-if="type=='种类'"></el-option>
+          <el-option value="sale" label="在售" v-if="type=='状态'"></el-option>
+          <el-option value="soldout" label="下架" v-if="type=='状态'"></el-option>
         </el-select>
         <el-button type="primary" size="small" @click="goSearch">搜索</el-button>
       </div>
@@ -143,6 +146,8 @@ export default {
           query.name = this.searchVal;
         } else if (this.type == "种类") {
           query.type = this.searchVal;
+        } else if (this.type == "状态") {
+          query.status = this.searchVal;
         }
       }
       return query;

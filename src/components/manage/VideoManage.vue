@@ -36,7 +36,7 @@
             header-align="center"
           ></el-table-column>
           <el-table-column label="视频编号 " prop="videoid" align="center" header-align="center"></el-table-column>
-          <el-table-column label="上传者" prop="username" align="center" header-align="center"></el-table-column>
+          <el-table-column label="上传账号" prop="username" align="center" header-align="center"></el-table-column>
           <el-table-column label="视频" prop="src" align="center" header-align="center">
             <div slot-scope="scope">
               <video
@@ -72,8 +72,8 @@
       <el-tab-pane label="投稿记录" name="second">
         <div>
           <el-select size="small" class="width200" v-model="type" @change="selectChange">
-            <el-option value="审批者" label="审批者"></el-option>
-            <el-option value="投稿者" label="投稿者"></el-option>
+            <el-option value="审批账号" label="审批账号"></el-option>
+            <el-option value="投稿账号" label="投稿账号"></el-option>
             <el-option value="投稿时间" label="投稿时间"></el-option>
             <el-option value="审批时间" label="审批时间"></el-option>
             <el-option value="状态" label="状态"></el-option>
@@ -113,7 +113,7 @@
         </div>
         <el-table :data="data" stripe border highlight-current-row class="table">
           <el-table-column label="视频编号 " prop="videoid" align="center" header-align="center"></el-table-column>
-          <el-table-column label="上传者" prop="username" align="center" header-align="center"></el-table-column>
+          <el-table-column label="上传账号" prop="username" align="center" header-align="center"></el-table-column>
           <el-table-column label="视频" prop="src" align="center" header-align="center">
             <div slot-scope="scope">
               <video
@@ -134,9 +134,14 @@
               <span v-else>未通过</span>
             </template>
           </el-table-column>
-          <el-table-column label="审批者" prop="approvalid" align="center" header-align="center"></el-table-column>
+          <el-table-column label="投稿账号" prop="approvalid" align="center" header-align="center"></el-table-column>
           <el-table-column label="审批时间" prop="approvaltime" align="center" header-align="center"></el-table-column>
           <el-table-column label="播放量" prop="count" align="center" header-align="center"></el-table-column>
+          <el-table-column label="操作" align="center" header-align="center">
+            <div slot-scope="scope">
+              <el-button type="text" size="small" @click="goDel(scope.row)">删除</el-button>
+            </div>
+          </el-table-column>
         </el-table>
         <el-pagination
           @size-change="sizeChangeHandle1"
@@ -178,7 +183,7 @@ export default {
         searchVal: ""
       },
       data: [],
-      type: "审批者",
+      type: "审批账号",
       approval: "",
       selectObj: []
     };
@@ -255,11 +260,11 @@ export default {
         query.approvalStartTime = time;
         query.approvalEndTime = time1;
       }
-      if (this.type == "投稿者") {
+      if (this.type == "投稿账号") {
         if (this.recordQuery.searchVal != "")
           query.userName = this.recordQuery.searchVal;
       }
-      if (this.type == "审批者") {
+      if (this.type == "审批账号") {
         if (this.recordQuery.searchVal != "")
           query.approvalId = this.recordQuery.searchVal;
       }
@@ -415,6 +420,25 @@ export default {
               if (res.data.success) {
                 this.$message.success("您已拒绝！");
                 this.getPending();
+              }
+            });
+        })
+        .catch(() => {});
+    },
+    goDel(row) {
+      this.$confirm("确认删除本条投稿记录吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          this.axios
+            .delete("/api/video/delete", {
+              data: { videoId: row.videoid }
+            })
+            .then(res => {
+              if (res.data.success) {
+                this.$message.success("删除成功！");
+                this.getRecord();
               }
             });
         })

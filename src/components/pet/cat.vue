@@ -26,7 +26,7 @@
         <el-button type="primary" size="small" style="margin-left:10px;" @click="goSearch">搜索</el-button>
       </div>
     </div>
-    <div>
+    <div v-if="tableData.length!=0">
       <div class="cat-list-box" @click="goDetail(item)" v-for="item in tableData">
         <div v-if="!seeOut">
           <i class="el-icon-shopping-cart-2 cat-shopcar" @click.stop="goAddShop(item)"></i>
@@ -60,6 +60,12 @@
         </div>
       </div>
     </div>
+    <el-card class="box-card cat-card-box" v-else>
+      <div slot="header" class="clearfix">
+        <span>告示</span>
+      </div>
+      <p>暂无符合搜索要求的的宠物</p>
+    </el-card>
     <el-pagination
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
@@ -92,7 +98,7 @@ export default {
       page_no: 1,
       page_size: 12,
       seeOut: false,
-      tableData: [],
+      tableData: [{}],
       collectObs: []
     };
   },
@@ -326,5 +332,10 @@ export default {
 .cat-botton-box {
   display: flex;
   justify-content: space-between;
+}
+.cat-card-box {
+  width: 300px;
+  text-align: center;
+  margin: 50px auto;
 }
 </style>

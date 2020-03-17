@@ -1,13 +1,13 @@
 <template>
   <div>
     <span class="fontclass">寄养管理</span>
-    <el-tabs value="first" class="tabs">
+    <el-tabs value="first" class="tabs"  @tab-click="handleClick">
       <el-tab-pane label="寄养申请" name="first">
         <div style="margin-bottom:10px;">
           <div class="right">
             <el-select size="small" class="width200" v-model="approval.type" @change="change1">
-              <el-option value="寄养者" label="寄养者"></el-option>
-              <el-option value="寄养单号" label="寄养单号"></el-option>
+              <el-option value="寄养账号" label="寄养账号"></el-option>
+              <el-option value="寄养编号" label="寄养编号"></el-option>
               <el-option value="申请类型" label="申请类型"></el-option>
             </el-select>
             <el-select
@@ -41,7 +41,7 @@
             align="center"
             header-align="center"
           ></el-table-column>
-          <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养编号" prop="careid" align="center" header-align="center"></el-table-column>
           <el-table-column label="宠物编号" prop="petid" align="center" header-align="center"></el-table-column>
           <el-table-column label="寄养日期" prop="starttime" align="center" header-align="center"></el-table-column>
           <el-table-column label="延迟天数" prop="longtime" align="center" header-align="center"></el-table-column>
@@ -52,7 +52,7 @@
               <span v-else>领回</span>
             </template>
           </el-table-column>
-          <el-table-column label="寄养者" prop="username" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养账号" prop="username" align="center" header-align="center"></el-table-column>
           <el-table-column label="操作" width="130" align="center" header-align="center">
             <div slot-scope="scope">
               <el-button type="text" size="small" @click="goAgree(scope.row)">同意</el-button>
@@ -96,7 +96,7 @@
           </div>
           <div>
             <el-select size="small" class="width200" v-model="recode.type" @change="change">
-              <el-option value="寄养者" label="寄养者"></el-option>
+              <el-option value="寄养账号" label="寄养账号"></el-option>
               <el-option value="寄养时间" label="寄养时间"></el-option>
               <el-option value="类型" label="类型"></el-option>
             </el-select>
@@ -112,7 +112,7 @@
               <el-option value="back" label="领回"></el-option>
             </el-select>
             <el-input
-              v-if="recode.type=='寄养者'"
+              v-if="recode.type=='寄养账号'"
               placeholder="请输入内容"
               type="text"
               size="small"
@@ -145,7 +145,7 @@
             align="center"
             header-align="center"
           ></el-table-column>
-          <el-table-column label="寄养单号" prop="careid" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养编号" prop="careid" align="center" header-align="center"></el-table-column>
           <el-table-column label="宠物编号" prop="petid" align="center" header-align="center"></el-table-column>
           <el-table-column label="寄养日期" prop="starttime" align="center" header-align="center">
             <template slot-scope="scope">
@@ -159,7 +159,7 @@
               <span v-if="scope.row.endtime!='Invalid date'">{{scope.row.endtime}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="寄养者" prop="username" align="center" header-align="center"></el-table-column>
+          <el-table-column label="寄养账号" prop="username" align="center" header-align="center"></el-table-column>
           <el-table-column label="类型" prop="type" align="center" header-align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.type=='care'">寄养</span>
@@ -220,14 +220,14 @@ export default {
       approvalData: [],
       recodeData: [],
       approval: {
-        type: "寄养者",
+        type: "寄养账号",
         searchVal: "",
         total: 0,
         page_no: 1,
         page_size: 10
       },
       recode: {
-        type: "寄养者",
+        type: "寄养账号",
         searchVal: "",
         total: 0,
         page_no: 1,
@@ -236,8 +236,7 @@ export default {
     };
   },
   created() {
-    this.goApprovalQuery();
-    this.goRecodeQuery();
+    this.getPending();
   },
   methods: {
     makeApprovalQuery() {
@@ -246,9 +245,9 @@ export default {
         page_size: this.approval.page_size
       };
       if (this.approval.searchVal != "") {
-        if (this.approval.type == "寄养者") {
+        if (this.approval.type == "寄养账号") {
           query.username = this.approval.searchVal;
-        } else if (this.approval.type == "寄养单号") {
+        } else if (this.approval.type == "寄养编号") {
           query.careid = this.approval.searchVal;
         } else if (this.approval.type == "申请类型") {
           query.type = this.approval.searchVal;
@@ -256,7 +255,7 @@ export default {
       }
       return query;
     },
-    goApprovalQuery() {
+    getPending() {
       let query = this.makeApprovalQuery();
       this.axios
         .get("/api/caretable/get", {
@@ -268,14 +267,6 @@ export default {
           if (res.data.success) {
             var results = res.data;
             this.approvalData = results.message;
-            for (let i in this.approvalData) {
-              this.approvalData[i].starttime = this.moment(
-                this.approvalData[i].starttime
-              ).format("YYYY-MM-DD");
-              this.approvalData[i].endtime = this.moment(
-                this.approvalData[i].endtime
-              ).format("YYYY-MM-DD");
-            }
             this.approval.total = results.total;
           }
         });
@@ -286,7 +277,7 @@ export default {
         page_size: this.recode.page_size
       };
       if (this.recode.searchVal != "" && this.recode.searchVal != null) {
-        if (this.recode.type == "寄养者") {
+        if (this.recode.type == "寄养账号") {
           query.username = this.recode.searchVal;
         } else if (this.recode.type == "寄养时间") {
           var time = this.moment(this.recode.searchVal[0]).format("YYYY-MM-DD");
@@ -301,7 +292,7 @@ export default {
       }
       return query;
     },
-    goRecodeQuery() {
+    getRecord() {
       let query = this.makeRecodeQuery();
       this.axios
         .get("/api/caretable/getall", {
@@ -313,14 +304,6 @@ export default {
           if (res.data.success) {
             var results = res.data;
             this.recodeData = results.message;
-            for (let i in this.recodeData) {
-              this.recodeData[i].starttime = this.moment(
-                this.recodeData[i].starttime
-              ).format("YYYY-MM-DD");
-              this.recodeData[i].endtime = this.moment(
-                this.recodeData[i].endtime
-              ).format("YYYY-MM-DD");
-            }
             this.recode.total = results.total;
           }
         });
@@ -341,8 +324,8 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已成功拒绝！");
-                this.goApprovalQuery();
-                this.goRecodeQuery();
+                this.getPending();
+                this.getRecord();
               }
             });
         })
@@ -366,8 +349,8 @@ export default {
               .then(res => {
                 if (res.data.success) {
                   this.$message.success("您已同意！");
-                  this.goApprovalQuery();
-                  this.goRecodeQuery();
+                  this.getPending();
+                  this.getRecord();
                 }
               });
           })
@@ -394,8 +377,8 @@ export default {
                 this.centerDialogVisible = false;
                 this.$message.success("您已成功同意延迟寄养！");
                 this.$refs["form"].resetFields();
-                this.goApprovalQuery();
-                this.goRecodeQuery();
+                this.getPending();
+                this.getRecord();
               }
             });
         } else {
@@ -419,8 +402,8 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("您已成功删除");
-                this.goApprovalQuery();
-                this.goRecodeQuery();
+                this.getPending();
+                this.getRecord();
               }
             });
         })
@@ -435,8 +418,8 @@ export default {
         .width("600px")
         .currentView(add_update, {})
         .then(data => {
-          this.goApprovalQuery();
-          this.goRecodeQuery();
+          this.getPending();
+          this.getRecord();
         })
         .show();
     },
@@ -447,7 +430,6 @@ export default {
           careid: item.careid
         });
       });
-
       if (this.selectObj.length == 0) {
         this.$message.warning("请选中要删除的对象！");
         return;
@@ -464,8 +446,8 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("删除成功！");
-                this.goApprovalQuery();
-                this.goRecodeQuery();
+                this.getPending();
+                this.getRecord();
               }
             });
         })
@@ -476,8 +458,8 @@ export default {
         .width("600px")
         .currentView(add_update, { row })
         .then(data => {
-          this.goApprovalQuery();
-          this.goRecodeQuery();
+          this.getPending();
+          this.getRecord();
         })
         .show();
     },
@@ -489,27 +471,27 @@ export default {
     },
     goRecodeSearch() {
       this.recode.page_no = 1;
-      this.goRecodeQuery();
+      this.getRecord();
     },
     goApprovaSearch() {
       this.approval.page_no = 1;
-      this.goApprovalQuery();
+      this.getPending();
     },
     sizeChangeHandle1(val) {
       this.approval.page_size = val;
-      this.goApprovalQuery();
+      this.getPending();
     },
     currentChangeHandle1(val) {
       this.approval.page_no = val;
-      this.goApprovalQuery();
+      this.getPending();
     },
     sizeChangeHandle(val) {
       this.recode.page_size = val;
-      this.goRecodeQuery();
+      this.getRecord();
     },
     currentChangeHandle(val) {
       this.recode.page_nopage_no = val;
-      this.goRecodeQuery();
+      this.getRecord();
     },
     handleSelectionChange(val) {
       let self = this;
@@ -518,6 +500,13 @@ export default {
       for (var i = 0; i < obj.length; i++) {
         var temp = obj[i];
         self.selectObj.push(temp);
+      }
+    },
+    handleClick(tab, event) {
+      if (tab.index == "1") {
+        this.getRecord();
+      } else {
+        this.getPending();
       }
     }
   }

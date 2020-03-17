@@ -121,7 +121,7 @@ export default {
       };
       if (this.searchVal != "") {
         if (this.type == "编号") {
-          query.petid = this.searchVal;
+          query.petId = this.searchVal;
         } else if (this.type == "种类") {
           query.type = this.searchVal;
         } else if (this.type == "状态") {

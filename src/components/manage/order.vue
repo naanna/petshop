@@ -5,7 +5,7 @@
       <div>
         <el-select size="small" class="width200" v-model="type">
           <el-option value="订单号" label="订单号"></el-option>
-          <el-option value="下单账户" label="下单账户"></el-option>
+          <el-option value="下单账号" label="下单账号"></el-option>
           <el-option value="下单日期" label="下单日期"></el-option>
         </el-select>
         <el-date-picker
@@ -99,7 +99,7 @@ export default {
           query.starttime = time;
           query.endtime = time1;
         } else {
-          query.username = this.searchVal;
+          query.userName = this.searchVal;
         }
       }
       return query;
