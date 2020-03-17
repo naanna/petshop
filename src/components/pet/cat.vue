@@ -106,7 +106,7 @@ export default {
     this.goQuery();
   },
   methods: {
-    makePendingQuery() {
+    makeQuery() {
       let query = {
         page_no: this.page_no,
         page_size: this.page_size
@@ -133,7 +133,7 @@ export default {
       return query;
     },
     goQuery() {
-      const query = this.makePendingQuery();
+      const query = this.makeQuery();
       this.axios
         .get("/api/pet/get", {
           params: {
