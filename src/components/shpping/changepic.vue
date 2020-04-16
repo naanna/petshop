@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "changePic",
   data() {
@@ -54,6 +55,7 @@ export default {
     this.getPicture();
   },
   methods: {
+    ...mapMutations(["setPicture"]),
     getPicture() {
       this.axios
         .get("/api/user/get", {
@@ -86,6 +88,7 @@ export default {
             .then(res => {
               if (res.data.success) {
                 this.$message.success("修改头像成功！");
+                this.setPicture(this.showImageurl);
                 this.imageUrl = "";
                 this.getPicture();
                 loading.close();

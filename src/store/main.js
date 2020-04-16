@@ -30,6 +30,10 @@ const store = new Vuex.Store({
             localStorage.setItem("permissions", user.user.permissions);
             localStorage.setItem("regday", user.user.regday);
         },
+        setPicture(state, picture) {
+            state.picture = picture;
+            localStorage.setItem("picture", picture);
+        },
         delToken(state) {
             state.token = '';
             state.username = '';
