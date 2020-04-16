@@ -149,13 +149,15 @@ export default {
 <style scoped>
 .close {
   cursor: pointer;
-  float: right;
+  position: absolute;
+  right: 20px;
   display: none;
 }
 .card:hover .close {
   display: block;
 }
 .card {
+  position: relative;
   margin-top: 40px;
   margin-left: 40px;
 }
