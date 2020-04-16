@@ -26,7 +26,7 @@
         <el-button type="primary" size="small" style="margin-left:10px;" @click="goSearch">搜索</el-button>
       </div>
     </div>
-    <div  v-if="tableData.length!=0">
+    <div v-if="tableData.length!=0">
       <div class="dog-list-box" @click="goDetail(item)" v-for="item in tableData">
         <div v-if="!seeOut">
           <i class="el-icon-shopping-cart-2 dog-shopcar" @click.stop="goAddShop(item)"></i>
@@ -59,7 +59,8 @@
           <span class="dog-info">{{item.price}}</span>
         </div>
       </div>
-    </div> <el-card class="box-card dog-card-box" v-else>
+    </div>
+    <el-card class="box-card dog-card-box" v-else>
       <div slot="header" class="clearfix">
         <span>告示</span>
       </div>
@@ -69,7 +70,7 @@
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
       :current-page="page_no"
-      :page-sizes="[12,24,36,48]"
+      :page-sizes="[10,20,40,50]"
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
@@ -92,10 +93,10 @@ export default {
   data() {
     return {
       money1: "",
-      money2: "", 
+      money2: "",
       total: 0,
       page_no: 1,
-      page_size: 12,
+      page_size: 10,
       seeOut: false,
       tableData: [{}],
       collectObs: []
@@ -246,11 +247,12 @@ export default {
         .catch(() => {});
     },
     goDetail(row) {
-      this.Dialog
-        .title("宠物详情")
+      this.Dialog.title("宠物详情")
         .width("500px")
         .currentView(detail, { row })
-        .then(data => {})
+        .then(data => {
+          this.goQuery();
+        })
         .show();
     },
     sizeChangeHandle(val) {
@@ -333,7 +335,8 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-right: 20px;
-}.dog-card-box {
+}
+.dog-card-box {
   width: 300px;
   text-align: center;
   margin: 50px auto;

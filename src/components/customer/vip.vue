@@ -131,9 +131,7 @@ export default {
       this.Dialog.title("详情信息")
         .width("550px")
         .currentView(detail, { row })
-        .then(data => {
-          this.goQuery();
-        })
+        .then(data => {})
         .show();
     },
     sizeChangeHandle(val) {

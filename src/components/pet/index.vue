@@ -75,7 +75,7 @@
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
       :current-page="page_no"
-      :page-sizes="[12,24,36,48]"
+      :page-sizes="[10,20,40,50]"
       :page-size="page_size"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
@@ -100,7 +100,7 @@ export default {
       money2: "",
       total: 0,
       page_no: 1,
-      page_size: 12,
+      page_size: 10,
       seeOut: false,
       tableData: [{}],
       collectObs: []
@@ -254,7 +254,9 @@ export default {
       this.Dialog.title("宠物详情")
         .width("500px")
         .currentView(detail, { row })
-        .then(data => {})
+        .then(data => {
+          this.goQuery();
+        })
         .show();
     },
     sizeChangeHandle(val) {

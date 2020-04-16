@@ -188,7 +188,7 @@ export default {
     goAdd() {
       var pet = this.pet;
       this.Dialog.title("我要寄养")
-        .width("800px")
+        .width("600px")
         .currentView(add_update, { pet })
         .then(data => {
           if (data) {

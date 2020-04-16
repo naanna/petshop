@@ -98,11 +98,12 @@ export default {
         });
     },
     goUpdate(row) {
-      this.Dialog
-        .title("编辑信息")
+      this.Dialog.title("编辑信息")
         .width("500px")
         .currentView(add_update, { row })
-        .then(data => {})
+        .then(data => {
+          this.goQuery();
+        })
         .show();
     },
     goDel(username) {
@@ -125,8 +126,7 @@ export default {
         .catch(() => {});
     },
     goDetail(row) {
-      this.Dialog
-        .title("详情信息")
+      this.Dialog.title("详情信息")
         .width("550px")
         .currentView(detail, { row })
         .then(data => {})

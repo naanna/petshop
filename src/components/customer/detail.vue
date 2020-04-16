@@ -77,4 +77,7 @@ export default {
   color: rgb(61, 147, 245);
   font-family: "jelly";
 }
+.el-avatar >>> img {
+  width: 100% !important;
+}
 </style>

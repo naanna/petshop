@@ -20,7 +20,7 @@
         <el-button slot="reference" type="info" plain size="small">投稿</el-button>
       </el-popover>
     </div>
-    <el-row :gutter="20">
+    <el-row :gutter="20" v-if="fileList.length!=0">
       <el-col
         :span="8"
         :xs="{span:24}"
@@ -31,6 +31,7 @@
         <div @click="goWatch(item)">
           <div class="videobox">
             <video
+              class="video-box"
               :poster="item.cover"
               width="100%"
               :id="item.videoid"
@@ -57,6 +58,12 @@
         </div>
       </el-col>
     </el-row>
+    <el-card class="box-card video-card-box" v-else>
+      <div slot="header" class="clearfix">
+        <span>告示</span>
+      </div>
+      <p>暂无可看视频</p>
+    </el-card>
     <el-pagination
       @current-change="currentChangeHandle"
       :current-page.sync="page_no"
@@ -230,5 +237,13 @@ export default {
 }
 .videoshow:hover .videoicon {
   opacity: 1;
+}
+.video-card-box {
+  width: 300px;
+  text-align: center;
+  margin: 50px auto;
+}
+.video-box {
+  height: 230px;
 }
 </style>

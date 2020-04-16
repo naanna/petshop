@@ -124,7 +124,7 @@
             </div>
           </el-form-item>
         </el-form>
-        <el-button size="small" type="primary" @click="goUpload">立即投稿</el-button>
+        <el-button size="small" type="primary" @click="goUpload" :disabled="disable">立即投稿</el-button>
       </div>
     </div>
   </div>
@@ -176,6 +176,7 @@ export default {
         tag: [],
         src: ""
       },
+      disable: false,
       rules: {
         title: [
           { required: true, message: "请输入标题", trigger: "blur" },
@@ -221,6 +222,7 @@ export default {
     goUpload() {
       this.$refs["form"].validate(valid => {
         if (valid) {
+          this.disable = true;
           this.form.username = this.$store.state.username;
           if (this.edit) {
             this.form.videoId = this.updateId;
@@ -307,6 +309,7 @@ export default {
       this.progress = 0;
       this.stepActive = 0;
       this.again = 0;
+      this.disable = false;
       this.form = {
         title: "",
         type: "homemade",

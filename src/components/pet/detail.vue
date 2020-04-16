@@ -76,6 +76,7 @@ export default {
   mounted() {
     if (this.DialogParams().row) {
       this.form = this.DialogParams().row;
+      this.collect = this.form.collect;
     }
   },
   methods: {
@@ -97,10 +98,32 @@ export default {
         });
     },
     goCollect() {
-      this.collect = true;
+      this.axios
+        .post("/api/collect/add", {
+          username: this.$store.state.username,
+          petid: this.form.petid
+        })
+        .then(res => {
+          if (res.data.success) {
+            this.collect = true;
+            this.$message.success("加入收藏!");
+          }
+        });
     },
     goNoCollect() {
-      this.collect = false;
+      this.axios
+        .delete("/api/collect/delete", {
+          data: {
+            username: this.$store.state.username,
+            petid: this.form.petid
+          }
+        })
+        .then(res => {
+          if (res.data.success) {
+            this.collect = false;
+            this.$message.success("取消收藏!");
+          }
+        });
     },
     goClose() {
       this.closeDialog();
