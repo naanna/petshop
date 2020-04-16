@@ -23,7 +23,7 @@
               style="margin-right:20px"
               v-model="form.code"
             ></el-input>
-            <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
+            <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="right">
               <span class="code" @click="generatedCode">{{showCode}}</span>
             </el-tooltip>
           </el-form-item>
@@ -52,7 +52,7 @@
               </el-form-item>
             </el-form>
           </div>
-          <div v-else-if="active==2" class="center">
+          <div v-else-if="active==3" class="center">
             <div v-if="showSuccess">
               <img src="@picture/success.png" class="picture" />
               <p>您已成功修改密码！</p>
@@ -172,8 +172,9 @@ export default {
               })
               .then(res => {
                 if (res.data.success) {
-                  this.active++;
+                  this.active=this.active+2;
                 } else {
+                  this.active=this.active+2;
                   this.showSuccess = false;
                 }
               });
@@ -195,7 +196,7 @@ export default {
               .get("/api/user/get", {
                 params: {
                   id: this.form.username,
-                  type:'forget'
+                  type: "forget"
                 }
               })
               .then(res => {

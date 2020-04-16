@@ -140,7 +140,6 @@ export default {
         name: "",
         sex: "",
         birthday: "",
-        psd: ""
       },
       rules: {
         nickname: [
@@ -180,7 +179,6 @@ export default {
             this.old.name = results.name;
             this.old.sex = results.sex;
             this.old.birthday = results.birthday;
-            this.old.psd = results.psd;
             this.form.regday = this.moment(this.form.regday).format(
               "YYYY-MM-DD"
             );

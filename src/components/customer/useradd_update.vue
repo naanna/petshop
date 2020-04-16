@@ -207,9 +207,9 @@ export default {
             this.axios.post(url, this.form).then(res => {
               if (res.data.success) {
                 this.$message.success("操作成功！");
-                this.closeDialog();
-                loading.close();
               }
+              this.closeDialog();
+              loading.close();
             });
           }, 2000);
         } else {

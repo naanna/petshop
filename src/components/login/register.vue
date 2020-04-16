@@ -64,7 +64,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="bottom">
+            <el-tooltip class="item" effect="dark" content="点击更换验证码" placement="right">
               <span class="code" @click="generatedCode">{{showCode}}</span>
             </el-tooltip>
           </el-form-item>
