@@ -15,7 +15,7 @@
         "default-passive-events": "^1.0.10",
         "echarts": "^4.7.0",
         "element-ui": "^2.13.1",
-        "moment": "^2.24.0",
+        "moment": "^2.29.2",
         "vue": "^2.6.11",
         "vue-axios": "^2.1.5",
         "vue-echarts": "^4.1.0",
